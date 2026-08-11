@@ -330,3 +330,82 @@ reset.  Therefore the first-bad-germ world-sheet must retain an explicit
 
 **Rigorous consequence:** one-particle quantile conservation cannot be used to
 erase the pair quantile seam.
+
+## 10. Shell decomposition must also be lifted by the full product partition
+
+If a one-particle region is partitioned into physical shells
+
+\[
+D=\bigsqcup_i A_i,
+\]
+
+then pair space decomposes as
+
+\[
+\boxed{
+D\times D=\bigsqcup_{i,j}(A_i\times A_j).
+}
+\]
+
+Keeping only the diagonal blocks `A_i x A_i` discards cross-shell pair content.
+For the exact same-ancestor Gaussian sign partition `A_+={x>0}`, `A_-={x<0}`,
+branching transfers pair mass continuously from the same-shell blocks into
+`A_+ x A_-` and `A_- x A_+`, even though each one-particle shell mass remains
+exactly `1/2`.
+
+**Classification: Exact identity for the product partition; rigorous consequence
+from the same-ancestor Gaussian calibration.**
+
+Thus shell telescoping is legitimate only in the **full pair shell complex**.
+Cross-shell blocks are physical covariance transport and must not be erased as
+refinement noise or observer error.
+
+## 11. Physical exit is a genuine two-face pair sink
+
+For the killed diffusion
+
+\[
+dX=\sqrt{2\nu}\,dW,
+\qquad X>0,
+\]
+
+with absorption at `0`, a particle starting at `x>0` has exact survival
+
+\[
+\boxed{
+S(x,t)=\operatorname{erf}\!\left(\frac{x}{\sqrt{4\nu t}}\right).
+}
+\]
+
+The positive first-exit density is
+
+\[
+\boxed{
+f_{\rm exit}(x,t)
+=-\partial_tS
+=\frac{x e^{-x^2/(4\nu t)}}
+{2\sqrt{\pi\nu}\,t^{3/2}}.
+}
+\]
+
+For two independent future replicas from the same fixed ancestor, pair survival is
+`S^2`, hence
+
+\[
+\boxed{
+-\partial_t(S^2)=2S f_{\rm exit}=S f_{\rm exit}+f_{\rm exit}S.
+}
+\]
+
+The two summands are exactly the two physical pair-boundary faces
+
+\[
+(\partial D\times D)\cup(D\times\partial D).
+\]
+
+**Classification: Exact identity for killed diffusion.**
+
+Physical exit therefore does not telescope away as an observer seam.  It is a true
+sub-Markov sink and remains explicitly in the pair covariance budget.  Any
+renormalization of survivors is a new conditional observable and must not be
+silently substituted for the unconditioned physical exit law.

@@ -114,3 +114,16 @@ Therefore a zero-mass one-particle quantile current does not imply zero pair
 quantile current.  The pair seam is genuine localization covariance transport and
 must remain explicit in the selected Kelvin budget.  It is neither ancestry
 production nor an observer reset.
+
+## 2026-08-12 — full pair shell partition and physical two-face exit
+
+The shell and exit seams now have exact calibration laws.  A one-particle shell
+partition lifts to the full product partition `A_i x A_j`; diagonal shell blocks
+alone lose cross-shell same-ancestor covariance.  In the Gaussian branching audit,
+pair mass moves from same-sign shell blocks into cross-sign blocks while each
+one-particle shell mass stays fixed.
+
+Physical exit is audited with killed Brownian ancestry on the half-line.  Single
+survival is `erf(x/sqrt(4 nu t))`; two-replica survival is its square, and the pair
+loss rate is exactly the sum of the two exit faces.  Exit is therefore a genuine
+physical sink, not an observer seam and not a quantity to renormalize away.

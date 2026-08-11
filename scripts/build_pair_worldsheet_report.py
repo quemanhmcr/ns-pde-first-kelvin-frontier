@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from pde_audit.exact_shear import kelvin_anchor_covariance, kelvin_anchor_moments
 from pde_audit.pair_worldsheet import make_stage, worldsheet_boundary
 from pde_audit.pair_quantile import same_ancestor_halfspace_pair_mass, halfspace_indicator_covariance
+from pde_audit.pair_exit import pair_survival_probability, pair_exit_rate
 
 
 def main() -> None:
@@ -44,6 +45,15 @@ def main() -> None:
         for tau2 in [0.0, 0.1, 0.5, 1.0, 4.0, 16.0]
     ]
 
+    shell_rows = []
+    for tau2 in [0.0, 0.1, 0.5, 1.0, 4.0]:
+        same = 2.0 * same_ancestor_halfspace_pair_mass(1.0, tau2)
+        shell_rows.append({"tau2": tau2, "same_shell_pair_mass": same, "cross_shell_pair_mass": 1.0 - same})
+    exit_rows = [
+        {"t": t, "pair_survival": pair_survival_probability(1.0, 1.0, t), "pair_exit_rate": pair_exit_rate(1.0, 1.0, t)}
+        for t in [0.1, 0.25, 0.5, 1.0, 2.0]
+    ]
+
     report = {
         "classification": {
             "worldsheet_internal_seam_cancellation": "Exact identity",
@@ -53,6 +63,8 @@ def main() -> None:
         "worldsheet_boundary": boundary.as_dict(),
         "odd_shear_refinement_rows": rows,
         "same_ancestor_quantile_rows": quantile_rows,
+        "shell_product_partition_rows": shell_rows,
+        "physical_pair_exit_rows": exit_rows,
         "interpretation": (
             "Internal localization rungs telescope. A linear physical refinement must be lifted by the full "
             "tensor square; cross-child pair currents are physical covariance content, not an irreducible defect. "
