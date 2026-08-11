@@ -1,0 +1,100 @@
+{
+  "calibration": "exact periodic 3D Navier-Stokes multimode shear",
+  "parameters": {
+    "nu": 1.0,
+    "c": 1.0,
+    "L": 1.0
+  },
+  "method": "closed-form Gaussian expectations; no Monte Carlo; exact NS solution family",
+  "interpretation": {
+    "Var_X": "Kelvin future-variance bank / expected martingale quadratic variation for fixed circulation",
+    "traffic_integral": "time-integrated drift-square circulation traffic on T_N",
+    "hodge_bank_initial": "natural coexact Green/Hodge bank at t=0"
+  },
+  "rows": [
+    {
+      "N": 8,
+      "T_N": 0.015625,
+      "E_X": 2.495432720130179,
+      "E_X2": 12.20059633468215,
+      "Var_X": 5.973411873985844,
+      "Var_X_over_N": 0.7466764842482305,
+      "traffic_integral": 0.003920474647498811,
+      "N2_times_traffic": 0.2509103774399239,
+      "hodge_bank_initial": 0.0375778443877012,
+      "N_times_hodge_bank": 0.3006227551016096,
+      "Var_over_traffic": 1523.6450713427694,
+      "Var_over_hodge_bank": 158.96100405218758
+    },
+    {
+      "N": 16,
+      "T_N": 0.00390625,
+      "E_X": 3.528515481346582,
+      "E_X2": 24.369694629882186,
+      "Var_X": 11.919273127779684,
+      "Var_X_over_N": 0.7449545704862303,
+      "traffic_integral": 0.0009798824670419059,
+      "N2_times_traffic": 0.2508499115627279,
+      "hodge_bank_initial": 0.019032509835416836,
+      "N_times_hodge_bank": 0.3045201573666694,
+      "Var_over_traffic": 12163.982445529298,
+      "Var_over_hodge_bank": 626.2586086045039
+    },
+    {
+      "N": 32,
+      "T_N": 0.0009765625,
+      "E_X": 4.9898732405886195,
+      "E_X2": 48.72373362396806,
+      "Var_X": 23.82489866682569,
+      "Var_X_over_N": 0.7445280833383028,
+      "traffic_integral": 0.00024495578420694844,
+      "N2_times_traffic": 0.2508347230279152,
+      "hodge_bank_initial": 0.009577255357046144,
+      "N_times_hodge_bank": 0.3064721714254766,
+      "Var_over_traffic": 97262.03748958,
+      "Var_over_hodge_bank": 2487.65411160279
+    },
+    {
+      "N": 64,
+      "T_N": 0.000244140625,
+      "E_X": 7.056674967794658,
+      "E_X2": 97.43965093037441,
+      "Var_X": 47.64298932927468,
+      "Var_X_over_N": 0.7444217082699168,
+      "traffic_integral": 6.123801791047639e-05,
+      "N2_times_traffic": 0.2508309213613113,
+      "hodge_bank_initial": 0.00480388429532125,
+      "N_times_hodge_bank": 0.30744859490056,
+      "Var_over_traffic": 777996.9201309514,
+      "Var_over_hodge_bank": 9917.597177699854
+    },
+    {
+      "N": 128,
+      "T_N": 6.103515625e-05,
+      "E_X": 9.979620158578543,
+      "E_X2": 194.8753951342331,
+      "Var_X": 95.28257662472586,
+      "Var_X_over_N": 0.7443951298806708,
+      "traffic_integral": 1.5309446451471944e-05,
+      "N2_times_traffic": 0.25082997066091633,
+      "hodge_bank_initial": 0.0024057567091212207,
+      "N_times_hodge_bank": 0.30793685876751625,
+      "Var_over_traffic": 6223776.733323026,
+      "Var_over_hodge_bank": 39606.07332548222
+    },
+    {
+      "N": 256,
+      "T_N": 1.52587890625e-05,
+      "E_X": 14.113305233206695,
+      "E_X2": 389.7488370840776,
+      "Var_X": 190.5634524784181,
+      "Var_X_over_N": 0.7443884862438207,
+      "traffic_integral": 3.827357985963097e-06,
+      "N2_times_traffic": 0.25082973296807753,
+      "hodge_bank_initial": 0.0012038320203886003,
+      "N_times_hodge_bank": 0.30818099721948167,
+      "Var_over_traffic": 49789816.67701661,
+      "Var_over_hodge_bank": 158297.37808178892
+    }
+  ]
+}

@@ -193,3 +193,76 @@ Cross-child covariance belongs to the physical refinement current.
 
 **Classification: Conjectural bridge until the actual active maps are inserted
 line by line.**
+
+## 7. Nested refinement has an exact pair functor
+
+For a linear physical refinement map `R` on currents, the correct pair lift is
+
+\[
+\boxed{R^{(2)}=R\otimes R.}
+\]
+
+For two consecutive refinements,
+
+\[
+\boxed{
+(R_2R_1)^{(2)}
+=(R_2\otimes R_2)(R_1\otimes R_1).
+}
+\]
+
+Equivalently, a covariance matrix/cochain pulls back by
+
+\[
+\boxed{C_{\rm parent}=R^T C_{\rm child}R,}
+\]
+
+and consecutive pullbacks compose exactly.  Therefore **internal refinement seams
+telescope at pair level when the full tensor-square lift is retained**.
+
+A projection that keeps only child diagonals does not commute with `R tensor R` in
+general; its commutator is precisely the lost cross-child covariance sector.  This
+is an analysis/projection defect, not evidence of irreducible physical content.
+Only a residual that remains after the full pair functor and all tracked physical
+projections have been applied is eligible for the literal `S^int / Z_irr` slot.
+
+**Classification: Exact identity.**
+
+This narrows the refinement part of the active-chain audit: the remaining unknown
+is no longer whether cross-child covariance should be present, but whether the
+actual shell/refinement maps used by the first-bad-germ construction realize the
+full pair functor without an additional non-functorial remainder.
+
+## 8. A nondegenerate 3D pressure calibration is included in CI
+
+The audit suite also uses the decaying ABC/Beltrami field
+
+\[
+U=(\sin z+\cos y,\;\sin x+\cos z,\;\sin y+\cos x),
+\qquad u(t)=e^{-\nu t}U.
+\]
+
+It satisfies `curl U=U`, `Delta U=-U`, and the nonlinear term is not zero.  Instead
+
+\[
+(u\cdot\nabla)u=\nabla\frac{|u|^2}{2},
+\]
+
+so with
+
+\[
+p=-\frac{|u|^2}{2}
+\]
+
+the full 3D Navier--Stokes residual vanishes exactly.  This regression prevents
+the PDE audit from relying only on shear solutions whose advective term happens to
+vanish.
+
+**Classification: Exact Navier--Stokes identity, symbolically audited.**
+
+The same symbolic lane now audits the multidimensional same-ancestor branching
+formula with a symmetric anisotropic diffusion tensor `K`; the diagonal branch-time
+source is exactly `2 nu K` contracted against cross-replica derivatives, while the
+drift cancels from the branching source.
+
+**Classification: Exact identity.**

@@ -81,3 +81,23 @@ and internal pair-world-sheet seam cancellation.
 
 Status remains: no continuation/restart theorem, no regularity claim, and literal
 Pillar II remains open.
+
+## 2026-08-12 — refinement functoriality and nondegenerate 3D PDE audit
+
+The pair-localization frontier has been sharpened further.  A linear current
+refinement `R` has the exact pair lift `R tensor R`; composition is functorial and
+covariance pulls back as `R^T C R`.  Thus nested refinement seams telescope at pair
+level **provided the full tensor square is retained**.  Diagonal-only projection
+breaks this naturality by deleting physical cross-child covariance.  Such deleted
+cross terms are an observer/analysis projection defect, not `Z_irr`.
+
+The symbolic CI lane has also been extended beyond zero-advection shears.  It now
+audits the exact decaying ABC/Beltrami 3D Navier--Stokes solution, where the
+nonlinear term is nonzero and is cancelled by the exact pressure gradient.  A
+separate multidimensional pair-generator test verifies that the same-ancestor
+branch-time source is `2 nu K` for anisotropic symmetric diffusion and that drift
+terms cancel from the branching source.
+
+These are structural audit gains only.  Literal shell/quantile/active CK maps are
+still not inserted into the pair world-sheet, Pillar II remains open, and no
+continuation or regularity claim is made.

@@ -1,0 +1,68 @@
+{
+  "classification": {
+    "odd_shear_cross_child_cancellation": "Rigorous consequence from exact NS calibration",
+    "pair_localization_closure": "Conjectural bridge pending literal active-chain/Pillar-II audit",
+    "worldsheet_internal_seam_cancellation": "Exact identity"
+  },
+  "interpretation": "Internal localization rungs telescope. A linear physical refinement must be lifted by the full tensor square; cross-child pair currents are physical covariance content, not an irreducible defect.",
+  "odd_shear_refinement_rows": [
+    {
+      "Cov0pi": -5.973411873985844,
+      "N": 8,
+      "V0": 5.973411873985844,
+      "Vpi": 5.973411873985844,
+      "diagonal_only_parent_variance": 11.946823747971688,
+      "full_parent_variance": 0.0
+    },
+    {
+      "Cov0pi": -11.919273127779684,
+      "N": 16,
+      "V0": 11.919273127779684,
+      "Vpi": 11.919273127779684,
+      "diagonal_only_parent_variance": 23.83854625555937,
+      "full_parent_variance": 0.0
+    },
+    {
+      "Cov0pi": -23.82489866682569,
+      "N": 32,
+      "V0": 23.82489866682569,
+      "Vpi": 23.82489866682569,
+      "diagonal_only_parent_variance": 47.64979733365138,
+      "full_parent_variance": 0.0
+    },
+    {
+      "Cov0pi": -47.64298932927468,
+      "N": 64,
+      "V0": 47.64298932927468,
+      "Vpi": 47.64298932927468,
+      "diagonal_only_parent_variance": 95.28597865854935,
+      "full_parent_variance": 0.0
+    },
+    {
+      "Cov0pi": -95.28257662472586,
+      "N": 128,
+      "V0": 95.28257662472586,
+      "Vpi": 95.28257662472586,
+      "diagonal_only_parent_variance": 190.56515324945173,
+      "full_parent_variance": 0.0
+    }
+  ],
+  "worldsheet_boundary": {
+    "D:anchor:2": "1",
+    "D:exit:6": "1",
+    "D:freeze:0": "1",
+    "D:quantile:1": "1",
+    "D:refinement:4": "1",
+    "D:resolve:5": "1",
+    "D:shell:3": "1",
+    "R0": "-1",
+    "R7": "1",
+    "S:anchor:2": "-1",
+    "S:exit:6": "-1",
+    "S:freeze:0": "-1",
+    "S:quantile:1": "-1",
+    "S:refinement:4": "-1",
+    "S:resolve:5": "-1",
+    "S:shell:3": "-1"
+  }
+}
