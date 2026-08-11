@@ -19,3 +19,14 @@ The surviving target is an exact **pair-localization current/capacity law** for 
 The literal `S^int / Z_irr` verification remains open.
 
 See `docs/selected_kelvin_pair_localization_budget.md` for the detailed derivation and no-go ledger.
+
+## Current audited refinement result
+
+The pair-localization audit has now isolated an exact refinement rule: a linear
+physical refinement `Z_P=sum_i a_i Z_i` must be lifted by the **full tensor square**
+`sum_ij a_i a_j Z_i tensor Z_j`.  Cross-child covariance is physical refinement
+content, not a Pillar-II defect.  Exact odd-mode periodic Navier--Stokes shear
+calibrations in GitHub Actions witness complete cancellation between positive child
+diagonals and negative cross-child covariance for the parent `Z_0+Z_pi`.
+
+See `docs/pair_localization_worldsheet_audit.md`.

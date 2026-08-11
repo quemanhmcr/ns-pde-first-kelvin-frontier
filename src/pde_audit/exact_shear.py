@@ -67,3 +67,71 @@ def kelvin_terminal_moments(N: int, c: float, L: float = 1.0) -> tuple[float, fl
     if var < 0.0 and abs(var) < 1e-12:
         var = 0.0
     return mean, second, var
+
+
+
+def kelvin_anchor_moments(
+    N: int, c: float, anchor: float, L: float = 1.0
+) -> tuple[float, float, float]:
+    """Exact Gaussian moments for the rectangular circulation at anchor ``anchor``.
+
+    X_N(a)=(2L/sqrt(N)) sum_m cos(k_m(a+sqrt(2c) Z/N)), Z~N(0,1).
+    """
+    ks = odd_wavenumbers(N)
+    scale = math.sqrt(2.0 * c) / N
+    coeff = 2.0 * L / math.sqrt(N)
+    mean = coeff * sum(
+        math.cos(k * anchor) * math.exp(-0.5 * (k * scale) ** 2) for k in ks
+    )
+    second = coeff * coeff * sum(
+        0.5
+        * (
+            math.cos(k * anchor - ell * anchor)
+            * math.exp(-0.5 * ((k - ell) * scale) ** 2)
+            + math.cos(k * anchor + ell * anchor)
+            * math.exp(-0.5 * ((k + ell) * scale) ** 2)
+        )
+        for k in ks
+        for ell in ks
+    )
+    var = second - mean * mean
+    if var < 0.0 and abs(var) < 1e-12:
+        var = 0.0
+    return mean, second, var
+
+
+def kelvin_anchor_covariance(
+    N: int, c: float, anchor_a: float, anchor_b: float, L: float = 1.0
+) -> float:
+    """Exact covariance of two rectangular Kelvin payoffs at anchors a,b."""
+    ks = odd_wavenumbers(N)
+    scale = math.sqrt(2.0 * c) / N
+    coeff = 2.0 * L / math.sqrt(N)
+    mean_a = coeff * sum(
+        math.cos(k * anchor_a) * math.exp(-0.5 * (k * scale) ** 2) for k in ks
+    )
+    mean_b = coeff * sum(
+        math.cos(k * anchor_b) * math.exp(-0.5 * (k * scale) ** 2) for k in ks
+    )
+    cross = coeff * coeff * sum(
+        0.5
+        * (
+            math.cos(k * anchor_a - ell * anchor_b)
+            * math.exp(-0.5 * ((k - ell) * scale) ** 2)
+            + math.cos(k * anchor_a + ell * anchor_b)
+            * math.exp(-0.5 * ((k + ell) * scale) ** 2)
+        )
+        for k in ks
+        for ell in ks
+    )
+    return cross - mean_a * mean_b
+
+
+def kelvin_increment_variance(
+    N: int, c: float, anchor_a: float, anchor_b: float, L: float = 1.0
+) -> float:
+    """Var(X_b-X_a), reconstructed only from exact covariance data."""
+    va = kelvin_anchor_moments(N, c, anchor_a, L)[2]
+    vb = kelvin_anchor_moments(N, c, anchor_b, L)[2]
+    cab = kelvin_anchor_covariance(N, c, anchor_a, anchor_b, L)
+    return va + vb - 2.0 * cab

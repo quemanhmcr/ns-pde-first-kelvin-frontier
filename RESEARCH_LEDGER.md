@@ -55,3 +55,29 @@ The CI distinguishes three layers:
 The calibration is designed to falsify false reservoirs, not to certify a regularity
 bridge. A CI pass means only that the encoded exact identities and anti-theorem tests are
 consistent with the tested PDE family.
+
+
+## 2026-08-12 — pair-localization world-sheet audit
+
+A new uncertified note `docs/pair_localization_worldsheet_audit.md` records the
+minimal spacetime pair-current strip identity for a complete first-bad-germ
+excursion.  The exact chain algebra cancels all internal localization rungs and
+forces every remaining longitudinal seam to be classified as physical pair
+transport/quantile/shell/refinement, exit, connection geometry, or literal
+`S^int / Z_irr` defect.
+
+A new exact refinement obstruction was isolated: if a physical parent current
+refines linearly as `Z_P=sum_i a_i Z_i`, then its pair lift is the full tensor
+square `sum_ij a_i a_j Z_i tensor Z_j`.  Keeping only child diagonals loses
+cross-child covariance even when the one-current refinement has zero irreducible
+defect.  Those cross terms are physical refinement content, not Pillar-II error.
+
+The exact odd-mode periodic NS shear supplies a sharp witness: rectangular Kelvin
+payoffs at anchors `0` and `pi` satisfy `X_pi=-X_0` pathwise, so both child
+variances are positive while the parent variance of `Z_0+Z_pi` is exactly zero.
+The cross-child covariance cancels the diagonal contribution.  GitHub Actions now
+audits this identity, closed observer-loop covariance revaluation, `boundary^2=0`,
+and internal pair-world-sheet seam cancellation.
+
+Status remains: no continuation/restart theorem, no regularity claim, and literal
+Pillar II remains open.

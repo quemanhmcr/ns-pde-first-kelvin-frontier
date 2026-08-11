@@ -58,3 +58,25 @@ jobs:
         with:
           name: exact-shear-calibration
           path: audit-results/exact_shear_report.json
+
+  pair-localization-worldsheet:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Audit pair-localization world-sheet and exact NS refinement covariance
+        run: python -m unittest -v tests.test_pair_localization_worldsheet
+      - name: Build pair-worldsheet artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_pair_worldsheet_report.py
+      - name: Upload pair-worldsheet artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pair-localization-worldsheet
+          path: audit-results/pair_worldsheet_report.json
