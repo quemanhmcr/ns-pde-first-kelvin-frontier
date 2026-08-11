@@ -1,0 +1,60 @@
+name: Audit PDE-first Kelvin frontier
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit classification and anti-overclaim guards
+        run: python scripts/audit_classification.py
+      - name: Check whitespace
+        run: git diff --check HEAD^
+
+  symbolic-identities:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Run exact symbolic identities
+        run: python -m unittest -v tests.test_symbolic_identities
+
+  exact-ns-calibration:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run exact smooth Navier-Stokes shear calibration regressions
+        run: python -m unittest -v tests.test_exact_shear_calibration
+      - name: Build closed-form calibration report
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_exact_shear_report.py
+      - name: Upload exact calibration artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: exact-shear-calibration
+          path: audit-results/exact_shear_report.json

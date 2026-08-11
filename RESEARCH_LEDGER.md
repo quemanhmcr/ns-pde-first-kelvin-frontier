@@ -32,3 +32,26 @@ The target is an exact current identity converting selected pair localization in
 ### Status
 
 No continuation/restart conclusion. No 3D Navier--Stokes regularity proof. Pillar II remains literally unverified.
+
+## 2026-08-12 — exact PDE audit harness
+
+The repository now carries a dedicated GitHub Actions audit harness. It is deliberately
+not a numerical PDE solver and does not treat floating-point stress as proof. The core
+calibration family is an exact smooth periodic 3D Navier--Stokes shear for which the
+nonlinearity vanishes identically. The audit uses symbolic residual checks and closed-form
+Gaussian expectations for the Kelvin terminal payoff.
+
+The CI distinguishes three layers:
+
+1. **Symbolic exact identities**: divergence-free condition, exact Navier--Stokes residual,
+   pair diagonal-branching identity, Kelvin quadratic polarization, normalized ancestry
+   variance-current identity, and the quadratic-refinement no-go.
+2. **Exact-solution calibration**: closed-form evaluation of selected Kelvin future
+   variance, drift-square circulation traffic, and the natural coexact Hodge bank across
+   increasing odd Fourier packets.
+3. **Anti-theorem guards**: the research note must retain explicit classification labels,
+   the `S^int / Z_irr` caveat, and the no-continuation/no-regularity status.
+
+The calibration is designed to falsify false reservoirs, not to certify a regularity
+bridge. A CI pass means only that the encoded exact identities and anti-theorem tests are
+consistent with the tested PDE family.
