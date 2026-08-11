@@ -20,7 +20,7 @@ jobs:
       - name: Audit classification and anti-overclaim guards
         run: python scripts/audit_classification.py
       - name: Check whitespace
-        run: git diff --check HEAD^
+        run: git show --check --oneline --no-renames HEAD
 
   symbolic-identities:
     strategy:
