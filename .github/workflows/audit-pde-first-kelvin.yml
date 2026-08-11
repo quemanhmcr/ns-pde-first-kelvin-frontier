@@ -70,7 +70,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Audit pair-localization world-sheet and exact NS refinement covariance
-        run: python -m unittest -v tests.test_pair_localization_worldsheet
+        run: python -m unittest -v tests.test_pair_localization_worldsheet tests.test_pair_quantile_leakage
       - name: Build pair-worldsheet artifact
         if: matrix.python-version == '3.12'
         run: python scripts/build_pair_worldsheet_report.py

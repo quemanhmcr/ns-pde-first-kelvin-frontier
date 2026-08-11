@@ -266,3 +266,67 @@ source is exactly `2 nu K` contracted against cross-replica derivatives, while t
 drift cancels from the branching source.
 
 **Classification: Exact identity.**
+
+## 9. Quantile conservation does not lift to pair conservation
+
+The quantile seam has its own exact obstruction.  Let a common ancestor be
+
+\[
+Y\sim N(0,\sigma^2)
+\]
+
+and let two future replicas branch independently,
+
+\[
+X_1=Y+E_1,
+\qquad
+X_2=Y+E_2,
+\qquad
+E_1,E_2\sim N(0,\tau^2).
+\]
+
+Each marginal is centered and symmetric, so the physical half-space chamber
+`D={x>0}` has exactly fixed one-particle quantile mass
+
+\[
+\boxed{P(X_i>0)=\frac12.}
+\]
+
+But the two replicas retain correlation
+
+\[
+\rho=\frac{\sigma^2}{\sigma^2+\tau^2},
+\]
+
+and the exact centered-Gaussian quadrant formula gives
+
+\[
+\boxed{
+P(X_1>0,X_2>0)
+=\frac14+\frac1{2\pi}\arcsin\rho.
+}
+\]
+
+Thus the one-particle quantile mass is constant while the pair mass decreases from
+`1/2` at zero branch separation toward `1/4` as the two futures decorrelate.  For
+`tau^2>0`,
+
+\[
+\boxed{
+\frac{d}{d\tau^2}P(X_1>0,X_2>0)
+=-\frac{\sigma^2}
+{2\pi(\sigma^2+\tau^2)\sqrt{\tau^2(2\sigma^2+\tau^2)}}<0.
+}
+\]
+
+**Classification: Exact identity for the same-ancestor Gaussian diffusion
+calibration.**
+
+Physical interpretation: a quantile chamber can conserve ancestry mass exactly
+while losing same-ancestor pair correlation through its pair boundary.  This is a
+pair-localization covariance flux, not ancestry production and not an observer
+reset.  Therefore the first-bad-germ world-sheet must retain an explicit
+`Pi_quant^(2)` seam even when the one-particle quantile current has zero total mass.
+
+**Rigorous consequence:** one-particle quantile conservation cannot be used to
+erase the pair quantile seam.

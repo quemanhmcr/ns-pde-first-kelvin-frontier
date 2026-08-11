@@ -101,3 +101,16 @@ terms cancel from the branching source.
 These are structural audit gains only.  Literal shell/quantile/active CK maps are
 still not inserted into the pair world-sheet, Pillar II remains open, and no
 continuation or regularity claim is made.
+
+## 2026-08-12 — exact same-ancestor quantile leakage
+
+The quantile part of the pair-localization world-sheet now has an exact calibration.
+For a centered Gaussian common ancestor with two independent future branches, the
+half-space chamber keeps one-particle mass exactly `1/2`, while the pair mass is
+`1/4 + asin(rho)/(2 pi)` and strictly decreases as branch noise decorrelates the
+replicas.  Its exact derivative is negative and is audited in CI.
+
+Therefore a zero-mass one-particle quantile current does not imply zero pair
+quantile current.  The pair seam is genuine localization covariance transport and
+must remain explicit in the selected Kelvin budget.  It is neither ancestry
+production nor an observer reset.
