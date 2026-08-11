@@ -173,6 +173,90 @@ class SymbolicIdentityAudit(unittest.TestCase):
         ).subs({X1: x, Y1: y, X2: x, Y2: y})
         self.assertEqual(sp.simplify(Ldiag - Lrep - cross), 0)
 
+    def test_exact_one_mode_kelvin_future_variance_pde(self) -> None:
+        a, tau, nu, k = sp.symbols("a tau nu k", positive=True)
+        r = nu * k**2 * tau
+        m = sp.exp(-r) * sp.cos(k * a)
+        second = sp.Rational(1, 2) * (1 + sp.exp(-4 * r) * sp.cos(2 * k * a))
+        V = sp.simplify(second - m**2)
+        gamma = 2 * nu * sp.diff(m, a) ** 2
+        residual = sp.simplify(sp.diff(V, tau) - nu * sp.diff(V, a, 2) - gamma)
+        self.assertEqual(sp.trigsimp(residual), 0)
+
+    def test_exact_one_mode_anchor_localization_derivative_is_covariance(self) -> None:
+        a, tau, nu, k = sp.symbols("a tau nu k", positive=True)
+        r = nu * k**2 * tau
+        m = sp.exp(-r) * sp.cos(k * a)
+        dm = sp.diff(m, a)
+        second = sp.Rational(1, 2) * (1 + sp.exp(-4 * r) * sp.cos(2 * k * a))
+        V = sp.simplify(second - m**2)
+        # E[X d_a X] for X=cos(k(a+sqrt(2 nu tau)Z)).
+        EXdX = -sp.Rational(1, 2) * k * sp.exp(-4 * r) * sp.sin(2 * k * a)
+        covariance = sp.simplify(EXdX - m * dm)
+        self.assertEqual(sp.trigsimp(sp.diff(V, a) - 2 * covariance), 0)
+
+    def test_exact_one_mode_kelvin_action_is_noise_carre_du_champ(self) -> None:
+        a, tau, nu, k = sp.symbols("a tau nu k", positive=True)
+        m = sp.exp(-nu * k**2 * tau) * sp.cos(k * a)
+        gamma = 2 * nu * sp.diff(m, a) ** 2
+        expected = 2 * nu * k**2 * sp.exp(-2 * nu * k**2 * tau) * sp.sin(k * a) ** 2
+        self.assertEqual(sp.simplify(gamma - expected), 0)
+
+    def test_variable_frame_cartan_identity_and_nontranslation_geometry(self) -> None:
+        x, y, z = sp.symbols("x y z")
+        coords = (x, y, z)
+        xi = sp.Matrix([x * y, y * z, z * x])
+        # Closed vorticity 2-form dual to omega=(sin y, sin z, sin x).
+        O = sp.MutableDenseMatrix(3, 3, [0] * 9)
+        O[0, 1] = sp.sin(x); O[1, 0] = -O[0, 1]
+        O[1, 2] = sp.sin(y); O[2, 1] = -O[1, 2]
+        O[2, 0] = sp.sin(z); O[0, 2] = -O[2, 0]
+        dO = sp.diff(O[1, 2], x) - sp.diff(O[0, 2], y) + sp.diff(O[0, 1], z)
+        self.assertEqual(sp.simplify(dO), 0)
+
+        # b=i_xi Omega, b_i=xi^k Omega_{k i}; then db is a 2-form.
+        b = sp.Matrix([sum(xi[k] * O[k, i] for k in range(3)) for i in range(3)])
+        db = sp.MutableDenseMatrix(3, 3, [0] * 9)
+        for i in range(3):
+            for j in range(3):
+                db[i, j] = sp.simplify(sp.diff(b[j], coords[i]) - sp.diff(b[i], coords[j]))
+
+        # Coordinate Lie derivative of a covariant 2-form.
+        L = sp.MutableDenseMatrix(3, 3, [0] * 9)
+        naive = sp.MutableDenseMatrix(3, 3, [0] * 9)
+        for i in range(3):
+            for j in range(3):
+                naive[i, j] = sum(xi[k] * sp.diff(O[i, j], coords[k]) for k in range(3))
+                L[i, j] = sp.simplify(
+                    naive[i, j]
+                    + sum(O[k, j] * sp.diff(xi[k], coords[i]) for k in range(3))
+                    + sum(O[i, k] * sp.diff(xi[k], coords[j]) for k in range(3))
+                )
+                self.assertEqual(sp.simplify(L[i, j] - db[i, j]), 0)
+
+        # Nonconstant frame geometry is real: Lie transport is not coefficientwise
+        # directional differentiation alone.
+        self.assertTrue(any(sp.simplify(L[i, j] - naive[i, j]) != 0 for i in range(3) for j in range(3)))
+        dL = sp.diff(L[1, 2], x) - sp.diff(L[0, 2], y) + sp.diff(L[0, 1], z)
+        self.assertEqual(sp.simplify(sp.trigsimp(dL)), 0)
+
+    def test_variable_coefficient_noise_pair_branching_is_cross_derivation(self) -> None:
+        x, y, X1, Y1, X2, Y2 = sp.symbols("x y X1 Y1 X2 Y2")
+        U = X1**2 * Y2 + X2 * Y1**2 + X1 * X2 * Y1 * Y2
+
+        def D(expr, xx, yy):
+            xi1 = 1 + xx**2
+            xi2 = 1 + xx * yy
+            return xi1 * sp.diff(expr, xx) + xi2 * sp.diff(expr, yy)
+
+        diag = U.subs({X1: x, Y1: y, X2: x, Y2: y})
+        lhs = sp.expand(D(D(diag, x, y), x, y))
+        D1 = lambda expr: D(expr, X1, Y1)
+        D2 = lambda expr: D(expr, X2, Y2)
+        rhs_diag = (D1(D1(U)) + D2(D2(U))).subs({X1: x, Y1: y, X2: x, Y2: y})
+        cross = (2 * D1(D2(U))).subs({X1: x, Y1: y, X2: x, Y2: y})
+        self.assertEqual(sp.simplify(lhs - rhs_diag - cross), 0)
+
     def test_quadratic_diagonal_refinement_is_not_additive(self) -> None:
         Q, n = sp.symbols("Q n", positive=True)
         # Q(delta/n)=Q(delta)/n^2 for a quadratic form; summing n pieces gives Q/n.

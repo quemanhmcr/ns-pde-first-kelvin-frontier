@@ -127,3 +127,33 @@ Physical exit is audited with killed Brownian ancestry on the half-line.  Single
 survival is `erf(x/sqrt(4 nu t))`; two-replica survival is its square, and the pair
 loss rate is exactly the sum of the two exit faces.  Exit is therefore a genuine
 physical sink, not an observer seam and not a quantity to renormalize away.
+
+## 2026-08-12 — continuous anchor covariance current and seam coverage guard
+
+The exact one-mode shear now audits the continuous anchor version of the
+localization law.  Its future variance satisfies the backward/remaining-time
+variance PDE with Kelvin carré-du-champ source, and its anchor derivative equals
+twice the covariance between circulation and the physical anchor derivative of
+circulation.  This identifies continuous anchor motion and finite selector reset
+as two forms of the same covariance revaluation geometry.
+
+CI now also contains an explicit frontier seam registry.  Quantile, shell,
+refinement, reset and physical exit have audited structural/calibration status;
+variable-frame connection terms and the literal active CK/Pillar-II sector remain
+open, and continuation/restart is forced to remain open.  The registry is an
+overclaim guard, not a proof of pair-localization closure.
+
+## 2026-08-12 — variable-frame geometry audit
+
+The variable-frame caveat has been narrowed.  Symbolic CI now checks Cartan's
+identity for a genuinely nonconstant noise vector field and a nontrivial closed
+vorticity two-form.  The Lie derivative contains frame-derivative terms absent from
+naive coefficientwise translation, and it still preserves closedness.  These terms
+are therefore transported geometry/connection content, not a new production
+channel.
+
+A separate variable-coefficient derivation test verifies that same-ancestor
+branching still produces the cross operator `2 D_1 D_2`; variable noise
+coefficients do not add a distinct pair source.  What remains open is the literal
+active-frame/Hodge commutator in the first-bad-germ construction, not the generic
+Cartan/branching algebra.

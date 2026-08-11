@@ -409,3 +409,98 @@ Physical exit therefore does not telescope away as an observer seam.  It is a tr
 sub-Markov sink and remains explicitly in the pair covariance budget.  Any
 renormalization of survivors is a new conditional observable and must not be
 silently substituted for the unconditioned physical exit law.
+
+## 12. Continuous anchor motion has an exact covariance conjugate
+
+For a one-mode exact shear/Kelvin martingale, with remaining diffusion time `tau`,
+
+\[
+m(a,\tau)=e^{-\nu k^2\tau}\cos(ka)
+\]
+
+is the conditional mean circulation.  The exact terminal second moment is
+
+\[
+E[X_a^2]
+=\frac12\left(1+e^{-4\nu k^2\tau}\cos(2ka)\right),
+\]
+
+so
+
+\[
+V(a,\tau)=E[X_a^2]-m(a,\tau)^2.
+\]
+
+The audit verifies symbolically
+
+\[
+\boxed{
+\partial_\tau V-\nu\partial_a^2V
+=2\nu(\partial_a m)^2
+=\gamma.
+}
+\]
+
+Thus future variance is fed exactly by the Kelvin carré-du-champ when the remaining
+horizon is increased, equivalently depleted by `gamma` in forward physical time.
+Moreover,
+
+\[
+\boxed{
+\partial_aV
+=2\operatorname{Cov}(X_a,\partial_aX_a).
+}
+\]
+
+**Classification: Exact identity for the one-mode exact Navier--Stokes shear
+calibration.**
+
+This gives the continuous anchor part of the degree-zero localization world-sheet a
+literal conjugate current: the derivative of future variance is physical
+circulation--deformation covariance.  Finite reset revaluation and continuous
+anchor deformation are therefore the discrete and differential forms of the same
+quadratic covariance geometry.
+
+## 13. Variable noise frame: the extra terms are geometry, not branching production
+
+The flat translation notation `Xi_mu=L_{xi_mu} Omega` hides an important distinction
+when `xi_mu` varies in space.  For a closed vorticity two-form,
+
+\[
+\boxed{
+d\,\iota_\xi\Omega=\mathcal L_\xi\Omega
+}
+\]
+
+still holds exactly by Cartan.  However, for nonconstant `xi`,
+
+\[
+\mathcal L_\xi\Omega
+\neq (\xi\cdot\nabla)\Omega
+\]
+
+in general: derivatives of the frame act on the form indices.  CI now audits this
+with an explicit nonconstant polynomial frame and a nontrivial closed vorticity
+form, including `d L_xi Omega = 0`.
+
+**Classification: Exact differential-geometric identity.**
+
+At the pair level, if a noise direction is the first-order derivation
+`D=xi(x).grad`, diagonal restriction still obeys
+
+\[
+\boxed{
+D_\Delta^2-(D_1^2+D_2^2)=2D_1D_2
+}
+\]
+
+for two independent replicas.  Variable coefficients therefore do not create a
+new pair-branching producer; they change the geometric realization of the noise
+derivations and the transported connection.
+
+**Classification: Exact identity, symbolically audited for a nonconstant frame.**
+
+What remains open is the literal insertion of the programme's actual transported
+frame/Hodge connection into the active first-bad-germ chain.  The generic geometry
+is no longer conceptually unclassified, but its concrete active-map commutators
+have not yet been verified.
