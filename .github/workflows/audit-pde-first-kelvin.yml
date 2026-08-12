@@ -202,3 +202,27 @@ jobs:
         with:
           name: stochastic-cycle-map
           path: audit-results/stochastic_cycle_map_report.json
+
+  vorticity-restart-geometry:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit vorticity stretching, Kelvin microframe dissipation, and restart-scale geometry
+        run: python -m unittest -v tests.test_vorticity_restart_geometry
+      - name: Build vorticity/Kelvin restart audit artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_vorticity_restart_report.py
+      - name: Upload vorticity/Kelvin restart audit artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: vorticity-restart-geometry
+          path: audit-results/vorticity_restart_geometry_report.json

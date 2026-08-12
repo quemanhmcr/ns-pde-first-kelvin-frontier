@@ -885,7 +885,8 @@ Conjectural bridge only for the still-undefined global Pillar-II objects.**
 ## 18. Regularity status
 
 There is no continuation theorem or 3D Navier--Stokes regularity proof at this
-stage.  The safe restart target remains separate.  The present result is a
+stage.  The safe restart target remains open and is sharpened below by the
+vorticity/Kelvin microframe audit.  The present result is a
 structural localization audit: the missing resource, if any, has been narrowed to
 a **physical pair-localization capacity/current** for the migrating first-bad germ,
 plus the unresolved literal Pillar-II defect sector.
@@ -1164,3 +1165,93 @@ carré-du-champ form, but a coefficient-level identification with a future stoch
 CK coordinate requires its literal state map and is therefore a Conjectural bridge.
 
 No `S^int` conclusion is inferred without a line-by-line definition.
+
+
+---
+
+## 23. Vorticity/Kelvin microframe identifies the restart-relevant density
+
+The restart question can now be tied directly to the local Navier--Stokes
+vorticity equation.  In a constant orthonormal noise frame, for a small disk loop
+`Z_r=partial Sigma_r(x,n)`, Stokes gives
+
+\[
+\frac{\gamma(Z_r)}{A_r^2}
+\longrightarrow
+2\nu |(\nabla\omega)^Tn|^2.
+\]
+
+For any orthonormal triple of normals,
+
+\[
+\boxed{
+\frac12\sum_{j=1}^3\gamma_{\rm dens}(n_j)
+=\nu|\nabla\omega|^2.
+}
+\]
+
+Thus an orientation-complete Kelvin microframe is exactly the bulk viscous
+enstrophy-dissipation channel.  A single loop may be blind; the exact periodic
+shear calibration has two coordinate normals with zero Kelvin density even though
+`grad omega` is nonzero.
+
+The local enstrophy equation is
+
+\[
+(\partial_t+u\cdot\nabla)e
+=\omega\cdot S\omega+\nu\Delta e-\nu|\nabla\omega|^2,
+\qquad e=|\omega|^2/2.
+\]
+
+For a material germ volume `D_t`, incompressibility and Reynolds transport give
+
+\[
+\boxed{
+\frac d{dt}\int_{D_t}e
+=\int_{D_t}\omega\cdot S\omega
+-\frac12\sum_j\int_{D_t}\gamma_{\rm dens}(n_j)
++\nu\int_{\partial D_t}\nabla e\cdot n.
+}
+\]
+
+This separates the restart ledger into literal vortex-stretching production,
+Kelvin microframe bulk dissipation, and signed spatial/Hodge boundary flux.
+Pressure is absent by curl; advection is absent only because the germ is material.
+
+Raw small-loop action scales as `A_r^2`.  Therefore the local restart density is
+`gamma_hat=gamma/A^2`, with covariance bank `V_hat=V/A^2`.  If area moves
+continuously, the exact bank chain rule is
+
+\[
+\boxed{
+\dot{\widehat V}
+=-\widehat\gamma
++\frac{W_{\rm cov}}{A^2}
+-2\frac{\dot A}{A}\widehat V.
+}
+\]
+
+The last term is signed dilation/zoom work and belongs to shell/refinement geometry.
+It is not stochastic production.
+
+At a spatial local maximum of enstrophy, positive material growth requires
+
+\[
+\boxed{\omega\cdot S\omega>\nu|\nabla\omega|^2,}
+\]
+
+but this is only a necessary local gate, not a first-bad threshold or continuation
+criterion.
+
+**Classification: Exact identities and rigorous structural consequences.**
+
+The remaining restart-capacity problem is now precise: an orientation-complete,
+area-normalized Kelvin pair bank and the signed boundary/dilation work must control
+cumulative vortex stretching while the selected scale approaches zero.  That
+capacity bound is not established.
+
+**Classification: Conjectural bridge for restart capacity.  No continuation or
+regularity conclusion.**
+
+See `docs/vorticity_kelvin_restart_audit.md` for the full derivation and exact shear
+and ABC calibrations.

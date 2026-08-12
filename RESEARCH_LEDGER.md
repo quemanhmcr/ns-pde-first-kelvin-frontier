@@ -361,3 +361,66 @@ The canonical same-ancestor source `2 nu q K delta_Delta` is structurally the sa
 diagonal carré-du-champ class, but no new coordinate-level identification is made
 without a literal state map.  `S^int` remains undefined; no continuation/restart or
 regularity conclusion follows.
+
+
+## 2026-08-12 — vorticity/Kelvin microframe exposes the physical restart ledger
+
+The restart frontier was returned to the literal incompressible Navier--Stokes
+vorticity PDE before introducing any continuation norm.  Curl removes pressure as
+an exact gauge sector and the velocity-gradient skew part annihilates its own
+vorticity, leaving
+`D_t omega = S omega + nu Delta omega`.  Material-line kinematics gives
+`d|ell|^2/dt = 2 ell.S ell`, so for a vortex-line tangent the scalar
+`alpha_vort = xi_omega.S xi_omega` is the literal logarithmic line-stretching rate.
+The old phrase `alpha^2 tau` remains undefined and is not identified with this new
+quantity.
+
+For `omega=rho xi`, `|xi|=1`, the exact amplitude equation is
+`D_t rho = rho alpha_vort + nu(Delta rho-rho|grad xi|^2)`.  The local enstrophy
+identity is
+`D_t (|omega|^2/2) = omega.S omega + nu Delta e - nu|grad omega|^2`.
+
+The new bridge to the Kelvin sector is exact.  For a small closed disk loop with
+normal `n` in the constant orthonormal noise frame, Stokes gives
+`gamma(Z_r)/Area_r^2 -> 2 nu |(grad omega)^T n|^2`.  Summing over any orthonormal
+triple of loop normals gives
+`(1/2) sum_j gamma_dens(n_j)=nu|grad omega|^2`.  Thus an orientation-complete
+Kelvin microframe is exactly the bulk viscous enstrophy-dissipation channel.
+
+A rank-one loop can be exactly blind.  The exact periodic shear has two coordinate
+loop normals with zero Kelvin density and only the third detects the nonzero
+vorticity gradient.  Therefore a restart proof using Kelvin q.v. must contain an
+orientation-complete packet or a proved equivalent coverage mechanism.
+
+Small-loop raw action scales as area squared (`r^4` under linear scale), so a finite
+raw bank does not control the local gradient density as scale shrinks.  For
+`V_hat=V/A^2`, the exact continuous bank law has the additional dilation term
+`-2(A_dot/A)V_hat`.  This is shell/refinement/zoom geometry, not stochastic
+production and not `S^int`.
+
+For a material germ volume the exact physical restart ledger is
+
+`d/dt int_D e = int_D omega.S omega - (1/2) sum_j int_D gamma_dens(n_j) + nu int_boundary grad e.n`.
+
+Advection disappears only because the domain moves with the fluid; pressure has
+already disappeared by curl.  The remaining channels are therefore literal vortex
+stretching production, Kelvin microframe bulk dissipation, and signed spatial/Hodge
+boundary flux.  At a local enstrophy maximum, positive material growth requires
+`omega.S omega > nu|grad omega|^2`; this is a necessary local growth gate, not a
+first-bad threshold or continuation criterion.
+
+Exact shear, Galilean-advected shear, and genuine 3D ABC/Beltrami calibrations
+close the vorticity, enstrophy, and microframe identities.  The Galilean shear has
+nonzero vorticity advection with zero stretching, preventing those mechanisms from
+being conflated.  At the symmetric ABC enstrophy maximum, stretching is
+zero, Kelvin bulk dissipation is `3 nu exp(-2 nu t)`, the spatial Laplacian term is
+`-3 nu exp(-2 nu t)`, and `partial_t e=-6 nu exp(-2 nu t)`, demonstrating that
+bulk q.v. dissipation and spatial flux are distinct physical channels.
+
+**Classification: Exact identities plus rigorous structural consequences from
+exact Navier--Stokes calibrations.**
+
+The restart target is now sharper but open: control cumulative vortex stretching
+by the orientation-complete, area-normalized Kelvin pair bank together with signed
+spatial boundary and dilation work as the selected scale tends to zero.  No
+continuation/restart theorem and no regularity claim.

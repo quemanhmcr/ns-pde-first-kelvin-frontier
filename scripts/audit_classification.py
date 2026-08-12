@@ -10,12 +10,14 @@ cycle_note = ROOT / "docs" / "cycle_typed_first_bad_selector.md"
 hodge_note = ROOT / "docs" / "hodge_cycle_projector_audit.md"
 ck_note = ROOT / "docs" / "kelvin_ck_admissibility_audit.md"
 stochastic_note = ROOT / "docs" / "stochastic_cycle_map_audit.md"
+vorticity_note = ROOT / "docs" / "vorticity_kelvin_restart_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
 hodge_text = hodge_note.read_text()
 ck_text = ck_note.read_text()
 stochastic_text = stochastic_note.read_text()
+vorticity_text = vorticity_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -96,13 +98,31 @@ if stochastic_missing:
     print("missing stochastic cycle-map structural markers:", stochastic_missing)
     sys.exit(1)
 
+vorticity_required = [
+    "Kelvin microframe",
+    "orientation-complete",
+    "area-squared",
+    "dilation",
+    "Material-germ restart ledger",
+    "Exact identity",
+    "Rigorous structural consequence",
+    "Conjectural bridge",
+    "No continuation/restart theorem",
+]
+vorticity_missing = [token for token in vorticity_required if token not in vorticity_text]
+if vorticity_missing:
+    print("missing vorticity/Kelvin restart structural markers:", vorticity_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
     "S^int = 0 is established",
     "S^int=0 iff Z_irr=0 is proved",
+    "restart capacity is bounded",
+    "first-bad threshold is established",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")
