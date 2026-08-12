@@ -57,6 +57,9 @@ SEAMS = {
     "orientation-complete-quadrupole-closure": ("audited", "for a coherent three-face microcell sum_i Q_i/A_i=(2/3)LL^T, reconstructing full spatial support Cauchy-Green geometry"),
     "support-vorticity-common-stretch-operator": ("audited", "material support LL^T and vorticity dyad share A T+T A^T; co-deforming pullback cancels this stretch exactly and leaves only nonstretch sources"),
     "minimal-coherent-restart-core": ("audited", "ideal coherent packet factorizes as L=rho F, H=rho^2F^-T, Q_flux_raw=rho^4Q_tot, T_tot=FQ_totF^T; scale, deformation and total second moment have separate physical roles"),
+    "support-bank-three-face-factorization": ("audited", "p q I-2nu tau omega omega^T splits exactly into support headroom, total-bank headroom, and pushed unresolved covariance on the ideal full physical Kelvin core"),
+    "support-bank-terminal-local-rate": ("audited-conditional", "Loewner envelopes P_nu<=pI and Q_tot<=qI imply |omega|^2<=pq/(2nu tau); bounded pq gives a statewise time-integrable tau^-1/2 terminal rate"),
+    "support-bank-uniform-first-bad-envelope": ("open", "no theorem supplies uniform/global first-bad Loewner envelopes p,q or controls all nonideal finite-shape/localization/exit faces near a candidate singular time"),
     "packet-support-uniform-locality": ("open", "no proof that the first-bad material packet remains support-local and sufficiently conditioned as scale collapses near a candidate singular time"),
     "backward-kelvin-infinitesimal-generator": ("audited-calibration", "Nanson plus exact NS gives the backward-Ito packet mean operator; exact shear covariance transfers the Kelvin Gram tensor"),
     "backward-kelvin-full-shape-kinematics": ("audited", "uniform common Wiener motion acts only on the material anchor; relative current shape has finite-variation velocity-difference drift"),
@@ -93,7 +96,7 @@ required = {
     "restart-scale-renormalization", "orientation-complete-restart-packet",
     "material-flux-metric-split", "future-covariance-full-state-tensor-law", "codeforming-kelvin-tensor-transfer", "resolved-future-total-second-moment", "codeforming-support-normalized-total-bank",
     "future-covariance-double-stokes", "future-covariance-fixed-state-stokes-limit",
-    "kelvin-packet-support-locality", "metric-whitened-local-tensor-topology", "joint-shape-flux-locality-factor", "coherent-microcell-primal-dual-geometry", "coherent-microcell-scale-anisotropy", "centered-surface-quadrupole-carrier", "material-refinement-two-sided-lineage", "exact-ns-refinement-strain-locality", "exact-ns-vortex-support-stretch-calibration", "kelvin-parabolic-support-scale", "first-bad-parabolic-scale-identification", "orientation-complete-quadrupole-closure", "support-vorticity-common-stretch-operator", "minimal-coherent-restart-core", "packet-support-uniform-locality",
+    "kelvin-packet-support-locality", "metric-whitened-local-tensor-topology", "joint-shape-flux-locality-factor", "coherent-microcell-primal-dual-geometry", "coherent-microcell-scale-anisotropy", "centered-surface-quadrupole-carrier", "material-refinement-two-sided-lineage", "exact-ns-refinement-strain-locality", "exact-ns-vortex-support-stretch-calibration", "kelvin-parabolic-support-scale", "first-bad-parabolic-scale-identification", "orientation-complete-quadrupole-closure", "support-vorticity-common-stretch-operator", "minimal-coherent-restart-core", "support-bank-three-face-factorization", "support-bank-terminal-local-rate", "support-bank-uniform-first-bad-envelope", "packet-support-uniform-locality",
     "backward-kelvin-infinitesimal-generator", "backward-kelvin-full-shape-kinematics",
     "finite-surface-xH-descent", "finite-shape-quadrupole-descent", "finite-shape-moment-hierarchy", "infinitesimal-xH-descent", "finite-shape-uniform-collapse",
     "ancestry-time-reversal-operator", "ancestry-reference-gauge", "ancestry-noisy-shape-distribution",
@@ -137,6 +140,7 @@ for exact_seam in (
     "orientation-complete-quadrupole-closure",
     "support-vorticity-common-stretch-operator",
     "minimal-coherent-restart-core",
+    "support-bank-three-face-factorization",
     "backward-kelvin-full-shape-kinematics",
     "finite-shape-moment-hierarchy",
     "infinitesimal-xH-descent",
@@ -175,6 +179,10 @@ if SEAMS["future-covariance-fixed-state-stokes-limit"][0] != "audited-conditiona
     raise SystemExit("fixed-state future-covariance Stokes limit must remain conditional on support locality and metric-whitened L2 control")
 if SEAMS["joint-shape-flux-locality-factor"][0] != "audited-conditional":
     raise SystemExit("joint-shape-flux-locality-factor must remain a conditional rigorous estimate, not a closed singular-time theorem")
+if SEAMS["support-bank-terminal-local-rate"][0] != "audited-conditional":
+    raise SystemExit("support-bank terminal rate must remain conditional on physical Loewner envelopes")
+if SEAMS["support-bank-uniform-first-bad-envelope"][0] != "open":
+    raise SystemExit("uniform/global support-bank first-bad envelope must remain open")
 if SEAMS["backward-kelvin-infinitesimal-generator"][0] != "audited-calibration":
     raise SystemExit("backward-Kelvin infinitesimal generator must remain an exact/calibrated NS result")
 if SEAMS["finite-surface-xH-descent"][0] != "audited-calibration":

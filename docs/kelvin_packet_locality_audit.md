@@ -1029,6 +1029,12 @@ co-deforming bank to physical vorticity.
 **Classification: Exact coherent factorization plus exact Navier--Stokes no-go
 calibration.**
 
+A later support×bank audit uses this same core without discarding deformation.  With
+`P_nu=2nu tau F F^T` and `Q_tot=eta eta^T+Ctilde`, exact PSD factorization shows that
+Loewner envelopes on physical support and co-deforming total second moment imply a
+conditional `tau^-1/2` physical vorticity rate.  This remains a local conditional
+bridge, not a continuation theorem; see `docs/support_bank_restart_bridge_audit.md`.
+
 ---
 
 ## 16. Kelvin remaining horizon supplies a natural parabolic support scale

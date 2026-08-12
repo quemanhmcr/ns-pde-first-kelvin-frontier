@@ -21,6 +21,7 @@ clock_cut_note = ROOT / "docs" / "clock_cut_compatibility_audit.md"
 two_clock_note = ROOT / "docs" / "two_clock_kelvin_quantile_audit.md"
 event_note = ROOT / "docs" / "first_bad_event_semantics_audit.md"
 candidate_note = ROOT / "docs" / "first_bad_candidate_exclusions_audit.md"
+support_bank_note = ROOT / "docs" / "support_bank_restart_bridge_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -38,6 +39,7 @@ clock_cut_text = clock_cut_note.read_text()
 two_clock_text = two_clock_note.read_text()
 event_text = event_note.read_text()
 candidate_text = candidate_note.read_text()
+support_bank_text = support_bank_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -286,6 +288,21 @@ if candidate_missing:
     print("missing first-bad candidate-exclusion structural markers:", candidate_missing)
     sys.exit(1)
 
+support_bank_required = [
+    "P_nu",
+    "Q_tot",
+    "support headroom",
+    "total-bank principal headroom",
+    "unresolved future covariance",
+    "time-integrable",
+    "not yet a restart theorem",
+    "Open",
+]
+support_bank_missing = [token for token in support_bank_required if token not in support_bank_text]
+if support_bank_missing:
+    print("missing support-bank restart-bridge structural markers:", support_bank_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -333,8 +350,13 @@ for forbidden in [
     "raw vorticity threshold certifies singularity",
     "instantaneous stretching threshold certifies continuation failure",
     "stretching/Kelvin ratio threshold proves blowup",
+    "support-bank rate proves continuation",
+    "support-bank rate proves regularity",
+    "bounded p q is proved uniformly",
+    "P_nu is uniformly bounded at first bad time",
+    "Q_tot is uniformly bounded at first bad time",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

@@ -289,7 +289,9 @@ for example a relation among
 rather than a single instantaneous magnitude.
 
 This list is **not** a proposed formula.  It records the physical sectors already
-forced by exact audits.
+forced by exact audits.  The subsequent support×bank audit derives one precise
+conditional tensor bridge from these sectors without promoting it to a finite
+threshold: see `docs/support_bank_restart_bridge_audit.md`.
 
 **Classification: Rigorous exclusion of a class of naive predicates; construction
 of the true badness functional remains open-literal.**

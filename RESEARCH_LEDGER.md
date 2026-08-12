@@ -850,3 +850,25 @@ growth gate; that gate remains necessary only, not a first-bad theorem.
 
 **Classification: Exact periodic NS calibration and rigorous candidate exclusion;
 true badness/resolve definitions remain open-literal.**
+
+
+## 2026-08-12 — physical Kelvin support x total-bank factorization gives a conditional integrable rate
+
+On the ideal full physical Kelvin state, write `omega=F eta`,
+`Q_tot=eta eta^T+Ctilde` with `Ctilde>=0`, and
+`P_nu=2nu tau F F^T`.  For scalar Loewner envelopes `P_nu<=p I` and
+`Q_tot<=q I`, the exact identity
+`p q I-2nu tau omega omega^T = q(pI-P_nu)+2nu tau F(qI-Q_tot)F^T+2nu tau F Ctilde F^T`
+splits the physical gap into support headroom, total-bank headroom, and unresolved
+future covariance.  Hence `|omega|^2<=p q/(2nu tau)`.
+
+If `p q<=M` on a terminal interval, the selected/statewise vorticity obeys the
+integrable rate `|omega|<=sqrt(M/(2nu)) tau^-1/2` and
+`int |omega| dt <= sqrt(2 M epsilon/nu)`.  If in addition physical parabolic support
+collapses `p->0` while `q` stays bounded, then `sqrt(tau)|omega|->0`.  This is not yet
+a global continuation theorem: uniform first-bad/global envelopes, ancestry-to-full
+state lift, finite-shape/localization faces, exit/boundary/reset control, and the
+literal continuation step remain open.
+
+**Classification: Exact tensor factorization and rigorous conditional local-rate
+theorem; restart/continuation open.**

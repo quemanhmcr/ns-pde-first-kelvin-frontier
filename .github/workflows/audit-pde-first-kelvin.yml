@@ -468,3 +468,27 @@ jobs:
         with:
           name: first-bad-candidate-exclusions
           path: audit-results/first_bad_candidate_exclusions_report.json
+
+  support-bank-restart-bridge:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit physical parabolic support x total Kelvin bank factorization
+        run: python -m unittest -v tests.test_support_bank_restart_bridge
+      - name: Build support-bank restart-bridge artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_support_bank_restart_bridge_report.py
+      - name: Upload support-bank restart-bridge artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: support-bank-restart-bridge
+          path: audit-results/support_bank_restart_bridge_report.json
