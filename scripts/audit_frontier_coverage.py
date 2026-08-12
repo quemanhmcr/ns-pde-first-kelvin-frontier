@@ -9,9 +9,11 @@ SEAMS = {
     "refinement": ("audited", "full tensor-square pair functor; cross-child covariance required"),
     "resolve-reset": ("audited", "observer jump has no q.v.; covariance revaluation is exact"),
     "physical-exit": ("audited-calibration", "two-face sub-Markov pair sink"),
-    "variable-frame-connection": ("audited-generic", "Cartan/transport geometry audited; literal CK frame data belongs to active projection audit"),
+    "variable-frame-connection": ("audited-generic", "Cartan/transport geometry audited; literal extra CK frame operator, if any, remains separate"),
     "active-pair-factorization": ("audited", "full pair boundary/transport residual is exact tensor lift of one-current commutator"),
-    "active-ck-pillar-ii": ("open-literal", "one-current P_active incidence/transport data absent; S^int / Z_irr not declared zero"),
+    "cycle-typed-first-bad-boundary": ("audited", "closed Kelvin cycle library forces zero intrinsic selector physical boundary and pair boundary"),
+    "cycle-typed-first-bad-transport": ("audited", "support transport is exact germ cut current; finite hysteresis switch is reset revaluation"),
+    "active-ck-pillar-ii": ("open-literal", "selector residual closed; S^int and any additional ambient CK/Hodge operator are not defined line by line"),
     "continuation-restart": ("open", "no regularity bridge claimed"),
 }
 
@@ -19,7 +21,8 @@ ALLOWED = {"audited", "audited-calibration", "audited-generic", "open-literal", 
 required = {
     "freeze", "quantile", "anchor-orientation", "shell", "refinement",
     "resolve-reset", "physical-exit", "variable-frame-connection",
-    "active-pair-factorization", "active-ck-pillar-ii", "continuation-restart",
+    "active-pair-factorization", "cycle-typed-first-bad-boundary",
+    "cycle-typed-first-bad-transport", "active-ck-pillar-ii", "continuation-restart",
 }
 
 if set(SEAMS) != required:
@@ -28,13 +31,18 @@ for seam, (status, meaning) in SEAMS.items():
     if status not in ALLOWED or not meaning.strip():
         raise SystemExit(f"invalid seam classification: {seam}: {status}: {meaning!r}")
 
-if SEAMS["active-pair-factorization"][0] != "audited":
-    raise SystemExit("full-pair commutator factorization must remain explicitly audited")
+for exact_seam in (
+    "active-pair-factorization",
+    "cycle-typed-first-bad-boundary",
+    "cycle-typed-first-bad-transport",
+):
+    if SEAMS[exact_seam][0] != "audited":
+        raise SystemExit(f"{exact_seam} must remain explicitly audited")
 if SEAMS["active-ck-pillar-ii"][0] != "open-literal":
-    raise SystemExit("Pillar II must remain open-literal until literal P_active incidence/transport verification")
+    raise SystemExit("global Pillar II must remain open-literal until S^int and any extra CK/Hodge operator are defined and audited")
 if SEAMS["continuation-restart"][0] != "open":
     raise SystemExit("continuation/restart must remain open")
 
 print("pair-localization frontier coverage: PASS")
 for seam, (status, meaning) in SEAMS.items():
-    print(f"{seam:28s} {status:20s} {meaning}")
+    print(f"{seam:34s} {status:20s} {meaning}")

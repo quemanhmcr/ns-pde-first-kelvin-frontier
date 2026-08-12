@@ -578,17 +578,24 @@ pair projection is strictly positive.  CI now audits this closed-form calibratio
 
 **Classification: Rigorous consequence from an exact Navier--Stokes calibration.**
 
-The remaining literal gap is now narrower: the repository still lacks the actual
-chain-level incidence maps `(P_active,1,P_active,0)` and active transport generator
-needed to compute
+A subsequent type audit sharpens this further.  The intrinsic first-bad Kelvin
+selector acts on a library `K` of closed physical cycle atoms, `B_x K=0`, through
+a germ-space support map `M_fb`.  Thus `P_fb=K M_fb` has zero physical-current
+boundary and zero full-pair physical-current boundary exactly.  The generic
+ambient commutator above is extension-dependent away from this cycle range.
 
-\[
-B P_{\rm active,1}-P_{\rm active,0}B,
-\qquad
-\dot P_{\rm active,1}+T_{\rm out}P_{\rm active,1}-P_{\rm active,1}T_{\rm in}.
-\]
+Selector transport is also explicit: `G_(KM)=G_K M+K G_M`, with the support term
+`[A,M]_(ij)=A_(ij)(chi_j-chi_i)` supported only on germ cut crossings and finite
+hysteresis jumps handled by exact covariance reset revaluation.
 
-These are not set to zero.  See `docs/active_first_bad_germ_pair_maps.md` for the
-literal map inventory and residual decomposition.
+**Classification: Exact identities; rigorous consequence that the intrinsic
+first-bad selector has no irreducible residual after named interface/connection/reset
+terms are retained.**
 
-**Classification: Conjectural bridge / missing literal CK incidence datum.**
+What remains open is only any additional programme-specific ambient CK/Hodge
+operator beyond the closed-cycle realization `K`, and the global `S^int / Z_irr`
+equivalence because `S^int` is not defined line by line in this repository.  See
+`docs/cycle_typed_first_bad_selector.md`.
+
+**Classification: Conjectural bridge for any such additional operator and for the
+global Pillar-II equivalence.**

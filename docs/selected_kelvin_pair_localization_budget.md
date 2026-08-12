@@ -898,3 +898,128 @@ stage.  The safe restart target remains separate.  The present result is a
 structural localization audit: the missing resource, if any, has been narrowed to
 a **physical pair-localization capacity/current** for the migrating first-bad germ,
 plus the unresolved literal Pillar-II defect sector.
+
+
+---
+
+## 19. Cycle-typed first-bad selector removes the intrinsic active residual
+
+A type audit of the actual selected Kelvin observable changes the active-map
+question.  The observable is evaluated on closed physical currents.  Write the
+closed germ library as
+
+\[
+K_s:G\to C_1^{\rm phys},
+\qquad B_xK_s=0,
+\]
+
+and the first-bad support projector in germ space as `M_fb(s)`.  Then
+
+\[
+\boxed{P_{\rm fb}=K_sM_{\rm fb}}
+\]
+
+and therefore
+
+\[
+\boxed{B_xP_{\rm fb}=0,
+\qquad
+\partial_{x,\rm pair}(P_{\rm fb}\otimes P_{\rm fb})=0.}
+\]
+
+**Classification: Exact identity.**
+
+This shows that the global ambient expression `B P_active,1-P_active,0 B` is not an
+intrinsic selector observable unless the active selector has first been extended
+off the physical cycle library.  Such extensions are nonunique.  CI gives an exact
+finite-chain witness with a nonzero global ambient commutator whose restriction to
+the physical cycle and pair cycle is nevertheless zero.
+
+**Classification: Rigorous consequence: an off-cycle ambient commutator cannot by
+itself be charged to `Z_irr`.**
+
+The transport side also factorizes exactly.  For physical transport `T_x`, germ
+connection `A_g`, and `P_fb=KM`,
+
+\[
+G_{P_{\rm fb}}
+=G_KM+KG_M,
+\]
+
+where
+
+\[
+G_K=\dot K+T_xK-KA_g,
+\qquad
+G_M=\dot M+A_gM-MA_g.
+\]
+
+For a diagonal support mask,
+
+\[
+\boxed{(A_gM-MA_g)_{ij}=A_{ij}(\chi_j-\chi_i),}
+\]
+
+so the support term is exactly germ-interface transport.  On hysteresis jumps the
+finite tensor-square jump is the exact reset covariance identity.  Thus, after
+quantile/shell localization, connection geometry, refinement, physical exit, and
+finite reset are kept literally, the first-bad selector itself has no remaining
+irreducible sector:
+
+\[
+\boxed{
+C_{\rm irr}^{\rm selector}=0,
+\qquad
+G_{\rm irr}^{\rm selector}=0.
+}
+\]
+
+**Classification: Rigorous consequence of exact cycle typing, cut-current algebra,
+and finite reset algebra.**
+
+Accordingly, for the cycle-typed selector sector the pair-localization identity is
+
+\[
+\boxed{
+\Pi^{\rm sel}-\Pi^{\rm dist}
+=
+\partial_{\rm pair}\mathscr W_{\rm loc}^{(2)}
++\Pi_{\rm quant}^{(2)}
++\Pi_{\rm shell}^{(2)}
++\Pi_{\rm exit}^{(2)}
++\Pi_{\rm conn}^{(2)}
++\Pi_{\rm reset}^{(2)}.
+}
+\]
+
+Pairing with the future Kelvin covariance cochain gives
+
+\[
+\boxed{
+\begin{aligned}
+V(\lambda_*)-R_{\rm dist}
+={}&
+\langle d_{\rm pair}\mathbb K,
+        \mathscr W_{\rm loc}^{(2)}\rangle\\
+&+\langle\mathbb K,
+  \Pi_{\rm quant}^{(2)}
+ +\Pi_{\rm shell}^{(2)}
+ +\Pi_{\rm exit}^{(2)}\rangle\\
+&+\mathcal H_{\rm conn}+\mathcal R_{\rm reset}.
+\end{aligned}
+}
+\]
+
+**Classification: Exact current/covariance identity for the cycle-typed selector
+sector, with the same full-state generator-compatibility caveat already stated for
+the Kelvin future-variance PDE.**
+
+This does not silently set the programme-wide `S^int / Z_irr` sector to zero.  The
+repository still has no literal line-by-line definition of `S^int`, and it has no
+additional ambient CK/Hodge operator beyond the closed-cycle realization `K` whose
+commutator could be audited.  If such an extra operator is intended, it must be
+written explicitly; any residual then belongs to that operator, not to first-bad
+support selection and not to pair lifting.
+
+**Classification: Conjectural bridge for any additional CK/Hodge operator and for
+the global Pillar-II equivalence.**

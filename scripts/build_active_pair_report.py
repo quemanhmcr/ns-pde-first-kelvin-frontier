@@ -108,9 +108,10 @@ def main() -> None:
             }
         )
 
-    # Generic active projection counterexample: a cell projection is not
-    # automatically a subcomplex.  This is intentionally not identified with
-    # the still-unspecified CK projection.
+    # Generic ambient cell-projection counterexample: a cell projection is not
+    # automatically a subcomplex.  The cycle-typed selector audit shows this is
+    # not an intrinsic Kelvin-selector obstruction unless it survives restriction
+    # to the closed-cycle library.
     P1, P0 = interval_cut_projection(2, 1)
     active_generic_C = B2 * P1 - P0 * B2
     active_generic_C2 = pair_boundary_residual(B2, P1, P0, B2)
@@ -122,7 +123,8 @@ def main() -> None:
             "completed_excursion_seam_product_rule": "Exact identity",
             "no_autonomous_pair_only_residual": "Rigorous consequence of exact tensor-square factorization",
             "odd_shear_active_mixture": "Rigorous consequence from exact Navier-Stokes calibration",
-            "actual_active_ck_residual": "Open literal audit: P_active chain incidence and transport data absent",
+            "cycle_typed_selector_residual": "Closed in dedicated cycle-typed audit",
+            "additional_ambient_ck_hodge_operator": "Open only if such an extra operator is intended; none is defined in the repository",
             "continuation_restart": "Open; no regularity conclusion",
         },
         "stage_rows": stage_rows,
@@ -138,19 +140,15 @@ def main() -> None:
             "missing_cross_shell_vector": [str(x) for x in parent_pair - diagonal_shell_pair],
         },
         "exact_ns_active_mixture_rows": ns_rows,
-        "generic_active_projection_counterexample": {
-            "not_claimed_to_be_actual_ck": True,
+        "generic_ambient_projection_counterexample": {
+            "not_intrinsic_to_cycle_typed_selector": True,
             "one_current_residual_entries": entries(active_generic_C),
             "pair_residual_nonzero_entry_count": len(nonzero_entries(active_generic_C2)),
         },
-        "literal_next_datum_required": {
-            "P_active_degree_1": "missing",
-            "P_active_degree_0": "missing",
-            "active_transport_generator_or_connection": "missing",
-            "required_tests": [
-                "B_out P_active,1 - P_active,0 B_in after physical-interface subtraction",
-                "Pdot_active + T_out P_active - P_active T_in after connection/physical transport subtraction",
-            ],
+        "remaining_literal_datum_if_programme_intends_extra_operator": {
+            "additional_CK_Hodge_operator": "not present",
+            "S_int_definition": "not present",
+            "required_test_if_added": "restrict its boundary/transport commutators to the physical closed-cycle range before classifying any irreducible residual",
         },
     }
 
@@ -160,8 +158,9 @@ def main() -> None:
     print(out)
     print(f"completed seam product rule exact: {composition_exact}")
     print(f"completed pair seam product rule exact: {pair_composition_exact}")
-    print(f"active CK literal incidence present: no")
-    print(f"generic active projection residual entries: {entries(active_generic_C)}")
+    print("cycle-typed selector intrinsic residual: closed in dedicated audit")
+    print("additional ambient CK/Hodge operator present: no")
+    print(f"generic ambient projection residual entries: {entries(active_generic_C)}")
     print(
         "odd shear h=1/2: full="
         f"{ns_rows[2]['full_pair_variance']:.3e} "

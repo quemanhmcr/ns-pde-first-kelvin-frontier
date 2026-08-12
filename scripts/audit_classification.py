@@ -6,8 +6,10 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 note = ROOT / "docs" / "selected_kelvin_pair_localization_budget.md"
 active_note = ROOT / "docs" / "active_first_bad_germ_pair_maps.md"
+cycle_note = ROOT / "docs" / "cycle_typed_first_bad_selector.md"
 text = note.read_text()
 active_text = active_note.read_text()
+cycle_text = cycle_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -23,21 +25,37 @@ if missing:
 active_required = [
     "P_active",
     "There is no autonomous pair-only residual",
-    "chain-level incidence",
     "Conjectural bridge",
     "No continuation/restart conclusion",
+    "Cycle-typed correction",
 ]
 active_missing = [token for token in active_required if token not in active_text]
 if active_missing:
     print("missing active-map structural markers:", active_missing)
+    sys.exit(1)
+cycle_required = [
+    "B_xK_s=0",
+    "C_{\\rm irr}^{\\rm selector}=0",
+    "G_{\\rm irr}^{\\rm selector}=0",
+    "off-cycle",
+    "Exact identity",
+    "Rigorous consequence",
+    "Conjectural bridge",
+    "S^int",
+    "no continuation/restart",
+]
+cycle_missing = [token for token in cycle_required if token not in cycle_text]
+if cycle_missing:
+    print("missing cycle-typed selector structural markers:", cycle_missing)
     sys.exit(1)
 
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
     "S^int = 0 is established",
+    "S^int=0 iff Z_irr=0 is proved",
 ]:
-    if forbidden in text or forbidden in active_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

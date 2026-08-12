@@ -229,3 +229,46 @@ exactly; if not, its explicit tensor lift is the obstruction.  No finite univers
 bank for a nonzero irreducible active commutator has been established.
 
 No continuation/restart theorem and no 3D Navier--Stokes regularity claim.
+
+
+## 2026-08-12 — cycle-typed first-bad selector removes the intrinsic ambient defect
+
+The active first-bad map has been retyped on the actual domain of the Kelvin
+observable.  Candidate germ currents form a library `K` of closed physical cycles,
+`B_x K=0`, and the first-bad/hysteresis logic acts by a state-dependent support
+projector `M_fb` in germ coefficient space.  Thus the intrinsic selector is
+`P_fb=K M_fb`, not an arbitrary endomorphism of the full ambient physical chain
+complex.
+
+This yields the exact identities `B_x P_fb=0` and zero full-pair physical boundary
+for `P_fb tensor P_fb`.  CI includes an exact counterexample showing why this type
+correction matters: two ambient extensions can have different global commutators,
+including a nonzero one, while the commutator restricted to the actual Kelvin cycle
+and pair cycle is exactly zero.  Off-cycle ambient commutator mass is therefore an
+extension/observer artifact unless it survives the physical cycle restriction.
+
+The transport analogue is also exact.  For `P_fb=K M`,
+`G_P=G_K M + K G_M`; for a diagonal germ support mask,
+`[A_g,M]_{ij}=A_ij(chi_j-chi_i)`, so only active/inactive interface crossings
+survive.  Finite hysteresis switches satisfy the full tensor-square jump identity
+and pair with future covariance as exact reset revaluation.
+
+Exact NS pressure tests were added.  In the odd-mode shear, the selector switch
+`0 -> pi` has strictly positive increment variance but zero net bank change because
+the mixed covariance cancels the diagonal increment exactly.  In the genuine 3D
+ABC/Beltrami solution, an `x`-torus closed cycle has nonzero circulation while the
+exact pressure gradient has zero circulation.
+
+**Classification: Exact identities plus rigorous consequences from exact NS
+calibrations.**
+
+For the cycle-typed first-bad selector itself, after quantile/shell interfaces,
+connection geometry, refinement, physical exit and finite reset are retained, the
+intrinsic selector remainders satisfy `C_irr^selector=G_irr^selector=0`.  The
+selected-Kelvin pair localization identity therefore has no intrinsic
+active-selector defect.  This does **not** establish the programme-wide Pillar-II
+claim: `S^int` is still not defined line by line in this repository, and no
+additional ambient CK/Hodge operator beyond the closed-cycle realization has been
+specified.  Any such future operator must be audited separately.
+
+No continuation/restart theorem and no regularity claim.

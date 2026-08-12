@@ -12,13 +12,15 @@ Every result must be labeled as **Exact identity**, **Rigorous consequence**, **
 
 The selected Kelvin quadratic variation has an exact fixed-current future-variance bank, but no selector-independent finite bank has been found at the present one-/two-ancestry level. The canonical same-ancestor pair branching tensor is the viscous diagonal tensor `2 nu q K delta_Delta`; drift traffic `q j_circ tensor j_circ` is a different physical object.
 
-The surviving target is an exact **pair-localization current/capacity law** for the migrating first-bad germ:
+The surviving target is an exact **pair-localization current/capacity law** for the migrating first-bad germ.  The active selector has now been type-corrected: it acts on a library of closed Kelvin cycles, not on arbitrary ambient physical chains.  On this intrinsic domain its physical boundary residual and full-pair physical boundary residual vanish exactly; germ support transport is an exact cut-interface current, and finite hysteresis jumps are exact covariance revaluations.
 
-`Pi_sel - Pi_dist = boundary(pair localization world-sheet) + quantile + shell + refinement + physical exit + irreducible defect`.
+For the cycle-typed selector sector the current identity has no intrinsic active-selector defect:
 
-The literal `S^int / Z_irr` verification remains open.
+`Pi_sel - Pi_dist = boundary(pair localization world-sheet) + quantile + shell + physical exit + connection + reset`,
 
-See `docs/selected_kelvin_pair_localization_budget.md` for the detailed derivation and no-go ledger.
+with full cross-shell and cross-child content retained inside the physical maps.  The literal global `S^int / Z_irr` equivalence remains open because the repository still contains no line-by-line definition of `S^int` or of any additional ambient CK/Hodge operator beyond the closed-cycle realization.
+
+See `docs/cycle_typed_first_bad_selector.md` and `docs/selected_kelvin_pair_localization_budget.md`.
 
 ## Current audited refinement result
 

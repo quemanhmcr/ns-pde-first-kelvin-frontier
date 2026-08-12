@@ -106,3 +106,27 @@ jobs:
         with:
           name: active-first-bad-pair-audit
           path: audit-results/active_first_bad_pair_report.json
+
+  cycle-typed-first-bad-selector:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit cycle-typed first-bad selector, cut currents, resets, and exact NS pressure tests
+        run: python -m unittest -v tests.test_cycle_typed_first_bad_selector
+      - name: Build cycle-typed selector audit artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_cycle_selector_report.py
+      - name: Upload cycle-typed selector audit artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cycle-typed-first-bad-selector
+          path: audit-results/cycle_typed_first_bad_selector_report.json

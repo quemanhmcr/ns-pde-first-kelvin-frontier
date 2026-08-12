@@ -186,10 +186,10 @@ class ActiveFirstBadPairMapAudit(unittest.TestCase):
                 self.assertAlmostEqual(full, 0.0, places=9)
                 self.assertGreater(diagonal_projection, 0.0)
 
-    def test_active_projection_nonfunctoriality_cannot_be_declared_zero_without_incidence_data(self) -> None:
-        # This is a counterexample to the *generic* claim that a projection onto
-        # "active" cells automatically commutes with boundary.  It is not an
-        # assertion that the still-unspecified CK projection equals this matrix.
+    def test_arbitrary_ambient_cell_projection_can_be_nonfunctorial(self) -> None:
+        # This is a counterexample only to the generic ambient-cell claim.  The
+        # cycle-typed Kelvin selector is audited separately on its actual closed
+        # cycle domain, where this off-cycle obstruction disappears.
         B = interval_boundary(2)
         P1, P0 = interval_cut_projection(2, 1)
         C = boundary_residual(B, P1, P0, B)

@@ -10,10 +10,13 @@ The answer at the algebraic level is rigid: for a tensor-square pair lift, every
 boundary or transport defect factorizes exactly through the corresponding
 one-current commutator.  Therefore cross-child/cross-shell covariance cannot be
 relabelled as `S^int / Z_irr`, and no pair-only producer is created by the lift.
-What remains open is narrower and literal: the repository still does not contain
-the chain-level incidence and transport data of the actual active CK projection.
-Until that datum is inserted, the one-current active commutators cannot be audited
-to zero.
+The ambient-chain commutator reduction below remains exact, but a later
+type-correct audit (`docs/cycle_typed_first_bad_selector.md`) shows that the
+first-bad Kelvin selector is intrinsically defined on a library of **closed cycle
+atoms**, not on arbitrary ambient physical chains.  Consequently the selector's
+physical-boundary residual vanishes on its actual domain; only a separately
+defined extra CK/Hodge ambient operator, if one exists, would still require the
+ambient incidence audit.
 
 ---
 
@@ -598,72 +601,54 @@ physical Kelvin current is zero.
 
 ## 8. Answer to the present frontier question
 
-After keeping full pair content and every already identified physical
-boundary/connection term, the current audit supports the following precise answer:
+After keeping full pair content and every identified physical boundary/connection
+term, two exact reductions now combine:
+
+\[
+\boxed{\text{There is no autonomous pair-only residual.}}
+\]
+
+and, after typing the selector on the actual closed Kelvin cycle library,
 
 \[
 \boxed{
-\text{There is no autonomous pair-only residual.}
+C_{\rm irr}^{\rm selector}
+=G_{\rm irr}^{\rm selector}=0.
 }
 \]
 
-Every full-pair boundary/transport residual is generated exactly by the
-corresponding one-current active-map commutator.  Quantile, shell, physical exit,
-connection geometry, cross-shell covariance, and cross-child covariance are all
-already classified and cannot be renamed `S^int / Z_irr`.
+The first statement follows from full tensor-square factorization.  The second
+follows because the first-bad support map acts in germ space and its physical
+realization has range in closed cycles.  Germ support transport is an exact cut
+current; finite hysteresis switching is exact reset revaluation.  Quantile, shell,
+physical exit, connection geometry, cross-shell covariance, and cross-child
+covariance remain explicit physical content.
 
-What is **not yet known** is whether the actual CK first-bad projection has a
-nonzero one-current irreducible commutator after those physical terms are removed.
-That question cannot be answered from the present repository because the literal
-chain-level `P_act` incidence and transport data have not yet been written down.
+**Classification: Exact identities plus rigorous consequence for the cycle-typed
+selector sector.**
 
-Therefore the strongest current statement is:
+The generic ambient projection counterexample remains valid only as a warning about
+arbitrary off-cycle extensions.  It is not an intrinsic Kelvin residual because CI
+now verifies an ambient extension with nonzero global commutator whose restriction
+to the physical cycle and pair cycle is exactly zero.
 
-\[
-\boxed{
-\Pi_{\rm irr}^{(2)}=0
-\quad\text{if}\quad
-C_{\rm irr}=0\ \text{and}\ G_{\rm irr}=0,
-}
-\]
+The only unresolved Pillar-II datum is now external to the first-bad selector
+itself: if the programme intends an additional ambient CK/Hodge operator beyond the
+closed-cycle realization `K`, that operator must be written down and audited.  The
+repository also still lacks a line-by-line definition of `S^int`, so the global
+statement `S^int=0 iff Z_irr=0` is not declared proved.
 
-and if either one-current remainder is nonzero, its full pair obstruction is the
-explicit tensor formula in Section 5.  No estimate is needed or permitted to hide
-it.
-
-**Classification: Exact conditional identity plus an open literal CK incidence
-audit.**
-
-If the forthcoming literal `P_act` data make `C_irr=G_irr=0`, the next selected
-Kelvin pair-bank identity is obtained from the world-sheet Stokes law with only
-endpoint covariance, quantile/shell transfer, connection geometry, exact reset
-revaluation, and physical exit.  If not, the nonzero `C_irr/G_irr` pairing with the
-future covariance cochain is the genuine obstruction; no finite universal bank for
-that irreducible term has yet been established.
+**Classification: Conjectural bridge only for any additional CK/Hodge operator and
+for the global Pillar-II equivalence.**
 
 No continuation/restart conclusion follows here.
 
 ---
 
-## 9. Conditional exact selected-Kelvin pair-bank identity
+## 9. Exact selected-Kelvin pair-bank identity in the cycle-typed selector sector
 
-The commutator reduction makes the next identity explicit.  Suppose the literal CK
-incidence/transport audit eventually gives
-
-\[
-C_{\rm irr}=0,
-\qquad
-G_{\rm irr}=0.
-\]
-
-Then the irreducible pair term vanishes exactly, not by estimate:
-
-\[
-\Pi_{\rm irr}^{(2)}=0.
-\]
-
-After internal refinement and full-shell reassembly, the pair-current localization
-identity reduces to
+Because the intrinsic selector remainder vanishes after the named physical terms
+are kept, the pair-current localization identity is
 
 \[
 \boxed{
@@ -678,13 +663,12 @@ identity reduces to
 }
 \]
 
-Here `Pi_conn^(2)` denotes the covariant connection/holonomy work when a fixed
-frame rather than the co-moving frame is used, and `Pi_reset^(2)` denotes the exact
-finite covariance revaluation at selector resets.  Neither is a stochastic
-quadratic-variation producer.
+Here `Pi_conn^(2)` is transported connection/holonomy work and
+`Pi_reset^(2)` is exact finite covariance revaluation.  Neither is a stochastic
+quadratic-variation producer.  Full cross-shell and cross-child pair content is
+retained inside the physical maps; no diagonal refinement/shell payment appears.
 
-Pairing with the future Kelvin covariance cochain `mathbb K` gives the next exact
-selected-versus-distributed bank identity
+Pairing with the future Kelvin covariance cochain gives
 
 \[
 \boxed{
@@ -703,33 +687,103 @@ V(\lambda_*)-R_{\rm dist}
 }
 \]
 
-The signs of the face terms are fixed by the oriented pair boundary convention of
-Section 1.  Combined with the fixed-current Doob identity on each frozen segment,
-this converts selected Kelvin quadratic variation into finite covariance endpoints
-plus explicitly tracked physical transfer/exit and signed connection/reset work.
-No diagonal refinement or diagonal shell payment appears.
+**Classification: Exact current/covariance identity for the cycle-typed selector
+sector, with the already stated full-state generator-compatibility caveat for the
+Kelvin future-variance PDE.**
 
-**Classification: Exact conditional identity, conditional only on the still-open
-literal equalities `C_irr=G_irr=0`.**
+If a future, separately defined ambient operator `H_CK` is inserted, its residual
+must be added explicitly and tested only after restriction to the physical cycle
+range.  No bank for such a presently undefined residual is asserted here.
 
-If the literal audit instead gives a nonzero irreducible remainder, the obstruction
-is not mysterious.  It enters exactly as
+**Classification: Conjectural bridge for any future extra operator.**
+
+---
+
+## 10. Cycle-typed correction to the ambient active projection
+
+The preceding ambient commutator formulas are still useful for genuine physical
+restriction maps, but the selected Kelvin observable itself is typed more
+narrowly.  Let
+
+\[
+K_s:G\to C_1^{\rm phys},
+\qquad B_xK_s=0,
+\]
+
+be the library of closed Kelvin germ currents, and let `M_fb(s)` be the rank-one
+first-bad support projector in germ space.  The intrinsic selector is
+
+\[
+\boxed{P_{\rm fb}=K_sM_{\rm fb}.}
+\]
+
+Therefore
+
+\[
+\boxed{B_xP_{\rm fb}=(B_xK_s)M_{\rm fb}=0}
+\]
+
+and the full ordered pair selector satisfies
+
+\[
+\boxed{\partial_{x,\rm pair}(P_{\rm fb}\otimes P_{\rm fb})=0.}
+\]
+
+This is independent of how one extends the selector away from the physical cycle
+library.  CI now contains an explicit counterexample in which two ambient
+extensions have different global commutators, one nonzero, while their restriction
+to the actual cycle and pair cycle is exactly zero.  Thus an off-cycle ambient
+commutator is an extension/observer artefact unless it survives restriction to the
+physical Kelvin cycles.
+
+**Classification: Exact identity and exact finite-chain counterexample.**
+
+For germ transport `A_g`, a diagonal support mask has
+
+\[
+( A_gM-MA_g)_{ij}=A_{ij}(\chi_j-\chi_i),
+\]
+
+so only transitions crossing the active/inactive germ cut remain.  For
+`P_fb=K M`, the covariant product rule is exactly
 
 \[
 \boxed{
-\mathcal O_{\rm irr}
-=
-\langle\mathbb K,C_{\rm irr}^{(2)}\rangle
-+\langle\mathbb K,G_{\rm irr}^{(2)}\rangle\,ds
+G_{P_{\rm fb}}=G_KM+KG_M,
 }
 \]
 
-with the two tensor factorizations from Section 5.  Before calling this a new
-physical resource one must ask whether it is still an unrecognized physical
-interface, connection term, exit face, or finite reset revaluation.  If all those
-possibilities have been literally excluded, no finite universal physical bank for
-`O_irr` is currently known; it is then a genuine obstruction to this
-localization route rather than a quantity to hide with an inequality.
+with `G_K` the physical realization/connection term and `G_M` the support-crossing
+localization current.  Finite hysteresis switches obey
 
-**Classification: Exact obstruction formula; existence of a finite bank for a
-nonzero irreducible remainder is open.**
+\[
+P^+\otimes P^+-P^-\otimes P^-
+=\Delta P\otimes P^-+P^-\otimes\Delta P+\Delta P\otimes\Delta P,
+\]
+
+which pairs with future covariance to give the exact reset revaluation identity.
+
+**Classification: Exact identities.**
+
+Hence the intrinsic first-bad selector has
+
+\[
+\boxed{C_{\rm irr}^{\rm selector}=G_{\rm irr}^{\rm selector}=0}
+\]
+
+after the already named interface/connection/reset terms are retained.  This does
+**not** establish the global Pillar-II statement `S^int=0 iff Z_irr=0`: `S^int` is
+not defined line by line in this repository, and any additional programme-specific
+ambient CK/Hodge operator beyond `K` is likewise not yet present.
+
+**Classification: Rigorous consequence for the selector sector; Conjectural bridge
+for any additional CK/Hodge operator and for the global Pillar-II equivalence.**
+
+The exact NS audit now includes two selector-specific checks.  In the odd-mode
+shear, a reset from anchor `0` to `pi` has positive increment variance but zero net
+bank change because the mixed covariance cancels it exactly.  In the genuine 3D
+ABC/Beltrami solution, a closed torus cycle has nonzero circulation while the exact
+pressure gradient has zero circulation, confirming that the cycle-typed domain is
+physically nontrivial and pressure remains gauge.
+
+See `docs/cycle_typed_first_bad_selector.md` for the full derivation.
