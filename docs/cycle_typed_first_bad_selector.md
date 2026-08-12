@@ -449,8 +449,20 @@ pair-localization current identity therefore has the form
 }
 \]
 
-with full cross-shell and cross-child content retained inside the physical maps.
-There is no diagonal refinement payment and no autonomous pair-only residual.
+where from the clock/cut repair onward the aggregate localization symbols mean
+
+\[
+\Pi_{\rm quant}^{(2)}
+:=\Pi_{\rm quant,space}^{(2)}+\Pi_{\rm quant,time}^{(2)},
+\qquad
+\Pi_{\rm shell}^{(2)}
+:=\Pi_{\rm shell,space}^{(2)}+\Pi_{\rm shell,time}^{(2)}.
+\]
+
+The algebra retains full cross-shell and cross-child content.  There is no diagonal
+refinement payment and no autonomous pair-only residual.  But the programme-specific
+moving-time pieces are not instantiated until the first-bad scalar quantile/shell
+observable and outer-time law are supplied.
 
 Pairing with the future Kelvin covariance cochain gives
 
@@ -471,9 +483,10 @@ V(\lambda_*)-R_{\rm dist}
 }
 \]
 
-**Classification: Exact current/covariance identity for the cycle-typed selector
-sector, subject to the already stated generator compatibility of the Kelvin future
-variance and to retaining the named physical interface/connection/exit terms.**
+**Classification: Exact algebraic current/covariance template for the cycle-typed
+selector sector after `Pi_quant/Pi_shell` are understood as full spacetime faces;
+programme-specific moving-cut realization and future-bank state intertwining remain
+open-literal.**
 
 This statement does not identify or eliminate a separate future operator that has
 not been defined.  In particular it does not assert the repository-wide statement

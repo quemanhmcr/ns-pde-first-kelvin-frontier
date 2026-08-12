@@ -13,8 +13,15 @@ SEAMS = {
     "active-pair-factorization": ("audited", "full pair boundary/transport residual is exact tensor lift of one-current commutator"),
     "parabolic-covariance-current": ("audited", "second-order Kelvin covariance is carried by the exact Dynkin/Fokker-Planck divergence current, not an ordinary de Rham one-form"),
     "moving-cut-time-face": ("audited-generic", "a moving restriction has G_Q=Qdot+T_out Q-Q T_in and one boundary-speed face per replica"),
-    "first-bad-moving-cut-speed-law": ("open-literal", "the actual first-bad quantile/shell boundary-speed law is not defined line by line"),
-    "two-clock-first-bad-kelvin-lift": ("open-literal", "same-clock covariance identities are exact but the physical first-bad time to ancestry/backward-Kelvin horizon/state lift is not constructed"),
+    "reverse-age-kelvin-generator": ("audited", "for physical reverse age sigma with r=t-sigma, the full Kelvin forward Markov generator is exactly L_K,rev=-K^-_{t-sigma}"),
+    "future-bank-clock-reversal": ("audited", "reversing a future-bank clock uses -b_+ and flips the covariance source sign; it is distinct from same-clock b_- diffusion reversal"),
+    "future-bank-clock-reversed-state-map": ("audited-generic", "a clock-reversed state map satisfies K_K=DPi K DPi^T and B_K=Pi_sigma-DPi b_+-nu K:D2Pi"),
+    "quantile-current-speed-law": ("audited-generic", "fixed-mass level sets move by the exact Reynolds/coarea weighted rate of g_t+j.grad g; in one dimension g=x gives adot=j"),
+    "affine-reverse-quantile-support-gramian": ("audited-calibration", "exact linear-strain NS reverse-age Gaussian covariance is the time integral of reverse support Cauchy-Green geometry and Mahalanobis quantile shells are pointwise material for probability current"),
+    "outer-time-cut-speed-underdetermination": ("audited-generic", "one-clock ancestry continuity does not determine arbitrary outer physical-time quantile motion"),
+    "first-bad-quantile-observable-definition": ("open-literal", "the scalar germ observable/threshold geometry whose level sets define the first-bad quantile chamber is not written line by line"),
+    "first-bad-moving-cut-speed-law": ("open-literal", "the generic current/coarea speed law is exact, but the first-bad observable and outer physical-time lift needed to instantiate Qdot/Hdot_shell are missing"),
+    "two-clock-first-bad-kelvin-lift": ("open-literal", "the physical reverse-age Kelvin clock is exact, but the programme ancestry state and first-bad outer time have not been intertwined with that state family"),
     "cycle-typed-first-bad-boundary": ("audited", "closed Kelvin cycle library forces zero intrinsic selector physical boundary and pair boundary"),
     "cycle-typed-first-bad-transport": ("audited", "support transport is exact germ cut current; finite hysteresis switch is reset revaluation"),
     "hodge-cycle-projector": ("audited-generic", "idempotent closed-range projector has zero physical boundary and pure range/complement exchange motion"),
@@ -74,7 +81,7 @@ ALLOWED = {"audited", "audited-calibration", "audited-generic", "audited-conditi
 required = {
     "freeze", "quantile", "anchor-orientation", "shell", "refinement",
     "resolve-reset", "physical-exit", "variable-frame-connection",
-    "active-pair-factorization", "parabolic-covariance-current", "moving-cut-time-face", "first-bad-moving-cut-speed-law", "two-clock-first-bad-kelvin-lift", "cycle-typed-first-bad-boundary",
+    "active-pair-factorization", "parabolic-covariance-current", "moving-cut-time-face", "reverse-age-kelvin-generator", "future-bank-clock-reversal", "future-bank-clock-reversed-state-map", "quantile-current-speed-law", "affine-reverse-quantile-support-gramian", "outer-time-cut-speed-underdetermination", "first-bad-quantile-observable-definition", "first-bad-moving-cut-speed-law", "two-clock-first-bad-kelvin-lift", "cycle-typed-first-bad-boundary",
     "cycle-typed-first-bad-transport", "hodge-cycle-projector", "kelvin-ck-admissibility",
     "stochastic-ck-carre-du-champ", "vorticity-kelvin-microframe",
     "restart-scale-renormalization", "orientation-complete-restart-packet",
@@ -99,6 +106,8 @@ for seam, (status, meaning) in SEAMS.items():
 for exact_seam in (
     "active-pair-factorization",
     "parabolic-covariance-current",
+    "reverse-age-kelvin-generator",
+    "future-bank-clock-reversal",
     "cycle-typed-first-bad-boundary",
     "cycle-typed-first-bad-transport",
     "kelvin-ck-admissibility",
@@ -132,6 +141,16 @@ for exact_seam in (
         raise SystemExit(f"{exact_seam} must remain explicitly audited")
 if SEAMS["moving-cut-time-face"][0] != "audited-generic":
     raise SystemExit("moving-cut time face must remain generic/audited until the literal first-bad cut is instantiated")
+if SEAMS["future-bank-clock-reversed-state-map"][0] != "audited-generic":
+    raise SystemExit("clock-reversed state-map equations are generic exact algebra, not a programme-specific state identification")
+if SEAMS["quantile-current-speed-law"][0] != "audited-generic":
+    raise SystemExit("quantile current/coarea speed law must remain generic/audited until the first-bad scalar observable is defined")
+if SEAMS["affine-reverse-quantile-support-gramian"][0] != "audited-calibration":
+    raise SystemExit("affine reverse quantile/support Gramian must remain an exact NS calibration, not a general first-bad shell theorem")
+if SEAMS["outer-time-cut-speed-underdetermination"][0] != "audited-generic":
+    raise SystemExit("outer-time cut-speed underdetermination must remain explicitly audited")
+if SEAMS["first-bad-quantile-observable-definition"][0] != "open-literal":
+    raise SystemExit("first-bad quantile scalar observable/threshold geometry must remain open-literal")
 if SEAMS["first-bad-moving-cut-speed-law"][0] != "open-literal":
     raise SystemExit("literal first-bad moving-cut speed law must remain open-literal")
 if SEAMS["two-clock-first-bad-kelvin-lift"][0] != "open-literal":

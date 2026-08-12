@@ -754,7 +754,9 @@ Third, a moving cut has a distinct time face.  For `Q_s`,
 `G_Q=Qdot+T_out Q-Q T_in`; in 1D Reynolds transport on `(-infinity,a(t))` gives
 `d int q = q(a,t)(a_dot-v)=-qv+q a_dot`.  The boundary-speed term is not contained in
 the static spatial commutator.  The pair lift has one such face per replica.  The
-actual first-bad quantile/shell speed laws remain open-literal.
+the generic quantile-current speed law is now exact; what remains open-literal is
+its first-bad instantiation because the scalar germ observable and outer physical-time
+lift are not defined.
 
 Fourth, the PR objection to identifying centered covariance with deterministic
 stretching is correct but already superseded on main by the exact split
@@ -764,3 +766,44 @@ determinant findings were likewise already repaired.
 **Classification: Exact one-mode NS/Kelvin counterexamples and exact generic
 Dynkin/Reynolds identities; two-clock first-bad lift and literal moving-cut speed
 laws open-literal.  No continuation/restart claim.**
+
+
+## 2026-08-12 — reverse-age Kelvin clock and probability-current quantile law
+
+A future conditional bank and a same-clock time-reversed diffusion are now kept
+strictly separate.  For physical observation time `t` and reverse age
+`sigma`, `r=t-sigma`, the full physical backward-Kelvin state has ordinary forward
+reverse-age generator `L_K,rev(t,sigma)=-K^-_{t-sigma}`.  Hence a physical past-payoff
+Kelvin covariance is literally a future covariance in reverse age.  Under a flat
+identity-map ancestry bridge this uses `b_+=-u`; the earlier condition `b_-=u` is the
+distinct same-clock backward-drift match.  Imposing both on one identity map forces
+`b_++b_-=2j=0`.
+
+For a fixed-mass chamber `{g<a_p}`, Reynolds plus
+`partial_s q+div(qj)=0` gives the exact coarea speed
+`a_dot = [int q/|grad g| (g_s+j.grad g)]/[int q/|grad g|]`; for `g=x` in one
+dimension, `a_dot=j` exactly.  A zero-drift Gaussian heat flow already has moving
+quantiles because `j=-nu grad log q`, so the moving cut cannot be tied to Itô drift
+alone.  The repo still does not define the scalar germ observable `g` underlying its
+first-bad quantile chamber, and one-clock ancestry continuity does not determine the
+outer physical-time cut motion.
+
+**Classification: Exact clock-reversal/current identities and exact diffusion
+calibration; programme-specific ancestry/reverse-Kelvin intertwining and first-bad
+quantile observable/outer-time law remain open-literal.  No restart claim.**
+
+
+## 2026-08-12 — affine reverse-age quantile shells are integrated support geometry
+
+For exact incompressible linear-strain NS `u=Ax`, the reverse-age anchor
+`dX=-A X d sigma+sqrt(2nu)dW` has covariance
+`Sigma_dot=-A Sigma-Sigma A^T+2nu I` and, for constant `A`,
+`Sigma=2nu int_0^sigma exp(-Ar)exp(-A^T r) dr`.  The integrand is exactly reverse
+material-line Cauchy--Green geometry.  For `A=diag(s,0,-s)`, the three variances are
+`nu(1-e^-2s sigma)/s`, `2nu sigma`, and `nu(e^2s sigma-1)/s`; hence the Kelvin
+parabolic scale is the leading term and strain supplies anisotropic `O(sigma^2)`
+corrections.  The Gaussian probability current `j=-Ax+nu Sigma^-1 x` transports
+the Mahalanobis shell `g=x^T Sigma^-1 x` pointwise: `g_sigma+j.grad g=0`.
+
+**Classification: Exact affine NS/Gaussian calibration; no identification with the
+programme first-bad shell without its missing scalar germ observable/state lift.**

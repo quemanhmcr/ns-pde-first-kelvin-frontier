@@ -248,14 +248,41 @@ The exact same-ancestor Gaussian arcsine calibration still shows that pair
 quantile content can move while each marginal quantile mass stays fixed, but that
 calibration does **not** erase the `dot Q` face.
 
-The programme has not yet written a literal first-bad quantile/shell boundary-speed
-law `dot Q_s` line by line.  Until it does, the completed physical excursion must
-retain this time face explicitly rather than declare the static commutator
-exhaustive.
+The speed itself is not arbitrary once a scalar quantile observable is specified.
+If
 
-**Classification: Exact spatial boundary commutator; exact generic Reynolds/
-transport identity for the moving-time face; programme-specific quantile speed law
-open-literal.**
+\[
+D_s=\{y:g(y,s)<a_p(s)\}
+\]
+
+has fixed `q`-mass and `grad g` is nonzero on the cut, the continuity equation
+forces the exact coarea law
+
+\[
+\boxed{
+\dot a_p
+=
+\frac{
+\displaystyle\int_{g=a_p}
+\frac{q}{|\nabla g|}(\partial_sg+j\cdot\nabla g)\,dS
+}{
+\displaystyle\int_{g=a_p}\frac{q}{|\nabla g|}\,dS
+}.
+}
+\]
+
+In one dimension with `g=x`, `dot a_p=j(a_p,s)`.  Thus quantile speed is governed
+by the probability-current velocity; diffusion can move the cut even when the Itô
+drift vanishes.
+
+What the programme has **not** written is the scalar germ observable `g` whose
+level sets define the first-bad quantile chamber, nor the outer physical-time lift
+relating that chamber to the reverse-age Kelvin clock.  Therefore the generic speed
+law is exact but the programme-specific `dot Q` is still open-literal.
+
+**Classification: Exact spatial boundary commutator; exact Reynolds/coarea
+quantile-speed law and pair transport identity; first-bad quantile observable and
+outer-time realization open-literal.**
 
 ### 3.3 Anchor/orientation motion
 
@@ -735,8 +762,20 @@ are kept, the pair-current localization identity is
 
 Here `Pi_conn^(2)` is transported connection/holonomy work and
 `Pi_reset^(2)` is exact finite covariance revaluation.  Neither is a stochastic
-quadratic-variation producer.  Full cross-shell and cross-child pair content is
-retained inside the physical maps; no diagonal refinement/shell payment appears.
+quadratic-variation producer.  In this aggregate notation
+
+\[
+\Pi_{\rm quant}^{(2)}
+=\Pi_{\rm quant,space}^{(2)}+\Pi_{\rm quant,time}^{(2)},
+\qquad
+\Pi_{\rm shell}^{(2)}
+=\Pi_{\rm shell,space}^{(2)}+\Pi_{\rm shell,time}^{(2)}.
+\]
+
+Full cross-shell and cross-child pair content is retained inside the physical maps;
+no diagonal refinement/shell payment appears.  The time faces still require the
+literal first-bad quantile observable/outer-time data before this aggregate ledger is
+a completed physical excursion.
 
 Pairing with the future Kelvin covariance cochain gives
 
@@ -757,9 +796,9 @@ V(\lambda_*)-R_{\rm dist}
 }
 \]
 
-**Classification: Exact current/covariance identity for the cycle-typed selector
-sector, with the already stated full-state generator-compatibility caveat for the
-Kelvin future-variance PDE.**
+**Classification: Exact algebraic current/covariance template for the cycle-typed
+selector sector with full spacetime localization faces; programme-specific moving-cut
+realization and future-bank state intertwining remain open-literal.**
 
 If a future, separately defined ambient operator `H_CK` is inserted, its residual
 must be added explicitly and tested only after restriction to the physical cycle

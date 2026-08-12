@@ -396,3 +396,27 @@ jobs:
         with:
           name: clock-cut-compatibility
           path: audit-results/clock_cut_compatibility_report.json
+
+  two-clock-kelvin-quantile:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit reverse-age Kelvin clock, state-map signs, and quantile-current geometry
+        run: python -m unittest -v tests.test_two_clock_kelvin_quantile
+      - name: Build two-clock Kelvin quantile artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_two_clock_kelvin_quantile_report.py
+      - name: Upload two-clock Kelvin quantile artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: two-clock-kelvin-quantile
+          path: audit-results/two_clock_kelvin_quantile_report.json

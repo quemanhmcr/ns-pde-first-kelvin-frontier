@@ -730,8 +730,13 @@ V(\lambda_*)-R_{\rm dist}
 \end{aligned}
 \]
 
-**Classification: Conjectural bridge until the literal active chain is built and
-checked line by line.**
+Here the historical symbols `Pi_quant^(2)` and `Pi_shell^(2)` are only aggregate
+placeholders.  The later clock/cut audit splits each into separate spatial and
+moving-time faces.  No completed physical identity may use the aggregate symbol
+unless both pieces have been instantiated.
+
+**Classification: Conjectural bridge at this historical stage; later algebraic
+factorization is exact but literal moving-cut realization remains open-literal.**
 
 The target is not an inequality.  It is a physical pair-current Stokes theorem in
 which internal seams/refinements cancel, quantile/shell terms are tracked physical
@@ -1643,7 +1648,7 @@ See `docs/kelvin_shape_generator_audit.md`.
 
 ---
 
-## 28. The normalized ancestry current is the forward/backward drift midpoint
+## 28. Same-clock drift split versus clock-reversed future-bank bridge
 
 The causal seam can be read directly from the existing normalized ancestry operator
 
@@ -1685,12 +1690,12 @@ j=w-\nu K\nabla\log f
 
 and the Fokker--Planck current is exactly `J=qj`.
 
-If the ancestry backward drift is to be identified with the physical backward
-Kelvin drift `u`, then the forward ancestry symbol must obey
+For a **same-clock** identification of the ancestry backward drift with the
+physical backward Kelvin drift `u`, the symbol must obey
 
 \[
 \boxed{
-w=u+\nu c_\phi+2\nu K\nabla\log f.
+w_{\rm same}=u+\nu c_\phi+2\nu K\nabla\log f.
 }
 \]
 
@@ -1698,10 +1703,32 @@ Silently setting `w=u` instead leaves the explicit mismatch
 `-nu c_phi-2nu K grad log f`, which is time-reversal/osmotic plus reference-geometry
 drift, not an internal pair source.
 
-**Classification: Exact weighted time-reversal/Fokker--Planck identities.  The
-ancestry-to-physical-Kelvin state map remains open-literal.**
+However the repository's **future covariance bank** requires a different causal
+operation.  Reverse its clock by `sigma=Theta-s`.  Then the future mean operator
+uses `-b_+` with second-order sign `-nu K:Hess`.  Therefore a flat identity-map
+anchor bridge to the physical backward-Kelvin operator requires
 
-See `docs/ancestry_time_reversal_audit.md`.
+\[
+\boxed{b_+=-u,}
+\]
+
+or, from `b_+=w+nu c_phi`,
+
+\[
+\boxed{w_{\rm future}=-u-\nu c_\phi.}
+\]
+
+The conditions `b_-=u` and `b_+=-u` are distinct.  If both were imposed on one
+identity-map process, `2j=b_++b_-` would have to vanish.  The future-bank bridge must
+therefore use the clock-reversed `b_+` state-map equations, not borrow the
+same-clock `b_-` condition.
+
+**Classification: Exact weighted time-reversal/Fokker--Planck identities and exact
+future-bank clock reversal.  Programme-specific reverse-age ancestry-to-Kelvin
+state intertwining remains open-literal.**
+
+See `docs/ancestry_time_reversal_audit.md` and
+`docs/two_clock_kelvin_quantile_audit.md`.
 
 
 ---

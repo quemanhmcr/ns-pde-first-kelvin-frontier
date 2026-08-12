@@ -46,7 +46,7 @@ report = {
         "forward_vs_backward_clock": "Exact one-mode separation; forward Brownian NS field is not the backward-Kelvin martingale",
         "two_clock_first_bad_identification": "Open-literal; physical selector time has not been identified with the ancestry/backward horizon clock",
         "moving_cut_time_face": "Exact Reynolds/operator identity; Qdot contributes boundary speed in addition to static transport flux",
-        "literal_first_bad_quantile_speed": "Open-literal; the actual moving quantile/shell boundary-speed law is not defined line by line",
+        "literal_first_bad_quantile_speed": "Generic Reynolds/coarea speed law is exact; first-bad scalar germ observable and outer-time instantiation remain open-literal",
         "continuation_restart": "Open; no regularity conclusion",
     },
     "one_mode": {

@@ -268,14 +268,22 @@ Closed/audited:
 - moving-cut `dot Q` / boundary-speed faces and their pair product rule are explicit;
 - mean versus covariance and locality/determinant distinctions are repaired.
 
+The subsequent reverse-age audit closes more of the first two items.  It proves
+`L_K,rev=-K^-`, shows that a future-bank clock reversal uses `b_+` rather than the
+same-clock `b_-`, and derives the exact fixed-mass level-set quantile speed from
+probability current.
+
 Still open:
 
-1. the literal two-clock/state lift from physical first-bad time to the causal
-   backward-Kelvin/ancestry bank;
-2. the actual first-bad quantile/shell boundary-speed laws;
+1. programme-specific intertwining from the normalized ancestry state to the
+   physical reverse-age Kelvin state;
+2. the scalar germ observable/threshold geometry whose level sets define the
+   first-bad quantile/shell chamber, plus its outer physical-time law;
 3. ancestry state semantics/lift;
 4. uniform singular-time support/shape/covariance collapse;
 5. restart capacity and continuation.
+
+See `docs/two_clock_kelvin_quantile_audit.md`.
 
 `S^int` and any independently intended `Z_irr` remain open-literal.  No term above
 is silently identified with them.

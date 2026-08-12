@@ -172,7 +172,7 @@ include it.
 
 ---
 
-## 5. What is required to match the physical backward Kelvin drift?
+## 5. Same-clock backward-drift matching (distinct from reversing a future bank)
 
 The physical backward stochastic Kelvin flow has backward Itô drift `u` in the
 spatial anchor coordinate.  Suppose, as a proposed state identification, that the
@@ -202,10 +202,16 @@ With this choice, symbolic CI verifies
 \boxed{b_--u=0.}
 \]
 
-This is not yet a proof that the state identification is correct.  It is the exact
-coefficient condition that any correct identification must satisfy.
+This is not yet a proof that the state identification is correct.  More
+importantly, it is a **same-clock** statement: it compares the backward drift of the
+ancestry diffusion with the physical backward-Itô drift while retaining the same
+clock orientation.  It is not the coefficient condition for converting the
+repository's future conditional bank into a physical past-payoff bank.  That latter
+operation reverses the future-bank clock and uses `b_+`; see
+`docs/two_clock_kelvin_quantile_audit.md`.
 
-**Classification: Exact algebra conditional on the physical state identification.**
+**Classification: Exact same-clock algebra conditional on the physical state
+identification.**
 
 ---
 
@@ -266,48 +272,106 @@ finite-dimensional diffusion tensor.
 
 ---
 
-## 8. Consequence for the future-covariance bank
+## 8. Consequence for the future-covariance bank: reverse the bank clock explicitly
 
-The earlier phrase "forward-future versus backward-Kelvin time orientation" mixed
-two issues.
+The normalized diffusion time-reversal algebra remains exact:
 
-The **time-reversal algebra of the normalized ancestry diffusion is now exact**:
-`b_+`, `b_-`, and `j` are explicitly related.
+\[
+(b_+,b_-,j),
+\qquad
+j=\frac{b_++b_-}{2}.
+\]
 
-What remains open is narrower:
+But a second operation must be kept distinct.  A future bank with ancestry clock
+`s` and terminal `Theta` becomes a causal physical past-payoff bank by introducing
+reverse age
 
-> is the ancestry backward state/process that supports the future covariance bank
-> literally the physical backward Kelvin current-shape process, after the correct
-> state projection/reference-density identification?
+\[
+\boxed{\sigma=\Theta-s.}
+\]
 
-If yes, the conditional future covariance and the physical backward martingale bank
-can be placed on the same state with their causal orientations explicit.  If not,
-the residual must be retained as a named state/projection current.
+If
 
-**Classification: Rigorous structural reduction; physical state identification
-remains open.**
+\[
+(\partial_s+b_+\cdot\nabla+\nu K:\nabla^2)m=0,
+\]
+
+then
+
+\[
+\boxed{
+(\partial_\sigma-b_+\cdot\nabla-\nu K:\nabla^2)\widehat m=0.
+}
+\]
+
+Hence an identity-map flat anchor bridge to the physical backward-Kelvin operator
+requires
+
+\[
+\boxed{b_+=-u,}
+\]
+
+not `b_-=u`.  The latter remains the distinct same-clock matching condition of
+Section 5.  Demanding both identity-map interpretations against the same physical
+drift forces `b_++b_-=2j=0`.
+
+For a general clock-reversed state map `Pi(sigma,y)`, the exact equations are
+
+\[
+\boxed{K_K=D\Pi K D\Pi^T,}
+\]
+
+and
+
+\[
+\boxed{
+B_K
+=\partial_\sigma\Pi-D\Pi b_+-\nu(K:D^2\Pi).
+}
+\]
+
+These are the equations relevant to the **future covariance bank**.  They are not
+the same-clock `b_-` pushforward equations.
+
+**Classification: Exact clock-reversal/state-map equations; programme-specific
+future-bank state intertwining remains open-literal.**
 
 ---
 
 ## 9. Updated causal frontier
 
-The causal bridge is no longer one opaque step.  It is
+The causal bridge now has three typed arrows rather than one:
 
 \[
 \boxed{
-\text{normalized ancestry operator}
-\xrightarrow{\text{exact time reversal}}
-(b_+,b_-,j)
-\xrightarrow{\text{open state map}}
-\text{physical backward Kelvin state}.
+\begin{aligned}
+&\text{normalized ancestry diffusion}
+\xrightarrow{\text{exact split}}
+(b_+,b_-,j),\\
+&\text{future bank}
+\xrightarrow{\sigma=\Theta-s}
+\text{reverse-age bank using }-b_+,\\
+&\text{reverse-age ancestry state}
+\xrightarrow{\text{open intertwining}}
+\text{physical reverse-age Kelvin state}.
+\end{aligned}
 }
 \]
 
-The first arrow is audited.  The second is the living seam.
+The first two arrows are audited.  The third is the living state-semantics seam.
+The full physical Kelvin side independently has
 
-The next PDE-first task should therefore inspect the actual ancestry state variables
-`f, phi, K, w` and determine whether they are defined on the same anchor/current
-state as the Kelvin representation.  One must not solve this by declaring `w=u`.
+\[
+\mathscr L_{\rm K,rev}^{(t)}(\sigma)
+=-\mathscr K^-_{t-\sigma},
+\]
+
+so its causal clock is no longer ambiguous.
+
+The same audit also shows that fixed-mass quantile motion is governed by
+probability-current velocity, not by `b_+`, `b_-`, or `u` alone.  The remaining
+first-bad cut problem is to define the actual scalar germ observable/threshold and
+its outer physical-time lift.
 
 `S^int`, restart capacity, and continuation remain open.
 
