@@ -10,14 +10,25 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from pde_audit.support_bank_restart_bridge import (  # noqa: E402
+    causal_backward_kelvin_horizon,
     codeforming_total_second_moment,
+    fixed_past_horizon_candidate_limit,
+    future_candidate_remaining_horizon,
+    horizon_matching_residual,
+    moving_past_terminal_matching_future_horizon,
+    moving_terminal_chain_derivative,
+    one_mode_fixed_terminal_second_moment_residual,
+    one_mode_moving_terminal_covariance_residual,
+    one_mode_moving_terminal_second_moment_residual,
     parabolic_support_dynamics_residual,
     parabolic_support_tensor,
     physical_total_second_moment,
     physical_vorticity_from_codeforming,
     resolved_unresolved_factorization_residual,
     scalar_vorticity_rate_square_bound,
+    scale_parametric_three_face_residual,
     support_bank_three_face_residual,
+    support_tensor_from_scale_squared,
     time_integrated_vorticity_rate_bound,
     total_bank_support_factorization_residual,
 )
@@ -93,6 +104,53 @@ class SupportBankRestartBridgeAudit(unittest.TestCase):
         self.assertTrue(sp.simplify(pstar*sp.eye(2)-P).is_positive_semidefinite)
         self.assertTrue(sp.simplify(qstar*sp.eye(2)-Q).is_positive_semidefinite)
         self.assertTrue(C.is_positive_semidefinite)
+
+
+    def test_three_face_factorization_is_really_scale_parametric_not_clock_specific(self) -> None:
+        ell2,p,q=sp.symbols('ell2 p q')
+        F=sp.Matrix([[2,1],[1,1]])
+        eta=sp.Matrix(sp.symbols('e0:2'))
+        c11,c12,c22=sp.symbols('c11 c12 c22')
+        C=sp.Matrix([[c11,c12],[c12,c22]])
+        self.assertEqual(scale_parametric_three_face_residual(F,eta,C,p,q,ell2),sp.zeros(2))
+        self.assertEqual(support_tensor_from_scale_squared(F,ell2),ell2*F*F.T)
+
+    def test_fixed_past_terminal_horizon_does_not_shrink_at_future_candidate_time(self) -> None:
+        Theta,t,t0=sp.symbols('Theta t t0')
+        h=causal_backward_kelvin_horizon(t,t0)
+        self.assertEqual(h,t-t0)
+        self.assertEqual(fixed_past_horizon_candidate_limit(Theta,t0),Theta-t0)
+
+    def test_matching_causal_past_horizon_to_future_remaining_horizon_requires_moving_terminal(self) -> None:
+        Theta,t=sp.symbols('Theta t')
+        t0=moving_past_terminal_matching_future_horizon(Theta,t)
+        self.assertEqual(t0,2*t-Theta)
+        self.assertEqual(sp.diff(t0,t),2)
+        self.assertEqual(horizon_matching_residual(Theta,t),0)
+
+    def test_future_remaining_horizon_and_fixed_past_horizon_have_opposite_time_rates(self) -> None:
+        Theta,t,t0=sp.symbols('Theta t t0')
+        h=causal_backward_kelvin_horizon(t,t0)
+        tau=future_candidate_remaining_horizon(Theta,t)
+        self.assertEqual(sp.diff(h,t),1)
+        self.assertEqual(sp.diff(tau,t),-1)
+
+
+    def test_generic_moving_terminal_chain_rule_has_explicit_terminal_face(self) -> None:
+        Qt,Qt0,v=sp.symbols('Qt Qt0 v')
+        self.assertEqual(moving_terminal_chain_derivative(Qt,Qt0,v),Qt+v*Qt0)
+
+    def test_one_mode_fixed_past_terminal_second_moment_has_homogeneous_backward_kelvin_law(self) -> None:
+        y,t,t0,nu,k=sp.symbols('y t t0 nu k', positive=True)
+        self.assertEqual(one_mode_fixed_terminal_second_moment_residual(y,t,t0,nu,k),0)
+
+    def test_one_mode_moving_past_terminal_second_moment_has_exact_terminal_motion_face(self) -> None:
+        y,t,Theta,nu,k=sp.symbols('y t Theta nu k', positive=True)
+        self.assertEqual(one_mode_moving_terminal_second_moment_residual(y,t,Theta,nu,k),0)
+
+    def test_one_mode_moving_past_terminal_covariance_has_qv_plus_terminal_motion_face(self) -> None:
+        y,t,Theta,nu,k=sp.symbols('y t Theta nu k', positive=True)
+        self.assertEqual(one_mode_moving_terminal_covariance_residual(y,t,Theta,nu,k),0)
 
     def test_rate_theorem_is_not_a_first_bad_threshold_by_itself(self) -> None:
         p,q,nu,tau=sp.symbols('p q nu tau', positive=True)

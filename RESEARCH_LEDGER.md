@@ -852,23 +852,32 @@ growth gate; that gate remains necessary only, not a first-bad theorem.
 true badness/resolve definitions remain open-literal.**
 
 
-## 2026-08-12 — physical Kelvin support x total-bank factorization gives a conditional integrable rate
+## 2026-08-12 — support x total-bank algebra is scale-parametric; causal horizon requires a separate face
 
-On the ideal full physical Kelvin state, write `omega=F eta`,
-`Q_tot=eta eta^T+Ctilde` with `Ctilde>=0`, and
-`P_nu=2nu tau F F^T`.  For scalar Loewner envelopes `P_nu<=p I` and
-`Q_tot<=q I`, the exact identity
-`p q I-2nu tau omega omega^T = q(pI-P_nu)+2nu tau F(qI-Q_tot)F^T+2nu tau F Ctilde F^T`
-splits the physical gap into support headroom, total-bank headroom, and unresolved
-future covariance.  Hence `|omega|^2<=p q/(2nu tau)`.
+The support×bank factorization has been causally repaired.  Its exact object is a
+coherent material support tensor `P_ell=ell^2 F F^T` at an arbitrary positive
+physical scale `ell`, together with `omega=F eta` and
+`Q_tot=eta eta^T+Ctilde`, `Ctilde>=0`, on the same state/frame.  The exact identity
+`p q I-ell^2 omega omega^T = q(pI-P_ell)+ell^2 F(qI-Q_tot)F^T+ell^2 F Ctilde F^T`
+splits the gap into support headroom, total-bank headroom, and unresolved covariance.
+Thus aligned Loewner envelopes give the conditional algebraic rate
+`|omega|^2<=p q/ell^2`.
 
-If `p q<=M` on a terminal interval, the selected/statewise vorticity obeys the
-integrable rate `|omega|<=sqrt(M/(2nu)) tau^-1/2` and
-`int |omega| dt <= sqrt(2 M epsilon/nu)`.  If in addition physical parabolic support
-collapses `p->0` while `q` stays bounded, then `sqrt(tau)|omega|->0`.  This is not yet
-a global continuation theorem: uniform first-bad/global envelopes, ancestry-to-full
-state lift, finite-shape/localization faces, exit/boundary/reset control, and the
-literal continuation step remain open.
+The previous wording overtyped `ell^2=2nu(Theta-t)` as the causal physical
+backward-Kelvin horizon.  The actual fixed-past Kelvin horizon is `h=t-t0`, with
+`h_dot=+1`; the future candidate remaining time is `tau=Theta-t`, with
+`tau_dot=-1`.  They are not equal for fixed `t0`.  Pointwise matching is possible
+with the causal moving past terminal `t0(t)=2t-Theta`, for which `h=tau`, but then
+`t0_dot=2` and every bank derivative gains the explicit terminal-motion face
+`2 partial_t0`.  Exact one-mode NS shear audits both the homogeneous fixed-terminal
+second-moment law and the moving-terminal q.v.+terminal-face covariance law.
 
-**Classification: Exact tensor factorization and rigorous conditional local-rate
-theorem; restart/continuation open.**
+Consequently a terminal `tau^-1/2` rate remains a **rigorous conditional
+scale-parametric/two-clock consequence** if a same-state covariance family is paired
+with the shrinking scale and `p q` is uniformly bounded.  The programme has not yet
+proved that pairing, the first-bad parabolic scale identification, uniform envelopes,
+nonideal face control, or continuation.
+
+**Classification: Exact scale-parametric factorization and exact causal clock/terminal
+calibration; scale--covariance horizon identification Open-literal; restart and
+continuation open.**

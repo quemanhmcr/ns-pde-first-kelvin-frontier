@@ -291,12 +291,15 @@ if candidate_missing:
 support_bank_required = [
     "P_nu",
     "Q_tot",
+    "scale-parametric",
+    "causal past horizon",
+    "moving terminal",
     "support headroom",
     "total-bank principal headroom",
     "unresolved future covariance",
     "time-integrable",
     "not yet a restart theorem",
-    "Open",
+    "Open-literal",
 ]
 support_bank_missing = [token for token in support_bank_required if token not in support_bank_text]
 if support_bank_missing:
@@ -355,6 +358,11 @@ for forbidden in [
     "bounded p q is proved uniformly",
     "P_nu is uniformly bounded at first bad time",
     "Q_tot is uniformly bounded at first bad time",
+    "tau=Theta-t is the causal backward-Kelvin horizon",
+    "fixed-past Kelvin horizon shrinks to zero at Theta",
+    "support-bank rate is already a physical backward-Kelvin continuation theorem",
+    "moving past terminal has no extra face",
+    "support-bank scale and covariance horizon are identified",
 ]:
     if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text:
         print("forbidden overclaim found:", forbidden)

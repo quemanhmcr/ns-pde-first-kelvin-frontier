@@ -1,22 +1,25 @@
-"""Exact support x total-bank tensor factorization for the physical Kelvin core.
+"""Exact scale-parametric support x total-bank tensor factorization.
 
-On the ideal full physical backward-Kelvin state write
+Write on one coherent state/frame
 
     omega = F eta,
     Q_tot = eta eta^T + C_tilde,  C_tilde >= 0,
-    P_nu = 2 nu tau F F^T.
+    P_ell = ell^2 F F^T.
 
-No norm estimate is introduced here.  The main identity decomposes a physical
-vorticity envelope into three positive-semidefinite physical sectors whenever the
-corresponding Loewner envelopes hold:
+The core identity is clock-free:
 
-    p q I - 2 nu tau omega omega^T
-      = q (p I-P_nu)
-        + 2 nu tau F(q I-Q_tot)F^T
-        + 2 nu tau F(Q_tot-eta eta^T)F^T.
+    p q I - ell^2 omega omega^T
+      = q (p I-P_ell)
+        + ell^2 F(q I-Q_tot)F^T
+        + ell^2 F(Q_tot-eta eta^T)F^T.
 
-The last term is unresolved/future covariance.  This module does not prove the
-programme-specific uniform envelopes or a continuation theorem.
+Setting ell^2=2 nu tau is a separate scale specialization.  The causal physical
+backward-Kelvin bank has a past horizon h=t-t0; for fixed t0 this is not the future
+remaining horizon tau=Theta-t.  Matching h=tau requires a moving past terminal
+`t0(t)=2t-Theta`, whose derivative produces an explicit terminal-motion face.
+
+No programme-specific scale/covariance horizon identification, uniform first-bad
+envelope, continuation, or regularity theorem is encoded here.
 """
 from __future__ import annotations
 
@@ -160,3 +163,159 @@ def isotropic_diagonal_envelope_gap(
         )
         for i in range(len(support_diagonal))
     ])
+
+
+def support_tensor_from_scale_squared(deformation: Matrix, scale_squared: sp.Expr) -> sp.Matrix:
+    """Pure geometric support tensor ell^2 F F^T for any positive scale ell."""
+    return sp.simplify(scale_squared * deformation * deformation.T)
+
+
+def scale_parametric_three_face_residual(
+    deformation: Matrix,
+    mean: Matrix,
+    covariance: Matrix,
+    p_star: sp.Expr,
+    q_star: sp.Expr,
+    scale_squared: sp.Expr,
+) -> sp.Matrix:
+    """Scale-parametric version of the three-face factorization.
+
+    No stochastic clock is assumed.  Setting scale_squared=2 nu h is a separate
+    physical identification step.
+    """
+    n = deformation.rows
+    I = sp.eye(n)
+    Q = codeforming_total_second_moment(mean, covariance)
+    P = support_tensor_from_scale_squared(deformation, scale_squared)
+    omega = physical_vorticity_from_codeforming(deformation, mean)
+    lhs = sp.simplify(p_star*q_star*I - scale_squared*omega*omega.T)
+    rhs = sp.simplify(
+        q_star*(p_star*I-P)
+        + scale_squared*deformation*(q_star*I-Q)*deformation.T
+        + scale_squared*deformation*(Q-mean*mean.T)*deformation.T
+    )
+    return sp.simplify(lhs-rhs)
+
+
+def causal_backward_kelvin_horizon(physical_time: sp.Expr, past_terminal: sp.Expr) -> sp.Expr:
+    """Causal fixed-past-terminal backward-Kelvin horizon h=t-t0."""
+    return sp.simplify(physical_time - past_terminal)
+
+
+def future_candidate_remaining_horizon(candidate_time: sp.Expr, physical_time: sp.Expr) -> sp.Expr:
+    """Future first-bad/candidate remaining horizon tau=Theta-t."""
+    return sp.simplify(candidate_time - physical_time)
+
+
+def moving_past_terminal_matching_future_horizon(
+    candidate_time: sp.Expr,
+    physical_time: sp.Expr,
+) -> sp.Expr:
+    """Past terminal t0(t) required by t-t0 = Theta-t."""
+    return sp.simplify(2*physical_time - candidate_time)
+
+
+def horizon_matching_residual(
+    candidate_time: sp.Expr,
+    physical_time: sp.Expr,
+) -> sp.Expr:
+    t0 = moving_past_terminal_matching_future_horizon(candidate_time, physical_time)
+    return sp.simplify(
+        causal_backward_kelvin_horizon(physical_time, t0)
+        - future_candidate_remaining_horizon(candidate_time, physical_time)
+    )
+
+
+def fixed_past_horizon_candidate_limit(candidate_time: sp.Expr, past_terminal: sp.Expr) -> sp.Expr:
+    """lim_{t->Theta} (t-t0)=Theta-t0, hence no shrinking for fixed t0<Theta."""
+    return sp.simplify(candidate_time - past_terminal)
+
+
+def moving_terminal_chain_derivative(
+    partial_current_time: sp.Expr,
+    partial_terminal_time: sp.Expr,
+    terminal_speed: sp.Expr,
+) -> sp.Expr:
+    """d/dt Q(t,t0(t)) = Q_t + t0dot Q_t0."""
+    return sp.simplify(partial_current_time + terminal_speed * partial_terminal_time)
+
+
+def one_mode_backward_kelvin_second_moment(
+    y: sp.Expr,
+    current_time: sp.Expr,
+    past_terminal: sp.Expr,
+    nu: sp.Expr,
+    k: sp.Expr,
+) -> sp.Expr:
+    """Exact causal past-payoff second moment for one-mode shear vorticity."""
+    h = sp.simplify(current_time - past_terminal)
+    return sp.simplify(
+        k**2 * sp.exp(-2 * nu * k**2 * past_terminal) / 2
+        * (1 - sp.exp(-4 * nu * k**2 * h) * sp.cos(2 * k * y))
+    )
+
+
+def one_mode_current_vorticity_square(
+    y: sp.Expr,
+    current_time: sp.Expr,
+    nu: sp.Expr,
+    k: sp.Expr,
+) -> sp.Expr:
+    return sp.simplify(k**2 * sp.exp(-2 * nu * k**2 * current_time) * sp.sin(k * y)**2)
+
+
+def one_mode_backward_kelvin_covariance(
+    y: sp.Expr,
+    current_time: sp.Expr,
+    past_terminal: sp.Expr,
+    nu: sp.Expr,
+    k: sp.Expr,
+) -> sp.Expr:
+    Q = one_mode_backward_kelvin_second_moment(y, current_time, past_terminal, nu, k)
+    return sp.simplify(Q - one_mode_current_vorticity_square(y, current_time, nu, k))
+
+
+def one_mode_fixed_terminal_second_moment_residual(
+    y: sp.Expr,
+    current_time: sp.Symbol,
+    past_terminal: sp.Symbol,
+    nu: sp.Expr,
+    k: sp.Expr,
+) -> sp.Expr:
+    """(partial_t-nu partial_yy)Q=0 at fixed past terminal."""
+    Q = one_mode_backward_kelvin_second_moment(y, current_time, past_terminal, nu, k)
+    return sp.trigsimp(sp.simplify(sp.diff(Q, current_time) - nu * sp.diff(Q, y, 2)))
+
+
+def one_mode_moving_terminal_second_moment_residual(
+    y: sp.Expr,
+    current_time: sp.Symbol,
+    candidate_time: sp.Expr,
+    nu: sp.Expr,
+    k: sp.Expr,
+) -> sp.Expr:
+    """Moving t0=2t-Theta leaves exactly the terminal-motion face 2 partial_t0 Q."""
+    t0 = sp.Symbol("t0", real=True)
+    Q = one_mode_backward_kelvin_second_moment(y, current_time, t0, nu, k)
+    moving = sp.simplify(Q.subs(t0, 2 * current_time - candidate_time))
+    lhs = sp.simplify(sp.diff(moving, current_time) - nu * sp.diff(moving, y, 2))
+    terminal_face = sp.simplify(2 * sp.diff(Q, t0).subs(t0, 2 * current_time - candidate_time))
+    return sp.trigsimp(sp.simplify(lhs - terminal_face))
+
+
+def one_mode_moving_terminal_covariance_residual(
+    y: sp.Expr,
+    current_time: sp.Symbol,
+    candidate_time: sp.Expr,
+    nu: sp.Expr,
+    k: sp.Expr,
+) -> sp.Expr:
+    """Moving-terminal covariance law = fixed-terminal qv source + terminal face."""
+    t0 = sp.Symbol("t0", real=True)
+    C = one_mode_backward_kelvin_covariance(y, current_time, t0, nu, k)
+    moving = sp.simplify(C.subs(t0, 2 * current_time - candidate_time))
+    omega = k * sp.exp(-nu * k**2 * current_time) * sp.sin(k * y)
+    gamma = sp.simplify(2 * nu * sp.diff(omega, y)**2)
+    lhs = sp.simplify(sp.diff(moving, current_time) - nu * sp.diff(moving, y, 2))
+    terminal_face = sp.simplify(2 * sp.diff(C, t0).subs(t0, 2 * current_time - candidate_time))
+    return sp.trigsimp(sp.simplify(lhs - gamma - terminal_face))

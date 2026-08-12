@@ -1,51 +1,49 @@
-# Physical Kelvin support x total-bank restart-rate audit
+# Scale-parametric support x total-bank restart-rate audit
 
-This note asks the next literal PDE question after the first-bad event semantics and
-naive-threshold exclusions:
+This note isolates an exact tensor relation between coherent material support,
+resolved vorticity, and an unresolved covariance sector.  A causal correction is
+essential: the algebra is **scale-parametric** and does not by itself identify the
+shrinking first-bad scale with the horizon of the causal backward-Kelvin covariance
+bank.
 
-> once the physical backward-Kelvin state is written in its coherent variables,
-> what exact relation ties material support geometry and the resolved-plus-future
-> second moment back to physical vorticity?
+Three objects must remain distinct:
 
-No new norm is chosen.  The only ordering used is positive-semidefinite tensor order,
-which has direct physical meaning: principal support lengths and principal
-second-moment amplitudes.
+1. a positive physical packet scale `ell` and its support geometry;
+2. a causal backward-Kelvin covariance bank with a past terminal `t0<t`;
+3. the future candidate/first-bad remaining time `tau=Theta-t`.
 
-The result is a conditional **local rate theorem**, not a continuation theorem.  The
-programme still lacks uniform first-bad/global coverage, the full ancestry lift, and
-uniform control of nonideal localization/finite-shape faces.
+The first gives exact algebra.  The second gives a physical positive covariance.
+Connecting both to the third is a separate two-clock/terminal/state problem.
+
+No restart or regularity conclusion is claimed.
 
 ---
 
-## 1. Ideal full physical Kelvin core
+## 1. Exact coherent state algebra does not need a clock
 
-On the full physical backward-Kelvin state, use the already audited co-deforming
-variables
+Let `F` be an invertible material deformation tensor and let
 
 \[
-\boxed{
-\omega=F\eta,
-}
+\boxed{\omega=F\eta.}
 \]
 
-and write the co-deforming total terminal second moment as
+Let a co-deforming total second moment be
 
 \[
 \boxed{
-Q_{\rm tot}
-=\eta\eta^T+\widetilde C,
+Q_{\rm tot}=\eta\eta^T+\widetilde C,
 \qquad
 \widetilde C\succeq0.
 }
 \]
 
-Here `eta eta^T` is the resolved mean-square sector and `Ctilde` is the future
-conditional covariance sector.  Their physical pushforward is
+Here `eta eta^T` is the resolved mean dyad and `Ctilde` is any physically valid
+unresolved covariance sector on the **same state and coordinate frame**.  Its
+physical pushforward is
 
 \[
 \boxed{
-T_{\rm tot}
-=FQ_{\rm tot}F^T
+T_{\rm tot}=FQ_{\rm tot}F^T
 =\omega\omega^T+F\widetilde C F^T.
 }
 \]
@@ -59,206 +57,347 @@ T_{\rm tot}-\omega\omega^T
 }
 \]
 
-**Physical classification:** resolved physical vorticity dyad plus unresolved future
-Kelvin covariance.
+This identity is purely tensorial.  No stochastic horizon has entered.
+
+**Physical classification:** resolved physical vorticity dyad plus pushed
+unresolved covariance.
 
 **Classification: Exact full-state tensor identity.**
 
 ---
 
-## 2. Physical parabolic support tensor
+## 2. Pure material support at an arbitrary positive scale
 
-Let
-
-\[
-\tau=\Theta-t>0
-\]
-
-be the remaining physical/Kelvin horizon and let the Brownian line scale be
+Let `ell>0` be a physical linear scale attached to a coherent isotropic reference
+microcell.  The material line frame at that scale is
 
 \[
-\rho_\nu=\sqrt{2\nu\tau}.
+L_\ell=\ell F.
 \]
 
-The coherent Kelvin-scale material line frame is
-
-\[
-L_\nu=\rho_\nu F.
-\]
-
-Its spatial Cauchy--Green/support tensor is therefore
+Define the spatial support Cauchy--Green tensor
 
 \[
 \boxed{
-P_\nu
-:=L_\nu L_\nu^T
+P_\ell:=L_\ell L_\ell^T
+=\ell^2FF^T.
+}
+\]
+
+The eigenvalues of `P_ell` are squared principal line lengths of this material
+microcell.  This is ordinary continuum geometry; it is not automatically the
+covariance matrix of a Brownian cloud.
+
+The exact affine reverse-diffusion audit is a useful warning.  Actual Gaussian
+anchor covariance is a time integral
+
+\[
+2\nu\int F_rF_r^T\,dr,
+\]
+
+whereas `ell^2 F F^T` is an endpoint material support tensor.  They coincide only in
+special/infinitesimal circumstances, not by definition.
+
+**Classification: Exact material support identity and exact type distinction.**
+
+---
+
+## 3. Exact three-face factorization is scale-parametric
+
+Suppose scalar principal envelopes `p_*`, `q_*` satisfy
+
+\[
+P_\ell\preceq p_*I,
+\qquad
+Q_{\rm tot}\preceq q_*I.
+\]
+
+Then the exact algebraic identity is
+
+\[
+\boxed{
+\begin{aligned}
+p_*q_*I-\ell^2\omega\omega^T
+={}&q_*(p_*I-P_\ell)\\
+&+\ell^2F(q_*I-Q_{\rm tot})F^T\\
+&+\ell^2F(Q_{\rm tot}-\eta\eta^T)F^T.
+\end{aligned}
+}
+\]
+
+CI audits this with a fully non-diagonal symbolic `F`, `eta`, and covariance.
+
+The three terms have literal physical types:
+
+1. **support headroom** `q_*(p_*I-P_ell)`;
+2. **total-bank principal headroom** `ell^2 F(q_*I-Q_tot)F^T`;
+3. **unresolved future covariance** or other physically supplied covariance
+   `ell^2 F(Q_tot-eta eta^T)F^T`.
+
+If the stated Loewner envelopes and covariance positivity hold, all three terms are
+positive semidefinite, hence
+
+\[
+\boxed{
+\ell^2\omega\omega^T\preceq p_*q_*I.
+}
+\]
+
+and therefore
+
+\[
+\boxed{
+|\omega|^2\le\frac{p_*q_*}{\ell^2}.
+}
+\]
+
+No estimate was guessed from Navier--Stokes; the inequality is the positivity
+consequence of an exact resolved/unresolved/support factorization.
+
+**Classification: Exact scale-parametric factorization; rigorous conditional PSD
+consequence.**
+
+---
+
+## 4. Candidate parabolic material scale is a separate specialization
+
+A natural **candidate** scale supplied by a future remaining time is
+
+\[
+\boxed{
+\ell_\nu^2=2\nu\tau,
+\qquad
+\tau=\Theta-t.
+}
+\]
+
+If a physical packet is actually refined/reselected at this scale, its material
+support tensor is
+
+\[
+\boxed{
+P_\nu^{\rm cand}
 =2\nu\tau FF^T.
 }
 \]
 
-Thus the eigenvalues of `P_nu` are literally squared physical lengths of the
-principal Kelvin-scale material axes.
-
-Under physical-time material deformation
-
-\[
-\dot F=(\nabla u)F,
-\qquad
-\dot\tau=-1,
-\]
-
-one obtains directly
+For physical-time material deformation `Fdot=A F` and `taudot=-1`, this chosen
+support tensor obeys
 
 \[
 \boxed{
-\dot P_\nu
-=(\nabla u)P_\nu
-+P_\nu(\nabla u)^T
--\frac1\tau P_\nu.
+\dot P_\nu^{\rm cand}
+=A P_\nu^{\rm cand}
++P_\nu^{\rm cand}A^T
+-\frac1\tau P_\nu^{\rm cand}.
 }
 \]
 
-The first two terms are real material strain/rotation.  The last term is the real
-shrinking of the Kelvin diffusion horizon.  No artificial damping term has been
-introduced.
+The first two terms are real material deformation.  The last comes from the chosen
+shrinking reference scale `sqrt(2nu tau)`.
 
-**Classification: Exact material/parabolic support identity.**
+This is **not** yet a theorem that the actual first-bad germ uses this scale.  That
+seam already exists as `first-bad-parabolic-scale-identification`.
+
+It is also not yet a statement about the causal backward-Kelvin covariance horizon.
+
+**Classification: Exact candidate-scale kinematics; first-bad scale identification
+Open.**
 
 ---
 
-## 3. Loewner envelopes have direct physical meaning
+## 5. Causal backward-Kelvin bank has a past horizon, not `Theta-t`
 
-Suppose at a given physical Kelvin state there exist scalar principal envelopes
-`p_*(t),q_*(t)` such that
+The physical backward-Kelvin covariance theorem uses a past terminal
+
+\[
+t_0<t.
+\]
+
+Its causal past horizon is
+
+\[
+\boxed{h=t-t_0.}
+\]
+
+For fixed `t0`,
+
+\[
+\boxed{\dot h=+1.}
+\]
+
+If `t` approaches a future candidate time `Theta`, then
+
+\[
+\boxed{h\to\Theta-t_0,}
+\]
+
+which is generally positive.  It does **not** shrink to zero.
+
+By contrast,
+
+\[
+\tau=\Theta-t,
+\qquad
+\boxed{\dot\tau=-1.}
+\]
+
+Therefore
 
 \[
 \boxed{
-P_\nu\preceq p_* I,
+\text{causal past horizon }h=t-t_0
+\ne
+\text{future remaining horizon }\tau=\Theta-t
 }
+\]
+
+for a fixed past terminal.
+
+This is the causal correction to the first version of this audit.
+
+**Classification: Exact clock identity and exact incompatibility for fixed `t0`.**
+
+---
+
+## 6. A moving past terminal can match the shrinking horizon pointwise
+
+For each `t<Theta`, one may define
+
+\[
+\boxed{t_0(t)=2t-\Theta.}
+\]
+
+Then
+
+\[
+t_0(t)<t,
 \]
 
 and
 
 \[
 \boxed{
-Q_{\rm tot}\preceq q_* I.
+t-t_0(t)=\Theta-t=\tau.
 }
 \]
 
-These are not arbitrary analysis norms:
+Thus a genuine causal past-payoff Kelvin bank **can** be evaluated over a past
+interval whose length equals the shrinking future remaining time.
 
-- `p_*` is an upper bound for the **squared largest Kelvin-scale physical support
-  axis**;
-- `q_*` is an upper bound for the **largest co-deforming total second-moment
-  principal value**.
+However,
 
-The minimal such scalars are the corresponding largest principal values, but the
-theorem does not require diagonalization or a particular coordinate frame.
+\[
+\boxed{\dot t_0=2.}
+\]
 
-**Classification: Physical tensor-order hypotheses, not a proved uniform bound.**
+The terminal itself moves.  Consequently this family is not the fixed-terminal
+martingale bank used by the standard backward-Kelvin PDE without modification.
+
+Pointwise positivity and the decomposition
+
+\[
+Q_{\rm tot}(t,t_0(t))
+=\eta(t)\eta(t)^T+\widetilde C(t,t_0(t))
+\]
+
+remain legitimate whenever the physical backward representation is defined.  But
+its time derivative has a new physical terminal-motion face.
+
+**Classification: Exact causal moving-terminal construction; fixed-terminal PDE
+cannot be reused without its extra face.**
 
 ---
 
-## 4. Exact three-face factorization
+## 7. Moving-terminal face is exact
 
-The key identity is
-
-\[
-\boxed{
-\begin{aligned}
-p_*q_*I-2\nu\tau\,\omega\omega^T
-={}&q_*(p_*I-P_\nu)\\
-&+2\nu\tau F(q_*I-Q_{\rm tot})F^T\\
-&+2\nu\tau F(Q_{\rm tot}-\eta\eta^T)F^T.
-\end{aligned}
-}
-\]
-
-CI verifies this with a fully non-diagonal symbolic `F`, `eta`, and covariance.
-
-Each term has an already identified physical type:
-
-1. \(q_*(p_*I-P_\nu)\): **support headroom**;
-2. \(2\nu\tau F(q_*I-Q_{\rm tot})F^T\): **total-bank principal headroom**;
-3. \(2\nu\tau F(Q_{\rm tot}-\eta\eta^T)F^T\): **unresolved future covariance**.
-
-If the stated tensor envelopes hold, all three terms are positive semidefinite.
-Therefore
+For any two-time quantity `Q(t,t0)`, along `t0=t0(t)`,
 
 \[
 \boxed{
-2\nu\tau\,\omega\omega^T
-\preceq
-p_*q_* I.
+\frac d{dt}Q(t,t_0(t))
+=\partial_tQ+\dot t_0\,\partial_{t_0}Q.
 }
 \]
 
-This is not an estimate guessed from the PDE.  It is the exact resolved/unresolved
-and support decomposition followed by positivity of physical covariance.
+For the matching choice `t0(t)=2t-Theta`,
 
-**Classification: Exact factorization; rigorous conditional PSD consequence.**
+\[
+\boxed{
+\frac d{dt}Q
+=\partial_tQ+2\partial_{t_0}Q.
+}
+\]
+
+The one-mode exact NS shear audits this literally.  At fixed past terminal its
+second moment satisfies the homogeneous backward-Kelvin equation.  Along the moving
+terminal, the same operator leaves exactly
+
+\[
+\boxed{2\partial_{t_0}Q}
+\]
+
+as the terminal-motion face.
+
+For centered covariance the corresponding moving-terminal law is
+
+\[
+\boxed{
+\mathfrak D_K C
+=\mathcal G_K
++2\partial_{t_0}C
+}
+\]
+
+in the one-mode calibration.  The first term is physical Kelvin q.v.; the second is
+terminal reselection/motion.  It is not `S^int` and must not be discarded.
+
+This is directly analogous to the `Qdot` face of a moving quantile chamber: moving
+the object being conditioned/localized on changes the balance.
+
+**Classification: Exact chain rule and exact one-mode Navier--Stokes calibration.**
 
 ---
 
-## 5. Direction-free physical vorticity rate
+## 8. What remains exact if a shrinking scale is paired with a covariance family
 
-Because the only nonzero eigenvalue of `omega omega^T` is `|omega|^2`, the tensor
-order gives
+The scale-parametric factorization of Section 3 needs only:
+
+- the same deformation `F` in the support and second-moment coordinates;
+- a positive covariance sector `Ctilde`;
+- one chosen physical scale `ell`.
+
+Therefore, if one constructs a **same-state/same-scale** family with
+
+\[
+\ell^2=2\nu(\Theta-t)
+\]
+
+and a total second moment `Q_tot(t)` satisfying the stated positivity, then
 
 \[
 \boxed{
 |\omega(t)|^2
 \le
-\frac{p_*(t)q_*(t)}{2\nu\tau}.
+\frac{p_*(t)q_*(t)}{2\nu(\Theta-t)}.
 }
 \]
 
-Equivalently,
+If
 
 \[
-\boxed{
-\sqrt\tau\,|\omega(t)|
-\le
-\sqrt{\frac{p_*(t)q_*(t)}{2\nu}}.
-}
+\boxed{p_*(t)q_*(t)\le M}
 \]
 
-This relation keeps the two physical channels visible:
-
-- vorticity can become large because Kelvin-scale support is stretched (`p_*`);
-- or because the co-deforming resolved-plus-unresolved second moment is large
-  (`q_*`);
-- the covariance sector itself appears with the correct positive sign in the
-  factorization rather than being discarded.
-
-**Classification: Rigorous conditional local-rate consequence.**
-
----
-
-## 6. Bounded support-bank product gives a time-integrable local rate
-
-Assume only on a terminal interval
-
-\[
-0<\tau<\varepsilon
-\]
-
-that
-
-\[
-\boxed{
-p_*(t)q_*(t)\le M<\infty.}
-\]
-
-Then
+on a terminal interval, then
 
 \[
 |\omega(t)|
 \le
-\sqrt{\frac{M}{2\nu}}\,\tau^{-1/2}.
+\sqrt{\frac{M}{2\nu}}(\Theta-t)^{-1/2}
 \]
 
-The terminal-time integral is explicit:
+and the **statewise** rate is time-integrable:
 
 \[
 \boxed{
@@ -268,160 +407,168 @@ The terminal-time integral is explicit:
 }
 \]
 
-Thus, **along any physical state/germ for which the ideal tensor identification and
-the product envelope hold uniformly**, the vorticity rate is time-integrable near
-the terminal time.
+This implication is rigorous **conditional on the same-scale covariance pairing and
+the Loewner envelopes**.
 
-This statement is local/statewise.  It does not assert a spatially uniform bound and
-therefore does not by itself invoke or close a global continuation criterion.
+What is not yet proved is that the programme's abstract future bank, a causal
+moving-past Kelvin bank, or the first-bad selected packet supplies exactly this
+same-state family with uniform `p_*q_*` control.
 
-**Classification: Rigorous conditional local time-integrability theorem.**
+**Classification: Rigorous conditional scale-parametric/two-clock local-rate
+consequence.**
 
 ---
 
-## 7. Support locality plus bounded total bank is stronger
+## 9. Support collapse plus bounded total bank
 
-If the Kelvin-scale material packet becomes genuinely support-local in the tensor
-sense
+Under the same conditional pairing, if
 
 \[
-\boxed{p_*(t)\to0}
+p_*(t)\to0
 \]
 
-and the co-deforming total bank remains bounded,
+and
 
 \[
-\boxed{q_*(t)\le Q_*<\infty,}
+q_*(t)\le Q_*<\infty,
 \]
 
 then
 
 \[
 \boxed{
-\tau|\omega(t)|^2
+(\Theta-t)|\omega(t)|^2
 \le
 \frac{p_*(t)Q_*}{2\nu}
 \to0,
 }
 \]
 
-so
+hence
 
 \[
 \boxed{
-\sqrt\tau\,|\omega(t)|\to0.
+\sqrt{\Theta-t}\,|\omega(t)|\to0.
 }
 \]
 
-This is exactly the geometric meaning one would hope for from a local Kelvin
-restart packet: if the physical Brownian-scale support truly collapses while the
-co-deforming total second moment does not blow up, physical vorticity cannot outrun
-the integrable `tau^-1/2` scale.
+Again, this is a conditional statement on a physically aligned shrinking packet
+and second-moment family.  It is not a theorem that the actual first-bad packet has
+those properties.
 
 **Classification: Rigorous conditional local consequence.**
 
 ---
 
-## 8. Why this is not yet a restart theorem
+## 10. Why this is not yet a restart theorem
 
-Several proof-critical bridges remain outside the identity:
+The remaining seams are now more precise.
 
-1. **Programme ancestry state lift.**  The repository has not yet constructed the
-   map/kernel from its abstract ancestry state to the full physical reverse-age
-   Kelvin state on which `Q_tot` above lives.
-2. **Uniform first-bad coverage.**  The first-bad `bad_flags` and `resolved`
-   predicates are still undefined, so there is no theorem that the selected germ is
-   the one whose loss would control the whole physical solution.
-3. **Uniform envelopes.**  No proof gives a common terminal bound for `p_*q_*`
-   over all physically relevant states/germs.
-4. **Finite-shape/localization remainder.**  The ideal infinitesimal core omits the
-   full finite-shape hierarchy, metric-whitened localization remainder, and moving
-   quantile/shell faces whose uniform collapse is still open.
-5. **Physical exit/boundary/reset work.**  These have exact types but no global
-   terminal control theorem.
-6. **Continuation theorem insertion.**  No global continuation criterion has been
-   paired line by line with this local tensor rate.
+### A. First-bad scale identification
 
-Therefore the correct status is not
-
-> vorticity is controlled.
-
-It is
-
-> **if** the physically named support and total-bank envelopes remain uniformly
-> finite on the right state family, then the local terminal vorticity rate is
-> integrable.
-
-**Classification: Conditional bridge; continuation/restart remains open.**
-
----
-
-## 9. Relation to the naive-threshold exclusion
-
-The amplitude-scaled ABC audit showed that no finite universal raw threshold on
-`|omega|`, stretching, q.v., or their instantaneous ratio can alone certify failure.
-
-The present theorem is qualitatively different.  It does not say
+No theorem identifies the actual selected germ scale with
 
 \[
-p_*q_*<\text{universal constant}.
+\sqrt{2\nu(\Theta-t)}.
 \]
 
-Instead it identifies the **asymptotic coupled resource** whose boundedness would
-force an integrable terminal rate for a fixed solution/state family.
+### B. Scale--covariance horizon/state identification
 
-Thus this theorem does not contradict the ABC no-go and does not propose a new
-finite first-bad threshold.
+A fixed-past causal bank has horizon `h=t-t0`, not `Theta-t`.  The moving-terminal
+construction can match the lengths, but introduces the explicit terminal-motion
+face and still requires the covariance state/deformation to be the same state used
+by the selected packet.
 
-**Classification: Rigorous structural compatibility.**
+This seam is **Open-literal**.
+
+### C. Uniform support-bank envelopes
+
+No theorem supplies a common terminal bound on `p_*q_*` over all physically
+relevant selected states/germs.
+
+### D. Finite-shape/localization hierarchy
+
+The ideal coherent identity omits the finite shape hierarchy, metric-whitened
+localization remainder, moving quantile/shell faces, and state-resolution covariance
+that must be controlled uniformly.
+
+### E. Physical boundary/exit/reset work
+
+These terms are typed exactly but have no global terminal control theorem.
+
+### F. Badness/resolve semantics
+
+`bad_flags` and `resolved` remain Boolean oracle inputs.  No Navier--Stokes event
+functional proves that the selected germ exhausts continuation failure.
+
+### G. Continuation insertion
+
+No literal global continuation criterion has yet been paired line by line with this
+statewise rate.
+
+Therefore the theorem is **not yet a restart theorem**.
+
+**Classification: Exact obstruction ledger; restart/continuation Open.**
 
 ---
 
-## 10. A sharper obstruction ledger
+## 11. Relation to the causal future-bank audit
 
-Within the ideal full physical Kelvin core, a terminal vorticity blow-up fast enough
-to evade the integrable `tau^-1/2` rate must be accompanied by failure of at least
-one stated hypothesis, for example:
+The future ancestry bank can be reversed in its own clock, and the physical
+backward-Kelvin process can be parameterized by reverse age.  Those operator facts
+are exact.  But they do not automatically identify
 
-- parabolic material support envelope `p_*` becomes unbounded strongly enough;
-- co-deforming total second-moment envelope `q_*` becomes unbounded strongly enough;
-- the full physical state/covariance representation ceases to match the programme
-  ancestry/reduced state;
-- finite-shape/localization or boundary/exit faces fail to vanish/control uniformly.
+\[
+\tau=\Theta-t
+\]
 
-This is an **obstruction ledger**, not yet a singularity theorem, because the
-programme has not shown that these alternatives exhaust a globally selected
-first-bad continuation failure.
+with the past horizon of the covariance tensor used here.
 
-**Classification: Rigorous conditional dichotomy inside the ideal core; global
-exhaustiveness remains conjectural/open.**
+The moving-terminal construction above is one literal physical way to create a
+past horizon equal to `tau`; its extra terminal face shows exactly what must be paid
+when doing so.
 
----
-
-## 11. Updated next target
-
-The next PDE-first target is no longer to invent a scalar norm.  It is to ask whether
-the actual first-bad construction can provide, from the NS/Kelvin dynamics itself,
+Thus the living bridge is no longer a vague sign problem.  It is:
 
 \[
 \boxed{
-P_\nu\preceq p_*I,
-\qquad
-Q_{\rm tot}\preceq q_*I,
-\qquad
-p_*q_*\ \text{terminally controlled},
+\text{selected shrinking scale}
++\text{same-state covariance family}
++\text{moving-terminal/clock faces}
++\text{uniform Loewner envelopes}.
 }
 \]
 
-**uniformly over the physically relevant selected state family**, while the named
-finite-shape/localization/exit faces are retained.
+**Classification: Rigorous structural reduction; programme-specific identification
+Open-literal.**
 
-No claim is made that this has been proved.
+---
 
-`S^int`, the literal badness/resolve functions, uniform singular-time collapse,
-restart capacity, and continuation remain open.
+## 12. Updated next target
 
-Audit markers: `P_\nu`, `Q_{\rm tot}`, status **Open** for the uniform/global
-first-bad envelope and continuation seams.
+The exact support×bank algebra has done its job: it tells us what a successful
+terminal mechanism would have to control without pretending that control already
+exists.
+
+The next PDE-first question is whether the actual NS/Kelvin first-bad construction
+can produce a physical family for which
+
+\[
+P_\ell\preceq p_*I,
+\qquad
+Q_{\rm tot}\preceq q_*I,
+\qquad
+p_*q_*\ \text{is terminally controlled},
+\]
+
+with `ell` tied to the actual selected physical scale and all clock/terminal faces
+retained.
+
+Audit markers: `P_nu`, `Q_tot`, **scale-parametric**, **causal past horizon**,
+**moving terminal**, status **Open-literal** for scale--covariance horizon/state
+identification, and status **Open** for uniform/global first-bad control.
+
+`S^int`, uniform finite-shape/localization collapse, restart capacity, and
+continuation remain open.
 
 **Classification: Exact/conditional structural advance; no regularity conclusion.**
