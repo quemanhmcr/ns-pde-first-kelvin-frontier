@@ -1330,10 +1330,14 @@ passive `GL(3)` jump can make both faces nonzero while their sum is exactly zero
 
 **Classification: Exact identities.**
 
-The existence of a singular-time-uniform local **future** covariance tensor and a
-suitable remainder current is not established.
+A subsequent double-Stokes audit proves a fixed-state local **future** covariance
+tensor under conditional mean-square continuity of the random terminal vorticity
+two-form.  What is not established is a **singular-time-uniform** diagonal
+trace/remainder law, nor the programme-specific descent of the full stochastic
+Kelvin generator to the reduced first-bad `(x,H)` state.
 
-**Classification: Conjectural bridge.**
+**Classification: Rigorous conditional fixed-state theorem; Conjectural/open-literal
+bridge for uniform singular-time control and generator descent.**
 
 ---
 
@@ -1403,3 +1407,131 @@ candidate singular time.
 Conjectural bridge for the remaining future-covariance capacity.**
 
 See `docs/orientation_complete_restart_packet.md`.
+
+
+---
+
+## 26. Full-state future-covariance tensor, double Stokes, and the true descent seam
+
+Let the full stochastic Kelvin state have generator
+
+\[
+\mathscr L=b\cdot\nabla+\frac12a:\nabla^2,
+\]
+
+and let a vector terminal Kelvin payoff have conditional mean `m`, second moment `Q`
+and covariance `C=Q-mm^T`.  Before any localization,
+
+\[
+\boxed{
+(\partial_\tau-\mathscr L)C
+=\Gamma_{\mathscr L}[m]
+=(\nabla m)a(\nabla m)^T,
+}
+\]
+
+while
+
+\[
+(\partial_\tau-\mathscr L)(mm^T)=-\Gamma_{\mathscr L}[m],
+\qquad
+(\partial_\tau-\mathscr L)Q=0.
+\]
+
+Thus quadratic variation is an exact transfer from conditional mean-square to
+future covariance, with all mixed orientation entries retained.
+
+The same matrix source is the diagonal defect of the same-ancestor pair generator:
+
+\[
+\boxed{
+\mathscr L(U^\Delta)
+-(\mathscr L^{(1)}+\mathscr L^{(2)})U|_\Delta
+=\Gamma_{\mathscr L}[m],
+\qquad
+U(y_1,y_2)=m(y_1)m(y_2)^T.
+}
+\]
+
+At the current/cochain level, the already existing pair momentum covariance
+`mathbb K_s` localizes by double Stokes:
+
+\[
+\boxed{
+C_s(\partial\Sigma_i,\partial\Sigma_j)
+=\langle(d\boxtimes d)\mathbb K_s,\Sigma_i\boxtimes\Sigma_j\rangle.
+}
+\]
+
+Exact gauge cochains vanish by boundary-squared-zero before any small-loop limit.
+Conditional mean-square continuity of `zeta_s=d beta_s` then yields the rigorous
+fixed-state tensor
+
+\[
+\boxed{
+\mathcal C_s(x)=\operatorname{Cov}_s(\zeta_s(x)),
+\qquad
+C_{H_r}^{\rm future}=H_r^T\mathcal C_s(x)H_r+o(|H_r|^2).
+}
+\]
+
+For centered conditionally `C^2` packets, the raw remainder begins at `r^6`, hence
+is only `r^2` after the packet metric normalization.
+
+Navier--Stokes supplies an independent tensor identity.  With
+`E_omega=omega omega^T`, `A=grad u`,
+
+\[
+\boxed{
+(\partial_t+u\cdot\nabla-\nu\Delta)E_\omega
+=AE_\omega+E_\omega A^T
+-2\nu(\nabla\omega)(\nabla\omega)^T.
+}
+\]
+
+Thus the full Kelvin Gram tensor, not merely its trace, is the viscous defect tensor
+of the vorticity dyad.  Its pullback by any area frame `H` is exactly the previously
+audited packet q.v. matrix.
+
+For the physical backward stochastic Kelvin orientation, Nanson plus NS further
+gives the infinitesimal packet mean law
+
+\[
+\boxed{
+[\partial_t+u\cdot\nabla-\nu\Delta-A^TH:\nabla_H](H^T\omega)=0.
+}
+\]
+
+The exact one-mode shear has a causal past-payoff covariance tensor `C` satisfying
+
+\[
+\boxed{\mathfrak D_K C=+\mathcal G_K,
+\qquad
+\mathfrak D_K(\omega\omega^T)=-\mathcal G_K,
+\qquad
+\mathfrak D_K(C+\omega\omega^T)=0.}
+\]
+
+This causal check matters: the anti-diffusive physical-time operator cannot be
+silently used with a future terminal `T>t`.  The repository's abstract forward
+future-ancestry bank and the physical backward-Kelvin martingale therefore require a
+literal time/state identification before they are declared the same object.
+
+Finally, a reduced autonomous generator exists only when the full generator
+intertwines with the reduction lift,
+
+\[
+\boxed{\mathscr L R=R\bar{\mathscr L}.}
+\]
+
+A finite-state audit contains both an exactly lumpable hidden-shape model and a
+non-lumpable model in which two hidden current shapes at the same spatial point have
+different physical exit rates.  In the latter case no spatial quotient generator
+exists: the residual is hidden-state physical flux.
+
+**Classification: Exact full-state tensor identities; exact NS and pair-current
+calibrations; rigorous conditional fixed-state Stokes limit.  Programme-specific
+generator descent, forward-future/backward-Kelvin identification, uniform
+singular-time diagonal remainder control, restart, and regularity remain open.**
+
+See `docs/future_covariance_tensor_audit.md`.

@@ -172,7 +172,7 @@ def main() -> None:
             "scale_issue": "raw Kelvin bank scales like area^2; local-gradient restart requires area^2-renormalized capacity across shrinking shells",
             "dilation_issue": "scalar isotropic dilation is an exact coordinate term; the later GL(3) packet metric audit shows passive scale/frame motion cancels when full covariance and metric co-transform",
             "first_bad_threshold": "still not defined; local stretch-over-Kelvin gate is only a necessary local-growth gate",
-            "remaining_restart_problem": "establish the local future-covariance tensor/remainder law and control metric-amplified remainder, material metric-stretching, and physical boundary/exit work up to a candidate singular time",
+            "remaining_restart_problem": "establish full-state generator/time descent and uniform singular-time control of the fixed-state future-covariance tensor remainder, material metric-stretching, and physical boundary/exit work",
         },
     }
 

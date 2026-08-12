@@ -478,3 +478,61 @@ tensor/remainder law uniformly near a candidate singular time and control the
 metric-amplified remainder, signed physical boundary/exit terms, and covariance-
 weighted material metric work.  `restart-capacity` and continuation/restart remain
 open; no regularity claim.
+
+
+## 2026-08-12 — full-state Kelvin covariance tensor meets the NS vorticity dyad
+
+The restart frontier was pushed from finite orientation-packet algebra into the
+conditional moment equation on the full stochastic Kelvin state.  For vector
+terminal payoff `F`, conditional mean `m`, second moment `Q`, and covariance
+`C=Q-mm^T`, the exact remaining-horizon laws are
+`(partial_tau-L)C=Gamma_L[m]`, `(partial_tau-L)(mm^T)=-Gamma_L[m]`, and
+`(partial_tau-L)Q=0`, with the complete mixed matrix carré-du-champ
+`Gamma_L[m]=(grad m) a (grad m)^T`.  Thus martingale q.v. is an exact transfer from
+conditional mean-square into future covariance, not a source of terminal second
+moment.
+
+The same tensor was recovered independently as the diagonal cross-derivation of the
+same-ancestor pair generator.  At current level, double Stokes gives
+`C(partial Sigma_i,partial Sigma_j)=<(d box d) K_s,Sigma_i box Sigma_j>`, where
+`K_s` is the already existing pair momentum covariance cochain.  Boundary-squared-
+zero makes exact pressure/gauge cochains invisible before taking any local limit.
+
+This closes an earlier overly broad “tensor existence” gap at fixed regular state.
+If the random terminal vorticity two-form `zeta=d beta` is conditionally mean-square
+continuous at `x`, conditional Jensen implies the small-surface average converges in
+conditional `L^2`; hence
+`C_H^future=H^T C_local H+o(|H|^2)` with
+`C_local=Cov_s(zeta(x))`.  For centered conditionally `C^2` packets the raw
+non-tensorial covariance remainder begins at `r^6`, so metric normalization leaves
+`O(r^2)` at fixed state.  No uniform singular-time constants are inferred.
+
+Navier--Stokes supplies a matching deterministic tensor law:
+`(partial_t+u.grad-nu Delta)(omega omega^T)=A omega omega^T+omega omega^T A^T-2nu grad(omega)grad(omega)^T`.
+Thus the entire Kelvin Gram tensor is the viscous defect tensor of the vorticity
+dyad; its half-trace is the previously audited enstrophy identity.  Exact shear and
+ABC symbolic calibrations close the full `3 x 3` residual.
+
+For additive Brownian Kelvin flow the causal backward-Ito packet mean operator is
+fixed by Nanson and NS:
+`[partial_t+u.grad-nu Delta-A^T H:grad_H](H^T omega)=0`.  An attempted future-terminal
+shear covariance through this anti-diffusive physical-time operator failed and was
+rejected.  Using the correct past terminal `t0<t`, exact shear instead gives
+`D_K C=+G_K`, `D_K(omega omega^T)=-G_K`, and homogeneous total second moment.  This
+exposes a new literal seam: the abstract forward future-ancestry bank and the
+physical backward-Kelvin martingale need a line-by-line causal/time-state
+identification before they are called the same bank.
+
+Generator compatibility is also now explicit.  A reduced autonomous generator
+requires `L R=R L_bar`.  Exact four-state audits show both a lumpable hidden-shape
+model and a non-lumpable one with different physical exit rates on the same reduced
+spatial fiber.  Therefore current shape/history cannot be dropped by declaration.
+
+**Classification: Exact full-state conditional-moment, pair-generator,
+double-Stokes, and Navier--Stokes tensor identities; rigorous conditional fixed-state
+Stokes limit.**
+
+Open: programme-specific full-state generator descent, forward-future/backward-
+Kelvin causal identification, uniform singular-time diagonal trace/remainder,
+material metric/boundary/exit capacity, literal `S^int` if separately intended, and
+continuation/restart.  No regularity claim.

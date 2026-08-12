@@ -20,13 +20,19 @@ SEAMS = {
     "restart-scale-renormalization": ("audited", "raw small-loop q.v. scales like area^2; GL(3) packet metric gives the exact scale-normalized contraction and passive dilation cancels"),
     "orientation-complete-restart-packet": ("audited", "first-bad restart selector lifts as M_fb tensor I_3 and full cross-orientation covariance is retained"),
     "material-flux-metric-split": ("audited", "Nanson plus NS gives D_t(H^T omega)=nu H^T Delta omega while packet metric work is vortex stretching"),
-    "future-covariance-local-tensor-limit": ("open", "no uniform singular-time proof that future Kelvin packet covariance has an area-squared local tensor limit with controlled remainder"),
-    "restart-capacity": ("open", "metric-amplified non-tensorial future-covariance remainder plus material metric-stretching and physical boundary/exit work remain uncontrolled"),
+    "future-covariance-full-state-tensor-law": ("audited", "vector conditional covariance gains the full mixed carre-du-champ while conditional mean-square loses it"),
+    "future-covariance-double-stokes": ("audited", "closed-loop future covariance is the double-Stokes localization of the existing pair momentum covariance cochain"),
+    "future-covariance-fixed-state-stokes-limit": ("audited-conditional", "conditional mean-square continuity gives the fixed-state area-squared local covariance tensor; centered C2 packets have r^2 normalized remainder"),
+    "backward-kelvin-infinitesimal-generator": ("audited-calibration", "Nanson plus exact NS gives the backward-Ito packet mean operator; exact shear covariance transfers the Kelvin Gram tensor"),
+    "future-covariance-generator-descent": ("open-literal", "the full stochastic Kelvin current/shape state generator has not been shown to intertwine with the reduced first-bad spatial/area-frame state"),
+    "future-backward-time-identification": ("open-literal", "the abstract forward future-ancestry bank has not been line-by-line identified with the causal physical backward-Kelvin martingale bank"),
+    "future-covariance-uniform-singular-limit": ("open", "fixed-state tensor existence is conditional-rigorous, but no uniform diagonal trace/remainder control is proved near a candidate singular time"),
+    "restart-capacity": ("open", "uniform tensor remainder plus material metric-stretching and physical boundary/exit work remain uncontrolled"),
     "active-ck-pillar-ii": ("open-literal", "selector and deterministic/stochastic admissible CK operation classes are classified; S^int itself or any independently intended Z_irr is not defined line by line"),
     "continuation-restart": ("open", "no regularity bridge claimed"),
 }
 
-ALLOWED = {"audited", "audited-calibration", "audited-generic", "open-literal", "open"}
+ALLOWED = {"audited", "audited-calibration", "audited-generic", "audited-conditional", "open-literal", "open"}
 required = {
     "freeze", "quantile", "anchor-orientation", "shell", "refinement",
     "resolve-reset", "physical-exit", "variable-frame-connection",
@@ -34,7 +40,10 @@ required = {
     "cycle-typed-first-bad-transport", "hodge-cycle-projector", "kelvin-ck-admissibility",
     "stochastic-ck-carre-du-champ", "vorticity-kelvin-microframe",
     "restart-scale-renormalization", "orientation-complete-restart-packet",
-    "material-flux-metric-split", "future-covariance-local-tensor-limit",
+    "material-flux-metric-split", "future-covariance-full-state-tensor-law",
+    "future-covariance-double-stokes", "future-covariance-fixed-state-stokes-limit",
+    "backward-kelvin-infinitesimal-generator", "future-covariance-generator-descent",
+    "future-backward-time-identification", "future-covariance-uniform-singular-limit",
     "restart-capacity", "active-ck-pillar-ii", "continuation-restart",
 }
 
@@ -53,11 +62,20 @@ for exact_seam in (
     "restart-scale-renormalization",
     "orientation-complete-restart-packet",
     "material-flux-metric-split",
+    "future-covariance-full-state-tensor-law",
+    "future-covariance-double-stokes",
 ):
     if SEAMS[exact_seam][0] != "audited":
         raise SystemExit(f"{exact_seam} must remain explicitly audited")
-if SEAMS["future-covariance-local-tensor-limit"][0] != "open":
-    raise SystemExit("future-covariance local tensor limit must remain open until a uniform singular-time Stokes/covariance limit is proved")
+if SEAMS["future-covariance-fixed-state-stokes-limit"][0] != "audited-conditional":
+    raise SystemExit("fixed-state future-covariance Stokes limit must remain explicitly conditional on mean-square continuity")
+if SEAMS["backward-kelvin-infinitesimal-generator"][0] != "audited-calibration":
+    raise SystemExit("backward-Kelvin infinitesimal generator must remain an exact/calibrated NS result")
+for seam in ("future-covariance-generator-descent", "future-backward-time-identification"):
+    if SEAMS[seam][0] != "open-literal":
+        raise SystemExit(f"{seam} must remain open-literal until the full state/time map is written line by line")
+if SEAMS["future-covariance-uniform-singular-limit"][0] != "open":
+    raise SystemExit("uniform singular-time future-covariance trace/remainder control must remain open")
 if SEAMS["active-ck-pillar-ii"][0] != "open-literal":
     raise SystemExit("global Pillar II must remain open-literal until S^int and any independently intended Z_irr are literally defined and audited")
 if SEAMS["restart-capacity"][0] != "open":

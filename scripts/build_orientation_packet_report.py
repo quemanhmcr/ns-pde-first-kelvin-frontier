@@ -129,7 +129,7 @@ def main() -> None:
             "orientation_complete_first_bad_packet": "Exact block selector M_fb tensor I_3 on closed Kelvin cycles",
             "GL3_metric_capacity": "Exact invariant scalar contraction 1/2 tr(C (H^T H)^-1)",
             "local_tensor_packet_reduction": "Exact algebra conditional on a local tensor representation C_H=H^T C_local H",
-            "future_covariance_local_tensor_limit": "Conjectural bridge; no uniform singular-time tensor limit is proved",
+            "future_covariance_fixed_state_local_tensor": "Rigorous conditional Stokes limit under conditional mean-square continuity; uniform singular-time control is separate",
             "material_flux_law": "Exact NS identity D_t(H^T omega)=nu H^T Delta omega",
             "material_metric_stretching": "Exact identity; rank-one metric work is omega.S.omega and covariance work is tr(S Sigma_omega)",
             "scale_remainder_threshold": "Exact r^(p-4) metric amplification for raw remainder r^p when area frame scales as r^2",
@@ -200,7 +200,7 @@ def main() -> None:
             "frame_geometry": "passive GL(3) orientation/scale/shear cancels in metric-normalized scalar capacity",
             "material_geometry": "physical Nanson metric motion is vortex-stretching work when flux coordinates are held by the NS flux law",
             "scale_obstruction": "only metric-amplified departure from area^2 local tensorial covariance survives pure packet normalization",
-            "remaining_restart_problem": "prove a uniform local future-covariance tensor/remainder law and control its material metric-stretching/boundary terms up to a candidate singular time",
+            "remaining_restart_problem": "prove full-state generator/time descent plus a uniform singular-time diagonal trace/remainder law and control material metric-stretching/boundary terms",
         },
     }
 

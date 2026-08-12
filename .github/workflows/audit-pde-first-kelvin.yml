@@ -250,3 +250,28 @@ jobs:
         with:
           name: orientation-complete-restart-packet
           path: audit-results/orientation_complete_restart_packet_report.json
+
+
+  future-covariance-tensor:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit full-state Kelvin covariance tensor, double Stokes, and generator descent
+        run: python -m unittest -v tests.test_future_covariance_tensor
+      - name: Build future-covariance tensor audit artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_future_covariance_tensor_report.py
+      - name: Upload future-covariance tensor audit artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: future-covariance-tensor
+          path: audit-results/future_covariance_tensor_report.json

@@ -542,7 +542,13 @@ with the already classified physical change of the cycle library `K_s`
 
 **Classification: Exact identity.**
 
-The identity is a bank *decomposition*, not yet a uniform continuation estimate.
+The identity is a bank *decomposition*, not yet a uniform continuation estimate.  A
+later tensor audit makes the old “generator compatibility” caveat literal: if `R`
+lifts a proposed reduced germ/current-frame observable to the full stochastic Kelvin
+state, an autonomous reduced generator requires the exact intertwining
+`L R = R L_bar`.  A non-lumpable hidden-shape counterexample shows that this can
+fail even when two states have the same reduced spatial label.  Thus any failure of
+descent is hidden-state physical flux, not an intrinsic selector residual.
 Repeated selector work is signed and cannot be replaced by the sum of positive
 quadratic increments; the odd-shear reset calibration shows why.  Finiteness or
 cancellation of the total physical localization work over an arbitrary approach to

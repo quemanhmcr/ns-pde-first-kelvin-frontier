@@ -764,10 +764,61 @@ cancels; **material** metric deformation is the stretching channel itself.
 **Classification: Exact packet/flux/metric identities.**
 
 The remaining singular-time question is whether the future Kelvin covariance has a
-uniform local tensor limit with a metric-amplified remainder whose signed physical
-transport, boundary, exit, and material metric work remain controllable.
+uniform diagonal trace/remainder law for the now identified fixed-state local tensor,
+whose signed physical transport, boundary, exit, material metric work, generator
+descent, and causal time orientation remain controllable.
 
 **Classification: Conjectural bridge.  No continuation/restart theorem and no
 regularity claim.**
 
 See `docs/orientation_complete_restart_packet.md` for the full packet audit.
+
+
+---
+
+## 16. Tensor enstrophy identity and future-covariance transfer
+
+The scalar enstrophy equation is the trace of a stronger exact NS identity.  With
+`E_omega=omega omega^T` and `A=grad u`,
+
+\[
+\boxed{
+(\partial_t+u\cdot\nabla-\nu\Delta)E_\omega
+=AE_\omega+E_\omega A^T
+-\mathcal G_K,
+\qquad
+\mathcal G_K=2\nu(\nabla\omega)(\nabla\omega)^T.
+}
+\]
+
+The tensor `mathcal G_K` is exactly the local orientation-complete Kelvin q.v.
+tensor; pulling it back by an arbitrary area frame reproduces `Gamma_H`.
+
+The full-state vector conditional-moment audit independently obtains the same tensor
+as the carré-du-champ source of future covariance and as the diagonal defect of the
+same-ancestor pair generator.  Double Stokes identifies its stored future tensor
+with the diagonal density of `(d box d) mathbb K_s` when that trace is regular.
+
+Conditional mean-square continuity of the random terminal vorticity field gives the
+fixed-state local covariance tensor rigorously.  Centered conditional `C^2` packets
+have raw remainder `O(r^6)` and normalized remainder `O(r^2)`.  These statements do
+not provide uniform constants near a candidate singular time.
+
+In the causal backward-Kelvin orientation, exact shear further verifies
+
+\[
+\mathfrak D_K C=+\mathcal G_K,
+\qquad
+\mathfrak D_K E_\omega=-\mathcal G_K,
+\qquad
+\mathfrak D_K(C+E_\omega)=0.
+\]
+
+Thus Kelvin q.v. is literally a tensor transfer between resolved mean-square and
+conditional covariance.  The remaining obstruction is generator/time descent and
+uniform singular-time control, not the existence of a fixed-state tensor.
+
+**Classification: Exact NS tensor identity and exact backward-Kelvin calibration;
+rigorous conditional fixed-state Stokes theorem.  No continuation/restart theorem.**
+
+See `docs/future_covariance_tensor_audit.md`.

@@ -748,38 +748,66 @@ family.**
 
 ---
 
-## 16. Conditional local future-covariance tensor bridge
+## 16. Local future-covariance tensor: fixed-state theorem, uniform frontier
 
-There is a natural next object, but it must not be assumed.
-
-If the random terminal transported momentum/vorticity field used by the Kelvin
-representation is conditionally mean-square continuous at a germ, small-loop
-Stokes convergence would give a local conditional covariance tensor
-`mathcal C_s(x)` such that
+The subsequent tensor audit sharpens the earlier conjectural bridge.  The fixed-state
+local tensor is not an arbitrary new object.  The repository already has the pair
+momentum covariance cochain
 
 \[
-C_H^{\rm future}
-=H^T\mathcal C_s(x)H+o(|H|^2)
+\mathbb K_s=\mathbb E_s[(\beta-\bar\beta_s)\boxtimes(\beta-\bar\beta_s)].
 \]
 
-in the appropriate area-squared sense.
-
-Then the orientation-complete local future bank would be
+For closed loops `Z_i=partial Sigma_i`, double Stokes gives exactly
 
 \[
 \boxed{
-\mathcal B_{\rm loc}(s,x)
-=\frac12\operatorname{tr}\mathcal C_s(x)
+C_s(Z_i,Z_j)
+=\langle(d\boxtimes d)\mathbb K_s,\Sigma_i\boxtimes\Sigma_j\rangle.
 }
 \]
 
-plus the metric-amplified non-tensorial remainder.
+If the random terminal vorticity two-form `zeta_s=d beta_s` is conditionally
+mean-square continuous at `x`, conditional Jensen gives
 
-This would be exactly the scale-invariant packet object needed by the restart
-programme.  But the uniform existence, generator compatibility, and singular-time
-control of this tensor limit have not been proved.
+\[
+\frac1{A_r}\int_{\Sigma_r(x,n)}\zeta_s(y)\cdot n\,dS
+\longrightarrow\zeta_s(x)\cdot n
+\quad\text{in conditional }L^2.
+\]
 
-**Classification: Conjectural bridge.**
+Hence the packet covariance has the rigorous fixed-state limit
+
+\[
+\boxed{
+C_{H_r}^{\rm future}
+=H_r^T\mathcal C_s(x)H_r+o(|H_r|^2),
+\qquad
+\mathcal C_s(x)=\operatorname{Cov}_s(\zeta_s(x)).
+}
+\]
+
+The local scalar bank is therefore
+
+\[
+\boxed{\mathcal B_{\rm loc}=\frac12\operatorname{tr}\mathcal C_s(x).}
+\]
+
+For a centered conditionally `C^2` packet, symmetry improves the raw covariance
+expansion to `r^4 C_0+r^6 C_1+...`; after the `r^-4` packet metric the remainder is
+`r^2 C_1+...` and vanishes at each fixed regular state.
+
+**Classification: Exact double-Stokes identity plus rigorous conditional fixed-state
+Stokes theorem.**
+
+What remains open is stronger and more specific: uniform conditional continuity and
+remainder control near a candidate singular time, the descent of the full stochastic
+Kelvin generator to the proposed reduced `(x,H)`/germ state, and the literal causal
+identification between the abstract forward future-ancestry bank and the physical
+backward-Kelvin martingale bank.
+
+**Classification: Conjectural/open-literal bridge only for uniform singular-time
+control and state/time descent.**
 
 ---
 
@@ -835,7 +863,7 @@ restricted to:
    classified in the pair world-sheet;
 3. material metric work, whose deterministic rank-one form is vortex stretching;
 4. metric-amplified non-tensorial covariance remainder;
-5. any failure of the local future-covariance tensor limit itself.
+5. failure of the **uniform** diagonal trace/remainder law or of the required full-state generator/time descent.
 
 There is no autonomous positive orientation/dilation/refinement payment left after
 full covariance and metric geometry are retained.
@@ -853,10 +881,11 @@ The restart problem is no longer accurately stated as
 
 The structurally correct question is now:
 
-> Does the material, orientation-complete first-bad packet admit a local future
-> covariance tensor with a metric-amplified remainder that remains controllable,
-> while its physical covariance depletion, boundary/exit terms, and material metric
-> stretching work are followed with their exact signs up to the candidate singular
+> Does the exact full-state future-covariance tensor bank descend to the required
+> material `(x,H)`/first-bad state with the correct causal time orientation, and does
+> its already existing fixed-state local tensor admit a **uniform** diagonal
+> trace/remainder law whose physical covariance depletion, boundary/exit terms, and
+> material metric-stretching work remain controlled up to the candidate singular
 > time?
 
 The packet audit removes several false obstructions:
@@ -872,10 +901,12 @@ material metric stretching is the vortex-stretching channel itself, and the
 amplitude-scaled ABC family shows instantaneous viscous packet payment alone cannot
 universally dominate it.
 
-The next mathematical target is therefore the **local future-covariance tensor and
-its non-tensorial remainder current**, not another norm estimate.
+The next mathematical target is therefore the **generator/time descent and uniform
+singular-time diagonal remainder current** of the already identified future-
+covariance tensor, not another norm estimate.
 
-**Classification: Rigorous structural reduction plus Conjectural bridge for the
-future-covariance tensor limit.**
+**Classification: Rigorous structural reduction plus open-literal/conjectural bridge
+for generator descent, causal time identification, and uniform singular-time
+control.**
 
 No continuation/restart theorem and no regularity claim.
