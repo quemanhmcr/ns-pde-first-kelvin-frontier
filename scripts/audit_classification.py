@@ -25,6 +25,7 @@ support_bank_note = ROOT / "docs" / "support_bank_restart_bridge_audit.md"
 cauchy_note = ROOT / "docs" / "stochastic_cauchy_deformation_audit.md"
 coupling_note = ROOT / "docs" / "deformation_current_pair_coupling_audit.md"
 full_shape_cov_note = ROOT / "docs" / "full_current_shape_covariance_audit.md"
+descent_note = ROOT / "docs" / "finite_shape_kelvin_descent_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -46,6 +47,7 @@ support_bank_text = support_bank_note.read_text()
 cauchy_text = cauchy_note.read_text()
 coupling_text = coupling_note.read_text()
 full_shape_cov_text = full_shape_cov_note.read_text()
+descent_text = descent_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -380,6 +382,26 @@ if full_shape_cov_missing:
     print("missing full current-shape covariance structural markers:", full_shape_cov_missing)
     sys.exit(1)
 
+finite_shape_descent_required = [
+    "opposite local connection signs",
+    "finite-support vorticity-inhomogeneity flux",
+    "finite-variation shape drift",
+    "vorticity-gradient residual",
+    "Pathwise q.v. versus finite-horizon covariance",
+    "connected-covariance",
+    "oriented quadrupole",
+    "zero q.v.",
+    "covariance-only",
+    "ABC",
+    "Legendre",
+    "Open-literal",
+    "No restart/continuation/regularity theorem claimed",
+]
+finite_shape_descent_missing = [token for token in finite_shape_descent_required if token not in descent_text]
+if finite_shape_descent_missing:
+    print("missing finite-shape Kelvin descent structural markers:", finite_shape_descent_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -464,8 +486,15 @@ for forbidden in [
     "joint covariance proves restart",
     "full current-shape state equals the programme ancestry state",
     "mixed covariance is the future remaining bank",
+    "actual reverse-current area equals H_C",
+    "descent error covariance proves local descent",
+    "zero error covariance implies zero descent bias",
+    "finite-shape error is S^int",
+    "q.v. controls deterministic shape bias",
+    "finite quadrupole closes descent",
+    "first-bad shape collapse is proved",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

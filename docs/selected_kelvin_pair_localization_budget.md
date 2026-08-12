@@ -1992,3 +1992,119 @@ anisotropy/conditioning; the PDE fields differ.
 
 **Classification: Rigorous joint sufficient criterion.  Uniform first-bad control
 remains open.**
+
+---
+
+## 36. Literal finite-shape Kelvin descent error: covariance is not the bias
+
+The full-current descent seam can now be written without an abstract remainder.
+For the actual finite material spanning surface `Sigma_R`, set
+
+\[
+h_R=\int_{\Sigma_R}n\,dA,
+\qquad
+\varepsilon_K
+=K_{\partial\Sigma_R}-\omega(X)\cdot h_R.
+\]
+
+Stokes gives exactly
+
+\[
+\boxed{
+\varepsilon_K
+=\int_{\Sigma_R}[\omega(X+r)-\omega(X)]\cdot n\,dA.
+}
+\]
+
+This is finite-support vorticity-inhomogeneity flux.  It is not a norm defect or a
+covariance by definition.
+
+A type correction is essential.  The actual current marched backward in reverse age
+has local area connection `+A^T`; the same-replica Cauchy metric-dual packet frame
+`H_C=rho^2D^-1` has `-A^T`.  They are different physical geometries and the old
+shorthand `Z_local(D,H)` must not identify them.
+
+For the actual finite surface define
+
+\[
+\mathcal R_A
+=\int_{\Sigma_R}[A(X+r)-A(X)]^Tn\,dA
+\]
+
+and
+
+\[
+q_\mu^{\rm err}
+=\int_{\Sigma_R}
+[\partial_\mu\omega(X+r)-\partial_\mu\omega(X)]\cdot n\,dA.
+\]
+
+The genuine reverse-age Navier--Stokes/Nanson/Itô law is
+
+\[
+\boxed{
+d\varepsilon_K
+=-\omega(X)\cdot\mathcal R_A\,d\sigma
++\sqrt{2\nu}\sum_\mu q_\mu^{\rm err}dW^\mu.
+}
+\]
+
+Thus the finite-shape seam has a deterministic/finite-variation bias-drift face and
+an anchor-translation stochastic-spread face.  Relative shape itself still has zero
+q.v.
+
+Pathwise,
+
+\[
+[\operatorname{vec}D,\varepsilon_K]=0,
+\]
+
+but finite-horizon `Cov(vec D,epsilon_K)` can be nonzero through the same anchor
+carré-du-champ as every other full-state connected covariance.  This covariance is
+not the value or mean of `epsilon_K`.
+
+Exact cubic heat-shear Navier--Stokes makes that distinction decisive.  For a
+centered `xy` rectangle of half-widths `a,b`,
+
+\[
+\boxed{\varepsilon_K=-4ab^3\neq0}
+\]
+
+for every reverse age and every Brownian anchor, while
+
+\[
+\dot\varepsilon_K=0,
+\qquad
+[\varepsilon_K]=0,
+\qquad
+\operatorname{Var}(\varepsilon_K)=0,
+\qquad
+\operatorname{Cov}(\operatorname{vec}D,\varepsilon_K)=0.
+\]
+
+Therefore a covariance bank can be exactly blind to a nonzero conserved finite-shape
+mode.  Exact ABC flow independently activates the finite-variation
+`-omega dot R_A` face, while exact one-mode shear activates error q.v. and the
+`D`/error covariance block.
+
+For centered smooth surfaces the first deterministic carrier is the oriented
+quadrupole `M_kl=int r_k r_l n dA`.  Both `epsilon_K` and `R_A` start at raw order
+`r^4`; `q_mu^err` uses one additional vorticity derivative and is also raw `r^4`, so
+its q.v. rate is raw `r^8`.  Odd polynomial heat shears with Legendre `P_2m`
+surfaces show that every finite even-moment truncation misses a higher deterministic
+flux mode, and at the centered symmetry point the exposing mode can have zero
+instantaneous error-q.v. coefficient.
+
+**Classification: Exact Stokes/Navier--Stokes/Nanson/Itô identities; exact NS
+calibrations and rigorous covariance-only / finite-moment no-go consequences.**
+
+The first-bad target is therefore sharper: a real descent theorem must control the
+actual deterministic bias `epsilon_K`, the finite-variation shape current `R_A`, the
+stochastic residual `q_mu^err`, support locality, and the metric-whitened pair
+covariance remainder on one compatible selected physical state/clock.  Covariance
+alone cannot substitute for that state theorem.
+
+**Classification: Open-literal.  No restart/continuation/regularity theorem
+claimed.**
+
+See `docs/finite_shape_kelvin_descent_audit.md`.

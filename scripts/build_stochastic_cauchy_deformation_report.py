@@ -37,6 +37,22 @@ from pde_audit.full_current_shape_covariance import (  # noqa: E402
     reverse_age_current_shape_diffusion_covariance,
     translation_cartan_residual,
 )
+from pde_audit.finite_shape_kelvin_descent import (  # noqa: E402
+    abc_origin_xy_kelvin_descent_error,
+    abc_origin_xy_local_vorticity,
+    abc_origin_xy_reverse_shape_residual,
+    cauchy_metric_dual_area_frame_rate,
+    deformation_descent_error_pathwise_cross_qv,
+    joint_deformation_error_leading_covariance,
+    joint_deformation_error_leading_gramian,
+    one_mode_shear_deformation_rectangle_error_cross_covariance,
+    one_mode_shear_deformation_rectangle_error_cross_leading_residual,
+    one_mode_shear_rectangle_error_mean,
+    one_mode_shear_rectangle_error_variance,
+    reverse_age_kelvin_descent_error_drift,
+    reverse_age_local_area_rate,
+    xy_rectangle_shear_descent_error,
+)
 from pde_audit.future_covariance_tensor import (  # noqa: E402
     connected_covariance_horizon_residual,
     connected_mean_horizon_residual,
@@ -51,6 +67,7 @@ from pde_audit.kelvin_packet_locality import (  # noqa: E402
 from pde_audit.kelvin_shape_generator import (  # noqa: E402
     cubic_shear_rectangle_shape_residual,
     oriented_rectangle_area_vector_yz,
+    polynomial_heat_shear,
 )
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
@@ -270,6 +287,54 @@ generic_cross_leading = deformation_kelvin_cross_covariance_leading_tensor(
 )
 generic_cross_has_h2 = all(sp.simplify(entry / h**2).has(nu) for entry in generic_cross_leading if entry != 0)
 
+# Literal finite-shape -> local Kelvin descent error.
+ax, by, Y_anchor, Amp, bshape = sp.symbols("ax by Y_anchor Amp bshape", positive=True)
+Aconn = sp.Matrix([[sp.Symbol("aa"), sp.Symbol("ab")], [sp.Symbol("ac"), sp.Symbol("ad")]])
+hconn = sp.Matrix([sp.Symbol("hh1"), sp.Symbol("hh2")])
+actual_reverse_area = reverse_age_local_area_rate(Aconn, hconn, sp.zeros(2, 1))
+cauchy_metric_area = cauchy_metric_dual_area_frame_rate(Aconn, hconn)
+area_connection_opposite = sp.simplify(actual_reverse_area + cauchy_metric_area) == sp.zeros(2, 1)
+area_connection_not_identical = sp.simplify(actual_reverse_area - cauchy_metric_area) != sp.zeros(2, 1)
+
+Ucubic = polynomial_heat_shear(3, y, t, nu)
+cubic_bias = xy_rectangle_shear_descent_error(sp.diff(Ucubic, y), y, Y_anchor, ax, by)
+cubic_bias_exact = sp.simplify(cubic_bias + 4 * ax * by**3) == 0
+cubic_bias_anchor_independent = sp.simplify(sp.diff(cubic_bias, Y_anchor)) == 0
+cubic_bias_time_independent = sp.simplify(sp.diff(cubic_bias, t)) == 0
+cubic_error_qv_zero = cubic_bias_anchor_independent
+cubic_D_error_cross_qv_zero = deformation_descent_error_pathwise_cross_qv(2) == sp.zeros(4, 1)
+
+eps_bar = one_mode_shear_rectangle_error_mean(y, t, ax, by, nu, k)
+eps_var = one_mode_shear_rectangle_error_variance(y, t, h, ax, by, nu, k)
+eps_var_leading_zero = sp.trigsimp(sp.simplify(
+    sp.series(eps_var, h, 0, 2).removeO() - 2 * nu * h * sp.diff(eps_bar, y)**2
+)) == 0
+eps_cross_scalar = one_mode_shear_deformation_rectangle_error_cross_covariance(
+    y, t, h, ax, by, nu, k
+)
+eps_cross = sp.simplify(v21 * eps_cross_scalar)
+Heps_cross = reverse_age_horizon_operator_matrix(eps_cross, h, t, velocity, nu, (x, y))
+deps = [sp.diff(eps_bar, x), sp.diff(eps_bar, y)]
+eps_cross_horizon_zero = deformation_kelvin_cross_covariance_horizon_residual(
+    eps_cross, Heps_cross, A, dmean, deps, nu
+) == sp.zeros(4, 1)
+eps_cross_leading_zero = one_mode_shear_deformation_rectangle_error_cross_leading_residual(
+    y, t, h, ax, by, nu, k
+) == 0
+
+eg1, eg2 = sp.symbols("eg1 eg2")
+joint_error_gram_zero = sp.simplify(
+    joint_deformation_error_leading_covariance([dAx, dAy], [eg1, eg2], nu, h)
+    - joint_deformation_error_leading_gramian([dAx, dAy], [eg1, eg2], nu, h)
+) == sp.zeros(5)
+
+abc_R = abc_origin_xy_reverse_shape_residual(Amp, nu, t, bshape)
+abc_omega0 = abc_origin_xy_local_vorticity(Amp, nu, t)
+abc_error_drift = reverse_age_kelvin_descent_error_drift(abc_omega0, abc_R)
+abc_error_drift_expected = sp.simplify(4 * Amp**2 * sp.exp(-2 * nu * t) * bshape * (bshape - sp.sin(bshape)))
+abc_shape_drift_zero_residual = sp.simplify(abc_error_drift - abc_error_drift_expected) == 0
+abc_bias = abc_origin_xy_kelvin_descent_error(Amp, nu, t, bshape)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -286,6 +351,14 @@ report = {
         "deformation_kelvin_cross_covariance": "Exact identity",
         "joint_D_K_short_horizon": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "exact_shear_D_K_cross": "Audited calibration",
+        "reverse_current_area_vs_cauchy_frame": "Exact identity / theorem-type correction",
+        "finite_shape_kelvin_descent_error_sde": "Exact identity",
+        "finite_shape_error_pathwise_vs_horizon_covariance": "Exact identity",
+        "centered_finite_shape_quadrupole_jet": "Rigorous consequence for centered locally smooth surfaces",
+        "cubic_shape_bias_covariance_blindness": "Audited calibration / rigorous no-go consequence",
+        "one_mode_finite_shape_error_covariance": "Audited calibration",
+        "abc_finite_shape_error_drift": "Audited calibration",
+        "finite_moment_covariance_blindness": "Audited calibration family / rigorous no-go consequence",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
@@ -361,6 +434,41 @@ report = {
         "referees": "positive source sign, horizon transpose/order, and coefficient 2nu/3",
         "selected_vs_replica": "at y=0 deterministic material deformation is I while stochastic replica metric has positive C_D^Gram",
     },
+    "finite_shape_kelvin_descent": {
+        "corrected_local_readout": "epsilon_K=K_{Z(R)}-omega(X).h_R; actual reverse-current area h_R is not the Cauchy metric-dual H_C",
+        "actual_reverse_area_connection": "+(grad u)^T",
+        "cauchy_metric_dual_connection": "-(grad u)^T",
+        "opposite_connection_residual_zero": bool(area_connection_opposite),
+        "connections_not_identical_generically": bool(area_connection_not_identical),
+        "exact_error_sde": "d epsilon_K=-omega.R_A dsigma+sqrt(2nu) sum_mu q_mu^err dW_mu",
+        "pathwise_D_error_cross_qv_zero": bool(cubic_D_error_cross_qv_zero),
+        "horizon_cross_source": "2nu sum_mu vec(partial_mu Dbar) partial_mu epsilon_bar",
+        "joint_leading_gramian_residual_zero": bool(joint_error_gram_zero),
+        "short_hierarchy": "Var(epsilon)=O(h), Cov(vec D,epsilon)=O(h^2), Sigma_D=O(h^3)",
+        "centered_spatial_hierarchy": "epsilon and R_A start on oriented quadrupole O(r^4); q_mu^err uses one higher vorticity derivative; error qv rate O(r^8) at fixed smooth state",
+        "cubic_heat_shear": {
+            "bias": str(cubic_bias),
+            "bias_equals_minus_4ab3": bool(cubic_bias_exact),
+            "anchor_independent": bool(cubic_bias_anchor_independent),
+            "time_independent": bool(cubic_bias_time_independent),
+            "error_qv_zero": bool(cubic_error_qv_zero),
+            "verdict": "nonzero deterministic finite-shape bias can be conserved while drift/qv/variance/D-error covariance vanish; covariance alone cannot prove descent",
+        },
+        "one_mode_shear": {
+            "error_variance_leading_residual_zero": bool(eps_var_leading_zero),
+            "D_error_cross_horizon_residual_zero": bool(eps_cross_horizon_zero),
+            "D_error_cross_leading_residual_zero": bool(eps_cross_leading_zero),
+            "typing": "same-anchor stochastic error spread and D/error finite-horizon covariance are active; pathwise [D,error] remains zero",
+        },
+        "abc": {
+            "initial_bias": str(abc_bias),
+            "shape_drift": str(abc_error_drift),
+            "shape_drift_formula_residual_zero": bool(abc_shape_drift_zero_residual),
+            "typing": "genuine 3D NS activates finite-variation strain-gradient shape drift -omega.R_A",
+        },
+        "finite_moment_hierarchy": "odd heat shears + Legendre P_2m expose every next deterministic even-moment flux mode while centered instantaneous qv coefficient can vanish",
+        "first_bad_verdict": "Open-literal: must control deterministic bias, R_A, q_mu^err, support locality, and metric-whitened covariance remainder together",
+    },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),
         "cauchy_z_residual_zero": bool(affine_vortex_cauchy_z_residual(a, r0, s, t) == 0),
@@ -432,7 +540,8 @@ report = {
         "future_remaining_horizon": "not identified: causal past h=t-s is distinct from future remaining tau=Theta-t",
         "resolution_covariance": "given a lift, reduction adds Cov_R(Dbar_vec) to averaged intrinsic Sigma_D; it does not retype intrinsic deformation covariance as resolution",
         "selected_current_projection": "for a shared frozen selector, Sigma_D transports inside the closed-current spatial fiber; replica-dependent selectors add separate selector and cross pair sectors",
-        "finite_current_state": "local D/current projection and full current-shape source law are exact, but finite-shape-to-local first-bad descent remains Open-literal",
+        "finite_current_state": "local D/current projection and full current-shape source law are exact; the literal epsilon_K descent-error SDE is also exact, but uniform first-bad shape collapse remains Open-literal",
+        "finite_shape_descent_error": "epsilon_K has a deterministic bias/shape-drift face plus anchor-qv spread; exact cubic NS proves zero covariance does not imply zero descent bias",
         "deformation_kelvin_cross": "C_DK is an exact same-clock off-diagonal joint covariance block; it is distinct from Sigma_D, Kelvin variance, S^int, and resolution covariance",
         "S_int": "no identification with S^int, Z_irr, or irreducible content",
     },

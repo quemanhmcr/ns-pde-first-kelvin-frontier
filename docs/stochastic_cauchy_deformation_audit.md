@@ -1495,3 +1495,29 @@ The next coupling layer is now audited in `docs/deformation_current_pair_couplin
 The literal full-state follow-through is now in `docs/full_current_shape_covariance_audit.md`.  On `(r,X,R(.),D)` only the anchor carries Brownian q.v.; Navier--Stokes makes moving Kelvin circulation drift pure gauge; Cartan identifies the Kelvin anchor coefficient; and `Cov(vec D,K_Z)` is the exact off-diagonal block of the joint connected covariance theorem.  The smooth leading joint hierarchy is `V_K=O(h)`, `C_DK=O(h^2)`, `Sigma_D=O(h^3)` with one Gram-integral representation.
 
 **Status: Exact full-state source/cross law and Audited calibration; first-bad finite-shape-to-local descent remains Open-literal.**
+
+---
+
+## 20. Finite-shape descent error is not controlled by deformation covariance
+
+The full-current follow-through now derives the literal local Stokes error
+
+\[
+\varepsilon_K=K_{Z(R)}-\omega(X)\cdot h_R.
+\]
+
+A theorem-type correction is required: the actual reverse-current area vector has
+local connection `+A^T`, while the same-replica Cauchy metric-dual frame
+`H_C=rho^2D^{-1}` has `-A^T`.  They are different objects and must not be identified.
+
+The exact error SDE has finite-variation strain-shape drift plus anchor-translation
+vorticity-gradient residual.  Pathwise `[vec D,epsilon_K]=0`; finite-horizon
+`Cov(vec D,epsilon_K)` is an ordinary same-clock connected covariance block.
+Most importantly, exact cubic heat shear has a nonzero conserved finite-shape error
+with zero q.v. and zero `D` covariance.  Thus neither `Sigma_D` nor the mixed block
+can by themselves prove finite-current descent.
+
+**Status: Exact identity / rigorous exact-NS no-go consequence.  First-bad uniform
+shape collapse remains Open-literal.**
+
+See `docs/finite_shape_kelvin_descent_audit.md`.
