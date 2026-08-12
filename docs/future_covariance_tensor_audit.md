@@ -1223,3 +1223,55 @@ covariance, and physical boundary/exit/reset faces.
 
 **Classification: Exact cofactor/support contraction and exact common-stretch
 cancellation.  No continuation theorem.**
+
+---
+
+## 15. Metric whitening reconstructs the finite orientation residual before the local limit
+
+The fixed-state theorem previously used
+
+\[
+X_H=H^T\zeta(x)+\varepsilon_H,
+\qquad
+H^{-T}X_H=\zeta(x)+H^{-T}\varepsilon_H.
+\]
+
+The new codeforming/Stokes audit physically types
+
+\[
+\boxed{r_H:=H^{-T}\varepsilon_H}
+\]
+
+as the vector reconstructed from the three finite orientation residuals.  At
+pointwise orientation-density level whitening is exactly the inverse map
+`H^{-T}H^T delta zeta=delta zeta`; for finite faces, `r_H` is a three-face
+reconstruction and is not generally a pointwise defect because its components sample
+different surfaces.
+
+The covariance algebra must be kept full:
+
+\[
+\boxed{
+H^{-T}C_HH^{-1}
+=C_\zeta+C_r+C_{\zeta r}+C_{\zeta r}^T.
+}
+\]
+
+Thus the two local/residual cross blocks are present at finite scale.  Conditional
+`L^2` convergence `r_H->0` makes all three remainder blocks vanish, but only **after**
+the exact decomposition is written.
+
+For the same-time physical NS current, the Stokes density satisfies
+
+\[
+H^{-T}\operatorname{curl}_\xi\beta_L
+=\omega(X+L\xi)-\omega(X).
+\]
+
+This identifies the topology at a fixed coherent physical state.  It does not
+identify the causal-past codeforming process with the future-bank clock or the
+programme ancestry lift.
+
+**Classification: Exact fixed-state topology/covariance identity.  Existing
+conditional local-limit theorem unchanged; cross-clock and uniform singular-time
+control remain Open-literal/Open.**

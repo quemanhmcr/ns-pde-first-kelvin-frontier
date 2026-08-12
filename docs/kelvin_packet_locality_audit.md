@@ -1226,3 +1226,45 @@ remainders.
 
 **Classification: Rigorous consequence of the exact integral identities; uniform
 first-bad verification remains open.**
+
+---
+
+## 13. Physical meaning of the metric-whitened remainder
+
+For a coherent line frame `L`, `H=cof(L)`.  The orientation density of a common
+physical field defect is `g_H=H^T delta zeta`, hence
+
+\[
+H^{-T}g_H=\delta\zeta
+\]
+
+exactly.  For the same-time Navier--Stokes finite-current error,
+`curl_xi beta_L=H^T delta omega`, so whitening its Stokes density returns the literal
+vorticity defect.
+
+For a finite three-face packet, however, the components of `epsilon_H` are integrated
+on three different faces.  The exact object
+
+\[
+r_H=H^{-T}\varepsilon_H
+\]
+
+is therefore a **reconstructed physical residual vector**, not generally a pointwise
+field value.  Its Euclidean energy and covariance are exactly the existing packet
+metric contractions.  Passive orientation reparameterization leaves `r_H`
+invariant.
+
+Exact cubic heat-shear NS gives a unit-cube finite residual `r_H=-e_z/4` while the
+center vorticity defect is zero; under isotropic scale `r`, the reconstructed
+remainder is exactly `-r^2 e_z/4`.  This is the literal NS calibration behind the
+fixed-state `r^2` metric-whitened remainder.
+
+For random full payoffs `H^{-T}X_H=zeta+r_H`, covariance contains the mandatory cross
+blocks `Cov(zeta,r_H)+transpose`; the finite covariance defect is not simply
+`Cov(r_H)`.
+
+**Classification: Exact fixed-state reconstruction/covariance identities and audited
+exact-NS scaling calibration.  Uniform first-bad control and cross-clock future-bank
+identification remain Open-literal.**
+
+See `docs/codeforming_whitened_kelvin_remainder_audit.md`.

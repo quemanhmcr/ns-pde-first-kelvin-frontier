@@ -24,10 +24,28 @@ from pde_audit.codeforming_surface_moment_tower import (  # noqa: E402
     codeforming_kelvin_curl_residual,
     pulledback_vorticity_defect,
     codeforming_oriented_moment,
+    cofactor_map,
+    curl3,
     coherent_refinement_codeforming_moment_residual,
     scalar_normalized_oriented_moments,
     scalar_normalized_refinement_residual,
     scale_shape_codeforming_residual,
+)
+from pde_audit.codeforming_whitened_kelvin_remainder import (  # noqa: E402
+    coordinate_face_flux_vector,
+    equal_two_state_covariance,
+    equal_two_state_cross_covariance,
+    face_error_qv_tensor,
+    homogeneous_beta_scale_shape_residual,
+    passive_orientation_reparameterization_residual,
+    pointwise_orientation_density,
+    pointwise_whitening_residual,
+    whitened_covariance,
+    whitened_covariance_trace_residual,
+    whitened_energy_residual,
+    whitened_face_error_qv_residual,
+    whitened_face_reconstruction,
+    whitened_full_covariance_from_blocks,
 )
 from pde_audit.deformation_current_pair_coupling import (  # noqa: E402
     selected_deformation_pair_decomposition,
@@ -546,6 +564,73 @@ super_codeforming_area_zero = sp.simplify(
     super_codeforming_area - sp.Matrix([0, 0, 1])
 ) == sp.zeros(3, 1)
 
+# Metric-whitened physical reconstruction of finite orientation residuals.
+Hwhite = sp.Matrix([[2, 1, 0], [0, 3, 1], [1, 0, 2]])
+delta_white = sp.Matrix(sp.symbols("delta_white_0:3"))
+pointwise_white_zero = pointwise_whitening_residual(delta_white, Hwhite) == sp.zeros(3, 1)
+pointwise_density = pointwise_orientation_density(delta_white, Hwhite)
+pointwise_reconstruction_zero = sp.simplify(
+    whitened_face_reconstruction(pointwise_density, Hwhite) - delta_white
+) == sp.zeros(3, 1)
+eps_white = sp.Matrix(sp.symbols("eps_white_0:3"))
+white_energy_zero = whitened_energy_residual(eps_white, Hwhite) == 0
+Cwhite = sp.Matrix(3, 3, sp.symbols("Cwhite_0:9"))
+white_cov_trace_zero = whitened_covariance_trace_residual(Cwhite, Hwhite) == 0
+Rwhite = sp.Matrix([[1, 1, 0], [0, 1, 1], [0, 0, 1]])
+passive_white_zero = passive_orientation_reparameterization_residual(
+    eps_white, Hwhite, Rwhite
+) == sp.zeros(3, 1)
+qwhite1 = sp.Matrix(sp.symbols("qwhite1_0:3"))
+qwhite2 = sp.Matrix(sp.symbols("qwhite2_0:3"))
+white_qv_zero = whitened_face_error_qv_residual(
+    [qwhite1, qwhite2], Hwhite, nu
+) == sp.zeros(3)
+
+# Exact covariance cross-block calibration after whitening.
+zwhite1 = sp.Matrix([1, 0])
+zwhite2 = sp.Matrix([-1, 0])
+rwhite1 = sp.Matrix([-sp.Rational(1, 2), 1])
+rwhite2 = sp.Matrix([sp.Rational(1, 2), -1])
+Cz_white = equal_two_state_covariance(zwhite1, zwhite2)
+Cr_white = equal_two_state_covariance(rwhite1, rwhite2)
+Czr_white = equal_two_state_cross_covariance(zwhite1, zwhite2, rwhite1, rwhite2)
+Cfull_white = equal_two_state_covariance(zwhite1 + rwhite1, zwhite2 + rwhite2)
+white_cross_decomposition_zero = sp.simplify(
+    whitened_full_covariance_from_blocks(Cz_white, Cr_white, Czr_white) - Cfull_white
+) == sp.zeros(2)
+white_cross_mandatory = sp.simplify(Czr_white + Czr_white.T) != sp.zeros(2)
+white_drop_cross_false = sp.simplify(Cfull_white - Cz_white - Cr_white) != sp.zeros(2)
+
+# Homogeneous beta exponent law and exact cubic NS finite-face reconstruction.
+beta_scale_shape_zero = homogeneous_beta_scale_shape_residual(
+    cubic_homogeneous, 3, coords_phys, rho, Sshape, coords_code
+) == sp.zeros(3, 1)
+beta_cubic_unit = sp.Matrix([cy**3, 0, 0])
+density_cubic_unit = curl3(beta_cubic_unit, coords_code)
+eps_cubic_unit = coordinate_face_flux_vector(
+    density_cubic_unit, coords_code, (sp.Rational(1, 2),) * 3
+)
+cubic_unit_reconstruction = whitened_face_reconstruction(eps_cubic_unit, sp.eye(3))
+cubic_unit_expected = sp.Matrix([0, 0, -sp.Rational(1, 4)])
+cubic_unit_reconstruction_zero = sp.simplify(
+    cubic_unit_reconstruction - cubic_unit_expected
+) == sp.zeros(3, 1)
+cubic_center_defect_zero = sp.simplify(density_cubic_unit.subs({cx: 0, cy: 0, cz: 0})) == sp.zeros(3, 1)
+
+Lwhite_iso = cr * sp.eye(3)
+Hwhite_iso = cofactor_map(Lwhite_iso)
+beta_cubic_iso = sp.Matrix([cr**4 * cy**3, 0, 0])
+eps_cubic_iso = coordinate_face_flux_vector(
+    curl3(beta_cubic_iso, coords_code), coords_code, (sp.Rational(1, 2),) * 3
+)
+recon_cubic_iso = whitened_face_reconstruction(eps_cubic_iso, Hwhite_iso)
+cubic_raw_r4_zero = sp.simplify(
+    eps_cubic_iso - sp.Matrix([0, 0, -cr**4 / 4])
+) == sp.zeros(3, 1)
+cubic_white_r2_zero = sp.simplify(
+    recon_cubic_iso - sp.Matrix([0, 0, -cr**2 / 4])
+) == sp.zeros(3, 1)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -593,6 +678,18 @@ report = {
         "first_bad_codeforming_kelvin_one_form_collapse": "Open-literal",
         "codeforming_kelvin_anchor_noise": "Exact identity / audited exact one-mode Navier--Stokes calibration",
         "codeforming_finite_shape_error_sde": "Exact identity",
+        "metric_whitened_pointwise_orientation_inversion": "Exact identity",
+        "metric_whitened_finite_face_reconstruction": "Exact physical typing",
+        "metric_whitened_codeforming_stokes_bridge": "Exact Stokes--Piola / whitening identity",
+        "metric_whitened_homogeneous_exponent_ladder": "Exact identity",
+        "metric_whitened_reconstruction_covariance": "Exact identity",
+        "metric_whitened_reconstruction_qv": "Exact identity",
+        "metric_whitened_local_residual_cross_blocks": "Exact covariance identity / audited algebraic calibration",
+        "cubic_finite_reconstruction_not_pointwise": "Audited calibration / rigorous finite-scale type separation",
+        "cubic_whitened_r2": "Audited calibration",
+        "fixed_state_whitened_topology_physical_typing": "Exact fixed-state topology identification",
+        "codeforming_whitened_future_clock_identification": "Open-literal",
+        "first_bad_reconstructed_kelvin_residual_collapse": "Open",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
@@ -761,6 +858,31 @@ report = {
         },
         "anisotropic_quadratic_no_go": "L=diag(r^3,r,r) shrinks all physical lines but N_L=r^-1 xi_y^2 e_x",
         "first_bad_verdict": "Open-literal: instantaneous Kelvin descent requires beta_L/curl control, while dynamic current-shape descent separately requires N_L/DN_L plus actual support and selector/boundary/exit/reset faces",
+    },
+    "metric_whitened_kelvin_remainder": {
+        "pointwise_density": "g_H=H^T delta_zeta",
+        "pointwise_whitening_residual_zero": bool(pointwise_white_zero),
+        "pointwise_reconstruction_residual_zero": bool(pointwise_reconstruction_zero),
+        "finite_reconstruction": "r_H=H^-T epsilon_H",
+        "finite_reconstruction_typing": "physical vector reconstructed from three different finite face residuals; not generally a pointwise field value",
+        "energy_reconstruction_residual_zero": bool(white_energy_zero),
+        "covariance_trace_reconstruction_residual_zero": bool(white_cov_trace_zero),
+        "passive_orientation_reparameterization_residual_zero": bool(passive_white_zero),
+        "qv_reconstruction_residual_zero": bool(white_qv_zero),
+        "covariance_cross_decomposition_residual_zero": bool(white_cross_decomposition_zero),
+        "covariance_cross_blocks_nonzero": bool(white_cross_mandatory),
+        "dropping_cross_blocks_is_false": bool(white_drop_cross_false),
+        "homogeneous_beta_scale_shape_residual_zero": bool(beta_scale_shape_zero),
+        "homogeneous_beta_law": "beta_{rho S}^{(p)}=rho^(p+1) S^T U_p(Sxi)",
+        "scale_ladder": "N_L: rho^(p-1); beta/raw Stokes: rho^(p+1); H^-T whitened defect: rho^(p-1)",
+        "cubic_unit_cube_center_defect_zero": bool(cubic_center_defect_zero),
+        "cubic_unit_cube_face_residual": str(eps_cubic_unit),
+        "cubic_unit_cube_reconstructed_residual": str(cubic_unit_reconstruction),
+        "cubic_unit_cube_reconstruction_expected": bool(cubic_unit_reconstruction_zero),
+        "cubic_isotropic_raw_face_r4": bool(cubic_raw_r4_zero),
+        "cubic_isotropic_whitened_r2": bool(cubic_white_r2_zero),
+        "fixed_state_bridge": "for same-time NS, H^-T curl_xi beta_L=delta omega; for future random payoff the same whitening algebra applies only after its literal full state/clock is specified",
+        "first_bad_verdict": "Open: must prove actual first-bad support locality and reconstructed residual collapse while retaining covariance cross blocks and selector/boundary/exit/reset faces; future-clock/ancestry identification remains Open-literal",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),

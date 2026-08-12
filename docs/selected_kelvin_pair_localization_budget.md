@@ -2282,3 +2282,47 @@ uses `D N_L`, the second uses anchor derivatives of `G_L N_L`.
 
 **Classification: Exact identity / exact one-mode NS calibration.  No new bank and no
 restart/continuation/regularity conclusion.**
+
+---
+
+## 39. Metric-whitened remainder is a reconstructed physical residual
+
+For a coherent orientation packet `H=cof(L)`, pointwise flux-density coordinates
+satisfy
+
+\[
+g_H=H^T\delta\omega,
+\qquad
+H^{-T}g_H=\delta\omega.
+\]
+
+For the same-time finite Kelvin current this is exactly
+
+\[
+H^{-T}\operatorname{curl}_\xi\beta_L
+=\omega(X+L\xi)-\omega(X).
+\]
+
+At finite scale define `r_H=H^-T epsilon_H`.  It is the physical vector reconstructed
+from the three finite face residuals.  It is generally not a pointwise defect because
+each component samples a different face.  Exact cubic heat-shear NS witnesses this:
+on the unit cube the center defect vanishes while `r_H=-e_z/4`; isotropic refinement
+gives exactly `r_H=-r^2 e_z/4`.
+
+The packet metric has the literal reconstruction meaning
+
+\[
+|r_H|^2=\varepsilon_H^T(H^TH)^{-1}\varepsilon_H,
+\]
+
+with the same congruence identity for covariance and q.v.  For a random full payoff
+`H^-T X_H=zeta+r_H`, the exact covariance contains residual covariance **and both
+local--residual cross blocks**.  Those cross terms cannot be dropped before the
+conditional `L^2` local-limit argument.
+
+This closes the fixed-state physical typing of the metric-whitened topology, not its
+uniform first-bad control and not the cross-clock future-bank/ancestry bridge.
+
+**Classification: Exact fixed-state reconstruction/covariance identities; audited
+exact-NS finite-scale calibration.  First-bad uniform collapse and cross-clock
+identification remain Open-literal.  No restart/continuation/regularity theorem.**

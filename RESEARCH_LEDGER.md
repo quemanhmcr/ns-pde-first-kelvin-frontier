@@ -1103,3 +1103,30 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited calibration:** exact periodic one-mode NS shear reproduces both the finite
   rectangle descent error and its anchor-noise coefficient from the residual
   one-form.  This is a representation of the existing error process, not a new bank.
+
+## 2026-08-13 — metric whitening is physical orientation reconstruction
+
+- **Exact identity:** for common pointwise orientation density
+  `g_H=H^T delta zeta`, `H^-T g_H=delta zeta`.  Whitening is the inverse orientation
+  map, not an arbitrary norm at this level.
+- **Exact Stokes--Piola identity:** for the same-time physical NS current,
+  `H^-T curl_xi beta_L=omega(X+Lxi)-omega(X)` with `H=cof(L)`.
+- **Exact physical typing:** for finite three-face error vector `epsilon_H`,
+  `r_H=H^-T epsilon_H` is a reconstructed physical residual vector.  Its three
+  components come from different faces, so it is not generally a pointwise field
+  defect.
+- **Audited exact-NS calibration:** cubic heat shear on the unit cube has center
+  defect zero but finite reconstructed residual `-e_z/4`; isotropic scale `r` gives
+  exactly `r_H=-r^2 e_z/4`.
+- **Exact identity:** `|r_H|^2=epsilon_H^T(H^T H)^-1 epsilon_H`, and covariance/q.v.
+  whiten by congruence.  Passive orientation-coordinate changes leave `r_H`
+  invariant.
+- **Exact covariance identity:** if `H^-T X_H=zeta+r_H`, then full covariance is
+  `C_zeta+C_r+C_zeta,r+C_zeta,r^T`.  Cross blocks are mandatory at finite scale.
+- **Exact scale--shape identity:** a homogeneous degree-p velocity jet gives
+  `beta_{rho S}=rho^(p+1)S^T U_p(Sxi)`; whitening its Stokes density removes the
+  area `rho^2` and returns the physical `rho^(p-1)` vorticity-defect scale.
+- **Open-literal:** the metric-whitened topology now has exact fixed-state physical
+  meaning, but no theorem gives uniform first-bad support locality/reconstructed
+  residual collapse or identifies the future-bank clock/ancestry lift.  No restart,
+  continuation, or regularity claim.

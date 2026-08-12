@@ -28,6 +28,7 @@ full_shape_cov_note = ROOT / "docs" / "full_current_shape_covariance_audit.md"
 descent_note = ROOT / "docs" / "finite_shape_kelvin_descent_audit.md"
 moment_note = ROOT / "docs" / "surface_moment_hierarchy_audit.md"
 codeforming_note = ROOT / "docs" / "codeforming_surface_moment_tower_audit.md"
+whitened_codeforming_note = ROOT / "docs" / "codeforming_whitened_kelvin_remainder_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -52,6 +53,7 @@ full_shape_cov_text = full_shape_cov_note.read_text()
 descent_text = descent_note.read_text()
 moment_text = moment_note.read_text()
 codeforming_text = codeforming_note.read_text()
+whitened_codeforming_text = whitened_codeforming_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -454,6 +456,26 @@ if codeforming_missing:
     print("missing codeforming surface-moment structural markers:", codeforming_missing)
     sys.exit(1)
 
+whitened_codeforming_required = [
+    "whitening is exact physical inversion",
+    "reconstructed physical residual vector",
+    "not a pointwise field value",
+    "Exact cubic NS referee",
+    "r^2",
+    "Homogeneous jet exponent ladder",
+    "ordinary energy of the reconstructed residual",
+    "Passive orientation coordinates are gauge",
+    "stochastic q.v. also reconstructs exactly",
+    "mandatory local--residual cross blocks",
+    "cross-clock identification",
+    "Open-literal",
+    "No restart/continuation/regularity theorem claimed",
+]
+whitened_codeforming_missing = [token for token in whitened_codeforming_required if token not in whitened_codeforming_text]
+if whitened_codeforming_missing:
+    print("missing codeforming whitened-Kelvin structural markers:", whitened_codeforming_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -560,8 +582,17 @@ for forbidden in [
     "beta_L is S^int",
     "anchor derivative one-form is a new covariance bank",
     "codeforming error SDE proves restart",
+    "finite reconstructed residual is pointwise vorticity defect",
+    "whitened covariance defect equals residual covariance",
+    "cross terms can be dropped after whitening",
+    "metric whitening proves locality",
+    "metric whitening proves restart",
+    "same-time beta_L equals future epsilon_H",
+    "beta_L is the future-bank remainder",
+    "r_H is S^int",
+    "r^2 whitened calibration proves first-bad collapse",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")
