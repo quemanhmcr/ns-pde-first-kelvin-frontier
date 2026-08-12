@@ -2108,3 +2108,42 @@ alone cannot substitute for that state theorem.
 claimed.**
 
 See `docs/finite_shape_kelvin_descent_audit.md`.
+
+---
+
+## 37. The finite-shape seam is an upward-coupled material moment hierarchy
+
+For the actual reverse-age spanning surface define oriented moments
+
+\[
+M_\alpha=\int r^\alpha n\,dA.
+\]
+
+Their exact transport is
+
+\[
+\dot M_\alpha
+=-\sum_i\alpha_i\int r^{\alpha-e_i}\Delta u_i(r)n\,dA
++\int r^\alpha A(X+r)^Tn\,dA.
+\]
+
+Affine velocity closes each order exactly.  A spatial velocity jet of degree `p`
+forces order `m` to couple to order `m+p-1`.  Hence nonlinear Navier--Stokes does
+not preserve a generic finite low-moment quotient.
+
+Exact quadratic heat shear makes a centered `yz` surface acquire a nonzero oriented
+first moment directly from its quadrupole; the new component is transverse to the
+area vector, so one anchor shift cannot remove it.  In the complementary `xy` shear
+geometry, the entire oriented `y`-moment tower is conserved exactly.  Thus omitted
+shape content can be either dynamically injected into lower-order observables or
+carried as a persistent hidden mode.
+
+This dynamic hierarchy and the static Legendre no-go say the same thing from two
+sides: adding any fixed finite list of moments cannot be the universal exact
+first-bad state.  What remains open is whether genuine shrinking selected support
+makes the infinite tower asymptotically subordinate to one local scale/shape law.
+
+**Classification: Exact material hierarchy / audited exact-NS calibrations;
+first-bad uniform jet collapse Open-literal.  No continuation/restart theorem.**
+
+See `docs/surface_moment_hierarchy_audit.md`.

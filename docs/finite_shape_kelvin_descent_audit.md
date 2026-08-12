@@ -886,3 +886,29 @@ Only after that state/descent question is settled does it make sense to introduc
 uniform estimate.
 
 **Status: Open-literal.  No restart/continuation/regularity theorem claimed.**
+
+---
+
+## 15. The oriented surface-moment dynamics are now explicit
+
+The actual reverse-age finite surface moments
+
+\[
+M_\alpha=\int r^\alpha n\,dA
+\]
+
+obey an exact material transport hierarchy.  Affine velocity closes each order on
+itself, but a homogeneous velocity jet of degree `p>=2` couples order `m` to order
+`m+p-1`.  Exact quadratic heat-shear NS already makes a zero oriented first moment
+grow from the quadrupole, so material-anchor centering is not generally preserved.
+Conversely, an `xy` surface in an arbitrary shear conserves its entire oriented
+`y`-moment tower exactly, explaining how a nonzero cubic descent bias can remain
+invisible to q.v. and covariance.
+
+A single anchor shift changes the first-moment matrix by `F -> F-c h^T`; generic
+vector-valued first moments therefore cannot all be centered by one shift.
+
+**Status: Exact hierarchy / audited NS calibrations.  No finite low-moment universal
+closure; uniform first-bad shrinking-support collapse remains Open-literal.**
+
+See `docs/surface_moment_hierarchy_audit.md`.

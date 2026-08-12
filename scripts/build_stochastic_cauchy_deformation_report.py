@@ -69,6 +69,14 @@ from pde_audit.kelvin_shape_generator import (  # noqa: E402
     oriented_rectangle_area_vector_yz,
     polynomial_heat_shear,
 )
+from pde_audit.surface_moment_hierarchy import (  # noqa: E402
+    affine_reverse_age_oriented_moment_rate,
+    homogeneous_moment_rate_degree,
+    oriented_first_moment_recentering_residual,
+    polynomial_error_noise_from_oriented_moments,
+    polynomial_flux_error_from_oriented_moments,
+    reverse_age_oriented_moment_rate_integrand,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -335,6 +343,72 @@ abc_error_drift_expected = sp.simplify(4 * Amp**2 * sp.exp(-2 * nu * t) * bshape
 abc_shape_drift_zero_residual = sp.simplify(abc_error_drift - abc_error_drift_expected) == 0
 abc_bias = abc_origin_xy_kelvin_descent_error(Amp, nu, t, bshape)
 
+# Exact reverse-age oriented material-surface moment hierarchy.
+rx, ry, rz = sp.symbols("rx ry rz", real=True)
+rvec3 = sp.Matrix([rx, ry, rz])
+area_ex = sp.Matrix([1, 0, 0])
+du_cubic_jet = sp.Matrix([ry**3, 0, 0])
+A_cubic_jet = du_cubic_jet.jacobian((rx, ry, rz))
+rate_m2_p3 = reverse_age_oriented_moment_rate_integrand(
+    rvec3, area_ex, du_cubic_jet, A_cubic_jet, (0, 2, 0)
+)
+moment_degree_rule_ok = homogeneous_moment_rate_degree(rate_m2_p3, (rx, ry, rz)) == {4}
+moment_degree_value_ok = sp.simplify(rate_m2_p3[1] - 3 * ry**4) == 0
+
+A_aff_moment = sp.Matrix([[sp.Symbol("ma"), sp.Symbol("mb")], [sp.Symbol("mc"), sp.Symbol("md")]])
+zero2 = sp.zeros(2, 1)
+affine_first_zero = (
+    affine_reverse_age_oriented_moment_rate({(1, 0): zero2, (0, 1): zero2}, (1, 0), A_aff_moment) == zero2
+    and affine_reverse_age_oriented_moment_rate({(1, 0): zero2, (0, 1): zero2}, (0, 1), A_aff_moment) == zero2
+)
+
+qb, qc = sp.symbols("qb qc", positive=True)
+Uquad = polynomial_heat_shear(2, ry, t, nu)
+du_quad = sp.Matrix([sp.simplify(Uquad - Uquad.subs(ry, 0)), 0, 0])
+Aquad = sp.Matrix([[0, sp.diff(Uquad, ry), 0], [0, 0, 0], [0, 0, 0]])
+quad_M1_rate_integrand = reverse_age_oriented_moment_rate_integrand(
+    rvec3, area_ex, du_quad, Aquad, (0, 1, 0)
+)
+quad_M1_rate = quad_M1_rate_integrand.applyfunc(
+    lambda q: sp.simplify(sp.integrate(sp.integrate(q, (ry, -qb, qb)), (rz, -qc, qc)))
+)
+quad_centering_breaks = sp.simplify(
+    quad_M1_rate - sp.Matrix([0, sp.Rational(8, 3) * qb**3 * qc, 0])
+) == sp.zeros(3, 1)
+
+F_recent = sp.eye(2)
+recent_c1, recent_c2 = sp.symbols("recent_c1 recent_c2")
+recent_res = oriented_first_moment_recentering_residual(
+    F_recent, sp.Matrix([1, 0]), sp.Matrix([recent_c1, recent_c2])
+)
+recentering_generic_obstruction = recent_res != sp.zeros(2)
+
+f_shear = sp.Function("f_shear")
+du_tangent = sp.Matrix([f_shear(ry) - f_shear(0), 0, 0])
+A_tangent = sp.Matrix([[0, sp.diff(f_shear(ry), ry), 0], [0, 0, 0], [0, 0, 0]])
+area_ez = sp.Matrix([0, 0, 1])
+shear_tower_zero = all(
+    reverse_age_oriented_moment_rate_integrand(
+        rvec3, area_ez, du_tangent, A_tangent, (0, m, 0)
+    ) == sp.zeros(3, 1)
+    for m in range(8)
+)
+
+Ucubic_moment = polynomial_heat_shear(3, ry, t, nu)
+omega_cubic_moment = sp.Matrix([0, 0, -sp.diff(Ucubic_moment, ry)])
+ma, mb = sp.symbols("moment_a moment_b", positive=True)
+cubic_moments = {
+    (0, 1, 0): sp.zeros(3, 1),
+    (0, 2, 0): sp.Matrix([0, 0, sp.Rational(4, 3) * ma * mb**3]),
+}
+cubic_moment_bias = polynomial_flux_error_from_oriented_moments(
+    omega_cubic_moment, (rx, ry, rz), cubic_moments
+)
+cubic_moment_bias_ok = sp.simplify(cubic_moment_bias + 4 * ma * mb**3) == 0
+cubic_moment_noise_zero = polynomial_error_noise_from_oriented_moments(
+    omega_cubic_moment, (rx, ry, rz), cubic_moments
+) == [0, 0, 0]
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -359,6 +433,14 @@ report = {
         "one_mode_finite_shape_error_covariance": "Audited calibration",
         "abc_finite_shape_error_drift": "Audited calibration",
         "finite_moment_covariance_blindness": "Audited calibration family / rigorous no-go consequence",
+        "reverse_age_oriented_surface_moment_hierarchy": "Exact identity",
+        "affine_surface_moment_order_closure": "Exact identity",
+        "nonlinear_surface_moment_order_raising": "Exact homogeneous-polynomial identity / rigorous local-jet consequence",
+        "material_surface_centering_preservation": "Audited calibration: false universally",
+        "single_anchor_oriented_recentering": "Exact geometry / audited obstruction",
+        "shear_hidden_oriented_moment_tower": "Exact shear identity",
+        "finite_moment_dynamic_shape_closure": "Audited calibration family / rigorous no-go consequence",
+        "first_bad_infinite_moment_jet_collapse": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
@@ -468,6 +550,21 @@ report = {
         },
         "finite_moment_hierarchy": "odd heat shears + Legendre P_2m expose every next deterministic even-moment flux mode while centered instantaneous qv coefficient can vanish",
         "first_bad_verdict": "Open-literal: must control deterministic bias, R_A, q_mu^err, support locality, and metric-whitened covariance remainder together",
+    },
+    "surface_moment_hierarchy": {
+        "exact_law": "Mdot_alpha=-sum_i alpha_i int r^(alpha-e_i) Delta u_i n dA+int r^alpha A(X+r)^T n dA",
+        "affine_order_preserving": bool(affine_first_zero),
+        "nonlinear_p3_m2_degree_is_4": bool(moment_degree_rule_ok and moment_degree_value_ok),
+        "order_rule": "degree-p velocity jet couples moment order m to m+p-1; p=1 affine is the exact order-preserving exception",
+        "quadratic_heat_shear_centering_breaks": bool(quad_centering_breaks),
+        "quadratic_centering_rate": str(quad_M1_rate),
+        "single_anchor_recentering_generic_obstruction": bool(recentering_generic_obstruction),
+        "recentering_law": "F' = F-c h^T",
+        "tangential_xy_shear_y_moment_tower_zero_rate": bool(shear_tower_zero),
+        "cubic_bias_from_Myy_residual_zero": bool(cubic_moment_bias_ok),
+        "cubic_centered_error_noise_zero": bool(cubic_moment_noise_zero),
+        "typing": "low oriented moments are observables of the full material surface; nonlinear NS calls omitted higher moments dynamically, while special shear geometry can conserve hidden moments exactly",
+        "first_bad_verdict": "Open-literal: no uniform theorem controls the full normalized oriented moment tower on the migrating selected support",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),
