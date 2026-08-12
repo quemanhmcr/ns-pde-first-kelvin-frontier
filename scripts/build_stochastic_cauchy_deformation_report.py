@@ -13,6 +13,22 @@ from pde_audit.ancestry_resolution_kernel import (  # noqa: E402
     vector_total_covariance_decomposition,
 )
 from pde_audit.cycle_selector import two_cycle_library  # noqa: E402
+from pde_audit.codeforming_surface_moment_tower import (  # noqa: E402
+    codeforming_homogeneous_scale_shape_residual,
+    codeforming_anchor_one_form_derivative,
+    codeforming_descent_error_drift,
+    codeforming_nonaffinity_divergence,
+    codeforming_nonaffinity_field,
+    codeforming_nonaffinity_geometry_residual,
+    codeforming_nonaffinity_one_form,
+    codeforming_kelvin_curl_residual,
+    pulledback_vorticity_defect,
+    codeforming_oriented_moment,
+    coherent_refinement_codeforming_moment_residual,
+    scalar_normalized_oriented_moments,
+    scalar_normalized_refinement_residual,
+    scale_shape_codeforming_residual,
+)
 from pde_audit.deformation_current_pair_coupling import (  # noqa: E402
     selected_deformation_pair_decomposition,
     selected_deformation_pair_dyad_residual,
@@ -63,6 +79,8 @@ from pde_audit.future_covariance_tensor import (  # noqa: E402
 from pde_audit.kelvin_packet_locality import (  # noqa: E402
     affine_vortex_stretch_gradient,
     affine_vortex_stretch_ns_residual,
+    exact_linear_strain_ns_residual,
+    strained_refined_line_frame,
 )
 from pde_audit.kelvin_shape_generator import (  # noqa: E402
     cubic_shear_rectangle_shape_residual,
@@ -409,6 +427,125 @@ cubic_moment_noise_zero = polynomial_error_noise_from_oriented_moments(
     omega_cubic_moment, (rx, ry, rz), cubic_moments
 ) == [0, 0, 0]
 
+# Full scale/shape and codeforming surface-moment reduction.
+cx, cy, cz = sp.symbols("cx cy cz", real=True)
+cr, ca, cb, cd = sp.symbols("code_r code_a code_b code_d", positive=True)
+coords_phys = (rx, ry, rz)
+coords_code = (cx, cy, cz)
+M0 = sp.Matrix(sp.symbols("code_m0_0:3"))
+zero_exp = (0, 0, 0)
+base0 = {zero_exp: M0}
+Rshape = sp.diag(ca, cb, cd**3 / (ca * cb))
+scalar_refinement_zero = scalar_normalized_refinement_residual(
+    base0, zero_exp, Rshape, rho, cd, coords_phys
+) == sp.zeros(3, 1)
+Sshape = sp.diag(ca, cb, 1 / (ca * cb))
+Lshape = sp.simplify(rho * Sshape)
+scale_shape_pullback_zero = scale_shape_codeforming_residual(
+    base0, zero_exp, Lshape, rho, coords_phys
+) == sp.zeros(3, 1)
+Rcoh = sp.Matrix([[1, 1, 0], [0, 1, 0], [0, 0, 1]])
+Lcoh = sp.diag(2, 3, 1)
+coherent_refinement_zero = coherent_refinement_codeforming_moment_residual(
+    base0, zero_exp, Lcoh, Rcoh, coords_phys
+) == sp.zeros(3, 1)
+
+quad_residual_field = sp.Matrix([ry**2, 0, 0])
+quad_grad_profile = quad_residual_field.jacobian(coords_phys)
+Lquad = sp.diag(cr**3, cr, cr)
+Nquad = codeforming_nonaffinity_field(
+    quad_residual_field, sp.zeros(3), coords_phys, Lquad, coords_code
+)
+quad_nonaffinity_ratio_zero = sp.simplify(
+    Nquad - sp.Matrix([cy**2 / cr, 0, 0])
+) == sp.zeros(3, 1)
+quad_nonaffinity_div_zero = codeforming_nonaffinity_divergence(Nquad, coords_code) == 0
+quad_area_is_DN_transpose = codeforming_nonaffinity_geometry_residual(
+    quad_residual_field, quad_grad_profile, sp.zeros(3), coords_phys, Lquad, coords_code
+) == sp.zeros(3)
+beta_quad = codeforming_nonaffinity_one_form(Nquad, Lquad)
+beta_quad_expected = sp.Matrix([cr**5 * cy**2, 0, 0])
+beta_quad_r5_zero = sp.simplify(beta_quad - beta_quad_expected) == sp.zeros(3, 1)
+omega_quad_defect = sp.Matrix([0, 0, -2 * ry])
+pulled_omega_quad = pulledback_vorticity_defect(
+    omega_quad_defect, sp.zeros(3, 1), coords_phys, Lquad, coords_code
+)
+kelvin_curl_piola_zero = codeforming_kelvin_curl_residual(
+    Nquad, Lquad, coords_code, pulled_omega_quad
+) == sp.zeros(3, 1)
+
+# Exact one-mode NS referee for beta_L anchor derivative = error martingale coefficient.
+U_anchor = sp.exp(-alpha * t) * sp.cos(k * Y_anchor)
+U_offset = sp.exp(-alpha * t) * sp.cos(k * (Y_anchor + ry))
+one_mode_residual_velocity = sp.Matrix([
+    sp.simplify(U_offset - U_anchor - sp.diff(U_anchor, Y_anchor) * ry), 0, 0
+])
+N_one = codeforming_nonaffinity_field(
+    one_mode_residual_velocity, sp.zeros(3), coords_phys, sp.eye(3), coords_code
+)
+beta_one = codeforming_nonaffinity_one_form(N_one, sp.eye(3))
+eps_beta_line = sp.simplify(2 * ax * (
+    beta_one[0].subs(cy, -by) - beta_one[0].subs(cy, by)
+))
+eps_beta_expected = one_mode_shear_rectangle_error_mean(Y_anchor, t, ax, by, nu, k)
+one_mode_beta_error_zero = sp.trigsimp(sp.simplify(eps_beta_line - eps_beta_expected)) == 0
+beta_anchor_derivative = codeforming_anchor_one_form_derivative(beta_one, Y_anchor)
+q_beta_line = sp.simplify(2 * ax * (
+    beta_anchor_derivative[0].subs(cy, -by)
+    - beta_anchor_derivative[0].subs(cy, by)
+))
+one_mode_beta_noise_zero = sp.trigsimp(
+    sp.simplify(q_beta_line - sp.diff(eps_beta_expected, Y_anchor))
+) == 0
+eta_symbols = sp.Matrix(sp.symbols("eta_code_0:3"))
+hdot_symbols = sp.Matrix(sp.symbols("hdot_code_0:3"))
+codeforming_drift_identity = sp.simplify(
+    codeforming_descent_error_drift(eta_symbols, hdot_symbols)
+    + (eta_symbols.T * hdot_symbols)[0]
+) == 0
+
+cubic_homogeneous = sp.Matrix([ry**3, rz**3, rx**3])
+homogeneous_scale_shape_zero = codeforming_homogeneous_scale_shape_residual(
+    cubic_homogeneous, 3, coords_phys, rho, Sshape, coords_code
+) == sp.zeros(3, 1)
+
+# Critical exact linear-strain/refinement calibration.
+linear_ns_res, _ = exact_linear_strain_ns_residual(a, (x, y, z), nu)
+linear_ns_zero = sp.simplify(linear_ns_res) == sp.zeros(3, 1)
+Lcritical = sp.diag(1, cr, cr**2)
+critical_area = sp.Matrix([0, 0, cr])
+critical_moments = {zero_exp: critical_area}
+critical_scalar_area = scalar_normalized_oriented_moments(critical_moments, cr)[zero_exp]
+critical_codeforming_area = codeforming_oriented_moment(
+    critical_moments, zero_exp, Lcritical, coords_phys
+)
+critical_scalar_area_zero = sp.simplify(
+    critical_scalar_area - sp.Matrix([0, 0, 1 / cr])
+) == sp.zeros(3, 1)
+critical_codeforming_area_zero = sp.simplify(
+    critical_codeforming_area - sp.Matrix([0, 0, 1])
+) == sp.zeros(3, 1)
+critical_support_nonlocal = Lcritical[0, 0] == 1
+
+# Supercritical exact strain geometry: all physical exponents are negative for k>s,
+# while scalar-normalized xy area is exp(s t).  We record the exact symbolic faces.
+kref = sp.symbols("k_ref", positive=True)
+Lsuper = strained_refined_line_frame(a, kref, t)
+rho_super = sp.exp(-kref * t)
+super_area = sp.Matrix([0, 0, sp.exp((a - 2 * kref) * t)])
+super_scalar_area = sp.simplify(
+    scalar_normalized_oriented_moments({zero_exp: super_area}, rho_super)[zero_exp]
+)
+super_codeforming_area = codeforming_oriented_moment(
+    {zero_exp: super_area}, zero_exp, Lsuper, coords_phys
+)
+super_scalar_factor_zero = sp.simplify(
+    super_scalar_area - sp.Matrix([0, 0, sp.exp(a * t)])
+) == sp.zeros(3, 1)
+super_codeforming_area_zero = sp.simplify(
+    super_codeforming_area - sp.Matrix([0, 0, 1])
+) == sp.zeros(3, 1)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -441,6 +578,21 @@ report = {
         "shear_hidden_oriented_moment_tower": "Exact shear identity",
         "finite_moment_dynamic_shape_closure": "Audited calibration family / rigorous no-go consequence",
         "first_bad_infinite_moment_jet_collapse": "Open-literal",
+        "surface_moment_scalar_refinement_weight": "Exact identity",
+        "codeforming_surface_moment_pullback": "Exact identity",
+        "codeforming_nonaffinity_reduction": "Exact identity",
+        "codeforming_generating_current_law": "Exact identity",
+        "coherent_refinement_codeforming_gauge": "Exact identity",
+        "codeforming_homogeneous_jet_scale_shape": "Exact identity",
+        "codeforming_constancy_vs_support_locality": "Audited calibration / rigorous no-go consequence",
+        "support_locality_vs_codeforming_affinity": "Audited calibration / rigorous no-go consequence",
+        "first_bad_codeforming_nonaffinity_collapse": "Open-literal",
+        "codeforming_kelvin_nonaffinity_one_form": "Exact identity / exact Stokes--Piola identity",
+        "codeforming_nonaffinity_three_face_split": "Exact identity",
+        "kinematic_vs_kelvin_nonaffinity_scaling": "Audited calibration / rigorous type-separation consequence",
+        "first_bad_codeforming_kelvin_one_form_collapse": "Open-literal",
+        "codeforming_kelvin_anchor_noise": "Exact identity / audited exact one-mode Navier--Stokes calibration",
+        "codeforming_finite_shape_error_sde": "Exact identity",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
@@ -565,6 +717,50 @@ report = {
         "cubic_centered_error_noise_zero": bool(cubic_moment_noise_zero),
         "typing": "low oriented moments are observables of the full material surface; nonlinear NS calls omitted higher moments dynamically, while special shear geometry can conserve hidden moments exactly",
         "first_bad_verdict": "Open-literal: no uniform theorem controls the full normalized oriented moment tower on the migrating selected support",
+    },
+    "codeforming_surface_moment_tower": {
+        "raw_isotropic_weight": "M_alpha -> lambda^(|alpha|+2) M_alpha",
+        "scalar_refinement_shape_residual_zero": bool(scalar_refinement_zero),
+        "scale_shape_full_pullback_residual_zero": bool(scale_shape_pullback_zero),
+        "coherent_refinement_pullback_residual_zero": bool(coherent_refinement_zero),
+        "nonaffinity_field": "N_L=L^-1[u(X+Lxi)-u(X)-A(X)Lxi]",
+        "quadratic_heat_shear_nonaffinity": str(Nquad),
+        "quadratic_nonaffinity_ratio_r_inverse": bool(quad_nonaffinity_ratio_zero),
+        "nonaffinity_divergence_zero": bool(quad_nonaffinity_div_zero),
+        "area_source_equals_DN_transpose": bool(quad_area_is_DN_transpose),
+        "kelvin_one_form": "beta_L=(L^T L)N_L",
+        "quadratic_kelvin_one_form": str(beta_quad),
+        "quadratic_kelvin_one_form_r5": bool(beta_quad_r5_zero),
+        "quadratic_pulled_vorticity_defect": str(pulled_omega_quad),
+        "kelvin_curl_piola_residual_zero": bool(kelvin_curl_piola_zero),
+        "kelvin_identity": "epsilon_K=oint beta_L.dxi; curl_xi beta_L=cof(L)^T[omega(X+Lxi)-omega(X)]",
+        "one_mode_beta_recovers_error": bool(one_mode_beta_error_zero),
+        "one_mode_anchor_beta_derivative_recovers_noise": bool(one_mode_beta_noise_zero),
+        "codeforming_drift_contraction_residual_zero": bool(codeforming_drift_identity),
+        "codeforming_error_sde": "d epsilon=-eta0.htilde_dot dsigma+sqrt(2nu) sum_mu (oint partial_Xmu beta_L.dxi)dW_mu",
+        "three_faces": "shape velocity -N_L; area rate (D N_L)^T; Kelvin one-form (L^T L)N_L",
+        "homogeneous_scale_shape_residual_zero": bool(homogeneous_scale_shape_zero),
+        "homogeneous_law": "N_{rho S}^{(p)}=rho^(p-1) S^-1 U_p(Sxi)",
+        "linear_strain_ns_residual_zero": bool(linear_ns_zero),
+        "critical_long_thin": {
+            "line_frame": str(Lcritical),
+            "scalar_normalized_xy_area": str(critical_scalar_area),
+            "scalar_area_is_r_inverse": bool(critical_scalar_area_zero),
+            "codeforming_xy_area": str(critical_codeforming_area),
+            "codeforming_area_is_reference": bool(critical_codeforming_area_zero),
+            "physical_support_nonlocal": bool(critical_support_nonlocal),
+            "verdict": "codeforming constancy does not imply physical support locality",
+        },
+        "supercritical_refinement": {
+            "line_frame": str(Lsuper),
+            "scalar_normalized_xy_area": str(super_scalar_area),
+            "scalar_factor_is_exp_st": bool(super_scalar_factor_zero),
+            "codeforming_xy_area": str(super_codeforming_area),
+            "codeforming_area_is_reference": bool(super_codeforming_area_zero),
+            "verdict": "support locality for k>s does not require bounded scalar-normalized area moments",
+        },
+        "anisotropic_quadratic_no_go": "L=diag(r^3,r,r) shrinks all physical lines but N_L=r^-1 xi_y^2 e_x",
+        "first_bad_verdict": "Open-literal: instantaneous Kelvin descent requires beta_L/curl control, while dynamic current-shape descent separately requires N_L/DN_L plus actual support and selector/boundary/exit/reset faces",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),

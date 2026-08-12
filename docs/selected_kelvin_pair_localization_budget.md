@@ -2147,3 +2147,138 @@ makes the infinite tower asymptotically subordinate to one local scale/shape law
 first-bad uniform jet collapse Open-literal.  No continuation/restart theorem.**
 
 See `docs/surface_moment_hierarchy_audit.md`.
+
+---
+
+## 36. The infinite finite-shape tower reduces to one codeforming nonaffinity field
+
+The literal finite-surface hierarchy can be reorganized without truncation.  On a
+smooth reverse-age material segment choose the actual local line frame
+
+\[
+\dot L=-\nabla u(X)L,
+\]
+
+and pull the surface back by
+
+\[
+\xi=L^{-1}r,
+\qquad
+\widetilde a=\operatorname{cof}(L)^{-1}a.
+\]
+
+Then all affine deformation cancels.  Define
+
+\[
+\boxed{
+\mathcal N_L(\xi)
+=L^{-1}[u(X+L\xi)-u(X)-\nabla u(X)L\xi].
+}
+\]
+
+Incompressibility gives the exact residual material-surface system
+
+\[
+\boxed{
+\dot\xi=-\mathcal N_L,
+\qquad
+\dot{\widetilde a}=(D_\xi\mathcal N_L)^T\widetilde a,
+\qquad
+\nabla_\xi\cdot\mathcal N_L=0.
+}
+\]
+
+Thus every pulled-back oriented moment, and equivalently the generating current
+`int exp(theta.xi) a_tilde`, is driven by this one nonaffinity field.  Affine flow
+freezes the entire tower exactly.  Coherent linear refinement of current and frame is
+also exact gauge.
+
+For `L=rho S`, a homogeneous degree-`p` NS jet appears as
+
+\[
+\mathcal N_{\rho S}^{(p)}
+=\rho^{p-1}S^{-1}U_p(S\xi),
+\]
+
+so scalar scale and anisotropy are distinct physical faces.  Exact linear-strain NS
+shows codeforming constancy without physical locality at critical refinement.  Exact
+quadratic heat-shear NS with shrinking `L_r=diag(r^3,r,r)` gives
+`mathcal N_L=r^-1 xi_y^2 e_x`, so physical support shrink alone does not imply
+codeforming affine collapse.
+
+The remaining first-bad descent seam is therefore not "choose more moments".  It is
+simultaneous control of actual support/current faces and tensorial NS nonaffinity
+relative to the actual selected frame.  Selector switches, noncoherent refinements,
+physical boundary/exit, and reset remain separate pair-current faces.
+
+**Classification: Exact identities and audited exact-NS no-go calibrations.
+First-bad anisotropic jet-frame collapse is Open-literal.  No restart, continuation,
+or regularity theorem is claimed.**
+
+---
+
+## 37. Kelvin reads the metric-weighted codeforming nonaffinity one-form
+
+The codeforming residual vector field has a second exact face.  With
+`G_L=L^T L`, define
+
+\[
+\boxed{\beta_L=G_L\mathcal N_L.}
+\]
+
+Because the physical residual velocity is `L mathcal N_L` and `dr=L dxi`,
+
+\[
+\boxed{
+\varepsilon_K
+=\oint_{\widetilde Z}\beta_L\cdot d\xi,
+\qquad
+\operatorname{curl}_\xi\beta_L
+=\operatorname{cof}(L)^T[\omega(X+L\xi)-\omega(X)].
+}
+\]
+
+Thus the same nonaffinity drives three differently typed objects: residual shape
+velocity `N_L`, oriented-area rate `(D N_L)^T`, and Kelvin one-form `G_L N_L`.
+Exact quadratic heat-shear with `L=diag(r^3,r,r)` gives
+`N_L=r^-1 xi_y^2 e_x` but `beta_L=r^5 xi_y^2 e_x`.  A divergent normalized shape
+velocity therefore does not imply failure of instantaneous Kelvin descent.
+
+The first-bad frontier must keep two seams separate: instantaneous circulation/local
+Stokes descent is a `beta_L`/vorticity-defect question, while dynamic finite-current
+shape descent is an `N_L,D N_L` plus selector/boundary/exit/reset question.
+
+**Classification: Exact identity / audited exact-NS type separation.  Both first-bad
+uniform controls remain Open-literal.  No restart, continuation, or regularity theorem
+is claimed.**
+
+---
+
+## 38. Codeforming form of the exact finite-shape error SDE
+
+Because only the anchor is Brownian on the full current-shape state, the codeforming
+Kelvin one-form gives the martingale coefficient directly:
+
+\[
+q_\mu^{\rm err}
+=\oint_{\widetilde Z}\partial_{X_\mu}\beta_L\cdot d\xi.
+\]
+
+With `eta_0=cof(L)^T omega(X)` and
+`htilde_dot=int(D_xi N_L)^T a_tilde`, the already audited physical SDE becomes
+
+\[
+\boxed{
+d\varepsilon_K
+=-\eta_0\cdot\dot{\widetilde h}\,d\sigma
++\sqrt{2\nu}\sum_\mu
+\left(\oint\partial_{X_\mu}\beta_L\cdot d\xi\right)dW^\mu.
+}
+\]
+
+Thus deterministic shape drift and stochastic finite-support spread are both faces of
+the same codeforming nonaffinity geometry, but remain physically distinct: the first
+uses `D N_L`, the second uses anchor derivatives of `G_L N_L`.
+
+**Classification: Exact identity / exact one-mode NS calibration.  No new bank and no
+restart/continuation/regularity conclusion.**

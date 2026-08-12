@@ -27,6 +27,7 @@ coupling_note = ROOT / "docs" / "deformation_current_pair_coupling_audit.md"
 full_shape_cov_note = ROOT / "docs" / "full_current_shape_covariance_audit.md"
 descent_note = ROOT / "docs" / "finite_shape_kelvin_descent_audit.md"
 moment_note = ROOT / "docs" / "surface_moment_hierarchy_audit.md"
+codeforming_note = ROOT / "docs" / "codeforming_surface_moment_tower_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -50,6 +51,7 @@ coupling_text = coupling_note.read_text()
 full_shape_cov_text = full_shape_cov_note.read_text()
 descent_text = descent_note.read_text()
 moment_text = moment_note.read_text()
+codeforming_text = codeforming_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -423,6 +425,35 @@ if surface_moment_missing:
     print("missing surface-moment hierarchy structural markers:", surface_moment_missing)
     sys.exit(1)
 
+codeforming_required = [
+    "m+2",
+    "unit-determinant shape action",
+    "Full codeforming pullback",
+    "single codeforming nonaffinity field",
+    "residual incompressible velocity",
+    "generating current",
+    "rho^(p-1)",
+    "Coherent linear refinement is a gauge",
+    "codeforming tower constancy does not imply physical support collapse",
+    "bounded scalar-normalized moments are **not necessary**",
+    "support diameter collapse alone does not imply codeforming affine collapse",
+    "Open-literal",
+    "No restart/continuation/regularity theorem claimed",
+    "metric-weighted nonaffinity one-form",
+    "exact Stokes--Piola identity",
+    "three distinct physical faces",
+    "does **not** imply a large Kelvin descent error",
+    "Instantaneous Kelvin readout descent",
+    "Dynamic current-shape descent",
+    "anchor derivative of the Kelvin one-form",
+    "entire exact finite-shape error SDE",
+    "no new bank",
+]
+codeforming_missing = [token for token in codeforming_required if token not in codeforming_text]
+if codeforming_missing:
+    print("missing codeforming surface-moment structural markers:", codeforming_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -518,8 +549,19 @@ for forbidden in [
     "material centering is preserved by Navier-Stokes",
     "one anchor shift always centers oriented moments",
     "moment hierarchy proves first-bad support collapse",
+    "scalar moment normalization proves locality",
+    "codeforming tower constancy proves support locality",
+    "support locality proves codeforming affine collapse",
+    "rho^(p-1) alone controls nonaffinity",
+    "codeforming nonaffinity proves restart",
+    "large codeforming N implies large Kelvin descent error",
+    "small Kelvin one-form controls full shape dynamics",
+    "kinematic affine collapse is equivalent to Kelvin descent",
+    "beta_L is S^int",
+    "anchor derivative one-form is a new covariance bank",
+    "codeforming error SDE proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

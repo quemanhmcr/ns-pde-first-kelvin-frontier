@@ -1043,3 +1043,63 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Exact polynomial jet/moment contraction:** polynomial Kelvin descent bias, reverse shape residual, and error-noise coefficients are exact contractions of vorticity/velocity-gradient jets with the same oriented moment tower.  A physically zero centered moment must be stored as zero; omission is not equivalent to zero.
 - **Rigorous dynamic finite-truncation no-go:** the earlier Legendre static counterexample is now complemented by generator algebra: any finite low-moment cutoff is generically called by omitted higher moments under nonlinear spatial jets.  Smooth exact NS polynomial heat shears realize arbitrarily high degree.
 - **Open-literal:** no theorem yet shows that the actual first-bad material support remains sufficiently shrinking/conditioned to make `M^(m)/ell^(m+2)` uniformly subordinate across the full tower.  No restart, continuation, `S^int`, or regularity conclusion is claimed.
+
+## 2026-08-13 — codeforming material-surface tower collapses to one nonaffinity field
+
+- **Exact identity:** raw order-`m` oriented moments scale as `lambda^(m+2)` under
+  isotropic physical refinement.  For `J=dS`, scalar normalization removes only
+  `d`; the unit-determinant shape `S` acts nontrivially.
+- **Exact identity:** with the actual reverse local line frame `L_dot=-A(X)L`, the
+  pullback `xi=L^-1 r`, `a_tilde=cof(L)^-1 a` removes all local affine deformation.
+  The only residual velocity is
+  `N_L=L^-1[u(X+Lxi)-u(X)-A(X)Lxi]`.
+- **Exact identity:** incompressibility gives `div_xi N_L=0` and the pulled-back area
+  law `a_tilde_dot=(D_xi N_L)^T a_tilde`.  Therefore the whole infinite oriented
+  moment tower is one material-surface transport system driven by `-N_L`.
+- **Exact identity:** the generating current `G_L(theta)=int exp(theta.xi)a_tilde`
+  reproduces every moment equation by theta derivatives.  Affine NS freezes the
+  entire codeforming tower, not merely each raw moment order.
+- **Exact identity:** homogeneous degree-`p` jets enter as
+  `N_{rho S}^{(p)}=rho^(p-1) S^-1 U_p(Sxi)`; anisotropy conjugation is independent of
+  scalar scale.  Coherent linear refinement is exact gauge for the pulled-back tower.
+- **Audited calibration / rigorous no-go:** exact critical linear strain has constant
+  codeforming tower but no support locality.  Supercritical refinement can be
+  support-local while scalar-normalized area moments diverge.
+- **Audited calibration / rigorous no-go:** exact quadratic heat-shear NS with
+  shrinking `L_r=diag(r^3,r,r)` has `N_L=r^-1 xi_y^2 e_x`; support locality alone
+  does not force codeforming affine collapse.
+- **Open-literal:** a first-bad descent theorem must control both actual support and
+  the tensorial nonaffinity jets `L^-1 (nabla^p u) L^tensor p`, together with existing
+  selector/boundary/exit/reset faces.  No restart/continuation/regularity claim.
+
+## 2026-08-13 — Kelvin descent is circulation of the codeforming nonaffinity one-form
+
+- **Exact identity:** if `N_L=L^-1[u(X+Lxi)-u(X)-A(X)Lxi]` and `G=L^T L`, the
+  physical nonaffine momentum one-form pulls back to `beta_L=G N_L`.
+- **Exact Stokes--Piola identity:** `curl_xi(beta_L)=cof(L)^T[omega(X+Lxi)-omega(X)]`,
+  and the finite Kelvin descent error is exactly `epsilon_K=oint beta_L.dxi`.
+- **Exact identity:** the same underlying nonaffinity has three distinct physical
+  faces: `xi_dot=-N_L`, `a_tilde_dot=(D N_L)^T a_tilde`, and Kelvin one-form
+  `beta_L=G N_L`.  The first two are shape kinematics; the third is circulation.
+- **Audited exact-NS calibration:** for quadratic heat shear with shrinking
+  `L=diag(r^3,r,r)`, `N_L=r^-1 xi_y^2 e_x` diverges while
+  `beta_L=r^5 xi_y^2 e_x` shrinks.  Therefore kinematic shape-affinity and
+  instantaneous Kelvin descent are not equivalent.
+- **Open-literal:** first-bad instantaneous Kelvin descent requires control of the
+  metric-weighted one-form/curl on the actual selected current; dynamic shape descent
+  separately requires the residual vector field/Jacobian plus physical current
+  faces.  No restart/continuation/regularity claim.
+
+## 2026-08-13 — codeforming representation of the finite-shape error SDE
+
+- **Exact identity:** on the full reverse-age state, `L` and pulled-back shape have no
+  direct Brownian q.v.; hence `q_mu^err=oint partial_Xmu beta_L . dxi` with
+  `beta_L=(L^T L)N_L`.
+- **Exact identity:** if `eta0=cof(L)^T omega(X)` and
+  `htilde_dot=int(D N_L)^T a_tilde`, then the existing physical drift
+  `-omega.R_A` is exactly `-eta0.htilde_dot`.
+- **Exact codeforming SDE:** `d epsilon=-eta0.htilde_dot dsigma + sqrt(2nu) sum_mu
+  (oint partial_Xmu beta_L.dxi)dW_mu`.
+- **Audited calibration:** exact periodic one-mode NS shear reproduces both the finite
+  rectangle descent error and its anchor-noise coefficient from the residual
+  one-form.  This is a representation of the existing error process, not a new bank.

@@ -578,3 +578,32 @@ That question should be attacked first through exact support/moment transport an
 adversarial NS calibrations, before any norm estimate.
 
 **Status: Open-literal.  No restart/continuation/regularity theorem claimed.**
+
+---
+
+## 11. Full codeforming reduction of the infinite tower
+
+The raw upward-coupled hierarchy admits an exact stronger reorganization.  Let the
+local reverse line frame satisfy `L_dot=-A(X)L`, set `xi=L^-1 r` and pull oriented
+area back by `cof(L)^-1`.  Then every affine connection term cancels and the whole
+pulled-back tower is transported by the single divergence-free nonaffinity field
+
+\[
+\mathcal N_L(\xi)=L^{-1}[u(X+L\xi)-u(X)-A(X)L\xi].
+\]
+
+The pulled-back area law is exactly `(D_xi mathcal N_L)^T`; an exponential generating
+current packages every oriented moment.  Coherent linear refinement leaves the full
+pulled-back tower invariant.  Homogeneous degree-`p` jets enter as
+`rho^(p-1) S^-1 U_p(S xi)` for `L=rho S`, exposing scalar scale and anisotropy as
+separate physical faces.
+
+Exact linear-strain and quadratic heat-shear NS calibrations then show two different
+no-go facts: codeforming constancy does not imply support locality, while support
+locality alone does not force codeforming affine collapse under severe anisotropy.
+
+**Status: Exact identity / audited exact-NS calibrations.  First-bad anisotropic
+jet-frame collapse remains Open-literal.  No restart/continuation/regularity theorem
+claimed.**
+
+See `docs/codeforming_surface_moment_tower_audit.md`.
