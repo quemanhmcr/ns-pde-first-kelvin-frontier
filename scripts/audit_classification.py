@@ -22,6 +22,7 @@ two_clock_note = ROOT / "docs" / "two_clock_kelvin_quantile_audit.md"
 event_note = ROOT / "docs" / "first_bad_event_semantics_audit.md"
 candidate_note = ROOT / "docs" / "first_bad_candidate_exclusions_audit.md"
 support_bank_note = ROOT / "docs" / "support_bank_restart_bridge_audit.md"
+cauchy_note = ROOT / "docs" / "stochastic_cauchy_deformation_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -40,6 +41,7 @@ two_clock_text = two_clock_note.read_text()
 event_text = event_note.read_text()
 candidate_text = candidate_note.read_text()
 support_bank_text = support_bank_note.read_text()
+cauchy_text = cauchy_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -306,6 +308,22 @@ if support_bank_missing:
     print("missing support-bank restart-bridge structural markers:", support_bank_missing)
     sys.exit(1)
 
+cauchy_required = [
+    "stochastic Cauchy deformation",
+    "terminal directional headroom",
+    "centered covariance",
+    "R_s",
+    "finite variation",
+    "affine-vortex",
+    "one-mode",
+    "Open",
+    "No continuation",
+]
+cauchy_missing = [token for token in cauchy_required if token not in cauchy_text]
+if cauchy_missing:
+    print("missing stochastic Cauchy deformation structural markers:", cauchy_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -363,8 +381,14 @@ for forbidden in [
     "support-bank rate is already a physical backward-Kelvin continuation theorem",
     "moving past terminal has no extra face",
     "support-bank scale and covariance horizon are identified",
+    "smooth past vorticity proves Q_tot bounded",
+    "fixed-past bank removes deformation growth",
+    "R_s is centered covariance",
+    "stochastic deformation is martingale q.v.",
+    "selected material F equals stochastic Cauchy D",
+    "stochastic Cauchy deformation is uniformly controlled",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

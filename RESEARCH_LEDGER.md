@@ -881,3 +881,32 @@ nonideal face control, or continuation.
 **Classification: Exact scale-parametric factorization and exact causal clock/terminal
 calibration; scale--covariance horizon identification Open-literal; restart and
 continuation open.**
+
+## 2026-08-12 — fixed-past total bank reduces to stochastic Cauchy deformation plus covariance
+
+For fixed causal past time `s<t`, the literal stochastic Cauchy contribution is
+`Y_s=D_s^t omega(A_s^t,s)` and `E Y_s=omega(x,t)`.  With
+`Q_s=E[Y_s Y_s^T]`, `C_s=Q_s-omega omega^T`,
+`W_s=sup_y|omega(y,s)|^2`, and `R_s=E[D_s^t(D_s^t)^T]`, exact samplewise algebra gives
+`W_s D D^T-Y Y^T=D(W_s I-w_s w_s^T)D^T`, hence
+`omega omega^T<=Q_s<=W_s R_s`.  The full gap splits exactly as
+`W_s R_s-omega omega^T=(W_s R_s-Q_s)+C_s`: terminal directional headroom plus
+centered stochastic covariance.
+
+In reverse age the deformation obeys `D_sigma=D(grad u)^T` and
+`(D D^T)_sigma=2 D S D^T`, so `R_sigma=2 E[D S D^T]`; this is finite-variation
+stochastic deformation work and is generally not closed on `R`.  Incompressibility
+preserves `det D` pathwise but not its anisotropy/second moment.
+
+Two exact NS calibrations separate the mechanisms.  In the genuine affine
+vortex-stretch flow, vorticity and gradient are spatially uniform, centered covariance
+is zero, and the z-deformation factor carries the full vorticity growth pathwise.  In
+the one-mode shear the vorticity-direction deformation is one while the fixed-past
+second moment/covariance is nontrivial and remains below the fixed terminal supremum.
+Thus smooth past vorticity alone does not make the total bank a free bounded
+reservoir; the remaining sufficient envelope is the stochastic Cauchy deformation
+moment, with exact directional headroom quantifying looseness.
+
+**Classification: Exact stochastic-Cauchy tensor identities and exact NS calibration
+pair; uniform stochastic deformation control and alignment with selected support remain
+open.  No restart claim.**

@@ -479,6 +479,14 @@ construction can match the lengths, but introduces the explicit terminal-motion
 face and still requires the covariance state/deformation to be the same state used
 by the selected packet.
 
+A separate fixed-past audit now identifies the total-bank envelope more literally:
+`Q_s<=W_s R_s`, where `R_s=E[D D^T]` is the stochastic Cauchy deformation second
+moment, with an exact terminal-directional-headroom plus centered-covariance split.
+This improves physical typing but does not identify the selected coherent `F` with
+the random Cauchy deformation `D`.
+
+See `docs/stochastic_cauchy_deformation_audit.md`.
+
 This seam is **Open-literal**.
 
 ### C. Uniform support-bank envelopes
