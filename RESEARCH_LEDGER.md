@@ -997,3 +997,14 @@ law-of-total-covariance split. **Status: Rigorous consequence** for the local sm
 shear and affine-vortex NS. Cross-clock, actual reduced-state lift construction, and
 deterministic-selected support identifications remain **Conjectural bridge /
 Open-literal**. No restart, continuation, or regularity theorem is claimed.
+
+
+## 2026-08-12 — Cauchy deformation / physical-current pair coupling
+
+- **Exact identity:** the reverse-age Cauchy matrix acts on the spatial tangent fiber through `F=D^T`, while the first-bad selector/current map acts on chain/germ coefficients.  The literal local combined map is `T(P,D)=P tensor D^T`.
+- **Exact identity:** physical boundary factorizes as `(B tensor I)T(P,D)=(BP) tensor D^T`.  Hence a closed selected Kelvin cycle stays closed replica by replica; the ordered pair boundary contains only the two chain faces and no autonomous deformation seam.
+- **Exact identity:** for a fixed reference tangent `e`, `D^T e=(I tensor e^T) vec(D)`, so tangent covariance and every fixed local cochain readout are exact linear projections of the full `Sigma_D`.  They are not new covariance species.
+- **Rigorous consequence:** the short-horizon cochain readout keeps the same cubic onset, `Var(alpha^T D_h^T e)=(2 nu/3) h^3 sum_mu [alpha^T (partial_mu grad u)e]^2+O(h^4)` for locally smooth NS coefficients.
+- **Exact two-replica identity:** `T(P1,D1)-T(P2,D2)=T(P1-P2,D1)+T(P2,D1-D2)`.  Squaring gives selector, deformation, and mandatory cross pair terms.  A shared/frozen selector kills selector and cross sectors exactly; replica-dependent reselection does not.
+- **Audited calibration / rigorous no-descent consequence:** exact cubic heat-shear NS gives two finite surfaces with the same anchor, initial local `D=I`, and the same area vector but different finite-surface shape currents (`-4 e_y` versus `-16 e_y`).  Existing polynomial/Legendre calibrations already exclude every universal finite even-moment closure.  Thus `D` is an exact local tangent transport but not a complete finite-current state.
+- **Open-literal:** derive the same-ancestor pair law on the actual stochastic current-shape state `(X,R(.),D)` with the Kelvin cochain sampled along that moving current; only then test shrinking first-bad descent.  No `S^int`, future-bank, restart, continuation, or regularity identification is claimed.

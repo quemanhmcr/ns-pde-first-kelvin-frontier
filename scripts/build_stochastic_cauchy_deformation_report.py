@@ -12,6 +12,17 @@ sys.path.insert(0, str(ROOT / "src"))
 from pde_audit.ancestry_resolution_kernel import (  # noqa: E402
     vector_total_covariance_decomposition,
 )
+from pde_audit.cycle_selector import two_cycle_library  # noqa: E402
+from pde_audit.deformation_current_pair_coupling import (  # noqa: E402
+    selected_deformation_pair_decomposition,
+    selected_deformation_pair_dyad_residual,
+    spatial_fiber_boundary,
+    spatial_fiber_boundary_factorization_residual,
+    spatial_fiber_current_map,
+    spatial_fiber_pair_boundary_factorization_residual,
+    tangent_cochain_covariance,
+    tangent_projection_residual,
+)
 from pde_audit.future_covariance_tensor import (  # noqa: E402
     connected_covariance_horizon_residual,
     connected_mean_horizon_residual,
@@ -22,6 +33,10 @@ from pde_audit.future_covariance_tensor import (  # noqa: E402
 from pde_audit.kelvin_packet_locality import (  # noqa: E402
     affine_vortex_stretch_gradient,
     affine_vortex_stretch_ns_residual,
+)
+from pde_audit.kelvin_shape_generator import (  # noqa: E402
+    cubic_shear_rectangle_shape_residual,
+    oriented_rectangle_area_vector_yz,
 )
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
@@ -153,6 +168,44 @@ shear_mean0 = one_mode_shear_deformation_mean_coefficient(0, t, h, nu, k)
 shear_second0 = one_mode_shear_deformation_second_coefficient(0, t, h, nu, k)
 shear_var0 = one_mode_shear_deformation_variance_at_symmetry(t, h, nu, k)
 
+# Literal current-fiber / selected-pair coupling audit.
+B_cycle, K_cycle = two_cycle_library()
+P_cycle = K_cycle * sp.diag(1, 0)
+D_coupling = sp.Matrix([[1, 2], [0, 1]])
+fiber_boundary_res = spatial_fiber_boundary_factorization_residual(B_cycle, P_cycle, D_coupling)
+pair_boundary_res = spatial_fiber_pair_boundary_factorization_residual(B_cycle, P_cycle, D_coupling)
+Bfiber = spatial_fiber_boundary(B_cycle, 2)
+Tfiber = spatial_fiber_current_map(P_cycle, D_coupling)
+closed_current_boundary_zero = sp.simplify(Bfiber * Tfiber) == sp.zeros(Bfiber.rows, Tfiber.cols)
+
+e1, e2, a1, a2 = sp.symbols("e1 e2 a1 a2")
+e_ref = sp.Matrix([e1, e2])
+alpha_ref = sp.Matrix([a1, a2])
+local_projection_zero = tangent_projection_residual(D_coupling, e_ref) == sp.zeros(2, 1)
+local_cochain_leading = tangent_cochain_covariance(full_leading, e_ref, alpha_ref)
+local_cochain_expected = sp.simplify(
+    sp.Rational(2, 3) * nu * h**3 * (
+        (alpha_ref.T * dAx * e_ref)[0] ** 2
+        + (alpha_ref.T * dAy * e_ref)[0] ** 2
+    )
+)
+local_cochain_leading_zero = sp.simplify(local_cochain_leading - local_cochain_expected) == 0
+
+P1 = sp.Matrix([[1, 0], [0, 0]])
+P2 = sp.Matrix([[0, 0], [0, 1]])
+D1 = sp.Matrix([[1, 1], [0, 1]])
+D2 = sp.Matrix([[1, 0], [2, 1]])
+pair_sector = selected_deformation_pair_decomposition(P1, D1, P2, D2)
+_, pair_selector_lift, pair_deformation_lift, pair_cross_lift = pair_sector.pair_lift_parts()
+pair_sector_residual_zero = selected_deformation_pair_dyad_residual(P1, D1, P2, D2) == sp.zeros(16)
+shared_sector = selected_deformation_pair_decomposition(P1, D1, P1, D2)
+_, shared_selector_lift, shared_deformation_lift, shared_cross_lift = shared_sector.pair_lift_parts()
+
+h_surface_1 = oriented_rectangle_area_vector_yz(1, 1)
+h_surface_2 = oriented_rectangle_area_vector_yz(2, sp.Rational(1, 2))
+shape_current_1 = cubic_shear_rectangle_shape_residual(1, 1, t, nu)
+shape_current_2 = cubic_shear_rectangle_shape_residual(2, sp.Rational(1, 2), t, nu)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -160,6 +213,10 @@ report = {
         "pair_and_projection_identities": "Exact identity",
         "connected_covariance_theorem_specialization": "Exact identity",
         "vector_total_covariance_given_lift": "Exact identity",
+        "current_fiber_boundary_and_pair_coupling": "Exact identity",
+        "fixed_local_current_cochain_projection": "Exact identity",
+        "selected_deformation_pair_sector_split": "Exact identity",
+        "finite_current_D_only_descent": "Audited calibration / rigorous no-descent consequence",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
         "affine_vortex": "Audited calibration",
@@ -251,10 +308,42 @@ report = {
             cauchy_packet_metric_duality_residual(D_generic, rho) == sp.zeros(2)
         ),
     },
+    "physical_current_pair_coupling": {
+        "local_map": "T(P,D)=P tensor D^T: selector/current coefficients and spatial tangent deformation are distinct factors",
+        "boundary_factorization_residual_zero": bool(fiber_boundary_res == sp.zeros(*fiber_boundary_res.shape)),
+        "closed_selected_current_boundary_zero": bool(closed_current_boundary_zero),
+        "pair_boundary_factorization_residual_zero": bool(pair_boundary_res == sp.zeros(*pair_boundary_res.shape)),
+        "local_tangent_projection_residual_zero": bool(local_projection_zero),
+        "short_h_local_cochain_projection_residual_zero": bool(local_cochain_leading_zero),
+        "short_h_local_cochain_law": "Var(alpha^T D_h^T e)=(2nu/3)h^3 sum_mu [alpha^T(partial_mu grad u)e]^2+O(h^4)",
+        "typing": "deformation transports the spatial fiber of a closed current; it is not a boundary/interface seam and has no direct pathwise Brownian q.v.",
+    },
+    "selected_pair_sector_split": {
+        "identity": "T(P1,D1)-T(P2,D2)=T(P1-P2,D1)+T(P2,D1-D2)",
+        "pair_lift_residual_zero": bool(pair_sector_residual_zero),
+        "replica_dependent_selector_pair_lift_nonzero": bool(pair_selector_lift != sp.zeros(16)),
+        "replica_dependent_deformation_pair_lift_nonzero": bool(pair_deformation_lift != sp.zeros(16)),
+        "replica_dependent_cross_pair_lift_nonzero": bool(pair_cross_lift != sp.zeros(16)),
+        "shared_selector_lift_zero": bool(shared_selector_lift == sp.zeros(16)),
+        "shared_deformation_lift_nonzero": bool(shared_deformation_lift != sp.zeros(16)),
+        "shared_cross_lift_zero": bool(shared_cross_lift == sp.zeros(16)),
+        "typing": "selector, deformation, and cross tensor-lift terms are distinct literal pair-current content",
+    },
+    "finite_current_no_descent": {
+        "exact_ns_calibration": "u=(y^3+6nu t y,0,0)",
+        "same_area_vector": bool(h_surface_1 == h_surface_2),
+        "same_initial_local_deformation": "D=I at zero reverse age for both surfaces at the same anchor",
+        "shape_current_1": str(shape_current_1),
+        "shape_current_2": str(shape_current_2),
+        "shape_current_difference": str(sp.simplify(shape_current_2 - shape_current_1)),
+        "verdict": "D is exact local tangent transport but does not close the finite Kelvin-current state; full shape R(.) or an equivalent nontruncated state is required",
+    },
     "ledger_placement": {
         "same_clock_face": "Sigma_D is the existing connected vector covariance theorem specialized to reverse-age Cauchy deformation; C_D^Gram is its row-Gram projection",
         "future_remaining_horizon": "not identified: causal past h=t-s is distinct from future remaining tau=Theta-t",
         "resolution_covariance": "given a lift, reduction adds Cov_R(Dbar_vec) to averaged intrinsic Sigma_D; it does not retype intrinsic deformation covariance as resolution",
+        "selected_current_projection": "for a shared frozen selector, Sigma_D transports inside the closed-current spatial fiber; replica-dependent selectors add separate selector and cross pair sectors",
+        "finite_current_state": "local D/current projection is exact but D-only finite-current descent is false in exact NS; actual stochastic shape/cochain lift remains Open-literal",
         "S_int": "no identification with S^int, Z_irr, or irreducible content",
     },
 }

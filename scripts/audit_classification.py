@@ -23,6 +23,7 @@ event_note = ROOT / "docs" / "first_bad_event_semantics_audit.md"
 candidate_note = ROOT / "docs" / "first_bad_candidate_exclusions_audit.md"
 support_bank_note = ROOT / "docs" / "support_bank_restart_bridge_audit.md"
 cauchy_note = ROOT / "docs" / "stochastic_cauchy_deformation_audit.md"
+coupling_note = ROOT / "docs" / "deformation_current_pair_coupling_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -42,6 +43,7 @@ event_text = event_note.read_text()
 candidate_text = candidate_note.read_text()
 support_bank_text = support_bank_note.read_text()
 cauchy_text = cauchy_note.read_text()
+coupling_text = coupling_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -340,6 +342,25 @@ if cauchy_missing:
     print("missing stochastic Cauchy deformation structural markers:", cauchy_missing)
     sys.exit(1)
 
+coupling_required = [
+    "spatial tangent fiber",
+    "cannot manufacture a physical boundary seam",
+    "full ordered pair current",
+    "fixed local cochain",
+    "2 nu / 3",
+    "Dropping the cross pair terms is not an identity",
+    "Shared/frozen first-bad selector",
+    "Replica-dependent selector",
+    "finite Kelvin-current state",
+    "cubic heat shear",
+    "Open-literal",
+    "No continuation/restart/regularity theorem claimed",
+]
+coupling_missing = [token for token in coupling_required if token not in coupling_text]
+if coupling_missing:
+    print("missing deformation/current coupling structural markers:", coupling_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -415,8 +436,12 @@ for forbidden in [
     "connected covariance theorem identifies the future clock",
     "pathwise D has Brownian q.v.",
     "shear dispersion closes first-bad alignment",
+    "D alone closes finite Kelvin current",
+    "deformation covariance is selector covariance",
+    "deformation creates physical boundary seam",
+    "selector-deformation cross pair terms can be dropped",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

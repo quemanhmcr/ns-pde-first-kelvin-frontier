@@ -1477,3 +1477,12 @@ state alignment, uniform collapse, restart capacity, and continuation remain ope
 
 **Status: Exact identity / Rigorous consequence for the covariance law; Open-literal
 for the remaining restart bridges.**
+
+
+---
+
+## 20. Physical-current/pair coupling refinement
+
+The next coupling layer is now audited in `docs/deformation_current_pair_coupling_audit.md`.  On a fixed selected closed cycle, the local current lift is `P tensor D^T`; incidence boundary and spatial deformation act on different fibers, so deformation cannot manufacture a boundary seam.  Fixed tangent/cochain observations are exact projections of `Sigma_D`.  Replica-dependent selectors introduce a distinct selector sector and mandatory selector--deformation cross pair terms.  Exact cubic NS simultaneously blocks any inference that `D` alone closes the finite-current state.
+
+**Status: Exact local fiber/pair identities plus Audited calibration; full finite-current/state lift remains Open-literal.**
