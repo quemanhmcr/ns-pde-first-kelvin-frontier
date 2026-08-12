@@ -1,141 +1,145 @@
-# Adversarial audit note — Kelvin packet locality
+# Adversarial audit — Kelvin restart/covariance frontier
 
-Date: 2026-08-12
+Date: 2026-08-12. Scope intentionally narrow: proof-critical compatibility between the exact Kelvin/NS identities and the proposed restart bank.
 
-Scope: independent re-derivation of the material Kelvin packet identities and an adversarial check of the local future-covariance restart bridge. This note is intentionally narrow.
+## Priority finding P0 — physical time and stochastic ancestry time are being conflated
 
-## Confirmed backbone
+The local Kelvin noise coefficient is consistent with Navier--Stokes **when derived on the reverse-time stochastic flow**. For a closed loop, reverse drift `-u` and additive noise `sqrt(2 nu)` cancel the viscous drift modulo an exact pressure/gauge form; Cartan reduces the noise coefficient to
 
-The following identities re-derive directly from incompressible Navier--Stokes/Nanson algebra:
+`sqrt(2 nu) <i_e Omega,Z>`.
 
-- `D_t(H^T omega) = nu H^T Delta omega` for the material area frame `D_t H = -(grad u)^T H`;
-- with `M=(H^T H)^(-1)` and `Phi=H^T omega`, `(1/2) Phi^T (D_t M) Phi = omega.S.omega`;
-- `(1/2) tr(2 nu H^T (grad omega)(grad omega)^T H M) = nu |grad omega|_F^2` for every invertible `H`;
-- the same-ancestor pair branching difference leaves exactly the cross term `2 nu sum_mu D_mu^(1) D_mu^(2)`; first-order drift cancels.
+So the local `gamma=2 nu sum_i <i_{e_i}Omega,Z>^2` normalization is not the problem.
 
-No counterexample was found to these exact identities.
+The problem is the time orientation of the bank. `selected_kelvin_pair_localization_budget.md` calls `V_s` variance to a common **future physical terminal horizon** `Theta`, uses `D_s C=-Gamma`, and later combines the same `s` with the moving first-bad selector. The repository's own exact shear calibration has the opposite stochastic meaning.
 
-## Finding 1 — determinant-rate formula is domain-sensitive
+For
 
-`docs/orientation_complete_restart_packet.md` works throughout in the incompressible specialization and writes
+`u(a,t)=exp(-nu k^2 t) cos(k a)`,
 
-`D_t log det M_H = 2 div u`.
+a forward Brownian anchor satisfies
 
-Within that theorem domain this reduces to `0=0` and the used conclusion `D_t det M_H=0` is correct. It should not, however, be read as the general compressible Nanson formula. For a general 3D area frame,
+`d u(a_t,t) = -2 nu k^2 u(a_t,t) dt + sqrt(2 nu) partial_a u dW`.
 
-`D_t H = [(div u) I - (grad u)^T] H`,
+It has the advertised bracket rate `gamma`, but it is **not** a martingale. In reverse physical time the drift cancels exactly. Equivalently,
 
-so
+`u(a,t)=E[cos(k(a+sqrt(2 nu t) Z))]`
 
-`D_t log det H = 2 div u`
+is ancestry to the time-zero field. For `s<Theta`, ordinary future Brownian conditioning gives instead
 
-and, since `M_H=(H^T H)^(-1)`,
+`E_s[u(X_Theta,Theta)] = exp(-nu k^2(2 Theta-s)) cos(k a) != u(a,s)`.
 
-`D_t log det M_H = -4 div u`.
+The multi-mode payoff `X_N` used by the repository has scale `sqrt(2 nu T_N)` and no terminal viscous prefactor, so it is exactly of this **past/ancestral** type.
 
-**Downstream status:** no defect in the present incompressible route. Minimal wording repair: state only `div u=0 => D_t det M_H=0`, or explicitly label `-4 div u` as the general-Nanson extension.
+This changes the sign of the distributed bank in the same calibration: with uniform anchor measure,
 
-## Finding 2 — shrinking area frame does not by itself imply a local packet
+`d/dt <V(a,t)> = <gamma(a,t)> > 0`,
 
-The conditional local future-covariance bridge needs spatial support shrinkage in addition to small area vectors.
+whereas the proposed future-physical bank has `d/ds int q V = - int q gamma`.
 
-Exact periodic Navier--Stokes witness: take the shear
+There is also a path mismatch. The true reverse-time Kelvin bracket for a fixed physical loop `Z_t` follows its random back-transport `Z_tau^back`, schematically
 
-`u_r(y,t)=(A_r e^(-nu k^2 t) cos(k y),0,0)`, `A_r=1/r`.
+`int 2 nu sum_i <i_{e_i} Omega_{t-tau}, Z_tau^back>^2 d tau`.
 
-Its nonlinearity vanishes identically. The flow is
+The programme's target instead follows contemporaneous first-bad germs,
 
-`X_t(x,y,z)=(x+B_r(t) cos(k y),y,z)`,
-`B_r=A_r(1-e^(-nu k^2 t))/(nu k^2)`.
+`int 2 nu sum_i <i_{xi_i} Omega_s, Z_{lambda_*(s)}>^2 ds`.
 
-Start with an `r x r` material face in the `x-y` plane at `y_0=pi/(2k)`. Its image has tangent vectors `(1,0,0)` and `(-B_r k sin(k y),1,0)`, so its area remains exactly `r^2`, but its diameter is at least
+These are not the same stochastic process. Therefore the one-clock formula
 
-`B_r sin(k r) -> (1-e^(-nu k^2 t))/(nu k) > 0`.
+`d(a_s^T C_s a_s)/ds = -Gamma_s(a_s,a_s) + 2 C_s(a_s,a_dot_s)`
 
-Thus there is no **uniform** implication over smooth periodic NS states from `H -> 0` to support locality. For one fixed pre-singular smooth solution the flow is locally Lipschitz and small supports remain small; the missing issue is precisely uniform control as a candidate singular time is approached.
+is not yet a physical-time selected-Kelvin bank theorem.
 
-A concrete smooth covariance witness is `W(x)=X cos(x_1) e_2`, with centered scalar `X`, `E X^2=1`. For the long-thin face
+**Required repair:** introduce separate physical and ancestry clocks (`t`,`tau`), the reverse stochastic flow/filtration, the random back-transported current, and the terminal variable. Then prove a two-time identity connecting the ancestry bracket to the contemporaneous first-bad action before using any physical-time telescope.
 
-`Sigma_r=[-1/2,1/2] x {0} x [-r^2/2,r^2/2]`,
+## Priority finding P1 — the Doob equation is parabolic, not an ordinary exact one-form
 
-its area vector is `h_r=r^2 e_2 -> 0`, but
-
-`int_{Sigma_r} W.n dA = 2 r^2 sin(1/2) X`,
-
-whereas the local-center approximation gives `r^2 X`. Hence the covariance defect remains order `r^4` rather than `o(r^4)`.
-
-**Minimal repair:** make locality explicit, e.g. require packet support diameter `->0` (or an equivalent material deformation bound) before invoking the small-loop covariance tensor expansion.
-
-For an isotropic reference packet transported by an incompressible deformation, one useful diagnostic is
-
-`sqrt(det H) / sigma_min(H) -> 0`,
-
-which equals the largest transported line scale up to the fixed reference geometry.
-
-## Remainder normalization
-
-The scalar bank is
-
-`2 B_H = tr(C_H (H^T H)^(-1)) = E |H^(-T) X_H|^2`.
-
-Therefore a raw Frobenius condition such as `R_H=o(||H||^2)` is not sufficient for a highly anisotropic packet. The invariant smallness condition should control the metric-amplified remainder, for example
-
-`tr(R_H (H^T H)^(-1)) -> 0`,
-
-or at the payoff level `H^(-T) epsilon_H -> 0` in conditional `L^2`.
-
-This is consistent with the repository's stated concern about a metric-amplified non-tensorial remainder; the point here is to make the required topology/norm explicit.
-
-## Finding 3 — Doob evolution is parabolic, not an ordinary exact one-form
-
-`docs/pair_localization_worldsheet_audit.md` writes
+`pair_localization_worldsheet_audit.md` writes
 
 `A_cov = d_pair V - gamma ds = d_spacetime V`
 
-from `D_s V=-gamma`, and then applies ordinary Stokes on a pair strip. This identification is not valid when `D_s` contains the diffusion generator.
+and applies ordinary Stokes. This is false when `D_s` contains the diffusion generator.
 
-The repository's own one-mode exact NS shear calibration gives, in remaining-time `tau`,
+The exact one-mode calibration gives, in remaining-time `tau`,
 
 `partial_tau V - nu partial_a^2 V = gamma`.
 
-With forward physical time `s=Theta-tau`,
+With `s=Theta-tau`,
 
-`partial_s V = -gamma - nu partial_a^2 V`.
+`partial_s V = -gamma - nu partial_a^2 V`,
 
-Hence the ordinary spacetime differential is
+so the ordinary differential contains the extra diffusion term. At `a=0`, `gamma=0` but `nu partial_a^2 V>0` for every `tau>0`, giving a direct counterexample inside the repository's exact NS calibration.
 
-`d_spacetime V = d_a V - (gamma + nu partial_a^2 V) ds`,
+**Required repair:** replace the de Rham/Stokes packaging by Dynkin--Itô/Markov duality or by the already-derived forward--backward covariance flux law. A second-order generator is not an exterior derivation.
 
-not `d_a V-gamma ds`. At `a=0`, `gamma=0` while for every `tau>0`
+## Priority finding P1 — centered future covariance is not the tensor carrying deterministic vortex stretching
 
-`nu partial_a^2 V = 2 nu k^2 (e^(2 nu k^2 tau)-1)e^(-4 nu k^2 tau) > 0`.
-
-So the claimed one-form equality already fails inside an exact calibration used by the repository. The same distinction also affects any use of `dot C=-Gamma` as an ordinary fixed-anchor time derivative: the exact identity is generator/covariant (`D_s C=-Gamma`), and the fixed-anchor derivative carries the diffusion term.
-
-**Downstream status:** the fixed-current Doob/Itô bank and the distributed forward--backward balance remain valid. What is not justified is the de Rham-Stokes packaging of the second-order generator. Minimal repair: use Dynkin--Itô/Markov duality (or the already derived distributed covariance flux law) and derive the localization boundary terms there. A second-order generator cannot be treated as an exterior derivation without its carré-du-champ correction.
-
-## Finding 4 — future covariance is not the deterministic rank-one flux tensor
-
-The metric algebra is correct, but two different tensors are being placed next to each other. If `Y` is the terminal material flux vector, write
+Let terminal material flux be `Y` and write
 
 `m=E_s Y`, `C=Cov_s(Y)`, `Q=E_s[YY^T]=C+m m^T`.
 
-Under the Kelvin representation the current deterministic flux is the conditional mean `m`, so with `omega=H^(-T)m`, literal vortex stretching is
+With `omega=H^(-T)m`, literal deterministic stretching is
 
 `omega.S.omega = (1/2) m^T Mdot m`.
 
-By contrast, the future-covariance bank carries metric work
+The centered covariance contributes a different metric term,
 
 `(1/2) tr(C Mdot) = tr(S Sigma_cov)`.
 
-These are different terms. In particular at the terminal horizon `C=0` identically, while the repository's exact ABC calibration has `omega.S.omega=3 A^3 e^(-3 nu t) != 0` at `(0,0,0)`. Thus future-covariance metric work cannot itself be identified with literal deterministic vortex stretching.
+They cannot be identified. At the terminal horizon `C=0`, while the repository's exact ABC calibration has
 
-The one-mode calibration makes the distinction explicit: its terminal second moment solves the homogeneous backward heat equation, while its centered covariance solves the same equation with the positive `gamma` source.
+`omega.S.omega = 3 A^3 exp(-3 nu t) != 0`
 
-**Minimal repair:** track the mean rank-one tensor `m m^T` separately, or pass to the full second moment `Q=C+m m^T` and derive its own evolution. The latter does not satisfy the same covariance-depletion law `D_s C=-Gamma`, so the two ledgers cannot be merged by notation alone.
+at `(0,0,0)`. The one-mode calibration gives the same separation dynamically: `Q` obeys the homogeneous backward heat equation, whereas `C` carries the positive `gamma` source.
 
-## Status
+**Required repair:** track `m m^T` and `C` separately, or use `Q=C+m m^T` and derive its distinct evolution law.
 
-These findings do **not** provide a counterexample to the Kelvin programme or to any claimed regularity theorem (none is claimed here). They sharpen the restart bridge to require, simultaneously:
+## Priority finding P1 — moving quantile/shell cuts need the time-face flux, not only the spatial commutator
 
-`parabolic covariance transport + mean/covariance separation + support locality + metric-whitened remainder control + signed metric/boundary/exit accounting`.
+`active_first_bad_germ_pair_maps.md` defines a moving quantile restriction `Q_s` but the literal quantile stage records only
+
+`C_quant = B Q_s - Q_{s,0} B`,
+
+which is the spatial boundary commutator. A moving characteristic also has a distributional time derivative. In one space dimension, for a conservation law
+
+`partial_t q + partial_x(q v)=0`
+
+and moving chamber `D_t=(-infinity,a(t))`, Reynolds gives exactly
+
+`d/dt int_{D_t} q dx = -q(a,t) (v(a,t)-a_dot(t))`.
+
+The `a_dot q` face is not contained in the static spatial commutator. In operator language it is the `Qdot` term in the transport defect `G_Q=Qdot+T_out Q-Q T_in`. The repository has the abstract `G_F` product rule and mentions `Mdot`, but no literal `Qdot`/moving-shell map or test is inserted for the quantile stage; current CI uses static interval block projections.
+
+**Required repair:** instantiate the moving cut as a spacetime current and retain its boundary-speed term (and the two replica faces at pair level) before declaring the completed quantile/shell seam exhaustive.
+
+## Priority finding P1 — area-frame shrinkage needs an independent support-locality hypothesis
+
+Small area vectors do not uniformly imply a spatially local packet near a candidate singular time. An exact periodic NS witness is
+
+`u_r(y,t)=(r^(-1) exp(-nu k^2 t) cos(k y),0,0)`.
+
+The nonlinearity vanishes. Its flow shears an initially `r x r` material face at `y0=pi/(2k)` while preserving its area exactly as `r^2`; nevertheless its diameter has a positive `r->0` limit. Thus no uniform implication `H->0 => support diameter->0` holds across smooth NS states without a deformation bound.
+
+Consequently a local covariance expansion must assume actual support shrinkage. For anisotropic packets, raw `R_H=o(||H||^2)` is also insufficient because `M=(H^T H)^(-1)` amplifies weak directions. The invariant requirement is of the form
+
+`tr(R_H M_H)->0`,
+
+or, at payoff level, `H^(-T) epsilon_H -> 0` in conditional `L^2`.
+
+## Minor domain caveat — determinant rate
+
+The incompressible conclusion `D_t det M_H=0` is correct. The displayed extension `D_t log det M_H=2 div u` should not be read as general 3D Nanson: the general rate is `-4 div u`. This does not affect the present incompressible route.
+
+## Independently re-derived backbone that survived this audit
+
+The following exact identities were re-derived and no counterexample was found:
+
+- `D_t(H^T omega)=nu H^T Delta omega` under incompressible Nanson transport;
+- `(1/2) Phi^T Mdot Phi = omega.S.omega` for deterministic material flux `Phi=H^T omega`;
+- `(1/2) tr(2 nu H^T (grad omega)(grad omega)^T H M)=nu |grad omega|_F^2` for invertible `H`;
+- the same-ancestor diagonal branching difference leaves `2 nu sum_mu D_mu^(1)D_mu^(2)` and cancels first-order drift;
+- covariance reset/full tensor-square algebra retains mandatory cross terms.
+
+## Audit status
+
+No counterexample to 3D Navier--Stokes regularity is claimed. The local Kelvin/Nanson backbone remains viable. The proof-critical restart route is **not yet certified** because the current covariance reservoir mixes physical time with stochastic ancestry time, and the subsequent world-sheet/metric ledger inherits that mismatch.
