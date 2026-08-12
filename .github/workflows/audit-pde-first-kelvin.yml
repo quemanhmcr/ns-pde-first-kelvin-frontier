@@ -506,7 +506,7 @@ jobs:
       - name: Install symbolic audit dependency
         run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
       - name: Audit vectorized stochastic Cauchy deformation, physical-current pair coupling, and fixed-past envelope
-        run: python -m unittest -v tests.test_stochastic_cauchy_deformation tests.test_deformation_current_pair_coupling
+        run: python -m unittest -v tests.test_stochastic_cauchy_deformation tests.test_deformation_current_pair_coupling tests.test_full_current_shape_covariance
       - name: Build stochastic Cauchy deformation artifact
         if: matrix.python-version == '3.12'
         run: python scripts/build_stochastic_cauchy_deformation_report.py

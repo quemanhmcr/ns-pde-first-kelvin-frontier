@@ -350,21 +350,19 @@ or the programme's unresolved restart quantity.
 **Status: Exact ledger refinement; programme-specific full current/state lift remains
 Open-literal.**
 
-## 10. Next literal target
+## 10. Full-state follow-through
 
-The next theorem should be posed on the full causal current-shape state
+The next theorem proposed here has now been derived in
+`docs/full_current_shape_covariance_audit.md`.  On the literal reverse-age state
+`(r,X,R(.),D)`, only `X` carries Brownian q.v.; NS makes the moving circulation drift
+an exact pressure/Bernoulli gauge; Cartan turns anchor translation into the Kelvin
+coefficient `<i_e Omega,Z>`; and the mixed deformation--Kelvin covariance is the
+off-diagonal block of the joint connected covariance theorem.  Its short-age onset
+is `O(h^2)`, between Kelvin variance `O(h)` and deformation covariance `O(h^3)`.
 
-\[
-(X,R(\cdot),D)
-\]
+The remaining target has therefore moved: derive the exact finite-shape-to-local
+current error and its joint deformation covariance on the migrating first-bad
+support, then test whether genuine physical support collapse yields a descent.
 
-or on an exactly equivalent current representation.  The task is to derive the
-same-ancestor pair law for the **actual Kelvin cochain evaluated along the stochastic
-current**, where both the cochain sampling and the finite current shape are allowed
-to move.  Only after that law is explicit should one ask whether a shrinking
-first-bad selected support collapses the shape hierarchy strongly enough to descend
-to the local deformation/current projection above.
-
-That is a state/lift theorem or counterexample problem, not yet an estimate problem.
-
-**Status: Open-literal.  No continuation/restart/regularity theorem claimed.**
+**Status: Full-state source/cross law Exact; first-bad finite-shape descent remains
+Open-literal.  No continuation/restart/regularity theorem claimed.**

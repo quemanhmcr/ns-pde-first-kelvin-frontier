@@ -24,6 +24,7 @@ candidate_note = ROOT / "docs" / "first_bad_candidate_exclusions_audit.md"
 support_bank_note = ROOT / "docs" / "support_bank_restart_bridge_audit.md"
 cauchy_note = ROOT / "docs" / "stochastic_cauchy_deformation_audit.md"
 coupling_note = ROOT / "docs" / "deformation_current_pair_coupling_audit.md"
+full_shape_cov_note = ROOT / "docs" / "full_current_shape_covariance_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -44,6 +45,7 @@ candidate_text = candidate_note.read_text()
 support_bank_text = support_bank_note.read_text()
 cauchy_text = cauchy_note.read_text()
 coupling_text = coupling_note.read_text()
+full_shape_cov_text = full_shape_cov_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -361,6 +363,23 @@ if coupling_missing:
     print("missing deformation/current coupling structural markers:", coupling_missing)
     sys.exit(1)
 
+full_shape_cov_required = [
+    "only martingale/q.v. channel",
+    "pressure/Bernoulli gauge",
+    "anchor carré-du-champ",
+    "deformation--circulation cross covariance",
+    "off-diagonal block",
+    "h^2",
+    "Gram-integral",
+    "Literal reverse-age full state",
+    "Open-literal",
+    "No restart/continuation/regularity theorem claimed",
+]
+full_shape_cov_missing = [token for token in full_shape_cov_required if token not in full_shape_cov_text]
+if full_shape_cov_missing:
+    print("missing full current-shape covariance structural markers:", full_shape_cov_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -440,8 +459,13 @@ for forbidden in [
     "deformation covariance is selector covariance",
     "deformation creates physical boundary seam",
     "selector-deformation cross pair terms can be dropped",
+    "shape drift is quadratic variation",
+    "D-K cross covariance is S^int",
+    "joint covariance proves restart",
+    "full current-shape state equals the programme ancestry state",
+    "mixed covariance is the future remaining bank",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

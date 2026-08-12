@@ -23,6 +23,20 @@ from pde_audit.deformation_current_pair_coupling import (  # noqa: E402
     tangent_cochain_covariance,
     tangent_projection_residual,
 )
+from pde_audit.full_current_shape_covariance import (  # noqa: E402
+    anchor_cross_carre_du_champ,
+    deformation_kelvin_cross_carre_du_champ,
+    deformation_kelvin_cross_covariance_horizon_residual,
+    deformation_kelvin_cross_covariance_leading_tensor,
+    joint_deformation_kelvin_leading_gramian_residual,
+    navier_stokes_kelvin_gauge_residual,
+    one_mode_shear_deformation_kelvin_cross_covariance,
+    one_mode_shear_deformation_kelvin_cross_leading_residual,
+    one_mode_shear_kelvin_mean,
+    one_mode_shear_kelvin_variance,
+    reverse_age_current_shape_diffusion_covariance,
+    translation_cartan_residual,
+)
 from pde_audit.future_covariance_tensor import (  # noqa: E402
     connected_covariance_horizon_residual,
     connected_mean_horizon_residual,
@@ -206,6 +220,56 @@ h_surface_2 = oriented_rectangle_area_vector_yz(2, sp.Rational(1, 2))
 shape_current_1 = cubic_shear_rectangle_shape_residual(1, 1, t, nu)
 shape_current_2 = cubic_shear_rectangle_shape_residual(2, sp.Rational(1, 2), t, nu)
 
+# Full moving current-shape state and deformation--Kelvin joint covariance.
+full_state_diffusion = reverse_age_current_shape_diffusion_covariance(1, 2, 2, nu)
+full_state_anchor_only = (
+    full_state_diffusion[:2, :2] == 2 * nu * sp.eye(2)
+    and full_state_diffusion[2:, :] == sp.zeros(6, 8)
+    and full_state_diffusion[:, 2:] == sp.zeros(8, 6)
+)
+kelvin_gauge_zero = sp.trigsimp(sp.simplify(
+    navier_stokes_kelvin_gauge_residual(sp.Matrix([U, 0]), sp.Integer(0), t, (x, y), nu)
+)) == sp.zeros(2, 1)
+cartan_x_zero = translation_cartan_residual(sp.Matrix([U, 0]), (x, y), 0) == sp.zeros(2, 1)
+cartan_y_zero = translation_cartan_residual(sp.Matrix([U, 0]), (x, y), 1) == sp.zeros(2, 1)
+
+Kbar = one_mode_shear_kelvin_mean(y, t, nu, k)
+scalar_cross = one_mode_shear_deformation_kelvin_cross_covariance(y, t, h, nu, k)
+C_DK = sp.simplify(scalar_cross * v21)
+HC_DK = reverse_age_horizon_operator_matrix(C_DK, h, t, velocity, nu, (x, y))
+dK = [sp.diff(Kbar, x), sp.diff(Kbar, y)]
+cross_horizon_zero = deformation_kelvin_cross_covariance_horizon_residual(
+    C_DK, HC_DK, A, dmean, dK, nu
+) == sp.zeros(4, 1)
+cross_leading_zero = one_mode_shear_deformation_kelvin_cross_leading_residual(
+    y, t, h, nu, k
+) == 0
+
+V_K = one_mode_shear_kelvin_variance(y, t, h, nu, k)
+mean_joint = mean_vec.col_join(sp.Matrix([Kbar]))
+joint_cov = Sigma.row_join(C_DK).col_join(C_DK.T.row_join(sp.Matrix([[V_K]])))
+joint_second = sp.simplify(joint_cov + mean_joint * mean_joint.T)
+B_joint = sp.zeros(5)
+B_joint[:4, :4] = -B_horizon.T
+joint_connected_zero = sp.trigsimp(sp.simplify(connected_covariance_horizon_residual(
+    mean_joint,
+    joint_second,
+    B_joint,
+    h,
+    sp.Matrix([-U, 0, -1]),
+    sp.diag(2 * nu, 2 * nu, 0),
+    (x, y, t),
+))) == sp.zeros(5)
+
+kg1, kg2 = sp.symbols("kg1 kg2")
+joint_gram_zero = joint_deformation_kelvin_leading_gramian_residual(
+    [dAx, dAy], [kg1, kg2], nu, h
+) == sp.zeros(5)
+generic_cross_leading = deformation_kelvin_cross_covariance_leading_tensor(
+    [dAx, dAy], [kg1, kg2], nu, h
+)
+generic_cross_has_h2 = all(sp.simplify(entry / h**2).has(nu) for entry in generic_cross_leading if entry != 0)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -217,6 +281,12 @@ report = {
         "fixed_local_current_cochain_projection": "Exact identity",
         "selected_deformation_pair_sector_split": "Exact identity",
         "finite_current_D_only_descent": "Audited calibration / rigorous no-descent consequence",
+        "full_current_shape_anchor_qv": "Exact identity",
+        "moving_kelvin_gauge_cartan": "Exact identity",
+        "deformation_kelvin_cross_covariance": "Exact identity",
+        "joint_D_K_short_horizon": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
+        "exact_shear_D_K_cross": "Audited calibration",
+        "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
         "affine_vortex": "Audited calibration",
@@ -338,12 +408,32 @@ report = {
         "shape_current_difference": str(sp.simplify(shape_current_2 - shape_current_1)),
         "verdict": "D is exact local tangent transport but does not close the finite Kelvin-current state; full shape R(.) or an equivalent nontruncated state is required",
     },
+    "full_current_shape_state": {
+        "state": "(r,X,R(.),D) on reverse age; only X carries Brownian q.v.",
+        "anchor_only_diffusion_block": bool(full_state_anchor_only),
+        "exact_shear_ns_kelvin_gauge_residual_zero": bool(kelvin_gauge_zero),
+        "translation_cartan_x_residual_zero": bool(cartan_x_zero),
+        "translation_cartan_y_residual_zero": bool(cartan_y_zero),
+        "typing": "relative shape and D are finite variation; moving Kelvin drift is Bernoulli/pressure gauge; anchor translation gives the Kelvin martingale coefficient",
+    },
+    "deformation_kelvin_joint_covariance": {
+        "mixed_law": "H C_DK=B_D C_DK+2nu sum_mu vec(partial_mu Dbar) partial_mu Kbar",
+        "exact_shear_cross_horizon_residual_zero": bool(cross_horizon_zero),
+        "exact_shear_cross_leading_residual_zero": bool(cross_leading_zero),
+        "exact_shear_joint_connected_covariance_residual_zero": bool(joint_connected_zero),
+        "general_leading_gramian_residual_zero": bool(joint_gram_zero),
+        "generic_cross_block_has_h2_factor": bool(generic_cross_has_h2),
+        "short_hierarchy": "V_K=O(h), C_DK=O(h^2), Sigma_D=O(h^3); leading coefficients 2nu, nu, 2nu/3 arise from one Gram integral",
+        "exact_shear_cross_covariance": str(scalar_cross),
+        "typing": "C_DK is the deformation-circulation off-diagonal block of one same-ancestor joint covariance; not S^int, not resolution covariance, not a new branching source",
+    },
     "ledger_placement": {
         "same_clock_face": "Sigma_D is the existing connected vector covariance theorem specialized to reverse-age Cauchy deformation; C_D^Gram is its row-Gram projection",
         "future_remaining_horizon": "not identified: causal past h=t-s is distinct from future remaining tau=Theta-t",
         "resolution_covariance": "given a lift, reduction adds Cov_R(Dbar_vec) to averaged intrinsic Sigma_D; it does not retype intrinsic deformation covariance as resolution",
         "selected_current_projection": "for a shared frozen selector, Sigma_D transports inside the closed-current spatial fiber; replica-dependent selectors add separate selector and cross pair sectors",
-        "finite_current_state": "local D/current projection is exact but D-only finite-current descent is false in exact NS; actual stochastic shape/cochain lift remains Open-literal",
+        "finite_current_state": "local D/current projection and full current-shape source law are exact, but finite-shape-to-local first-bad descent remains Open-literal",
+        "deformation_kelvin_cross": "C_DK is an exact same-clock off-diagonal joint covariance block; it is distinct from Sigma_D, Kelvin variance, S^int, and resolution covariance",
         "S_int": "no identification with S^int, Z_irr, or irreducible content",
     },
 }

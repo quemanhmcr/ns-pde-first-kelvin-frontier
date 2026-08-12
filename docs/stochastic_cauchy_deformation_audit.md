@@ -1486,3 +1486,12 @@ for the remaining restart bridges.**
 The next coupling layer is now audited in `docs/deformation_current_pair_coupling_audit.md`.  On a fixed selected closed cycle, the local current lift is `P tensor D^T`; incidence boundary and spatial deformation act on different fibers, so deformation cannot manufacture a boundary seam.  Fixed tangent/cochain observations are exact projections of `Sigma_D`.  Replica-dependent selectors introduce a distinct selector sector and mandatory selector--deformation cross pair terms.  Exact cubic NS simultaneously blocks any inference that `D` alone closes the finite-current state.
 
 **Status: Exact local fiber/pair identities plus Audited calibration; full finite-current/state lift remains Open-literal.**
+
+
+---
+
+## 21. Full moving-current covariance refinement
+
+The literal full-state follow-through is now in `docs/full_current_shape_covariance_audit.md`.  On `(r,X,R(.),D)` only the anchor carries Brownian q.v.; Navier--Stokes makes moving Kelvin circulation drift pure gauge; Cartan identifies the Kelvin anchor coefficient; and `Cov(vec D,K_Z)` is the exact off-diagonal block of the joint connected covariance theorem.  The smooth leading joint hierarchy is `V_K=O(h)`, `C_DK=O(h^2)`, `Sigma_D=O(h^3)` with one Gram-integral representation.
+
+**Status: Exact full-state source/cross law and Audited calibration; first-bad finite-shape-to-local descent remains Open-literal.**
