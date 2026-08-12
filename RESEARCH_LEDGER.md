@@ -830,3 +830,23 @@ crossing `Mdot`.
 **Classification: Exact implementation/event semantics and type separation;
 badness functional, resolve predicate, and localization observable remain
 open-literal.  No restart claim.**
+
+
+## 2026-08-12 — exact periodic ABC excludes naive first-bad size thresholds
+
+The arbitrary-amplitude periodic Beltrami family `u=A e^-nu t U_ABC` remains an
+exact globally smooth NS solution for every finite `A`.  At the origin it has
+`|omega|^2=3a^2`, `e=3a^2/2`, stretching `3a^3`, Kelvin bulk
+`nu|grad omega|^2=3nu a^2`, ratio `a/nu`, and growth margin
+`3a^2(a-nu)`, where `a=A e^-nu t`.  All are unbounded with `A` at fixed time.
+Therefore no finite threshold on any one of these raw instantaneous quantities can
+alone be a universal continuation-failure predicate, although they may remain
+diagnostic/localization scores.
+
+Referee scope is explicit: the origin is not an enstrophy critical point.  At the
+symmetric ABC critical point `(pi/4,pi/4,pi/4)`, `grad e=0` and Beltrami stretching
+is zero.  Thus this calibration does not falsify the already rigorous local-maximum
+growth gate; that gate remains necessary only, not a first-bad theorem.
+
+**Classification: Exact periodic NS calibration and rigorous candidate exclusion;
+true badness/resolve definitions remain open-literal.**

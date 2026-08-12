@@ -326,8 +326,13 @@ the reverse-age Kelvin scale/support/covariance laws strongly enough to close a
 restart argument.
 
 The local positive enstrophy-growth gate already audited in the repository is not
-silently promoted to this role; it is only a necessary local growth condition and
-has exact smooth NS calibrations where it holds without a singularity theorem.
+silently promoted to this role; it is only a necessary local growth condition.
+A separate amplitude-scaled ABC audit further excludes raw finite thresholds on
+vorticity/enstrophy/stretching/Kelvin q.v. and their instantaneous ratio as standalone
+continuation-failure predicates, while carefully preserving the local-maximum
+hypothesis of the growth gate.
+
+See `docs/first_bad_candidate_exclusions_audit.md`.
 
 `S^int`, uniform collapse, restart capacity, and continuation remain open.
 

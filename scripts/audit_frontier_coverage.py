@@ -23,6 +23,8 @@ SEAMS = {
     "selector-vs-localization-cut-distinction": ("audited", "the rank-one hysteretic M_fb event selector and moving Q_s/H_s localization maps are distinct typed operations"),
     "first-bad-badness-functional-definition": ("open-literal", "bad_flags are Boolean oracle inputs; no Navier-Stokes badness score/threshold functional generates them"),
     "first-bad-resolve-predicate-definition": ("open-literal", "resolved is an independent Boolean oracle input; no Navier-Stokes resolve condition generates it"),
+    "naive-instantaneous-badness-threshold-no-go": ("audited-calibration", "arbitrary-amplitude smooth periodic ABC flow makes raw vorticity, enstrophy, stretching, Kelvin bulk qv, growth margin, and stretch/bulk ratio exceed every finite threshold, so none alone certifies continuation failure"),
+    "abc-local-growth-gate-scope-check": ("audited-calibration", "ABC origin is not an enstrophy critical point while the symmetric critical point has zero Beltrami stretching; the calibration does not falsify the local-maximum necessary growth gate"),
     "first-bad-quantile-observable-definition": ("open-literal", "the separate scalar/state observable whose level sets define the moving first-bad quantile/shell localization map is not written line by line"),
     "first-bad-moving-cut-speed-law": ("open-literal", "the generic current/coarea speed law is exact, but the first-bad observable and outer physical-time lift needed to instantiate Qdot/Hdot_shell are missing"),
     "two-clock-first-bad-kelvin-lift": ("open-literal", "the physical reverse-age Kelvin clock is exact, but the programme ancestry state and first-bad outer time have not been intertwined with that state family"),
@@ -85,7 +87,7 @@ ALLOWED = {"audited", "audited-calibration", "audited-generic", "audited-conditi
 required = {
     "freeze", "quantile", "anchor-orientation", "shell", "refinement",
     "resolve-reset", "physical-exit", "variable-frame-connection",
-    "active-pair-factorization", "parabolic-covariance-current", "moving-cut-time-face", "reverse-age-kelvin-generator", "future-bank-clock-reversal", "future-bank-clock-reversed-state-map", "quantile-current-speed-law", "affine-reverse-quantile-support-gramian", "outer-time-cut-speed-underdetermination", "hysteretic-first-bad-event-structure", "selector-vs-localization-cut-distinction", "first-bad-badness-functional-definition", "first-bad-resolve-predicate-definition", "first-bad-quantile-observable-definition", "first-bad-moving-cut-speed-law", "two-clock-first-bad-kelvin-lift", "cycle-typed-first-bad-boundary",
+    "active-pair-factorization", "parabolic-covariance-current", "moving-cut-time-face", "reverse-age-kelvin-generator", "future-bank-clock-reversal", "future-bank-clock-reversed-state-map", "quantile-current-speed-law", "affine-reverse-quantile-support-gramian", "outer-time-cut-speed-underdetermination", "hysteretic-first-bad-event-structure", "selector-vs-localization-cut-distinction", "first-bad-badness-functional-definition", "first-bad-resolve-predicate-definition", "naive-instantaneous-badness-threshold-no-go", "abc-local-growth-gate-scope-check", "first-bad-quantile-observable-definition", "first-bad-moving-cut-speed-law", "two-clock-first-bad-kelvin-lift", "cycle-typed-first-bad-boundary",
     "cycle-typed-first-bad-transport", "hodge-cycle-projector", "kelvin-ck-admissibility",
     "stochastic-ck-carre-du-champ", "vorticity-kelvin-microframe",
     "restart-scale-renormalization", "orientation-complete-restart-packet",
@@ -159,6 +161,10 @@ if SEAMS["first-bad-badness-functional-definition"][0] != "open-literal":
     raise SystemExit("first-bad badness score/threshold must remain open-literal until derived from NS")
 if SEAMS["first-bad-resolve-predicate-definition"][0] != "open-literal":
     raise SystemExit("first-bad resolve predicate must remain open-literal until derived from NS")
+if SEAMS["naive-instantaneous-badness-threshold-no-go"][0] != "audited-calibration":
+    raise SystemExit("naive instantaneous badness threshold no-go must remain an exact NS calibration")
+if SEAMS["abc-local-growth-gate-scope-check"][0] != "audited-calibration":
+    raise SystemExit("ABC local-growth gate scope check must remain a calibration, not a theorem falsifying the local-max gate")
 if SEAMS["first-bad-quantile-observable-definition"][0] != "open-literal":
     raise SystemExit("first-bad quantile scalar observable/threshold geometry must remain open-literal")
 if SEAMS["first-bad-moving-cut-speed-law"][0] != "open-literal":
