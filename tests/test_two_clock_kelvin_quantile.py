@@ -165,7 +165,8 @@ class TwoClockKelvinQuantileAudit(unittest.TestCase):
         A = sp.diag(a1, a2)
         Sigma = sp.diag(s1, s2)
         j = affine_reverse_probability_current(A, Sigma, sp.Matrix([x1, x2]), nu)
-        self.assertEqual(j, sp.Matrix([-a1*x1 + nu*x1/s1, -a2*x2 + nu*x2/s2]))
+        expected = sp.Matrix([-a1*x1 + nu*x1/s1, -a2*x2 + nu*x2/s2])
+        self.assertEqual(sp.simplify(j - expected), sp.zeros(2, 1))
 
     def test_reverse_noise_covariance_is_integrated_reverse_support_geometry(self) -> None:
         srate, tau, nu, r = sp.symbols("s tau nu r", positive=True)
