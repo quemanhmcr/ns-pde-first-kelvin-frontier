@@ -130,6 +130,8 @@ By contrast, the future-covariance bank carries metric work
 
 These are different terms. In particular at the terminal horizon `C=0` identically, while the repository's exact ABC calibration has `omega.S.omega=3 A^3 e^(-3 nu t) != 0` at `(0,0,0)`. Thus future-covariance metric work cannot itself be identified with literal deterministic vortex stretching.
 
+The one-mode calibration makes the distinction explicit: its terminal second moment solves the homogeneous backward heat equation, while its centered covariance solves the same equation with the positive `gamma` source.
+
 **Minimal repair:** track the mean rank-one tensor `m m^T` separately, or pass to the full second moment `Q=C+m m^T` and derive its own evolution. The latter does not satisfy the same covariance-depletion law `D_s C=-Gamma`, so the two ledgers cannot be merged by notation alone.
 
 ## Status
