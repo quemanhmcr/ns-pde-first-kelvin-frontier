@@ -626,15 +626,19 @@ identifies what a restart-capacity theorem would actually have to control.
 For a shrinking first-bad germ it is not enough to control one raw selected Kelvin
 variance.  One needs, at minimum,
 
-1. **orientation completion**: three-loop microframe content, or a proved equivalent
-   orientation coverage, so no vorticity-gradient direction is invisible;
-2. **area-squared normalization**: the local density rather than the vanishing raw
-   small-loop action;
-3. **dilation work**: the exact `-2(A_dot/A) Vhat` term during shell migration;
+1. **orientation completion**: a three-loop packet, or a proved equivalent coverage,
+   so no vorticity-gradient direction is invisible;
+2. **packet-metric normalization**: the full cross-orientation covariance contracted
+   with `(H^T H)^(-1)`, not three independent diagonal normalizations once the
+   material frame becomes non-orthogonal;
+3. **connection typing**: the scalar `-2(A_dot/A)Vhat` law is retained as a coordinate
+   identity, but the later GL(3) audit proves passive rotation/dilation/shear cancels
+   when covariance and packet metric are transported together;
 4. **signed physical boundary flux** from the material-germ enstrophy ledger;
-5. **vortex-stretching production** `omega·S omega`, the actual nonlinear source;
+5. **material metric work**: the later Nanson/flux audit identifies this exactly with
+   vortex stretching rather than a separate positive zoom cost;
 6. all previously audited covariance/reset/cross-shell/cross-child terms with their
-   signs intact.
+   signs intact, plus the metric-amplified non-tensorial scale remainder.
 
 The local gate
 
@@ -648,15 +652,122 @@ blow-up.
 
 The next unresolved structural problem is therefore much sharper:
 
-> Can the orientation-complete, area-normalized Kelvin pair bank plus signed
-> material-germ boundary flux control the cumulative time spent in the
-> stretch-dominant gate as the selected scale tends to zero?
+> Does the orientation-complete material packet admit a uniform local future-
+> covariance tensor with controlled metric-amplified non-tensorial remainder, while
+> its material metric-stretching work and physical boundary/exit terms are followed
+> with their exact signs as the selected scale tends to zero?
 
-That is a physical capacity question.  Only after this exact ledger is closed is it
-appropriate to compress the result into a continuation norm or a classical restart
-criterion.
+That is the refined physical capacity question.  Only after this exact ledger is
+closed is it appropriate to compress the result into a continuation norm or a
+classical restart criterion.
 
 **Classification: Rigorous reduction of the restart target; the capacity bound
 itself remains a Conjectural bridge.**
 
 No continuation/restart theorem and no regularity claim.
+
+
+---
+
+## 15. Orientation-complete material packet sharpens the restart geometry
+
+The later packet audit replaces the orthonormal diagnostic microframe by a general
+invertible material area frame `H=(h_1,h_2,h_3)`.  Its raw shared-noise q.v. matrix is
+
+\[
+\Gamma_H=2\nu H^T(\nabla\omega)(\nabla\omega)^TH,
+\]
+
+and the exact packet metric is
+
+\[
+M_H=(H^TH)^{-1}.
+\]
+
+Then
+
+\[
+\boxed{
+\frac12\operatorname{tr}(\Gamma_HM_H)=\nu|\nabla\omega|^2
+}
+\]
+
+for every invertible `H`, not only an orthonormal one.  This is essential because a
+material packet obeys Nanson kinematics
+
+\[
+D_tH=-(\nabla u)^TH
+\]
+
+and generally becomes non-orthogonal.
+
+For any raw packet covariance `C_H`, the metric-normalized scalar
+
+\[
+\mathcal B_H=\frac12\operatorname{tr}(C_HM_H)
+\]
+
+is invariant under passive `GL(3)` reparameterization.  Thus the earlier scalar
+`-2(A_dot/A)V_hat` term is only a coordinate face of the full metric connection; a
+passive zoom/rotation/shear does not create capacity when covariance and metric are
+transported together.
+
+If
+
+\[
+C_H=H^T\mathcal C H+R,
+\]
+
+the tensorial part gives exactly `tr(mathcal C)/2`; only
+
+\[
+\frac12\operatorname{tr}(R M_H)
+\]
+
+survives packet normalization.  Under isotropic linear scale `r`, `H_r=r^2H_0`, so
+a raw remainder `r^pR_0` contributes exactly `r^(p-4)` after metric normalization.
+
+Most importantly, material vorticity flux coordinates
+
+\[
+\Phi=H^T\omega
+\]
+
+obey the exact Navier--Stokes law
+
+\[
+\boxed{D_t\Phi=\nu H^T\Delta\omega.}
+\]
+
+Vortex stretching cancels from the flux equation and reappears as packet metric
+work:
+
+\[
+\boxed{
+\frac12\Phi^T\dot M_H\Phi=\omega\cdot S\omega.
+}
+\]
+
+For flux covariance `C_Phi`, this polarizes to
+
+\[
+\frac12\operatorname{tr}(C_\Phi\dot M_H)
+=\operatorname{tr}(S\Sigma_\omega),
+\qquad
+\Sigma_\omega=H^{-T}C_\Phi H^{-1}.
+\]
+
+Thus the restart obstruction is no longer accurately described as a positive
+"dilation cost" plus a separate cubic stretching term.  Passive packet geometry
+cancels; **material** metric deformation is the stretching channel itself.
+
+**Classification: Exact packet/flux/metric identities.**
+
+The remaining singular-time question is whether the future Kelvin covariance has a
+uniform local tensor limit with a metric-amplified remainder whose signed physical
+transport, boundary, exit, and material metric work remain controllable.
+
+**Classification: Conjectural bridge.  No continuation/restart theorem and no
+regularity claim.**
+
+See `docs/orientation_complete_restart_packet.md` for the full packet audit.

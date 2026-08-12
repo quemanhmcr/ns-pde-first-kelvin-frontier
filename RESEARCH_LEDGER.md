@@ -420,7 +420,61 @@ bulk q.v. dissipation and spatial flux are distinct physical channels.
 **Classification: Exact identities plus rigorous structural consequences from
 exact Navier--Stokes calibrations.**
 
-The restart target is now sharper but open: control cumulative vortex stretching
-by the orientation-complete, area-normalized Kelvin pair bank together with signed
-spatial boundary and dilation work as the selected scale tends to zero.  No
-continuation/restart theorem and no regularity claim.
+At this stage the restart target was sharpened to an orientation-complete,
+area-normalized packet.  The subsequent material-packet audit below refines this
+further: passive dilation/rotation/shear cancel in the full GL(3) metric capacity,
+while material metric work is the vortex-stretching channel itself.  The living
+frontier is therefore the local future-covariance tensor/remainder law plus signed
+material metric and physical boundary/exit work.  No continuation/restart theorem
+and no regularity claim.
+
+
+## 2026-08-12 — orientation-complete material packet turns stretching into metric work
+
+The restart layer was lifted from one selected Kelvin loop to a three-loop packet per
+first-bad germ.  The germ selector is now `M_fb tensor I_3` for this restart layer,
+so one selected germ retains all three orientations and all nine ordered
+cross-orientation pair slots.  A finite-chain CI witness verifies rank `3`, zero
+one-current physical boundary, and zero full-pair physical boundary.
+
+The full instantaneous packet q.v. is the shared-noise Gram matrix
+`Gamma_mf=2 nu N^T (grad omega)(grad omega)^T N`.  Cross-orientation covariance is
+physical: at the symmetric exact ABC enstrophy maximum CI obtains the matrix
+`nu exp(-2 nu t) [[2,-1,-1],[-1,2,-1],[-1,-1,2]]`, including negative cross terms
+and a blind diagonal normal `(1,1,1)/sqrt(3)` while the bulk payment remains
+positive.
+
+A general material loop packet is represented by its invertible oriented area frame
+`H`.  The raw packet q.v. is `2 nu H^T(grad omega)(grad omega)^T H` and the exact
+contravariant packet metric is `M=(H^T H)^(-1)`.  Their contraction satisfies
+`(1/2) tr(Gamma_H M)=nu|grad omega|^2` for arbitrary non-orthogonal `H`.  More
+generally `B(C,H)=(1/2)tr(CM)` is invariant under passive `GL(3)` packet
+reparameterization.  Continuous rotation/dilation/shear and finite passive GL jumps
+therefore have exact signed cancellation when covariance and metric are both kept.
+
+If raw covariance has local tensor form `C_H=H^T C_local H`, the packet capacity is
+exactly `tr(C_local)/2` at every invertible scale and shape.  For isotropic linear
+scale `r`, the only surviving packet-normalized scale content is a non-tensorial
+remainder: `R_r=r^pR_0` contributes exactly `r^(p-4)`.  Perfect tensorial dyadic
+shrinking has zero capacity cost.
+
+The material kinematics reveals the physical nonlinear channel.  Nanson gives
+`D_t H=-(grad u)^T H`, while the NS vorticity equation gives
+`D_t(H^T omega)=nu H^T Delta omega`; vortex stretching cancels exactly from material
+flux coordinates.  With `Phi=H^T omega` and `M=(H^T H)^(-1)`, however,
+`|omega|^2=Phi^T M Phi` and `(1/2) Phi^T Mdot Phi=omega.S omega`.  Thus literal
+vortex stretching is material packet **metric work**, not production of vortex
+flux.  Incompressibility preserves `det M` while allowing anisotropy to grow.
+
+An amplitude-scaled exact ABC family supplies a no-go for a tempting closure:
+`stretching/(instantaneous Kelvin bulk)=A exp(-nu t)/nu`, so instantaneous packet
+q.v. alone cannot universally dominate stretching.
+
+**Classification: Exact packet, GL(3), material-flux and metric-stretching
+identities; rigorous no-go from an exact 3D NS family.**
+
+The remaining restart question is narrower: establish a local future-covariance
+tensor/remainder law uniformly near a candidate singular time and control the
+metric-amplified remainder, signed physical boundary/exit terms, and covariance-
+weighted material metric work.  `restart-capacity` and continuation/restart remain
+open; no regularity claim.

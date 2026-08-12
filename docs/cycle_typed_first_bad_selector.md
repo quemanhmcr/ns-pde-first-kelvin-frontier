@@ -547,9 +547,13 @@ Repeated selector work is signed and cannot be replaced by the sum of positive
 quadratic increments; the odd-shear reset calibration shows why.  Finiteness or
 cancellation of the total physical localization work over an arbitrary approach to
 a singular time remains a separate restart/continuation question.  The later
-vorticity/Kelvin microframe audit sharpens that question: a restart density needs
-orientation completion, area-squared normalization, and the exact dilation term
-created by shrinking scale; raw rank-one loop variance is not sufficient by itself.
+vorticity/Kelvin and orientation-packet audits sharpen that question: the restart
+extension selects a whole three-loop block `M_fb tensor I_3`, retains the full
+`3 x 3` cross-orientation covariance, and normalizes by the packet metric
+`(H^T H)^(-1)`.  Passive orientation/scale/shear changes then cancel exactly.  What
+remains is material metric-stretching work and the metric-amplified departure of
+future covariance from an area-squared local tensor law; raw rank-one loop variance
+is not sufficient by itself.
 
 **Classification: Rigorous consequence; no continuation claim.**
 

@@ -11,6 +11,7 @@ hodge_note = ROOT / "docs" / "hodge_cycle_projector_audit.md"
 ck_note = ROOT / "docs" / "kelvin_ck_admissibility_audit.md"
 stochastic_note = ROOT / "docs" / "stochastic_cycle_map_audit.md"
 vorticity_note = ROOT / "docs" / "vorticity_kelvin_restart_audit.md"
+packet_note = ROOT / "docs" / "orientation_complete_restart_packet.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -18,6 +19,7 @@ hodge_text = hodge_note.read_text()
 ck_text = ck_note.read_text()
 stochastic_text = stochastic_note.read_text()
 vorticity_text = vorticity_note.read_text()
+packet_text = packet_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -114,6 +116,23 @@ if vorticity_missing:
     print("missing vorticity/Kelvin restart structural markers:", vorticity_missing)
     sys.exit(1)
 
+packet_required = [
+    "orientation-complete",
+    "cross-orientation",
+    "GL(3)",
+    "Material vorticity flux removes stretching from the flux equation",
+    "Vortex stretching is packet metric work",
+    "p-4",
+    "future-covariance tensor",
+    "Exact identity",
+    "Conjectural bridge",
+    "No continuation/restart theorem",
+]
+packet_missing = [token for token in packet_required if token not in packet_text]
+if packet_missing:
+    print("missing orientation-complete restart packet structural markers:", packet_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -121,8 +140,9 @@ for forbidden in [
     "S^int=0 iff Z_irr=0 is proved",
     "restart capacity is bounded",
     "first-bad threshold is established",
+    "future-covariance tensor limit is established",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

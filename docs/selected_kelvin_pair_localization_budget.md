@@ -1245,13 +1245,161 @@ criterion.
 
 **Classification: Exact identities and rigorous structural consequences.**
 
-The remaining restart-capacity problem is now precise: an orientation-complete,
-area-normalized Kelvin pair bank and the signed boundary/dilation work must control
-cumulative vortex stretching while the selected scale approaches zero.  That
-capacity bound is not established.
+This section identifies the correct local density but not yet the invariant packet
+capacity.  The subsequent orientation-complete packet audit shows that passive
+rotation/dilation/shear cancel exactly in the GL(3)-normalized contraction, while
+material metric deformation is the vortex-stretching channel itself.  The living
+restart-capacity problem is therefore the local future-covariance tensor/remainder
+law plus signed material metric and physical boundary/exit work.
 
 **Classification: Conjectural bridge for restart capacity.  No continuation or
 regularity conclusion.**
 
-See `docs/vorticity_kelvin_restart_audit.md` for the full derivation and exact shear
-and ABC calibrations.
+See `docs/vorticity_kelvin_restart_audit.md` and
+`docs/orientation_complete_restart_packet.md`.
+
+
+
+---
+
+## 24. Orientation-complete first-bad packet and GL(3)-normalized capacity
+
+The restart extension of one selected germ carries three closed loop orientations.
+The first-bad support selector therefore lifts as
+
+\[
+\boxed{M_{\rm fb}^{\rm mf}=M_{\rm fb}\otimes I_3.}
+\]
+
+With a closed packet library `B_x K_mf=0`, both the selected one-current packet and
+its full pair lift remain physically closed.  The packet q.v. is the full matrix
+
+\[
+\boxed{
+\Gamma_{\rm mf}=2\nu N^T(\nabla\omega)(\nabla\omega)^TN,
+}
+\]
+
+not a diagonal list.  Exact ABC flow at `(pi/4,pi/4,pi/4)` has negative
+cross-orientation entries, so these terms are physical even in the ordinary
+coordinate frame.
+
+For a general material area frame `H`, define
+
+\[
+M_H=(H^TH)^{-1},
+\qquad
+\boxed{\mathcal B(C_H,H)=\frac12\operatorname{tr}(C_HM_H).}
+\]
+
+Then `B` is exactly invariant under any invertible packet reparameterization
+`H->HL`, `C_H->L^T C_H L`.  Rotation, anisotropic dilation and packet shear are one
+connection geometry; they do not create a scalar capacity when full covariance and
+the packet metric are retained.
+
+If a local covariance tensor exists so that
+
+\[
+C_H=H^T\mathcal C H,
+\]
+
+then
+
+\[
+\boxed{\mathcal B=\frac12\operatorname{tr}\mathcal C}
+\]
+
+independently of packet geometry.  Under `H_r=r^2H_0`, a non-tensorial raw remainder
+`R_r=r^pR_0` contributes exactly `r^(p-4)` after metric normalization.  Thus the
+scale obstruction is the metric-amplified **failure of local area-squared
+tensoriality**, not the number of refinements or a positive zoom cost.
+
+The continuous exact packet bank law is
+
+\[
+\boxed{
+\dot{\mathcal B}
+=-\frac12\operatorname{tr}(\Gamma_HM_H)
++\frac12\operatorname{tr}(W_HM_H)
++\frac12\operatorname{tr}(C_H\dot M_H).
+}
+\]
+
+Finite jumps split into signed covariance-reset and metric-revaluation faces.  A
+passive `GL(3)` jump can make both faces nonzero while their sum is exactly zero.
+
+**Classification: Exact identities.**
+
+The existence of a singular-time-uniform local **future** covariance tensor and a
+suitable remainder current is not established.
+
+**Classification: Conjectural bridge.**
+
+---
+
+## 25. Material flux coordinates move vortex stretching into the packet metric
+
+For a material area frame, Nanson gives
+
+\[
+D_tH=-(\nabla u)^TH.
+\]
+
+Define the infinitesimal vorticity-flux coordinates
+
+\[
+\Phi=H^T\omega.
+\]
+
+Combining Nanson with the exact NS vorticity equation gives
+
+\[
+\boxed{D_t\Phi=\nu H^T\Delta\omega.}
+\]
+
+The nonlinear stretching term cancels exactly from the material flux equation.  It
+reappears in the metric converting flux coordinates to physical vorticity:
+
+\[
+|\omega|^2=\Phi^TM_H\Phi,
+\qquad
+\boxed{
+\frac12\Phi^T\dot M_H\Phi=\omega\cdot S\omega.
+}
+\]
+
+For a flux covariance `C_Phi`,
+
+\[
+\boxed{
+\frac12\operatorname{tr}(C_\Phi\dot M_H)
+=\operatorname{tr}(S\Sigma_\omega),
+\qquad
+\Sigma_\omega=H^{-T}C_\Phi H^{-1}.
+}
+\]
+
+Incompressibility preserves `det M_H` exactly, so material stretching changes
+packet anisotropy rather than collapsing material volume.
+
+The exact amplitude-scaled ABC family gives another no-go.  At `(0,0,0)`,
+
+\[
+\omega\cdot S\omega=3A^3e^{-3\nu t},
+\qquad
+\frac12\operatorname{tr}\Gamma_{\rm mf}=3\nu A^2e^{-2\nu t},
+\]
+
+hence their ratio is `A exp(-nu t)/nu`, unbounded with amplitude at fixed `nu`.
+Instantaneous Kelvin bulk payment alone is therefore not a universal stretching
+bank.
+
+The restart-capacity target is now the coupled **future flux covariance + material
+packet metric + non-tensorial scale remainder + physical boundary/exit** ledger.
+No continuation theorem follows until that coupled object is controlled up to a
+candidate singular time.
+
+**Classification: Exact identities, exact 3D NS no-go calibration, and
+Conjectural bridge for the remaining future-covariance capacity.**
+
+See `docs/orientation_complete_restart_packet.md`.

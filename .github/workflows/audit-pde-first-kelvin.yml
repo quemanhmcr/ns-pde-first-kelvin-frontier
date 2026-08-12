@@ -226,3 +226,27 @@ jobs:
         with:
           name: vorticity-restart-geometry
           path: audit-results/vorticity_restart_geometry_report.json
+
+  orientation-complete-restart-packet:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit orientation-complete packet, GL3 metric capacity, and material flux stretching
+        run: python -m unittest -v tests.test_orientation_complete_packet
+      - name: Build orientation-complete restart packet artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_orientation_packet_report.py
+      - name: Upload orientation-complete restart packet artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: orientation-complete-restart-packet
+          path: audit-results/orientation_complete_restart_packet_report.json
