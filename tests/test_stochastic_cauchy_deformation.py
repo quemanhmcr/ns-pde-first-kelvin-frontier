@@ -12,6 +12,16 @@ from pde_audit.kelvin_packet_locality import (  # noqa: E402
     affine_vortex_stretch_gradient,
     affine_vortex_stretch_ns_residual,
 )
+from pde_audit.future_covariance_tensor import (  # noqa: E402
+    connected_covariance_horizon_residual,
+    connected_mean_horizon_residual,
+    connected_second_moment_horizon_residual,
+    product_pair_diagonal_defect,
+    vector_carre_du_champ,
+)
+from pde_audit.ancestry_resolution_kernel import (  # noqa: E402
+    vector_total_covariance_decomposition,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -40,6 +50,7 @@ from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     one_mode_shear_deformation_variance_at_symmetry,
     one_mode_shear_deformation_variance_leading_residual,
     column_vectorize,
+    column_partial_trace_vectorized_covariance,
     deformation_carre_du_champ_projection_residual,
     deformation_covariance_leading_projection_residual,
     deformation_covariance_projection_residual,
@@ -368,6 +379,89 @@ class StochasticCauchyDeformationAudit(unittest.TestCase):
             projected_deformation_covariance_leading_tensor(derivatives,nu,h),
             sp.zeros(3),
         )
+
+    def test_exact_shear_deformation_law_is_existing_connected_covariance_theorem_on_reverse_age_clock(self) -> None:
+        x, y, t, h, nu, k = sp.symbols('x y t h nu k', positive=True)
+        U = sp.exp(-nu * k**2 * t) * sp.cos(k * y)
+        Uy = sp.diff(U, y)
+        A = sp.Matrix([[0, Uy], [0, 0]])
+        mean_c = one_mode_shear_deformation_mean_coefficient(y, t, h, nu, k)
+        variance = one_mode_shear_deformation_variance(y, t, h, nu, k)
+        meanD = sp.Matrix([[1, 0], [mean_c, 1]])
+        mean = column_vectorize(meanD)
+        E21 = sp.Matrix([[0, 0], [1, 0]])
+        v = column_vectorize(E21)
+        Sigma = sp.simplify(variance * v * v.T)
+        second = sp.simplify(Sigma + mean * mean.T)
+
+        # L_rev=-partial_t-u.grad+nu Delta on (t,x,y); H_h=partial_h-L_rev.
+        reverse_drift = sp.Matrix([-1, -U, 0])
+        reverse_diffusion = sp.diag(0, 2 * nu, 2 * nu)
+        coords = (t, x, y)
+
+        # future_covariance_tensor uses H m + B_conn^T m=0, so the deformation
+        # horizon law H m=B_h m is the exact specialization B_conn=-B_h^T.
+        B_h = vectorized_horizon_connection(A)
+        B_conn = -B_h.T
+        self.assertEqual(
+            connected_mean_horizon_residual(
+                mean, B_conn, h, reverse_drift, reverse_diffusion, coords
+            ),
+            sp.zeros(4, 1),
+        )
+        self.assertEqual(
+            connected_second_moment_horizon_residual(
+                second, B_conn, h, reverse_drift, reverse_diffusion, coords
+            ),
+            sp.zeros(4),
+        )
+        self.assertEqual(
+            connected_covariance_horizon_residual(
+                mean, second, B_conn, h, reverse_drift, reverse_diffusion, coords
+            ),
+            sp.zeros(4),
+        )
+
+        t1, x1, y1, t2, x2, y2 = sp.symbols('t1 x1 y1 t2 x2 y2')
+        pair_defect = product_pair_diagonal_defect(
+            mean,
+            coords,
+            (t1, x1, y1),
+            (t2, x2, y2),
+            reverse_drift,
+            reverse_diffusion,
+        )
+        Gamma = vector_carre_du_champ(mean, reverse_diffusion, coords)
+        self.assertEqual(sp.simplify(pair_defect - Gamma), sp.zeros(4))
+
+    def test_reducing_hidden_deformation_adds_resolution_covariance_instead_of_retyping_intrinsic_sigma(self) -> None:
+        p, a, b, c, d, s1, s2, q1, q2 = sp.symbols(
+            'p a b c d s1 s2 q1 q2', real=True
+        )
+        Dbar1 = sp.Matrix([[1, a], [b, 1]])
+        Dbar2 = sp.Matrix([[1, c], [d, 1]])
+        m1 = column_vectorize(Dbar1)
+        m2 = column_vectorize(Dbar2)
+        means = sp.Matrix([list(m1), list(m2)])
+        Sigma1 = sp.diag(s1, 0, q1, 0)
+        Sigma2 = sp.diag(s2, 0, q2, 0)
+        kernel = sp.Matrix([[p, 1 - p]])
+        averaged, resolution, total = vector_total_covariance_decomposition(
+            kernel, means, [Sigma1, Sigma2]
+        )
+        self.assertEqual(sp.simplify(total[0] - averaged[0] - resolution[0]), sp.zeros(4))
+        # The packet-metric row-Gram face sees the partial trace of both sectors.
+        projected_total = column_partial_trace_vectorized_covariance(total[0], 2)
+        projected_intrinsic = sp.simplify(
+            p * column_partial_trace_vectorized_covariance(Sigma1, 2)
+            + (1 - p) * column_partial_trace_vectorized_covariance(Sigma2, 2)
+        )
+        projected_resolution = column_partial_trace_vectorized_covariance(resolution[0], 2)
+        self.assertEqual(
+            sp.simplify(projected_total - projected_intrinsic - projected_resolution),
+            sp.zeros(2),
+        )
+        self.assertNotEqual(sp.simplify(resolution[0]), sp.zeros(4))
 
     def test_smooth_past_vorticity_bound_does_not_remove_deformation_moment(self) -> None:
         W,r=sp.symbols('W r', positive=True)

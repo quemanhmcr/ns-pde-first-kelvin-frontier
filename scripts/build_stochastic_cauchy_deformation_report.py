@@ -9,6 +9,16 @@ import sympy as sp
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from pde_audit.ancestry_resolution_kernel import (  # noqa: E402
+    vector_total_covariance_decomposition,
+)
+from pde_audit.future_covariance_tensor import (  # noqa: E402
+    connected_covariance_horizon_residual,
+    connected_mean_horizon_residual,
+    connected_second_moment_horizon_residual,
+    product_pair_diagonal_defect,
+    vector_carre_du_champ,
+)
 from pde_audit.kelvin_packet_locality import (  # noqa: E402
     affine_vortex_stretch_gradient,
     affine_vortex_stretch_ns_residual,
@@ -18,6 +28,7 @@ from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_total_bank_envelope_residual,
     cauchy_packet_metric_duality_residual,
     column_vectorize,
+    column_partial_trace_vectorized_covariance,
     deformation_covariance_leading_projection_residual,
     deformation_mean_horizon_residual,
     deformation_second_moment_horizon_residual,
@@ -33,6 +44,7 @@ from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     reverse_age_horizon_operator_matrix,
     vectorized_deformation_covariance_horizon_residual,
     vectorized_deformation_covariance_leading_tensor,
+    vectorized_horizon_connection,
 )
 
 x, y, z, t, s, h, nu, k, a, r0 = sp.symbols(
@@ -70,6 +82,58 @@ v21 = column_vectorize(E21)
 Sigma = sp.simplify(variance * v21 * v21.T)
 HSigma = reverse_age_horizon_operator_matrix(Sigma, h, t, velocity, nu, (x, y))
 
+# Cross-module specialization to the repo's existing connected vector covariance theorem.
+mean_vec = column_vectorize(mean_D)
+second_vec = sp.simplify(Sigma + mean_vec * mean_vec.T)
+B_horizon = vectorized_horizon_connection(A)
+B_connected = -B_horizon.T
+reverse_drift = sp.Matrix([-1, -U, 0])
+reverse_diffusion = sp.diag(0, 2 * nu, 2 * nu)
+reverse_coords = (t, x, y)
+connected_mean_zero = connected_mean_horizon_residual(
+    mean_vec, B_connected, h, reverse_drift, reverse_diffusion, reverse_coords
+) == sp.zeros(4, 1)
+connected_second_zero = connected_second_moment_horizon_residual(
+    second_vec, B_connected, h, reverse_drift, reverse_diffusion, reverse_coords
+) == sp.zeros(4)
+connected_covariance_zero = connected_covariance_horizon_residual(
+    mean_vec, second_vec, B_connected, h, reverse_drift, reverse_diffusion, reverse_coords
+) == sp.zeros(4)
+t1, x1, y1, t2, x2, y2 = sp.symbols("t1 x1 y1 t2 x2 y2")
+pair_defect = product_pair_diagonal_defect(
+    mean_vec,
+    reverse_coords,
+    (t1, x1, y1),
+    (t2, x2, y2),
+    reverse_drift,
+    reverse_diffusion,
+)
+reverse_gamma = vector_carre_du_champ(mean_vec, reverse_diffusion, reverse_coords)
+pair_defect_zero = sp.simplify(pair_defect - reverse_gamma) == sp.zeros(4)
+
+# Exact vector law-of-total-covariance split for an explicit reduced/full lift.
+p_red = sp.symbols("p_red", real=True)
+Dbar_hidden_1 = sp.Matrix([[1, sp.Symbol("a_red")], [0, 1]])
+Dbar_hidden_2 = sp.Matrix([[1, sp.Symbol("c_red")], [sp.Symbol("d_red"), 1]])
+hidden_means = sp.Matrix([
+    list(column_vectorize(Dbar_hidden_1)),
+    list(column_vectorize(Dbar_hidden_2)),
+])
+S1 = sp.diag(sp.Symbol("s1_red"), 0, sp.Symbol("q1_red"), 0)
+S2 = sp.diag(sp.Symbol("s2_red"), 0, sp.Symbol("q2_red"), 0)
+reduction_kernel = sp.Matrix([[p_red, 1 - p_red]])
+averaged_intrinsic, resolution_cov, reduced_total = vector_total_covariance_decomposition(
+    reduction_kernel, hidden_means, [S1, S2]
+)
+resolution_split_zero = sp.simplify(
+    reduced_total[0] - averaged_intrinsic[0] - resolution_cov[0]
+) == sp.zeros(4)
+projected_resolution_split_zero = sp.simplify(
+    column_partial_trace_vectorized_covariance(reduced_total[0], 2)
+    - column_partial_trace_vectorized_covariance(averaged_intrinsic[0], 2)
+    - column_partial_trace_vectorized_covariance(resolution_cov[0], 2)
+) == sp.zeros(2)
+
 # General short-horizon tensor/projection audit with symbolic spatial derivatives.
 g11, g12, g21, g22, q11, q12, q21, q22 = sp.symbols(
     "g11 g12 g21 g22 q11 q12 q21 q22"
@@ -94,11 +158,13 @@ report = {
         "reverse_age_state": "Exact identity",
         "mean_second_moment_covariance_laws": "Exact identity",
         "pair_and_projection_identities": "Exact identity",
+        "connected_covariance_theorem_specialization": "Exact identity",
+        "vector_total_covariance_given_lift": "Exact identity",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
         "affine_vortex": "Audited calibration",
         "future_remaining_bank_identification": "Open-literal",
-        "reduced_resolution_identification": "Open-literal",
+        "actual_reduced_ancestry_lift_identification": "Open-literal",
         "selected_support_alignment": "Conjectural bridge / Open-literal",
         "restart_continuation_regularity": "Open; no theorem claimed",
     },
@@ -117,6 +183,23 @@ report = {
         "projected_law": "H_h C_D^Gram=A^T C_D^Gram+C_D^Gram A+2nu sum_mu (partial_mu Dbar)(partial_mu Dbar)^T",
         "pair": "Sigma_D=(1/2)E[(vec D1-vec D2)(vec D1-vec D2)^T]; C_D^Gram is its row-Gram projection",
         "packet_metric": "rho^4 E[M_H]=Dbar Dbar^T+C_D^Gram on the stochastic replica ensemble",
+    },
+    "existing_theorem_specialization": {
+        "reverse_generator": "L_rev=-partial_t-u.grad+nu Delta",
+        "connection_identification": "B_conn=-(I tensor (grad u)^T)^T",
+        "connected_mean_residual_zero": bool(connected_mean_zero),
+        "connected_second_moment_residual_zero": bool(connected_second_zero),
+        "connected_covariance_residual_zero": bool(connected_covariance_zero),
+        "pair_diagonal_defect_minus_gamma_zero": bool(pair_defect_zero),
+        "typing": "same covariance algebra/pair source already exists; Cauchy deformation payload, connection ordering, and causal-past clock are the physical specialization",
+    },
+    "reduced_state_covariance_split": {
+        "identity": "Sigma_D^red=R Sigma_D+Cov_R(Dbar_vec)",
+        "full_split_residual_zero": bool(resolution_split_zero),
+        "row_gram_partial_trace_split_residual_zero": bool(projected_resolution_split_zero),
+        "intrinsic_sector": "R Sigma_D: averaged full-state same-clock deformation covariance",
+        "resolution_sector": "Cov_R(Dbar_vec): additional covariance created by hiding full-state deformation means",
+        "actual_lift": "Open-literal: the programme-specific ancestry kernel/state semantics are not constructed here",
     },
     "short_horizon": {
         "full_vectorized": "Sigma_D=(2nu/3)h^3 sum_mu vec((partial_mu grad u)^T) outer vec((partial_mu grad u)^T)+O(h^4)",
@@ -169,9 +252,9 @@ report = {
         ),
     },
     "ledger_placement": {
-        "same_clock_face": "Sigma_D is an observable covariance sector on the augmented causal reverse-age state; C_D^Gram is its projection covariance",
+        "same_clock_face": "Sigma_D is the existing connected vector covariance theorem specialized to reverse-age Cauchy deformation; C_D^Gram is its row-Gram projection",
         "future_remaining_horizon": "not identified: causal past h=t-s is distinct from future remaining tau=Theta-t",
-        "resolution_covariance": "not identical without an explicit reduced-state conditional lift; hiding deformation would add a separate law-of-total-covariance face",
+        "resolution_covariance": "given a lift, reduction adds Cov_R(Dbar_vec) to averaged intrinsic Sigma_D; it does not retype intrinsic deformation covariance as resolution",
         "S_int": "no identification with S^int, Z_irr, or irreducible content",
     },
 }

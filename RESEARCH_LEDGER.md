@@ -971,17 +971,29 @@ stochastic packet-metric alignment remains false. The exact affine-vortex NS
 calibration has spatially uniform `grad u`, hence zero deformation-dispersion source,
 as required.
 
-Physical placement is now explicit. `Sigma_D` is an exact same-clock vector
-conditional covariance sector on the augmented causal reverse-age state and has an
-exact same-ancestor pair face. `C_D^Gram` is its projection covariance. Neither is
-automatically the future-remaining bank `tau=Theta-t`, nor the reduced ancestry
-resolution covariance. A reduction that hides deformation would introduce a
-separate law-of-total-covariance resolution face. No part is called `S^int`,
-`Z_irr`, or irreducible without a theorem.
+Physical placement is now sharper. Under the reverse-age generator
+`L_rev=-partial_t-u.grad+nu Delta`, the law is an exact specialization of the repo's
+existing connected vector covariance theorem after the connection identification
+`B_conn=-(I tensor (grad u)^T)^T`. The existing product-pair diagonal-defect theorem
+returns exactly `Gamma_D^vec`. Thus the covariance algebraic face and same-ancestor
+pair source were already present; the new physical sector is the literal Cauchy
+deformation payload, reverse-age connection ordering, and causal-past clock.
+
+`C_D^Gram` remains only the row-Gram projection covariance. Neither `Sigma_D` nor its
+projection is automatically the future-remaining bank `tau=Theta-t` or the ancestry
+resolution covariance. If an explicit reduced/full lift kernel `R` hides deformation,
+the exact vector law of total covariance is
+`Sigma_D^red=R Sigma_D+Cov_R(Dbar_vec)`. The first term is averaged intrinsic
+same-clock deformation covariance; the second is a genuinely additional resolution
+covariance with its own hidden-state two-replica form. Partial trace commutes with the
+split, so the reduced packet-metric face contains both `R C_D^Gram` and the projected
+resolution term. The actual programme-specific ancestry lift/kernel remains
+open-literal. No part is called `S^int`, `Z_irr`, or irreducible without a theorem.
 
 **Status: Exact identity** for the mean/second-moment/vectorized/projected covariance
-laws and pair identities. **Status: Rigorous consequence** for the local smooth
+laws, connected-theorem specialization, pair diagonal defect, and vector
+law-of-total-covariance split. **Status: Rigorous consequence** for the local smooth
 `h^3` asymptotic and PSD projections. **Status: Audited calibration** for one-mode
-shear and affine-vortex NS. Cross-clock, reduced-state, and deterministic-selected
-support identifications remain **Conjectural bridge / Open-literal**. No restart,
-continuation, or regularity theorem is claimed.
+shear and affine-vortex NS. Cross-clock, actual reduced-state lift construction, and
+deterministic-selected support identifications remain **Conjectural bridge /
+Open-literal**. No restart, continuation, or regularity theorem is claimed.

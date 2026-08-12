@@ -323,6 +323,9 @@ cauchy_required = [
     "row-Gram projection",
     "anchor carré-du-champ",
     "causal past horizon",
+    "connected vector covariance theorem",
+    "vector law of total covariance",
+    "additional resolution covariance",
     "Sigma_D",
     "C_D^Gram",
     "two-replica",
@@ -408,6 +411,8 @@ for forbidden in [
     "Sigma_D is S^int",
     "deformation covariance is the future remaining bank",
     "deformation covariance is the resolution covariance",
+    "resolution covariance equals Sigma_D",
+    "connected covariance theorem identifies the future clock",
     "pathwise D has Brownian q.v.",
     "shear dispersion closes first-bad alignment",
 ]:

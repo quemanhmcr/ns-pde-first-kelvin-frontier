@@ -38,6 +38,68 @@ def kernel_covariances(kernel: Matrix, payoff: Matrix) -> list[sp.Matrix]:
     return out
 
 
+def kernel_pair_covariances(kernel: Matrix, payoff: Matrix) -> list[sp.Matrix]:
+    """1/2 E_RxR[(F1-F2)(F1-F2)^T] at each reduced state.
+
+    This is the full vector pair form of the conditional resolution covariance.
+    It is ordinary hidden-state dispersion and does not assume any stochastic q.v.
+    """
+    if kernel.cols != payoff.rows:
+        raise ValueError("kernel physical-state dimension must match payoff rows")
+    out: list[sp.Matrix] = []
+    for a in range(kernel.rows):
+        C = sp.zeros(payoff.cols)
+        for i in range(kernel.cols):
+            fi = sp.Matrix([payoff[i, j] for j in range(payoff.cols)])
+            for j in range(kernel.cols):
+                fj = sp.Matrix([payoff[j, ell] for ell in range(payoff.cols)])
+                delta = fi - fj
+                C += (
+                    sp.Rational(1, 2)
+                    * kernel[a, i]
+                    * kernel[a, j]
+                    * delta
+                    * delta.T
+                )
+        out.append(sp.simplify(C))
+    return out
+
+
+def vector_resolution_pair_residual(kernel: Matrix, payoff: Matrix) -> list[sp.Matrix]:
+    """Pair covariance minus direct conditional covariance at every reduced state."""
+    direct = kernel_covariances(kernel, payoff)
+    pair = kernel_pair_covariances(kernel, payoff)
+    return [sp.simplify(pair[a] - direct[a]) for a in range(kernel.rows)]
+
+
+def vector_total_covariance_decomposition(
+    kernel: Matrix,
+    physical_means: Matrix,
+    physical_covariances: list[Matrix],
+) -> tuple[list[Matrix], list[Matrix], list[Matrix]]:
+    """Vector law of total covariance under a reduced/full conditional kernel.
+
+    For each reduced state a,
+      C_red = E_R[C_full] + Cov_R(m_full).
+    The second term is the resolution covariance created by hiding full-state
+    distinctions.  It is additional to any intrinsic full-state covariance.
+    """
+    if kernel.cols != physical_means.rows or kernel.cols != len(physical_covariances):
+        raise ValueError("kernel/full-state dimensions do not match")
+    d = physical_means.cols
+    if any(C.shape != (d, d) for C in physical_covariances):
+        raise ValueError("every physical covariance must match the output dimension")
+    averaged_full: list[Matrix] = []
+    for a in range(kernel.rows):
+        C = sp.zeros(d)
+        for i in range(kernel.cols):
+            C += kernel[a, i] * physical_covariances[i]
+        averaged_full.append(sp.simplify(C))
+    resolution = kernel_covariances(kernel, physical_means)
+    total = [sp.simplify(averaged_full[a] + resolution[a]) for a in range(kernel.rows)]
+    return averaged_full, resolution, total
+
+
 def scalar_resolution_variance(kernel: Matrix, payoff: Matrix) -> sp.Matrix:
     """Var_R(F)=R(F^2)-(RF)^2 for a scalar physical payoff."""
     if payoff.cols != 1:

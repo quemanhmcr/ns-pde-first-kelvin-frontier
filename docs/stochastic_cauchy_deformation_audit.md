@@ -1053,11 +1053,53 @@ would be physically wrong.
 
 ### B. `Sigma_D` is a full same-clock covariance sector; `C_D^Gram` is its projection
 
-On the augmented reverse-age Markov state `(physical time, anchor, deformation)`,
-`vec(D)` is an ordinary vector observable.  Therefore `Sigma_D` is an exact instance
-of the repo's general full-state vector covariance/carré-du-champ mechanism, now with
-a deformation connection.  Its two-replica identity is the corresponding same-ancestor
-pair diagonal defect.
+The repo already contains a general **connected vector covariance theorem**.  Its
+horizon convention is
+
+\[
+(\partial_\tau-L)m+B_{\rm conn}^T m=0,
+\]
+
+and
+
+\[
+(\partial_\tau-L)C+B_{\rm conn}^TC+CB_{\rm conn}
+=\Gamma[m].
+\]
+
+For deformation, take the literal reverse-age generator on current variables
+
+\[
+L_{\rm rev}=-\partial_t-u\cdot\nabla+\nu\Delta
+\]
+
+and the exact sign/order identification
+
+\[
+\boxed{
+B_{\rm conn}
+=-B_{\rm horizon}^T
+=-\big(I\otimes A^T\big)^T.
+}
+\]
+
+Then the existing connected theorem becomes exactly
+
+\[
+\mathcal H_h\bar z=B_{\rm horizon}\bar z,
+\qquad
+\mathcal H_h\Sigma_D
+=B_{\rm horizon}\Sigma_D+\Sigma_DB_{\rm horizon}^T
++\Gamma_D^{\rm vec}.
+\]
+
+So the covariance **algebraic face is already present** in the repo; the new content is
+the literal Cauchy-deformation payload, reverse-age connection ordering, and physical
+clock semantics.  The existing product-pair diagonal-defect theorem also gives
+exactly `Gamma_D^vec`; the deformation connection is homogeneous pair transport and
+does not manufacture a new branching source.  The exact one-mode shear is now a
+cross-module symbolic referee for all three statements: connected mean, connected
+second moment/covariance, and pair diagonal defect.
 
 But the `3 x 3` tensor entering the packet metric is only
 
@@ -1091,15 +1133,66 @@ covariance theorem, not a proof that it is the repo's future-remaining covarianc
 bank.
 
 Likewise, `Sigma_D` is not automatically the ancestry **resolution covariance**.
-If a reduced state later hides deformation degrees of freedom, the law of total
-covariance will add a separate conditional-resolution face.  Equality with that face
-requires an explicit reduction/lift theorem.
+Once an explicit reduced/full conditional lift kernel `R(y,dY)` is supplied, however,
+the vector law of total covariance is exact.  If
 
-No part of `Sigma_D` or `C_D^Gram` is renamed `S^int`, `Z_irr`, or “irreducible.”
-That identification has not been proved.
+\[
+\bar z(Y)=\mathbb E[\operatorname{vec}D\mid Y],
+\qquad
+\Sigma_D(Y)=\operatorname{Cov}(\operatorname{vec}D\mid Y),
+\]
 
-**Status: Conjectural bridge / Open-literal for cross-clock and reduced-state
-identifications.**
+then at the reduced state `y`,
+
+\[
+\boxed{
+\Sigma_D^{\rm red}(y)
+=
+R\Sigma_D(y)
++
+\operatorname{Cov}_R(\bar z)(y).
+}
+\]
+
+The first term is the averaged **intrinsic same-clock deformation covariance** already
+present on the full state.  The second is the genuinely additional **resolution
+covariance** created by hiding full-state deformation information.  It has its own
+exact hidden-state pair form
+
+\[
+\boxed{
+\operatorname{Cov}_R(\bar z)
+=
+\frac12\mathbb E_{R\otimes R}
+[(\bar z_1-\bar z_2)(\bar z_1-\bar z_2)^T].
+}
+\]
+
+Column partial trace commutes with this decomposition, so the packet-metric face at
+the reduced level is
+
+\[
+\boxed{
+C_{D,\rm red}^{\rm Gram}
+=
+R C_D^{\rm Gram}
++
+\operatorname{ptr}_{\rm col}\operatorname{Cov}_R(\bar z).
+}
+\]
+
+Thus reduction does **not** retype intrinsic `Sigma_D` as resolution covariance; it
+adds a second covariance sector.  What remains open-literal is not this algebra but
+the programme-specific construction/identification of the actual ancestry lift
+kernel and its state semantics.
+
+No part of `Sigma_D`, `C_D^Gram`, or the new resolution term is renamed `S^int`,
+`Z_irr`, or “irreducible.”  That identification has not been proved.
+
+**Status: Exact identity** for the connected-theorem specialization and vector
+law-of-total-covariance/pair decomposition.  **Status: Conjectural bridge /
+Open-literal** for cross-clock identification and for constructing the actual
+programme-specific reduced/full ancestry lift.
 
 ### D. Deterministic selected packet is still a different object
 
@@ -1374,8 +1467,10 @@ for it:
 
 Audit markers: **full vectorized deformation covariance**, **row-Gram projection**,
 **finite-variation deformation**, **anchor carré-du-champ**, **causal past horizon**,
-**terminal directional headroom**, **naive equality no-go**, **Open-literal
-selected-support coupling**, and **No continuation/restart theorem**.
+**connected vector covariance theorem**, **vector law of total covariance**,
+**additional resolution covariance**, **two-replica**, **terminal directional headroom**,
+**naive equality no-go**, **Open-literal selected-support coupling**,
+and **No continuation/restart theorem**.
 
 `S^int`, badness/resolve definitions, cross-clock identification, support--Cauchy
 state alignment, uniform collapse, restart capacity, and continuation remain open.

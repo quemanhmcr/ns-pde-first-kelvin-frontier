@@ -15,12 +15,15 @@ from src.pde_audit.ancestry_resolution_kernel import (
     hidden_two_state_mean,
     hidden_two_state_resolution_variance,
     kernel_covariances,
+    kernel_pair_covariances,
     kernel_intertwining_residual,
     kernel_mean,
     scalar_pair_resolution_variance,
     resolution_horizon_source_scalar,
     scalar_resolution_variance,
     total_variance_decomposition,
+    vector_resolution_pair_residual,
+    vector_total_covariance_decomposition,
 )
 
 
@@ -99,6 +102,37 @@ class AncestryResolutionKernelAudit(unittest.TestCase):
         F = sp.Matrix([[a], [-a]])
         self.assertEqual(kernel_mean(R, F), sp.zeros(1, 1))
         self.assertEqual(scalar_resolution_variance(R, F), sp.Matrix([a**2]))
+
+    def test_vector_resolution_covariance_has_exact_pair_form_and_total_covariance_split(self) -> None:
+        p = sp.symbols("p", real=True)
+        a, b, c, d = sp.symbols("a b c d", real=True)
+        s11, s12, s22, t11, t12, t22 = sp.symbols(
+            "s11 s12 s22 t11 t12 t22", real=True
+        )
+        kernel = sp.Matrix([[p, 1 - p]])
+        means = sp.Matrix([[a, b], [c, d]])
+        C1 = sp.Matrix([[s11, s12], [s12, s22]])
+        C2 = sp.Matrix([[t11, t12], [t12, t22]])
+        self.assertEqual(vector_resolution_pair_residual(kernel, means), [sp.zeros(2)])
+        for pair_cov, direct_cov in zip(
+            kernel_pair_covariances(kernel, means), kernel_covariances(kernel, means)
+        ):
+            self.assertEqual(sp.simplify(pair_cov - direct_cov), sp.zeros(2))
+        averaged, resolution, total = vector_total_covariance_decomposition(
+            kernel, means, [C1, C2]
+        )
+        mred = sp.Matrix([
+            sp.simplify(p * a + (1 - p) * c),
+            sp.simplify(p * b + (1 - p) * d),
+        ])
+        brute_second = sp.simplify(
+            p * (C1 + sp.Matrix([a, b]) * sp.Matrix([a, b]).T)
+            + (1 - p) * (C2 + sp.Matrix([c, d]) * sp.Matrix([c, d]).T)
+        )
+        brute_cov = sp.simplify(brute_second - mred * mred.T)
+        self.assertEqual(sp.simplify(total[0] - brute_cov), sp.zeros(2))
+        self.assertEqual(sp.simplify(averaged[0] - (p * C1 + (1 - p) * C2)), sp.zeros(2))
+        self.assertEqual(sp.simplify(total[0] - averaged[0] - resolution[0]), sp.zeros(2))
 
     def test_resolution_variance_exists_even_without_hidden_dynamics(self) -> None:
         a = sp.symbols("a", real=True)
