@@ -14,7 +14,9 @@ SEAMS = {
     "cycle-typed-first-bad-boundary": ("audited", "closed Kelvin cycle library forces zero intrinsic selector physical boundary and pair boundary"),
     "cycle-typed-first-bad-transport": ("audited", "support transport is exact germ cut current; finite hysteresis switch is reset revaluation"),
     "hodge-cycle-projector": ("audited-generic", "idempotent closed-range projector has zero physical boundary and pure range/complement exchange motion"),
-    "active-ck-pillar-ii": ("open-literal", "selector residual closed; projector kinematics classified; S^int or any non-projector CK content is not defined line by line"),
+    "kelvin-ck-admissibility": ("audited", "arbitrary cycle-preserving linear/differentiable CK maps have zero intrinsic boundary; cycle breaking is gauge-visible physical boundary"),
+    "stochastic-ck-carre-du-champ": ("audited-generic", "stochastic cycle motion contributes explicit martingale pair q.v.; finite-variation selector contribution is zero"),
+    "active-ck-pillar-ii": ("open-literal", "selector and deterministic/stochastic admissible CK operation classes are classified; S^int itself or any independently intended Z_irr is not defined line by line"),
     "continuation-restart": ("open", "no regularity bridge claimed"),
 }
 
@@ -23,7 +25,7 @@ required = {
     "freeze", "quantile", "anchor-orientation", "shell", "refinement",
     "resolve-reset", "physical-exit", "variable-frame-connection",
     "active-pair-factorization", "cycle-typed-first-bad-boundary",
-    "cycle-typed-first-bad-transport", "hodge-cycle-projector", "active-ck-pillar-ii", "continuation-restart",
+    "cycle-typed-first-bad-transport", "hodge-cycle-projector", "kelvin-ck-admissibility", "stochastic-ck-carre-du-champ", "active-ck-pillar-ii", "continuation-restart",
 }
 
 if set(SEAMS) != required:
@@ -36,11 +38,12 @@ for exact_seam in (
     "active-pair-factorization",
     "cycle-typed-first-bad-boundary",
     "cycle-typed-first-bad-transport",
+    "kelvin-ck-admissibility",
 ):
     if SEAMS[exact_seam][0] != "audited":
         raise SystemExit(f"{exact_seam} must remain explicitly audited")
 if SEAMS["active-ck-pillar-ii"][0] != "open-literal":
-    raise SystemExit("global Pillar II must remain open-literal until S^int and any extra CK/Hodge operator are defined and audited")
+    raise SystemExit("global Pillar II must remain open-literal until S^int and any independently intended Z_irr are literally defined and audited")
 if SEAMS["continuation-restart"][0] != "open":
     raise SystemExit("continuation/restart must remain open")
 

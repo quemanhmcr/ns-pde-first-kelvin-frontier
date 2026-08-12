@@ -154,3 +154,51 @@ jobs:
         with:
           name: hodge-cycle-projector
           path: audit-results/hodge_cycle_projector_report.json
+
+  kelvin-ck-admissibility:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit Kelvin-cycle CK admissibility, exact gauge boundary, and nonlinear pair tangent
+        run: python -m unittest -v tests.test_kelvin_ck_admissibility
+      - name: Build Kelvin CK admissibility artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_kelvin_ck_admissibility_report.py
+      - name: Upload Kelvin CK admissibility artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kelvin-ck-admissibility
+          path: audit-results/kelvin_ck_admissibility_report.json
+
+  stochastic-cycle-map:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit stochastic cycle-valued CK Itô drift and pair quadratic variation
+        run: python -m unittest -v tests.test_stochastic_cycle_map
+      - name: Build stochastic cycle-map audit artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_stochastic_cycle_map_report.py
+      - name: Upload stochastic cycle-map audit artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: stochastic-cycle-map
+          path: audit-results/stochastic_cycle_map_report.json

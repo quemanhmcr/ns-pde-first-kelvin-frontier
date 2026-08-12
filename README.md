@@ -18,9 +18,9 @@ For the cycle-typed selector sector the current identity has no intrinsic active
 
 `Pi_sel - Pi_dist = boundary(pair localization world-sheet) + quantile + shell + physical exit + connection + reset`,
 
-with full cross-shell and cross-child content retained inside the physical maps.  The literal global `S^int / Z_irr` equivalence remains open because the repository still contains no line-by-line definition of `S^int` or of any additional ambient CK/Hodge operator beyond the closed-cycle realization.
+with full cross-shell and cross-child content retained inside the physical maps.  A further admissibility audit now shows that idempotency is not needed: any linear or differentiable CK operation that genuinely acts on Kelvin currents must preserve closed cycles, in which case it produces no intrinsic physical-boundary or pair-content defect when full pair content is retained.  If it breaks closedness, exact pressure gauge exposes a physical open boundary/interface/exit instead.  The literal global `S^int / Z_irr` equivalence remains open because `S^int` itself has never been defined line by line.
 
-See `docs/cycle_typed_first_bad_selector.md` and `docs/selected_kelvin_pair_localization_budget.md`.
+See `docs/cycle_typed_first_bad_selector.md`, `docs/kelvin_ck_admissibility_audit.md`, and `docs/selected_kelvin_pair_localization_budget.md`.
 
 ## Current audited refinement result
 

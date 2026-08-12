@@ -632,14 +632,16 @@ arbitrary off-cycle extensions.  It is not an intrinsic Kelvin residual because 
 now verifies an ambient extension with nonzero global commutator whose restriction
 to the physical cycle and pair cycle is exactly zero.
 
-The only unresolved Pillar-II datum is now external to the first-bad selector
-itself: if the programme intends an additional ambient CK/Hodge operator beyond the
-closed-cycle realization `K`, that operator must be written down and audited.  The
-repository also still lacks a line-by-line definition of `S^int`, so the global
-statement `S^int=0 iff Z_irr=0` is not declared proved.
+The later Kelvin-admissibility audit classifies the generic additional CK/Hodge
+operation class without assuming a projector: a cycle-preserving linear or
+differentiable map has zero intrinsic physical boundary and no pair-content defect
+when the full pair current is retained; stochastic cycle motion has an explicit
+martingale carré-du-champ source; cycle breaking is pressure/gauge-visible physical
+boundary/interface/exit.  The repository still lacks a line-by-line definition of
+`S^int`, so the global statement `S^int=0 iff Z_irr=0` is not declared proved.
 
-**Classification: Conjectural bridge only for any additional CK/Hodge operator and
-for the global Pillar-II equivalence.**
+**Classification: Rigorous consequence for the specified CK operation classes;
+Conjectural bridge only for the undefined global Pillar-II objects.**
 
 No continuation/restart conclusion follows here.
 
@@ -771,13 +773,16 @@ Hence the intrinsic first-bad selector has
 \boxed{C_{\rm irr}^{\rm selector}=G_{\rm irr}^{\rm selector}=0}
 \]
 
-after the already named interface/connection/reset terms are retained.  This does
-**not** establish the global Pillar-II statement `S^int=0 iff Z_irr=0`: `S^int` is
-not defined line by line in this repository, and any additional programme-specific
-ambient CK/Hodge operator beyond `K` is likewise not yet present.
+after the already named interface/connection/reset terms are retained.  Subsequent
+admissibility audits show that an additional cycle-preserving CK/Hodge map likewise
+cannot create an intrinsic physical-boundary or pair-content defect; if stochastic,
+its only new second-order term is explicit carré-du-champ, and if cycle-breaking it
+is a physical gauge-visible boundary.  This still does **not** establish the global
+Pillar-II statement `S^int=0 iff Z_irr=0`, because those objects are not defined line
+by line in this repository.
 
-**Classification: Rigorous consequence for the selector sector; Conjectural bridge
-for any additional CK/Hodge operator and for the global Pillar-II equivalence.**
+**Classification: Rigorous consequence for selector and admissible CK operation
+classes; Conjectural bridge only for the undefined global Pillar-II equivalence.**
 
 The exact NS audit now includes two selector-specific checks.  In the odd-mode
 shear, a reset from anchor `0` to `pi` has positive increment variance but zero net

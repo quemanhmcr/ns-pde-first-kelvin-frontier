@@ -416,11 +416,17 @@ because `B_xK=0`.  Thus any remaining irreducible boundary term belongs to
 `H_CK`, not to first-bad selection or to pair lifting.
 
 The current repository still contains no independent literal definition of such an
-extra `H_CK` operator and no line-by-line definition of `S^int`.  Consequently the
-global Pillar-II equivalence involving `S^int / Z_irr` is **not** declared proved.
+extra `H_CK` operator and no line-by-line definition of `S^int`.  However, the later
+Kelvin-admissibility audit classifies the entire generic operation class: if
+`H_CK K` remains cycle-valued, idempotency is unnecessary and its intrinsic
+physical boundary is zero; if it breaks closedness, exact pressure gauge exposes a
+physical interface/open-current/exit.  Stochastic cycle-valued motion likewise has
+only its explicit martingale carré-du-champ source.  Consequently the global
+Pillar-II equivalence involving `S^int / Z_irr` is **not** declared proved solely
+because those symbols have no independent literal definition.
 
-**Classification: Conjectural bridge only for any additional, presently undefined
-CK/Hodge operator and for the `S^int` equivalence.**
+**Classification: Rigorous consequence for the admissible CK operation classes;
+Conjectural bridge only for the still-undefined global `S^int / Z_irr` objects.**
 
 ---
 

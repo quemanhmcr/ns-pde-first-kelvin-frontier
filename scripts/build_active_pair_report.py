@@ -124,7 +124,7 @@ def main() -> None:
             "no_autonomous_pair_only_residual": "Rigorous consequence of exact tensor-square factorization",
             "odd_shear_active_mixture": "Rigorous consequence from exact Navier-Stokes calibration",
             "cycle_typed_selector_residual": "Closed in dedicated cycle-typed audit",
-            "additional_ambient_ck_hodge_operator": "Open only if such an extra operator is intended; none is defined in the repository",
+            "additional_ambient_ck_hodge_operator": "No literal programme-specific operator present; generic admissible CK operation classes are classified in later audits",
             "continuation_restart": "Open; no regularity conclusion",
         },
         "stage_rows": stage_rows,
@@ -148,7 +148,7 @@ def main() -> None:
         "remaining_literal_datum_if_programme_intends_extra_operator": {
             "additional_CK_Hodge_operator": "not present",
             "S_int_definition": "not present",
-            "required_test_if_added": "restrict its boundary/transport commutators to the physical closed-cycle range before classifying any irreducible residual",
+            "required_test_if_added": "type every literal term by cycle preservation, gauge-visible boundary, connection/reset, or martingale q.v. before classifying any residual",
         },
     }
 

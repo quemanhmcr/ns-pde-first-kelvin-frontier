@@ -592,10 +592,14 @@ hysteresis jumps handled by exact covariance reset revaluation.
 first-bad selector has no irreducible residual after named interface/connection/reset
 terms are retained.**
 
-What remains open is only any additional programme-specific ambient CK/Hodge
-operator beyond the closed-cycle realization `K`, and the global `S^int / Z_irr`
-equivalence because `S^int` is not defined line by line in this repository.  See
-`docs/cycle_typed_first_bad_selector.md`.
+A later Kelvin-admissibility audit also classifies any additional linear or
+differentiable CK/Hodge operation at the physical Kelvin type: cycle-preserving
+operations have zero intrinsic physical boundary and full-pair content, stochastic
+cycle motion contributes only explicit carré-du-champ, and cycle breaking is
+pressure/gauge-visible physical boundary/interface/exit.  What remains open is the
+global `S^int / Z_irr` equivalence because those objects are not defined line by
+line in this repository.  See `docs/cycle_typed_first_bad_selector.md`,
+`docs/kelvin_ck_admissibility_audit.md`, and `docs/stochastic_cycle_map_audit.md`.
 
-**Classification: Conjectural bridge for any such additional operator and for the
-global Pillar-II equivalence.**
+**Classification: Rigorous consequence for the specified CK operation classes;
+Conjectural bridge only for the undefined global Pillar-II objects.**

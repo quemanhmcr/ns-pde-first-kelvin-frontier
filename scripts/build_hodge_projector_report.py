@@ -44,7 +44,7 @@ def main() -> None:
             "projector_tangent_off_diagonal": "Exact identity",
             "comoving_projector_transport": "Exact connection identity",
             "pair_projector_internal_source": "Exactly zero",
-            "actual_CK_Hodge_identification": "Conjectural bridge; no literal extra operator is defined in the repository",
+            "actual_CK_Hodge_identification": "No literal programme-specific operator is defined; generic non-projector admissibility is classified in the later audit",
             "global_Sint_Zirr_equivalence": "Open literal audit",
             "continuation_restart": "Open; no regularity conclusion",
         },
@@ -71,7 +71,8 @@ def main() -> None:
         "frontier": {
             "first_bad_selector": "closed by cycle typing",
             "idempotent_closed_range_CK_if_intended": "kinematics classified as boundary-zero plus exchange/connection",
-            "nonprojector_CK_or_S_int": "not defined; remains open literal datum",
+            "nonprojector_CK": "generic admissibility classified; cycle-preserving is boundary-zero, cycle-breaking is gauge-visible",
+            "S_int": "not defined; remains open literal datum",
         },
     }
     out = ROOT / "audit-results" / "hodge_cycle_projector_report.json"

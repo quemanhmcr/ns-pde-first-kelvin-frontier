@@ -1,0 +1,220 @@
+# Stochastic cycle-valued CK map: the Itô term is physical quadratic variation
+
+The deterministic Kelvin-admissibility audit classifies linear and differentiable
+cycle-preserving CK operations.  This note checks the only obvious second-order
+loophole: what if a future CK coordinate itself carries stochastic diffusion rather
+than finite-variation observer motion?
+
+The answer is again structurally rigid.  The extra second-order term is not an
+untyped internal seam.  It is the explicit martingale quadratic variation of the
+stochastic cycle coordinate.
+
+No estimate, continuation theorem, or regularity claim is used.
+
+---
+
+## 1. Cycle-valued Itô map
+
+Let a state semimartingale satisfy
+
+\[
+dS=b\,ds+\sigma\,dW,
+\qquad
+a=\sigma\sigma^T,
+\]
+
+and let
+
+\[
+Z=\Phi(S)\in C_1^{\rm phys}
+\]
+
+with
+
+\[
+\boxed{B\Phi(S)=0}
+\]
+
+for every admissible state.  Differentiating the closedness identity once and twice
+gives
+
+\[
+B D\Phi=0,
+\qquad
+B D^2\Phi=0.
+\]
+
+Itô therefore gives
+
+\[
+dZ=A_Z\,ds+\sum_\mu\Psi_\mu\,dW^\mu,
+\]
+
+where
+
+\[
+A_Z=D\Phi\,b+\frac12 D^2\Phi:a,
+\qquad
+\Psi_\mu=D\Phi\,\sigma_\mu.
+\]
+
+Every one of these currents remains physically closed:
+
+\[
+\boxed{BA_Z=0,
+\qquad
+B\Psi_\mu=0.}
+\]
+
+**Classification: Exact Itô identity plus exact differentiated closedness.**
+
+---
+
+## 2. Pair Itô formula names the second-order source
+
+The full pair current obeys
+
+\[
+\begin{aligned}
+d(Z\otimes Z)
+={}&(A_Z\otimes Z+Z\otimes A_Z)\,ds\\
+&+\sum_\mu(\Psi_\mu\otimes Z+Z\otimes\Psi_\mu)\,dW^\mu\\
+&+\boxed{\sum_\mu\Psi_\mu\otimes\Psi_\mu\,ds}.
+\end{aligned}
+\]
+
+Thus the only second-order correction introduced by stochastic CK motion is
+
+\[
+\boxed{
+\mathcal Q_{\Phi}^{(2)}
+=\sum_\mu\Psi_\mu\otimes\Psi_\mu.
+}
+\]
+
+This is exactly the pair quadratic-variation/carré-du-champ source of the stochastic
+coordinate.  Since every `Psi_mu` is a cycle,
+
+\[
+\boxed{
+\partial_{\rm pair}\mathcal Q_{\Phi}^{(2)}=0.
+}
+\]
+
+It is a physical stochastic production channel, not a non-functorial chain defect.
+Its conjugate bank is conditional future variance, exactly as for every martingale
+quadratic variation already used in the Kelvin programme.
+
+**Classification: Exact identity.**
+
+---
+
+## 3. Finite-variation observer motion is the zero-diffusion case
+
+The current first-bad construction assumes finite-variation motion of the
+observer-selected current between finite hysteresis resets.  In the notation above,
+
+\[
+\sigma=0.
+\]
+
+Therefore
+
+\[
+\boxed{
+\mathcal Q_{\Phi}^{(2)}=0
+}
+\]
+
+exactly.  Continuous observer motion contributes covariance/connection work; finite
+jumps contribute reset revaluation.  Neither generates observer quadratic
+variation.
+
+**Classification: Exact identity in the present selector model.**
+
+---
+
+## 4. Exact one-mode Kelvin calibration
+
+For the exact one-mode Kelvin conditional mean
+
+\[
+m(a,\tau)=e^{-\nu k^2\tau}\cos(ka),
+\]
+
+and Brownian anchor diffusion with covariance `2 nu`, the scalar carré-du-champ is
+
+\[
+\nabla m^T(2\nu)\nabla m
+=2\nu(\partial_a m)^2.
+\]
+
+This is precisely the already-audited Kelvin instantaneous action for that mode:
+
+\[
+\boxed{
+\Gamma_{\rm Ito}(m)=\gamma_{\rm K}(m).
+}
+\]
+
+CI checks the equality symbolically.
+
+**Classification: Exact Kelvin/Navier--Stokes stochastic calibration.**
+
+This does not assert that every future stochastic CK coordinate is literally the
+same stochastic variable as this anchor calibration.  The calibration verifies the
+physical category and coefficient convention in a case where the state matching is
+explicit.
+
+---
+
+## 5. Relation to the canonical same-ancestor pair source
+
+The tensor form
+
+\[
+\sum_\mu\Psi_\mu\otimes\Psi_\mu
+\]
+
+is the universal Itô form of a diagonal pair quadratic-variation source.  The
+programme's canonical same-ancestor ancestry source is independently audited as
+
+\[
+2\nu qK\,\delta_\Delta.
+\]
+
+They belong to the same carré-du-champ class of physical stochastic terms.  They
+must not be identified coefficient-by-coefficient unless the state map connecting
+the CK coordinate to the ancestry diffusion is written literally.
+
+**Classification: Exact structural analogy; literal identification in a new state
+representation is a Conjectural bridge until that state map is supplied.**
+
+---
+
+## 6. Stochastic admissibility dichotomy
+
+A future stochastic CK operation therefore has the following exhaustive local
+classification under the stated semimartingale model.
+
+1. `Phi(S)` remains a closed physical current: its drift and diffusion tangents are
+   cycles, and its second-order pair term is named martingale q.v./carré-du-champ.
+2. Its diffusion or drift leaves the cycle space: exact pressure/gauge sees the
+   resulting physical boundary, so the term is interface/open-current/exit rather
+   than internal.
+3. Diffusion is absent: the current construction's finite-variation observer case,
+   with zero extra q.v.
+4. A finite discontinuity occurs: the already-audited exact reset identity applies.
+
+No additional untyped pair producer is generated by Itô calculus itself.
+
+**Classification: Rigorous consequence of the exact identities above.**
+
+This still does not define the repository's `S^int`.  If a future literal `S^int`
+contains a stochastic term, that term must be compared with the explicit
+quadratic-variation source above before being called irreducible.
+
+**Classification: Conjectural bridge only for identification with still-undefined
+programme-specific `S^int / Z_irr`.**
+
+No continuation/restart conclusion follows here.

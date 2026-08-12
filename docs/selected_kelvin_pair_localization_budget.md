@@ -743,21 +743,28 @@ Z_{\rm irr}=0
 
 has been literally verified.
 
-At pair level, a non-functorial active CK/refinement block produces
+In the initial repository state, the pair-level placeholder was written
 
 \[
 \Pi_{\rm irr}^{(2)}
-=(R\otimes R)_*\Pi-\Pi_{\rm allowed}^{(2)},
+=(R\otimes R)_*\Pi-\Pi_{\rm allowed}^{(2)}.
 \]
 
-and the future-covariance budget sees it directly through
+The subsequent literal audits now classify this **content-defect realization**.
+Full physical refinement and every linear cycle-preserving CK map use the full
+tensor-square image, so this difference is exactly zero.  If
+`Pi_allowed^(2)` deletes cross-child, cross-shell, or cross-cycle blocks, the
+remainder is omitted physical covariance and therefore an observer/analysis
+projection defect.  If the underlying one-current operation breaks closedness,
+exact pressure gauge detects a physical boundary/interface/exit.
 
-\[
-\langle\mathbb K,\Pi_{\rm irr}^{(2)}\rangle.
-\]
+Thus this original pair-content placeholder is no longer an unclassified physical
+producer.  It remains illegitimate to identify that conclusion with the global
+statement `S^int=0 iff Z_irr=0`, because `S^int` and any independently intended
+`Z_irr` have no separate line-by-line definition in the repository.
 
-This is the correct slot for an unresolved content defect.  It is not a physical
-producer and must not be silently discarded.
+**Classification: Rigorous consequence for the original pair-content-defect
+realization; global Pillar-II equivalence remains a Conjectural bridge.**
 
 ---
 
@@ -850,44 +857,28 @@ active projection remains positive.
 **Classification: Exact current algebra plus rigorous consequence from an exact
 Navier--Stokes calibration.**
 
-What remains open is no longer an unspecified pair phenomenon.  The missing datum
-is the programme's actual active CK chain/transport map:
+The later cycle-typing audit removes the need to postulate an arbitrary ambient
+active-chain map.  The intrinsic selector is `P_fb=K M_fb` with `BK=0`, and its
+boundary/transport remainder closes after named interface/connection/reset terms.
+The subsequent CK admissibility audit goes further: any additional linear or
+differentiable operation that is genuinely internal to Kelvin circulation must map
+closed currents to closed currents.  Such an operation has zero intrinsic physical
+boundary; linear maps factor as cycle-coordinate transformations and use the full
+tensor-square pair image, while differentiable nonlinear maps have cycle-valued
+tangents and the ordinary two-factor pair Leibniz derivative.
 
-\[
-(P_{{\rm active},1},P_{{\rm active},0},T_{\rm active}) .
-\]
+If an operation instead sends a closed Kelvin cycle to an open current, Stokes makes
+exact pressure observable through its boundary, so that term must be exposed as a
+physical interface/open-current/exit contribution rather than placed in an
+irreducible internal slot.
 
-The repository does not yet contain its literal incidence data, so the following
-one-current residuals have not been certified to vanish:
+What remains open is therefore a literal-definition problem: `S^int` itself has
+never been written line by line, nor has any separate object been supplied whose
+physical type escapes the above classification.  No zero statement about the
+global `S^int / Z_irr` equivalence is inferred from absence of such a definition.
 
-\[
-\boxed{
-C_{\rm irr}
-=
-B P_{{\rm active},1}-P_{{\rm active},0}B
--\text{(classified physical boundary terms)},
-}
-\]
-
-\[
-\boxed{
-G_{\rm irr}
-=
-\dot P_{{\rm active},1}
-+T_{\rm out}P_{{\rm active},1}
--P_{{\rm active},1}T_{\rm in}
--\text{(classified connection/transport terms)}.
-}
-\]
-
-If `C_irr=G_irr=0`, the full pair `Pi_irr^(2)` vanishes exactly and the next
-selected-Kelvin pair-bank identity contains only endpoints plus quantile/shell
-transfer, connection geometry, exact reset revaluation, and physical exit.  If
-either is nonzero, its explicit tensor lift is the genuine obstruction; no finite
-universal bank for that irreducible sector is currently established.
-
-**Classification: Conjectural bridge pending literal active CK incidence and
-transport audit.**
+**Classification: Rigorous consequence for the specified Kelvin operation classes;
+Conjectural bridge only for the still-undefined global Pillar-II objects.**
 
 ---
 
@@ -1054,3 +1045,122 @@ non-projector CK operation, if intended, remains to be written and audited.
 
 **Classification: Conjectural bridge for the identification with any actual extra
 CK/Hodge operator and with `S^int`.**
+
+
+---
+
+## 21. Kelvin admissibility dichotomy removes the non-projector loophole
+
+The projector audit used `H^2=H`, but the physical Kelvin type gives a stronger
+criterion.  Let `K` be the admissible closed-cycle library, `BK=0`, and let an
+additional operation `H` be visible only through `Y=HK`.  An internal Kelvin
+operation must obey
+
+\[
+\boxed{BHK=0.}
+\]
+
+Idempotency is unnecessary.  If `HK=KL` for a cycle-coordinate map `L`, then
+
+\[
+\boxed{
+(HK)^{(2)}=(KL)^{(2)}=K^{(2)}L^{(2)},
+}
+\]
+
+so the original pair content defect vanishes when the full physical pair image is
+kept.  CI audits an explicit `H` with `H^2 != H` but `BHK=0` and zero pair
+boundary.
+
+For any differentiable nonlinear cycle-valued map `Phi`,
+
+\[
+B\Phi(a)=0
+\quad\Longrightarrow\quad
+\boxed{B D\Phi_a=0},
+\]
+
+and along a path
+
+\[
+\boxed{
+\frac d{ds}(Z\otimes Z)=\dot Z\otimes Z+Z\otimes\dot Z,
+\qquad
+\partial_{\rm pair}\frac d{ds}(Z\otimes Z)=0.
+}
+\]
+
+Conversely, if an operation breaks closedness, Stokes gives
+
+\[
+\langle dp,HZ\rangle=\langle p,BHZ\rangle.
+\]
+
+Thus exact pressure/gauge becomes sensitive to the new boundary.  In the exact
+3D ABC/Beltrami solution the pressure work around the closed `x` cycle is zero,
+while on the open half-cycle `y=pi/2,z=0`, `0<=x<=pi`, it is exactly
+
+\[
+\boxed{2e^{-2\nu t}}.
+\]
+
+A cycle-breaking CK operation is therefore a physical cut/interface/exit (or a
+change away from the Kelvin observable), not an internal producer.
+
+**Classification: Exact identities plus rigorous consequence from an exact 3D
+Navier--Stokes pressure calibration.**
+
+The current construction has therefore exhausted the original `Pi_irr^(2)`
+content-defect mechanism: full admissible pair content gives zero; truncation is an
+observer projection; cycle breaking is a physical boundary; continuous
+cycle-preserving motion is covariance/connection work; finite discontinuity is
+reset revaluation.  This does not define `S^int` and hence does not prove the
+global Pillar-II equivalence.
+
+**Classification: Rigorous consequence for the original content-defect mechanism;
+Conjectural bridge for any independently intended, still-undefined `S^int` or
+`Z_irr`.**
+
+No continuation/restart conclusion follows here.
+
+---
+
+## 22. If a CK coordinate is stochastic, the extra pair term is carré-du-champ
+
+The present first-bad observer is finite variation between resets, so it creates no
+continuous observer q.v.  For completeness, let a future CK coordinate be
+`Z=Phi(S)` with `dS=b ds+sigma dW` and assume it remains a closed Kelvin current,
+`B Phi=0`.  Then differentiated closedness and Itô give closed drift/diffusion
+currents and
+
+\[
+\boxed{
+\mathcal Q_\Phi^{(2)}
+=\sum_\mu \Psi_\mu\otimes\Psi_\mu,
+\qquad
+\Psi_\mu=D\Phi\,\sigma_\mu.
+}
+\]
+
+This is the exact second-order term in `d(Z tensor Z)`, with
+
+\[
+\boxed{\partial_{\rm pair}\mathcal Q_\Phi^{(2)}=0.}
+\]
+
+It is martingale quadratic variation/carré-du-champ and therefore already has a
+physical category and future-variance conjugate bank.  It is not an internal chain
+seam.  When `sigma=0`, as in the current finite-variation selector, this extra pair
+source vanishes exactly.
+
+The one-mode Kelvin calibration verifies symbolically that Brownian anchor
+covariance `2 nu` gives q.v. density `2 nu (partial_a m)^2`, exactly the Kelvin
+carré-du-champ.
+
+**Classification: Exact identities; exact Kelvin stochastic calibration.**
+
+The canonical ancestry source `2 nu q K delta_Delta` has the same diagonal
+carré-du-champ form, but a coefficient-level identification with a future stochastic
+CK coordinate requires its literal state map and is therefore a Conjectural bridge.
+
+No `S^int` conclusion is inferred without a line-by-line definition.

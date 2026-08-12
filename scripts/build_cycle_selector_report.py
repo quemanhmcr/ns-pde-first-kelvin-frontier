@@ -111,7 +111,7 @@ def main() -> None:
             "odd_shear_selector_reset": "Rigorous consequence from exact Navier-Stokes calibration",
             "abc_closed_cycle_pressure_gauge": "Exact 3D Navier-Stokes calibration",
             "selector_irreducible_residual": "Zero for the cycle-typed selector after named physical terms are retained",
-            "global_Sint_Zirr_equivalence": "Open literal audit; S^int and any additional CK/Hodge operator are not defined line by line",
+            "global_Sint_Zirr_equivalence": "Open literal audit because S^int / any independently intended Z_irr are not defined line by line; generic admissible CK operation classes are classified",
             "continuation_restart": "Open; no regularity conclusion",
         },
         "cycle_library": {
@@ -154,7 +154,7 @@ def main() -> None:
         },
         "frontier": {
             "first_bad_selector_intrinsic_residual": "closed",
-            "additional_CK_Hodge_operator": "not present in repository",
+            "additional_CK_Hodge_operator": "no literal programme-specific operator present; generic cycle-preserving/cycle-breaking/stochastic classes are classified by later audits",
             "S_int_literal_definition": "not present in repository",
         },
     }

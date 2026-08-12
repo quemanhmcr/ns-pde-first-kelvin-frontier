@@ -252,12 +252,14 @@ S^{\rm int}=0\iff Z_{\rm irr}=0.
 \]
 
 The repository still has no line-by-line definition of `S^int`, and it has no
-literal extra CK/Hodge map to identify with `H`.  A non-idempotent operator, an
-operator whose range is not closed, or an operator carrying additional physical
-restriction/exit content must be audited on its own terms.
+literal extra CK/Hodge map to identify with `H`.  The subsequent Kelvin-admissibility
+audit removes the non-idempotent loophole: idempotency is unnecessary when the
+operation preserves closed Kelvin currents.  An operation that breaks closedness is
+instead pressure/gauge-visible physical boundary/interface/exit.
 
-**Classification: Conjectural bridge for the identification with the programme's
-still-undefined CK/Pillar-II objects.**
+**Classification: Rigorous consequence for projector and general cycle-preserving
+operation classes; Conjectural bridge only for identification with the programme's
+still-undefined `S^int / Z_irr`.**
 
 ---
 
@@ -274,8 +276,9 @@ No estimate may turn that signed exchange into a fictitious positive reservoir.
 
 **Classification: Rigorous consequence.**
 
-The next unresolved structural question is therefore not projector kinematics but
-whether the programme contains any **non-projector CK operation** or an independent
-`S^int` definition whose physical current content is not already among
-quantile/shell interfaces, connection exchange, reset, refinement, or physical
-exit.
+The non-projector question is now handled separately by
+`docs/kelvin_ck_admissibility_audit.md`: any linear or differentiable CK operation
+that genuinely stays on Kelvin cycles has zero intrinsic physical-boundary defect,
+while cycle breaking is a physical gauge-visible boundary.  The unresolved question
+is therefore only whether the programme intends an independent line-by-line
+`S^int`/`Z_irr` object whose physical type has not yet been specified.

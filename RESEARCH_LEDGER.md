@@ -218,7 +218,7 @@ set to zero.  A generic finite-cell counterexample in CI shows that an arbitrary
 projection onto "active" cells need not commute with boundary, so naturality cannot
 be assumed from the word active alone.
 
-**Classification: Conjectural bridge / literal missing active-CK datum.**
+**Classification at this stage: Conjectural bridge / literal missing active-CK datum.  This specific ambient-map gap is superseded below by cycle typing and the Kelvin-admissibility audit.**
 
 Current answer to the frontier question: after FULL pair content and all already
 identified physical boundary/connection terms are retained, there is **no
@@ -292,6 +292,72 @@ active-pair internal sandwich `(H tensor H) D(H tensor H) (H tensor H)`.
 
 This narrows but does not close global Pillar II.  The repository still has no
 line-by-line `S^int` definition and no literal extra CK/Hodge operator to identify
-with this projector.  If a future CK operation is non-idempotent or has range
-outside closed cycles, its residual must be audited separately.  No
-continuation/restart theorem and no regularity claim.
+with this projector.  The immediately following Kelvin-admissibility audit removes
+the non-idempotent loophole and classifies range-outside-cycle behavior as physical
+gauge-visible boundary.  No continuation/restart theorem and no regularity claim.
+
+
+## 2026-08-12 — Kelvin admissibility closes the non-projector CK loophole
+
+The original commit was re-audited to determine what `S^int / Z_irr` actually
+encoded.  No literal `S^int` implementation has ever existed in repository
+history.  The only explicit pair-level realization was the content defect
+`Pi_irr^(2)=(R tensor R)_* Pi-Pi_allowed^(2)` associated with an allowed
+projection.
+
+A new exact admissibility audit removes the remaining non-projector ambiguity.
+For a closed Kelvin library `K`, `BK=0`, an arbitrary linear ambient operation `H`
+need not be idempotent.  Its intrinsic physical type depends only on `HK`.  If
+`BHK=0`, it remains a Kelvin-cycle operation; when its output lies in the chosen
+cycle span it factors exactly as `HK=KL`, and full pair content satisfies
+`(KL)^(2)=K^(2)L^(2)`.  CI uses an explicit non-idempotent `H` with `H^2 != H` and
+verifies zero intrinsic one-current and pair boundary.
+
+If `BHK != 0`, exact Stokes pairing makes a pressure/gauge form observable through
+`<dp,HK a>=<p,BHK a>`.  A finite-chain witness gives canonical gauge work `2`.
+The exact 3D ABC/Beltrami Navier--Stokes calibration makes the same distinction in
+the PDE itself: pressure work is zero around the closed `x` torus cycle but equals
+`2 exp(-2 nu t)` on an open half-cycle at `y=pi/2,z=0`.
+
+The audit also covers differentiable nonlinear cycle-valued maps: `B Phi=0`
+forces `B D Phi=0`, and the full pair derivative is exactly
+`dot Z tensor Z + Z tensor dot Z` with zero pair physical boundary.  Finite jumps
+remain reset revaluations.
+
+**Classification: Exact identities and rigorous physical consequences.**
+
+Consequently the original pair-content-defect mechanism is exhausted for the
+specified construction: full admissible content gives zero; deleted cross content
+is observer/analysis projection; cycle breaking is physical interface/exit;
+continuous cycle-preserving motion is cycle-coordinate/connection work.  Global
+Pillar II is still not declared proved because `S^int` has no line-by-line
+definition and an independently intended `Z_irr` has not been supplied.
+
+No continuation/restart theorem and no regularity claim.
+
+## 2026-08-12 — stochastic CK loophole is named quadratic variation
+
+The admissibility audit was extended from finite-variation/differentiable CK motion
+to a semimartingale state `dS=b ds+sigma dW`.  If `Z=Phi(S)` remains a closed
+physical Kelvin current, differentiating `B Phi=0` forces both the Itô drift and
+every diffusion tangent to remain closed.  The exact pair Itô formula contains one
+second-order source,
+
+`Q_Phi^(2)=sum_mu Psi_mu tensor Psi_mu`,
+
+which is precisely martingale quadratic variation/carré-du-champ.  Its pair
+physical boundary is zero when the diffusion tangents are cycles.  This is a named
+physical stochastic producer with the existing future-variance interpretation, not
+an untyped internal seam.
+
+For the current first-bad construction the observer motion is finite variation, so
+`Psi_mu=0` and the extra observer pair q.v. source vanishes exactly.  A one-mode
+Kelvin audit checks that Brownian anchor covariance `2 nu` gives q.v. density
+`2 nu (partial_a m)^2`, exactly the Kelvin carré-du-champ.
+
+**Classification: Exact Itô identities and exact Kelvin stochastic calibration.**
+
+The canonical same-ancestor source `2 nu q K delta_Delta` is structurally the same
+diagonal carré-du-champ class, but no new coordinate-level identification is made
+without a literal state map.  `S^int` remains undefined; no continuation/restart or
+regularity conclusion follows.
