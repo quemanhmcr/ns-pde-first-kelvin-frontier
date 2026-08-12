@@ -11,6 +11,10 @@ SEAMS = {
     "physical-exit": ("audited-calibration", "two-face sub-Markov pair sink"),
     "variable-frame-connection": ("audited-generic", "Cartan/transport geometry audited; literal extra CK frame operator, if any, remains separate"),
     "active-pair-factorization": ("audited", "full pair boundary/transport residual is exact tensor lift of one-current commutator"),
+    "parabolic-covariance-current": ("audited", "second-order Kelvin covariance is carried by the exact Dynkin/Fokker-Planck divergence current, not an ordinary de Rham one-form"),
+    "moving-cut-time-face": ("audited-generic", "a moving restriction has G_Q=Qdot+T_out Q-Q T_in and one boundary-speed face per replica"),
+    "first-bad-moving-cut-speed-law": ("open-literal", "the actual first-bad quantile/shell boundary-speed law is not defined line by line"),
+    "two-clock-first-bad-kelvin-lift": ("open-literal", "same-clock covariance identities are exact but the physical first-bad time to ancestry/backward-Kelvin horizon/state lift is not constructed"),
     "cycle-typed-first-bad-boundary": ("audited", "closed Kelvin cycle library forces zero intrinsic selector physical boundary and pair boundary"),
     "cycle-typed-first-bad-transport": ("audited", "support transport is exact germ cut current; finite hysteresis switch is reset revaluation"),
     "hodge-cycle-projector": ("audited-generic", "idempotent closed-range projector has zero physical boundary and pure range/complement exchange motion"),
@@ -70,7 +74,7 @@ ALLOWED = {"audited", "audited-calibration", "audited-generic", "audited-conditi
 required = {
     "freeze", "quantile", "anchor-orientation", "shell", "refinement",
     "resolve-reset", "physical-exit", "variable-frame-connection",
-    "active-pair-factorization", "cycle-typed-first-bad-boundary",
+    "active-pair-factorization", "parabolic-covariance-current", "moving-cut-time-face", "first-bad-moving-cut-speed-law", "two-clock-first-bad-kelvin-lift", "cycle-typed-first-bad-boundary",
     "cycle-typed-first-bad-transport", "hodge-cycle-projector", "kelvin-ck-admissibility",
     "stochastic-ck-carre-du-champ", "vorticity-kelvin-microframe",
     "restart-scale-renormalization", "orientation-complete-restart-packet",
@@ -94,6 +98,7 @@ for seam, (status, meaning) in SEAMS.items():
 
 for exact_seam in (
     "active-pair-factorization",
+    "parabolic-covariance-current",
     "cycle-typed-first-bad-boundary",
     "cycle-typed-first-bad-transport",
     "kelvin-ck-admissibility",
@@ -125,6 +130,12 @@ for exact_seam in (
 ):
     if SEAMS[exact_seam][0] != "audited":
         raise SystemExit(f"{exact_seam} must remain explicitly audited")
+if SEAMS["moving-cut-time-face"][0] != "audited-generic":
+    raise SystemExit("moving-cut time face must remain generic/audited until the literal first-bad cut is instantiated")
+if SEAMS["first-bad-moving-cut-speed-law"][0] != "open-literal":
+    raise SystemExit("literal first-bad moving-cut speed law must remain open-literal")
+if SEAMS["two-clock-first-bad-kelvin-lift"][0] != "open-literal":
+    raise SystemExit("two-clock physical first-bad/Kelvin lift must remain open-literal")
 if SEAMS["future-covariance-fixed-state-stokes-limit"][0] != "audited-conditional":
     raise SystemExit("fixed-state future-covariance Stokes limit must remain conditional on support locality and metric-whitened L2 control")
 if SEAMS["joint-shape-flux-locality-factor"][0] != "audited-conditional":

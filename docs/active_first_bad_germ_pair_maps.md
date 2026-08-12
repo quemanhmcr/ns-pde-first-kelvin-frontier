@@ -175,19 +175,22 @@ fixed-current Kelvin quadratic variation with its exact future-variance bank.
 
 **Classification: Exact identity.**
 
-### 3.2 Quantile localization
+### 3.2 Quantile localization: spatial cut face and moving-time face are distinct
 
 Let `Q_s` be the physical restriction to the moving quantile chamber used by the
 selector.  On currents this is the restriction/push-forward map associated with
-that chamber; on boundary data it has the induced restriction `Q_{s,0}`.  Define
+that chamber; on boundary data it has the induced restriction `Q_{s,0}`.
+
+At a **fixed time**, the spatial cut/interface boundary is
 
 \[
+\boxed{
 C_{\rm quant}
 :=B Q_{s,1}-Q_{s,0}B.
+}
 \]
 
-Distributionally this is supported on the moving quantile interface.  Its pair
-lift is not zero merely because one-particle quantile mass is conserved:
+Its full pair boundary lift is
 
 \[
 C_{\rm quant}^{(2)}
@@ -198,11 +201,61 @@ C_{\rm quant}\otimes Q_{s,1}\\
 \end{bmatrix}.
 \]
 
-The exact same-ancestor Gaussian arcsine calibration already shows that this pair
-interface current can be nonzero while each marginal mass stays fixed.
+This is not the whole spacetime story when the chamber moves.  The one-current
+transport defect is separately
 
-**Classification: Exact pair-commutator identity; rigorous physical
-interpretation from the existing exact Gaussian calibration.**
+\[
+\boxed{
+G_{\rm quant}
+=\dot Q_{s,1}
++T_{\rm out}Q_{s,1}
+-Q_{s,1}T_{\rm in},
+}
+\]
+
+and its full pair lift is exactly
+
+\[
+\boxed{
+G_{\rm quant}^{(2)}
+=G_{\rm quant}\otimes Q_{s,1}
++Q_{s,1}\otimes G_{\rm quant}.
+}
+\]
+
+The `dot Q` term is a physical **boundary-speed/time face**, not a second copy of
+the static spatial commutator.  In the one-dimensional conservation-law model
+
+\[
+\partial_tq+\partial_x(qv)=0,
+\qquad
+D_t=(-\infty,a(t)),
+\]
+
+Reynolds transport gives
+
+\[
+\boxed{
+\frac d{dt}\int_{D_t}q\,dx
+=q(a,t)\,[\dot a(t)-v(a,t)]
+=-qv+q\dot a.
+}
+\]
+
+The first term is the static transport flux through the cut; the second is the
+boundary-speed face.  At pair level there is one such moving face for each replica.
+The exact same-ancestor Gaussian arcsine calibration still shows that pair
+quantile content can move while each marginal quantile mass stays fixed, but that
+calibration does **not** erase the `dot Q` face.
+
+The programme has not yet written a literal first-bad quantile/shell boundary-speed
+law `dot Q_s` line by line.  Until it does, the completed physical excursion must
+retain this time face explicitly rather than declare the static commutator
+exhaustive.
+
+**Classification: Exact spatial boundary commutator; exact generic Reynolds/
+transport identity for the moving-time face; programme-specific quantile speed law
+open-literal.**
 
 ### 3.3 Anchor/orientation motion
 
@@ -260,20 +313,35 @@ H^{(2)}(Z\boxtimes Z)
 }
 \]
 
-Individual shell restrictions have interface commutators
+Individual shell restrictions have fixed-time interface commutators
 
 \[
 C_{{\rm shell},i}=B H_{i,1}-H_{i,0}B.
 \]
 
-These are physical shell-boundary currents.  Reassembly of the complete physical
-partition cancels internal shell interfaces in the parent current, while the pair
-reassembly requires every ordered block `A_i x A_j`; the cross-shell blocks are
-physical covariance transport.
+These are physical shell-boundary currents.  If the shell itself moves with time,
+there is also a distinct transport/time face
 
-**Classification: Exact identity for the full product partition and exact
-commutator factorization; physical nontriviality is already a rigorous consequence
-of the same-ancestor calibration.**
+\[
+\boxed{
+G_{{\rm shell},i}
+=\dot H_{i,1}+T_{\rm out}H_{i,1}-H_{i,1}T_{\rm in},
+}
+\]
+
+with pair lift `G_shell,i tensor H_i + H_i tensor G_shell,i`.  Reassembly of the
+complete physical partition cancels internal **spatial** shell interfaces in the
+parent current, while the pair reassembly requires every ordered block `A_i x A_j`;
+the cross-shell blocks are physical covariance transport.  A moving partition must
+in addition reassemble its time/boundary-speed faces.
+
+The present finite-cell shell witness is static.  Therefore it audits the product
+partition and spatial commutator exactly, but it does not supply a programme-specific
+moving-shell speed law.
+
+**Classification: Exact identity for the full product partition, exact spatial
+commutator and generic transport factorization; literal moving-shell speed law
+open-literal.**
 
 ### 3.5 Refinement
 

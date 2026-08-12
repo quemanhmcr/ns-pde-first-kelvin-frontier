@@ -371,3 +371,28 @@ jobs:
         with:
           name: ancestry-resolution-kernel
           path: audit-results/ancestry_resolution_kernel_report.json
+
+
+  clock-cut-compatibility:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit Kelvin clock, parabolic covariance current, and moving-cut time faces
+        run: python -m unittest -v tests.test_clock_cut_compatibility
+      - name: Build clock/cut compatibility artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_clock_cut_compatibility_report.py
+      - name: Upload clock/cut compatibility artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: clock-cut-compatibility
+          path: audit-results/clock_cut_compatibility_report.json

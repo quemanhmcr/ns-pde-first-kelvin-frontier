@@ -39,34 +39,71 @@ The identity alone does **not** say that the longitudinal difference
 literally as physical transport, quantile/shell/refinement transfer, physical
 exit, connection/holonomy geometry, or an irreducible active-chain defect.
 
-## 2. Covariance Stokes law
+## 2. Covariance transport is parabolic: use Dynkin/Fokker--Planck duality, not an ordinary exact one-form
 
-For the future covariance potential `V`, the functorial flat-sector spacetime
-covariance one-form is
+A previous version of this audit packaged the fixed-current covariance equation as
 
 \[
-\mathfrak A_{\rm cov}=d_{\rm pair}V-\gamma\,ds=d_{\rm spacetime}V,
+d_{\rm pair}V-\gamma\,ds=d_{\rm spacetime}V.
 \]
 
-because the fixed-current Doob equation is `D_s V = -gamma`.  Hence on every
-literal pair strip
+That is **not** a valid ordinary de Rham identity when the Kelvin/ancestry generator
+has a second-order diffusion part.  The canonical one-mode calibration already
+shows the obstruction.  In remaining-horizon time `tau`,
 
 \[
 \boxed{
-\langle \mathfrak A_{\rm cov},\partial F_k\rangle=0.
+(\partial_\tau-\nu\partial_a^2)V=\gamma.
 }
 \]
 
-Summing strips converts the difference of selected and distributed accumulated
-Kelvin action into endpoint localization covariance plus the covariance work of
-the non-cancelled physical side currents.  In a variable frame, the same statement
-must be written with the transported connection; connection/holonomy terms are
-geometry, not production.
+If `s=Theta-tau`, then
 
-**Classification: Exact identity in the functorial same-generator sector.**
+\[
+\boxed{
+\partial_sV+\gamma=-\nu\partial_a^2V,
+}
+\]
 
-A projected active chain may leave a commutator residual.  That residual is the
-literal slot for `S^int / Z_irr` and is not set to zero here.
+which is generally nonzero.  At the symmetry anchor `a=0`, the same exact
+calibration has `gamma=0` while `nu partial_a^2 V>0`.  Thus the second-order
+operator cannot be hidden inside an ordinary exterior derivative.
+
+The correct spacetime object is the already-audited **covariance conservation
+current**.  With normalized ancestry density `q`, current velocity `j`, diffusion
+matrix `K`, and generator compatibility,
+
+\[
+\boxed{
+\partial_s(qV)
++\nabla\!\cdot\!\left(qjV+\nu qK\nabla V\right)
+=-q\gamma.
+}
+\]
+
+Equivalently, for
+
+\[
+\mathbf J_V
+:=\left(qV,\;qjV+\nu qK\nabla V\right),
+\]
+
+one has `div_spacetime J_V=-q gamma`.  Integrating a literal spacetime chamber or
+pair strip therefore uses the divergence theorem/Dynkin--Itô duality: endpoint bank
+change plus side-current flux equals the integrated Kelvin carré-du-champ sink.
+Topological `boundary^2=0` cancellation of internal rungs remains exact, but the
+**payment** on those strips is parabolic-current flux, not the integral of an
+ordinary exact one-form.
+
+In a variable frame the transported connection remains geometry, not production;
+for a moving quantile/shell cut the time/boundary-speed face `dot Q` must also be
+retained (Section 14 and the active-map audit).
+
+**Classification: Exact one-mode counterexample to ordinary de Rham packaging;
+exact divergence-form covariance balance under generator compatibility.**
+
+A projected active chain may still leave a literal state/projection residual.  No
+identification with the undefined `S^int / Z_irr` sector is made here.
 
 ## 3. Pair refinement is quadratic: diagonal children are not enough
 
@@ -545,13 +582,23 @@ the full pair residual is exactly
 **Classification: Exact identities, symbolically audited.**
 
 Therefore a full tensor-square lift cannot create an autonomous pair-only
-`S^int / Z_irr` producer.  Quantile/shell/exit boundary defects lift to their two
-physical replica faces; variable-frame terms lift as connection geometry;
-refinement remains functorial when the full tensor square is retained.  Any
-irreducible pair residual must be the explicit lift of an irreducible one-current
-active commutator after all those physical terms have been removed.
+`S^int / Z_irr` producer.  Quantile/shell/exit **spatial boundary** defects lift to
+their two physical replica faces; variable-frame terms lift as connection geometry;
+refinement remains functorial when the full tensor square is retained.  For any
+moving stage, however, the one-current object that must be classified is the full
+transport defect
 
-**Classification: Rigorous consequence.**
+\[
+G_F=\dot F+T_{\rm out}F-FT_{\rm in},
+\]
+
+not merely its fixed-time boundary commutator.  The `dot F` part is the physical
+time/boundary-speed face and its pair lift is already forced by the same product
+rule.  Any irreducible pair residual must therefore be the explicit lift of an
+irreducible one-current residual **after both spatial and moving-time faces** have
+been removed.
+
+**Classification: Rigorous consequence of the exact pair product rules.**
 
 The exact product rule
 
@@ -559,12 +606,14 @@ The exact product rule
 C(GF)=C(G)F_1+G_0C(F)
 \]
 
-also gives a line-by-line completed-excursion seam sum.  A new finite-cell audit
-instantiates freeze, quantile, anchor/orientation, shell, refinement, reset, and
-physical exit in chronological order and verifies that the direct completed
-boundary residual equals the sum of transported stage residuals exactly.  In that
-witness, only localization interfaces and physical exit are nonzero; chain-natural
-anchor/refinement/reset maps do not manufacture a hidden residual.
+also gives a line-by-line completed-excursion seam sum for fixed-time chain maps.  A
+finite-cell audit instantiates freeze, quantile, anchor/orientation, shell,
+refinement, reset, and physical exit in chronological order and verifies that the
+direct completed **boundary** residual equals the sum of transported stage boundary
+residuals exactly.  In that static witness, only localization interfaces and
+physical exit are nonzero; chain-natural anchor/refinement/reset maps do not
+manufacture a hidden residual.  It does **not** certify the moving quantile/shell
+time faces, which require explicit `dot Q` / `dot H_shell` data.
 
 The exact odd-mode Navier--Stokes shear supplies an additional active-map
 counterpressure test.  For `Z_h=h Z_0+(1-h) Z_pi`, pathwise `X_pi=-X_0`, hence

@@ -725,3 +725,42 @@ the viable restart route is uniform finite-shape collapse, not finite-dimensiona
 moment completion.
 
 **Classification: Exact NS calibration family and rigorous structural no-go.**
+
+
+## 2026-08-12 — Draft PR #1 clock/de Rham/moving-cut audit repaired
+
+The open Draft PR #1 was read as an adversarial referee report rather than merged by
+provenance.  Four proof-critical claims were checked against exact NS/Kelvin
+calibrations.
+
+First, the one-mode shear `u=e^{-nu k^2 t} cos(ka)` separates physical forward
+Brownian time from the causal backward-Kelvin martingale: `(partial_t+nu d_aa)u`
+equals `-2 nu k^2 u`, while `(partial_t-nu d_aa)u=0`.  Therefore the fixed-current
+conditional-variance bank is exact only on one specified compatible Markov clock.
+For a physical selector `a_t` and a separate horizon `tau`, the literal chain rule is
+`d[a^T C(t,tau(t))a]/dt = a^T(C_t+tau_dot C_tau)a + 2 a^T C a_dot`.  The physical
+first-bad/Kelvin two-clock lift remains open-literal.
+
+Second, the old world-sheet equation `d_pair V-gamma ds=d_spacetime V` is false for
+a second-order generator.  The exact one-mode law is
+`(partial_tau-nu partial_aa)V=gamma`; with `s=Theta-tau`,
+`partial_s V+gamma=-nu partial_aa V`, nonzero even at a symmetry anchor where
+`gamma=0`.  The correct payment object is the exact divergence current
+`partial_s(qV)+div(qjV+nu q K grad V)=-q gamma`.  Topological boundary-squared-zero
+remains exact, but payment uses Dynkin/Fokker--Planck duality and the spacetime
+divergence theorem.
+
+Third, a moving cut has a distinct time face.  For `Q_s`,
+`G_Q=Qdot+T_out Q-Q T_in`; in 1D Reynolds transport on `(-infinity,a(t))` gives
+`d int q = q(a,t)(a_dot-v)=-qv+q a_dot`.  The boundary-speed term is not contained in
+the static spatial commutator.  The pair lift has one such face per replica.  The
+actual first-bad quantile/shell speed laws remain open-literal.
+
+Fourth, the PR objection to identifying centered covariance with deterministic
+stretching is correct but already superseded on main by the exact split
+`Q=C+mm^T` and `T_tot=omega omega^T+Sigma_fut`.  Its locality and general-Nanson
+determinant findings were likewise already repaired.
+
+**Classification: Exact one-mode NS/Kelvin counterexamples and exact generic
+Dynkin/Reynolds identities; two-clock first-bad lift and literal moving-cut speed
+laws open-literal.  No continuation/restart claim.**

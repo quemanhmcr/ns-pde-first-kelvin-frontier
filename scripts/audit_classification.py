@@ -17,6 +17,7 @@ shape_note = ROOT / "docs" / "kelvin_shape_generator_audit.md"
 time_note = ROOT / "docs" / "ancestry_time_reversal_audit.md"
 locality_note = ROOT / "docs" / "kelvin_packet_locality_audit.md"
 resolution_note = ROOT / "docs" / "ancestry_resolution_kernel_audit.md"
+clock_cut_note = ROOT / "docs" / "clock_cut_compatibility_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -30,6 +31,7 @@ shape_text = shape_note.read_text()
 time_text = time_note.read_text()
 locality_text = locality_note.read_text()
 resolution_text = resolution_note.read_text()
+clock_cut_text = clock_cut_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -219,6 +221,20 @@ if resolution_missing:
     print("missing ancestry resolution-kernel structural markers:", resolution_missing)
     sys.exit(1)
 
+clock_cut_required = [
+    "Two clocks must not be silently identified",
+    "parabolic, not an ordinary exact one-form",
+    "Moving quantile/shell cuts have a time face",
+    "boundary-speed",
+    "Exact two-clock chain rule",
+    "open-literal",
+    "No continuation, restart, or regularity theorem",
+]
+clock_cut_missing = [token for token in clock_cut_required if token not in clock_cut_text]
+if clock_cut_missing:
+    print("missing clock/cut compatibility structural markers:", clock_cut_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -247,8 +263,12 @@ for forbidden in [
     "Kelvin parabolic scale is the first-bad threshold",
     "parabolic support coefficient 1/2 proves regularity",
     "co-deforming total bank proves restart",
+    "one-clock selected Kelvin bank is a physical-time theorem",
+    "static quantile commutator exhausts moving cut",
+    "moving shell needs no time face",
+    "second-order covariance generator is an ordinary exterior derivative",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

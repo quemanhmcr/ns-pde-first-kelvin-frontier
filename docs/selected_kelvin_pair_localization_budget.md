@@ -81,40 +81,49 @@ not a stochastic production channel.
 
 ---
 
-## 2. Future Kelvin variance is the exact bank for a fixed current
+## 2. Conditional Kelvin variance is an exact bank on one compatible Markov clock
 
-For a common physical terminal horizon `Theta`, let `X_Z` be the terminal
-compensated Kelvin payoff and
+Let `sigma` denote the clock of a **single specified Markov state/filtration**, and
+let `Theta_sigma` be a terminal horizon in that same clock.  For a fixed current
+observable `Z`, let `X_Z` be the terminal compensated payoff and
 
 \[
-K_s(Z)=\mathbb E_sX_Z,
+K_\sigma(Z)=\mathbb E_\sigma X_Z,
 \qquad
-V_s(Z)=\operatorname{Var}_s(X_Z).
+V_\sigma(Z)=\operatorname{Var}_\sigma(X_Z).
 \]
 
-Then
+For the martingale `M_Z=E[X_Z|F_sigma]`,
 
 \[
 \boxed{
-V_s(Z)
-=\mathbb E_s\big([M_Z]_\Theta-[M_Z]_s\big).
+V_\sigma(Z)
+=\mathbb E_\sigma\big([M_Z]_{\Theta_\sigma}-[M_Z]_\sigma\big).
 }
 \]
 
-Equivalently, after matching the physical ancestry generator,
+and, on that same compatible state/clock,
 
 \[
 \boxed{
-D_sV_s(Z)=-\gamma_s(Z)
+D_\sigma V_\sigma(Z)=-\gamma_\sigma(Z)
 }
 \]
 
 modulo already classified physical transport/exit terms.
 
-For two currents define
+This is an exact conditional-variance theorem; it is **not yet** a theorem saying
+that `sigma` is contemporaneous physical first-bad time.  The one-mode NS shear
+separates the clocks exactly: `(partial_t+nu partial_a^2)u` is nonzero for forward
+Brownian physical-time conditioning, while `(partial_t-nu partial_a^2)u=0` in the
+causal backward-Kelvin orientation.  Therefore a physical first-bad telescope needs
+an explicit two-clock/state lift before this bank can be differentiated along the
+physical selector path.
+
+For two currents on the same Markov clock define
 
 \[
-C_s(Z,Z')=\operatorname{Cov}_s(X_Z,X_{Z'}),
+C_\sigma(Z,Z')=\operatorname{Cov}_\sigma(X_Z,X_{Z'}),
 \]
 
 and the polarized instantaneous action
@@ -830,12 +839,15 @@ G_F^{(2)}=G_F\otimes F+F\otimes G_F.
 
 Thus there is no autonomous pair-only non-functorial producer once full pair
 content is retained.  Cross-child and cross-shell covariance are physical content;
-quantile/shell interfaces and physical exit remain explicit two-face currents;
-anchor/frame terms are connection geometry; reset is exact covariance revaluation.
-Only a one-current active-map remainder left after these terms are subtracted can
-feed the literal `S^int / Z_irr` sector.
+quantile/shell **spatial** interfaces and physical exit remain explicit two-face
+currents; anchor/frame terms are connection geometry; reset is exact covariance
+revaluation.  For moving quantile/shell maps, the `dot Q` / `dot H_shell`
+boundary-speed faces are separate physical transport terms through the exact
+`G_F` defect.  Only a one-current remainder left after **all spatial and moving-time
+faces** are subtracted can feed any literal `S^int / Z_irr` sector.
 
-**Classification: Rigorous consequence.**
+**Classification: Rigorous consequence of exact pair factorization; literal
+first-bad moving-cut speed laws remain open-literal.**
 
 The completed hysteresis composition also has an exact seam product rule:
 
@@ -954,33 +966,42 @@ For a diagonal support mask,
 
 so the support term is exactly germ-interface transport.  On hysteresis jumps the
 finite tensor-square jump is the exact reset covariance identity.  Thus, after
-quantile/shell localization, connection geometry, refinement, physical exit, and
-finite reset are kept literally, the first-bad selector itself has no remaining
-irreducible sector:
+quantile/shell localization is interpreted as the **full spacetime operation** --
+including fixed-time cut currents and moving boundary-speed faces -- together with
+connection geometry, refinement, physical exit, and finite reset, the intrinsic
+cycle-typed selector has no additional irreducible sector:
 
 \[
 \boxed{
 C_{\rm irr}^{\rm selector}=0,
 \qquad
-G_{\rm irr}^{\rm selector}=0.
+G_{\rm irr}^{\rm selector}=0
+\quad\text{after all named spatial/time faces are retained}.
 }
 \]
 
-**Classification: Rigorous consequence of exact cycle typing, cut-current algebra,
-and finite reset algebra.**
+The algebraic statement is exact, but the actual first-bad `dot Q_s` and moving-shell
+speed data are not yet defined line by line.  Therefore a completed physical
+first-bad excursion is not certified until those time faces are instantiated.
 
-Accordingly, for the cycle-typed selector sector the pair-localization identity is
+**Classification: Rigorous conditional structural consequence of exact cycle typing,
+cut-current/transport algebra, and finite reset algebra; moving-cut realization
+open-literal.**
+
+Accordingly, for the cycle-typed selector sector the **full spacetime** pair-localization
+ledger must be
 
 \[
 \boxed{
+\begin{aligned}
 \Pi^{\rm sel}-\Pi^{\rm dist}
-=
-\partial_{\rm pair}\mathscr W_{\rm loc}^{(2)}
-+\Pi_{\rm quant}^{(2)}
-+\Pi_{\rm shell}^{(2)}
+={}&\partial_{\rm pair}\mathscr W_{\rm loc}^{(2)}
++\Pi_{\rm quant,space}^{(2)}+\Pi_{\rm quant,time}^{(2)}\\
+&+\Pi_{\rm shell,space}^{(2)}+\Pi_{\rm shell,time}^{(2)}
 +\Pi_{\rm exit}^{(2)}
 +\Pi_{\rm conn}^{(2)}
 +\Pi_{\rm reset}^{(2)}.
+\end{aligned}
 }
 \]
 
@@ -994,17 +1015,18 @@ V(\lambda_*)-R_{\rm dist}
 \langle d_{\rm pair}\mathbb K,
         \mathscr W_{\rm loc}^{(2)}\rangle\\
 &+\langle\mathbb K,
-  \Pi_{\rm quant}^{(2)}
- +\Pi_{\rm shell}^{(2)}
+  \Pi_{\rm quant,space}^{(2)}+\Pi_{\rm quant,time}^{(2)}
+ +\Pi_{\rm shell,space}^{(2)}+\Pi_{\rm shell,time}^{(2)}
  +\Pi_{\rm exit}^{(2)}\rangle\\
 &+\mathcal H_{\rm conn}+\mathcal R_{\rm reset}.
 \end{aligned}
 }
 \]
 
-**Classification: Exact current/covariance identity for the cycle-typed selector
-sector, with the same full-state generator-compatibility caveat already stated for
-the Kelvin future-variance PDE.**
+**Classification: Exact algebraic spacetime-ledger template for the cycle-typed
+selector sector.  Generator compatibility and the literal moving quantile/shell
+time-face realization remain open-literal before this becomes a completed physical
+first-bad identity.**
 
 This does not silently set the programme-wide `S^int / Z_irr` sector to zero.  The
 repository still has no literal line-by-line definition of `S^int`, and it has no

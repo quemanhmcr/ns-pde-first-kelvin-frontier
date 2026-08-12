@@ -82,3 +82,31 @@ This is consistent with the repository's stated concern about a metric-amplified
 These findings do **not** provide a counterexample to the Kelvin programme or to any claimed regularity theorem (none is claimed here). They sharpen the restart bridge to require, simultaneously:
 
 `uniform local covariance + support locality + metric-whitened remainder control + signed metric/boundary/exit accounting`.
+
+---
+
+## Draft PR #1 follow-up — clock, de Rham, covariance, and moving-cut findings
+
+The open Draft PR #1 later extended this locality audit with four additional
+compatibility findings.  They have now been independently checked against the
+current theorem spine rather than accepted by provenance alone.
+
+| Draft PR finding | Referee verdict on current main | Resolution |
+|---|---|---|
+| Physical time vs stochastic ancestry/backward clock | **Correct** | Same-clock conditional variance remains exact; physical first-bad lift is now explicitly two-clock and remains open-literal. |
+| `d_pair V-gamma ds=d_spacetime V` | **Incorrect old main claim; PR objection correct** | Replaced by exact Dynkin/Fokker--Planck covariance current `partial_s(qV)+div(qjV+nu q K grad V)=-q gamma`. |
+| Centered covariance carries deterministic stretching | **PR objection correct** | Current main already separates `mm^T`, `C`, `Q`, and `T_tot`; Kelvin q.v. is internal mean-square/covariance transfer. |
+| Moving quantile/shell cut needs `Qdot` / boundary-speed face | **Correct** | Static spatial commutator retained, and distinct moving transport face `G_Q=Qdot+T_out Q-Q T_in` plus two-replica lift are now explicit; literal first-bad cut speed remains open. |
+| Area shrinkage / metric-whitened locality | **Correct** | Already repaired by the support-local, metric-whitened packet theorem and coherent primal/dual geometry. |
+
+The determinant caveat is also correct: the general 3D Nanson extension is
+`D_t log det M_H=-4 div u`; the incompressible consequence used by the programme is
+`D_t det M_H=0`.
+
+See `docs/clock_cut_compatibility_audit.md` for the exact equations and regression
+calibrations.
+
+**Current status:** the Draft PR supplied valid adversarial pressure at several
+proof-critical seams.  Its valid findings are now part of the main theorem spine;
+the remaining two-clock and literal moving-cut constructions are deliberately left
+open rather than patched by declaration.
