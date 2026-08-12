@@ -272,3 +272,26 @@ additional ambient CK/Hodge operator beyond the closed-cycle realization has bee
 specified.  Any such future operator must be audited separately.
 
 No continuation/restart theorem and no regularity claim.
+
+
+## 2026-08-12 — closed-range Hodge projector kinematics
+
+A second active-CK layer has been audited conditionally on a precise structural
+hypothesis: any additional CK/Hodge operation is an idempotent projector `H` whose
+range lies in the closed physical-current subspace.  The weighted finite-chain
+model `H=K(K^T W K)^(-1)K^T W` satisfies `H^2=H`, `B_x H=0`, fixes the cycle
+library, and is `W`-selfadjoint.
+
+Differentiating idempotency covariantly gives `G H+H G=G`, hence
+`H G H=0` and `(I-H)G(I-H)=0`.  Projector motion is therefore purely signed
+range/complement exchange; a co-moving connection removes pure frame motion
+exactly.  The full pair derivative is `G tensor H + H tensor G`, with zero
+active-pair internal sandwich `(H tensor H) D(H tensor H) (H tensor H)`.
+
+**Classification: Exact identities under the stated projector hypotheses.**
+
+This narrows but does not close global Pillar II.  The repository still has no
+line-by-line `S^int` definition and no literal extra CK/Hodge operator to identify
+with this projector.  If a future CK operation is non-idempotent or has range
+outside closed cycles, its residual must be audited separately.  No
+continuation/restart theorem and no regularity claim.

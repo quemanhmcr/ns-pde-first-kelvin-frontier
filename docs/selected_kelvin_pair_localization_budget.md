@@ -1023,3 +1023,34 @@ support selection and not to pair lifting.
 
 **Classification: Conjectural bridge for any additional CK/Hodge operator and for
 the global Pillar-II equivalence.**
+
+---
+
+## 20. If the extra CK/Hodge map is a closed-range projector, its motion is pure exchange
+
+Suppose a future literal CK/Hodge operator is an idempotent projector `H`,
+`H^2=H`, with `Ran H subset ker B_x`.  Then `B_xH=0` exactly.  For its covariant
+derivative `G=D_sH`, differentiated idempotency gives
+
+\[
+G H+H G=G,\qquad H G H=0,\qquad (I-H)G(I-H)=0.
+\]
+
+Thus `G=H G(I-H)+(I-H)G H`: projector motion is signed range/complement exchange,
+not an internal production channel.  At pair level
+
+\[
+D_s(H\otimes H)=G\otimes H+H\otimes G,
+\]
+
+with zero active-pair internal sandwich.  Pure frame motion is removable by the
+co-moving connection.
+
+**Classification: Exact identity under the stated projector hypotheses.**
+
+This does not identify the programme's still-undefined `S^int` with projector
+motion and therefore does not prove the global Pillar-II equivalence.  A literal
+non-projector CK operation, if intended, remains to be written and audited.
+
+**Classification: Conjectural bridge for the identification with any actual extra
+CK/Hodge operator and with `S^int`.**

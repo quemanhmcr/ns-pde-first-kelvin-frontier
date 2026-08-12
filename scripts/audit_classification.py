@@ -7,9 +7,11 @@ ROOT = Path(__file__).resolve().parents[1]
 note = ROOT / "docs" / "selected_kelvin_pair_localization_budget.md"
 active_note = ROOT / "docs" / "active_first_bad_germ_pair_maps.md"
 cycle_note = ROOT / "docs" / "cycle_typed_first_bad_selector.md"
+hodge_note = ROOT / "docs" / "hodge_cycle_projector_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
+hodge_text = hodge_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -48,6 +50,18 @@ cycle_missing = [token for token in cycle_required if token not in cycle_text]
 if cycle_missing:
     print("missing cycle-typed selector structural markers:", cycle_missing)
     sys.exit(1)
+hodge_required = [
+    "H_W^2=H_W",
+    "P G P=0",
+    "Q G Q=0",
+    "Conjectural bridge",
+    "S^int",
+    "No continuation/restart",
+]
+hodge_missing = [token for token in hodge_required if token not in hodge_text]
+if hodge_missing:
+    print("missing Hodge projector structural markers:", hodge_missing)
+    sys.exit(1)
 
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
@@ -55,7 +69,7 @@ for forbidden in [
     "S^int = 0 is established",
     "S^int=0 iff Z_irr=0 is proved",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

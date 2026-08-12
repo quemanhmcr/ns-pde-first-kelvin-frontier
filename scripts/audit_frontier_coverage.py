@@ -13,7 +13,8 @@ SEAMS = {
     "active-pair-factorization": ("audited", "full pair boundary/transport residual is exact tensor lift of one-current commutator"),
     "cycle-typed-first-bad-boundary": ("audited", "closed Kelvin cycle library forces zero intrinsic selector physical boundary and pair boundary"),
     "cycle-typed-first-bad-transport": ("audited", "support transport is exact germ cut current; finite hysteresis switch is reset revaluation"),
-    "active-ck-pillar-ii": ("open-literal", "selector residual closed; S^int and any additional ambient CK/Hodge operator are not defined line by line"),
+    "hodge-cycle-projector": ("audited-generic", "idempotent closed-range projector has zero physical boundary and pure range/complement exchange motion"),
+    "active-ck-pillar-ii": ("open-literal", "selector residual closed; projector kinematics classified; S^int or any non-projector CK content is not defined line by line"),
     "continuation-restart": ("open", "no regularity bridge claimed"),
 }
 
@@ -22,7 +23,7 @@ required = {
     "freeze", "quantile", "anchor-orientation", "shell", "refinement",
     "resolve-reset", "physical-exit", "variable-frame-connection",
     "active-pair-factorization", "cycle-typed-first-bad-boundary",
-    "cycle-typed-first-bad-transport", "active-ck-pillar-ii", "continuation-restart",
+    "cycle-typed-first-bad-transport", "hodge-cycle-projector", "active-ck-pillar-ii", "continuation-restart",
 }
 
 if set(SEAMS) != required:

@@ -130,3 +130,27 @@ jobs:
         with:
           name: cycle-typed-first-bad-selector
           path: audit-results/cycle_typed_first_bad_selector_report.json
+
+  hodge-cycle-projector:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit closed-range Hodge projector kinematics and pair exchange
+        run: python -m unittest -v tests.test_hodge_cycle_projector
+      - name: Build Hodge cycle-projector audit artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_hodge_projector_report.py
+      - name: Upload Hodge cycle-projector audit artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hodge-cycle-projector
+          path: audit-results/hodge_cycle_projector_report.json
