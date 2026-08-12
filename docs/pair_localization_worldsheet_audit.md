@@ -504,3 +504,91 @@ What remains open is the literal insertion of the programme's actual transported
 frame/Hodge connection into the active first-bad-germ chain.  The generic geometry
 is no longer conceptually unclassified, but its concrete active-map commutators
 have not yet been verified.
+
+## 14. Full-pair active commutators reduce exactly to one-current commutators
+
+The active-map question can be sharpened without assuming Pillar II.  Let a
+one-current stage be `(F_1,F_0)` between chain complexes with boundary maps
+`B_in,B_out`, and set
+
+\[
+C_F=B_{\rm out}F_1-F_0B_{\rm in}.
+\]
+
+Using the full ordered pair lift `F^(2)=F_1 tensor F_1` and retaining the two pair
+boundary faces separately gives the exact identity
+
+\[
+\boxed{
+\partial_{\rm pair,out}F^{(2)}
+-F_{\partial}^{(2)}\partial_{\rm pair,in}
+=
+\begin{bmatrix}
+C_F\otimes F_1\\
+-F_1\otimes C_F
+\end{bmatrix}.
+}
+\]
+
+Likewise, for covariant transport
+
+\[
+G_F=\dot F+T_{\rm out}F-FT_{\rm in},
+\]
+
+the full pair residual is exactly
+
+\[
+\boxed{G_F^{(2)}=G_F\otimes F+F\otimes G_F.}
+\]
+
+**Classification: Exact identities, symbolically audited.**
+
+Therefore a full tensor-square lift cannot create an autonomous pair-only
+`S^int / Z_irr` producer.  Quantile/shell/exit boundary defects lift to their two
+physical replica faces; variable-frame terms lift as connection geometry;
+refinement remains functorial when the full tensor square is retained.  Any
+irreducible pair residual must be the explicit lift of an irreducible one-current
+active commutator after all those physical terms have been removed.
+
+**Classification: Rigorous consequence.**
+
+The exact product rule
+
+\[
+C(GF)=C(G)F_1+G_0C(F)
+\]
+
+also gives a line-by-line completed-excursion seam sum.  A new finite-cell audit
+instantiates freeze, quantile, anchor/orientation, shell, refinement, reset, and
+physical exit in chronological order and verifies that the direct completed
+boundary residual equals the sum of transported stage residuals exactly.  In that
+witness, only localization interfaces and physical exit are nonzero; chain-natural
+anchor/refinement/reset maps do not manufacture a hidden residual.
+
+The exact odd-mode Navier--Stokes shear supplies an additional active-map
+counterpressure test.  For `Z_h=h Z_0+(1-h) Z_pi`, pathwise `X_pi=-X_0`, hence
+
+\[
+V(Z_h)=(2h-1)^2V(Z_0).
+\]
+
+At `h=1/2` the physical pair bank vanishes exactly, whereas a diagonal-only active
+pair projection is strictly positive.  CI now audits this closed-form calibration.
+
+**Classification: Rigorous consequence from an exact Navier--Stokes calibration.**
+
+The remaining literal gap is now narrower: the repository still lacks the actual
+chain-level incidence maps `(P_active,1,P_active,0)` and active transport generator
+needed to compute
+
+\[
+B P_{\rm active,1}-P_{\rm active,0}B,
+\qquad
+\dot P_{\rm active,1}+T_{\rm out}P_{\rm active,1}-P_{\rm active,1}T_{\rm in}.
+\]
+
+These are not set to zero.  See `docs/active_first_bad_germ_pair_maps.md` for the
+literal map inventory and residual decomposition.
+
+**Classification: Conjectural bridge / missing literal CK incidence datum.**

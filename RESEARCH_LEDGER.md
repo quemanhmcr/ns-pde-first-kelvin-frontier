@@ -157,3 +157,75 @@ branching still produces the cross operator `2 D_1 D_2`; variable noise
 coefficients do not add a distinct pair source.  What remains open is the literal
 active-frame/Hodge commutator in the first-bad-germ construction, not the generic
 Cartan/branching algebra.
+
+## 2026-08-12 — active first-bad pair commutator reduction
+
+The full pair world-sheet has been pushed one level closer to the literal
+first-bad construction.  A new symbolic current-algebra module now represents a
+one-current stage by `(F_1,F_0)` between literal chain complexes and audits the
+boundary defect
+
+`C_F = B_out F_1 - F_0 B_in`.
+
+For the full ordered pair lift `F^(2)=F_1 tensor F_1`, the pair boundary defect is
+now proved and tested exactly as the two-face factorization
+
+`C_F^(2) = [C_F tensor F_1 ; - F_1 tensor C_F]`.
+
+The covariant transport analogue is likewise exact:
+
+`G_F^(2)=G_F tensor F + F tensor G_F`, with
+`G_F=Fdot+T_out F-F T_in`.
+
+**Classification: Exact identities.**
+
+This removes the possibility of an autonomous pair-only producer created merely by
+the full tensor-square lift.  Quantile/shell/exit defects remain physical interface
+or exit currents on the two replica faces; variable-frame terms remain connection
+geometry; full refinement remains functorial and keeps every cross-child term.
+Only a one-current active-map remainder that survives after subtracting those
+classified terms can feed `S^int / Z_irr`.
+
+**Classification: Rigorous consequence.**
+
+A completed finite-cell hysteresis witness now instantiates, in chronological
+order, freeze, quantile, anchor/orientation, shell, refinement, resolve/reset and
+physical exit.  The direct completed boundary residual equals the exact sum of all
+transported stage seams.  Removing the physical localization/exit stages leaves a
+functorial composition with zero boundary residual.  A separate full-shell test
+reconstructs the parent pair only after all ordered shell blocks are included.
+
+The exact odd-mode Navier--Stokes shear now also audits an active interpolation
+`Z_h=h Z_0+(1-h) Z_pi`.  Since `X_pi=-X_0` pathwise,
+`V(Z_h)=(2h-1)^2 V(Z_0)` and the physical pair bank vanishes at `h=1/2`; a
+diagonal-only active pair projection remains strictly positive.  This is a new
+anti-cancellation guard for active/refinement implementations.
+
+**Classification: Rigorous consequence from an exact Navier--Stokes calibration.**
+
+The literal Pillar-II question has therefore narrowed to the actual one-current CK
+projection.  The repository still does **not** contain the chain-level incidence
+maps `(P_active,1,P_active,0)` or the active transport generator needed to compute
+
+`B P_active,1 - P_active,0 B`
+
+and
+
+`Pdot_active + T_out P_active - P_active T_in`
+
+after removing quantile/shell/exit/connection/reset terms.  Those residuals are not
+set to zero.  A generic finite-cell counterexample in CI shows that an arbitrary
+projection onto "active" cells need not commute with boundary, so naturality cannot
+be assumed from the word active alone.
+
+**Classification: Conjectural bridge / literal missing active-CK datum.**
+
+Current answer to the frontier question: after FULL pair content and all already
+identified physical boundary/connection terms are retained, there is **no
+independent pair-only residual**.  A genuine residual can remain only if the actual
+one-current active CK projection has a nonzero irreducible boundary or transport
+commutator.  If those one-current remainders vanish, the pair `Pi_irr^(2)` vanishes
+exactly; if not, its explicit tensor lift is the obstruction.  No finite universal
+bank for a nonzero irreducible active commutator has been established.
+
+No continuation/restart theorem and no 3D Navier--Stokes regularity claim.

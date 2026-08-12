@@ -786,7 +786,7 @@ bank at this level.
 
 ## 17. Present frontier
 
-The distributed problem is solved structurally:
+The distributed problem remains solved structurally:
 
 \[
 \boxed{
@@ -796,50 +796,98 @@ The distributed problem is solved structurally:
 }
 \]
 
-The remaining problem is strictly localization:
+The pair-localization frontier has now narrowed one level further.  For any literal
+one-current active stage `(F_1,F_0)`, define
+
+\[
+C_F=B_{\rm out}F_1-F_0B_{\rm in},
+\qquad
+G_F=\dot F+T_{\rm out}F-FT_{\rm in}.
+\]
+
+With the full tensor-square pair lift, CI now audits the exact identities
 
 \[
 \boxed{
-\text{distributed pair covariance}
-\longrightarrow
-\text{migrating first-bad selector atom}.
+C_F^{(2)}=
+\begin{bmatrix}
+C_F\otimes F_1\\
+-F_1\otimes C_F
+\end{bmatrix},
+\qquad
+G_F^{(2)}=G_F\otimes F+F\otimes G_F.
 }
 \]
 
-The next literal calculation must lift the actual first-bad-germ chain through one
-complete hysteresis excursion to pair-current level, including
+**Classification: Exact identities.**
 
-- entry/first trigger;
-- frozen coordinate interval;
-- anchor/orientation motion;
-- quantile motion;
-- shell change;
-- refinement;
-- resolve/reset;
-- physical exit;
-- all active CK seams.
+Thus there is no autonomous pair-only non-functorial producer once full pair
+content is retained.  Cross-child and cross-shell covariance are physical content;
+quantile/shell interfaces and physical exit remain explicit two-face currents;
+anchor/frame terms are connection geometry; reset is exact covariance revaluation.
+Only a one-current active-map remainder left after these terms are subtracted can
+feed the literal `S^int / Z_irr` sector.
 
-For every face/seam, classify it as exactly one of
+**Classification: Rigorous consequence.**
+
+The completed hysteresis composition also has an exact seam product rule:
 
 \[
 \boxed{
-\text{pair-boundary cancellation},
-\quad
-\text{physical covariance transfer},
-\quad
-\text{physical exit},
-\quad
-S^{\rm int}/Z_{\rm irr}\text{ defect}.
+C(F_n\cdots F_1)
+=
+\sum_k F_{0,>k}\,C(F_k)\,F_{1,<k}.
 }
 \]
 
-If the pair world-sheet closes after the literal Pillar-II audit, then selected
-Kelvin q.v. inherits a finite physical pair bank.  If a non-boundary selector
-component remains, the present exact NS calibrations show that no averaged
-one-/two-ancestry reservoir already on the table can absorb it merely by stronger
-estimates.
+A finite-cell current audit now instantiates the chronological stages
+freeze/quantile/anchor-orientation/shell/refinement/resolve-reset/physical-exit and
+checks this identity exactly.  The new exact NS active-mixture calibration also
+forces full pair covariance: in the odd shear, `Z_h=h Z_0+(1-h)Z_pi` has
+`V(Z_h)=(2h-1)^2V(Z_0)`, so the true bank vanishes at `h=1/2` while a diagonal-only
+active projection remains positive.
 
-**Classification: Conjectural bridge.**
+**Classification: Exact current algebra plus rigorous consequence from an exact
+Navier--Stokes calibration.**
+
+What remains open is no longer an unspecified pair phenomenon.  The missing datum
+is the programme's actual active CK chain/transport map:
+
+\[
+(P_{{\rm active},1},P_{{\rm active},0},T_{\rm active}) .
+\]
+
+The repository does not yet contain its literal incidence data, so the following
+one-current residuals have not been certified to vanish:
+
+\[
+\boxed{
+C_{\rm irr}
+=
+B P_{{\rm active},1}-P_{{\rm active},0}B
+-\text{(classified physical boundary terms)},
+}
+\]
+
+\[
+\boxed{
+G_{\rm irr}
+=
+\dot P_{{\rm active},1}
++T_{\rm out}P_{{\rm active},1}
+-P_{{\rm active},1}T_{\rm in}
+-\text{(classified connection/transport terms)}.
+}
+\]
+
+If `C_irr=G_irr=0`, the full pair `Pi_irr^(2)` vanishes exactly and the next
+selected-Kelvin pair-bank identity contains only endpoints plus quantile/shell
+transfer, connection geometry, exact reset revaluation, and physical exit.  If
+either is nonzero, its explicit tensor lift is the genuine obstruction; no finite
+universal bank for that irreducible sector is currently established.
+
+**Classification: Conjectural bridge pending literal active CK incidence and
+transport audit.**
 
 ---
 

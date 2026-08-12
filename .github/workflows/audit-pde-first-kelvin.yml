@@ -82,3 +82,27 @@ jobs:
         with:
           name: pair-localization-worldsheet
           path: audit-results/pair_worldsheet_report.json
+
+  active-first-bad-pair-audit:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit literal active-map pair commutator algebra and exact NS counterpressure
+        run: python -m unittest -v tests.test_active_first_bad_pair_maps
+      - name: Build active first-bad pair audit artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_active_pair_report.py
+      - name: Upload active first-bad pair audit artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: active-first-bad-pair-audit
+          path: audit-results/active_first_bad_pair_report.json

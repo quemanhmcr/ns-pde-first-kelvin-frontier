@@ -5,7 +5,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 note = ROOT / "docs" / "selected_kelvin_pair_localization_budget.md"
+active_note = ROOT / "docs" / "active_first_bad_germ_pair_maps.md"
 text = note.read_text()
+active_text = active_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -18,12 +20,24 @@ missing = [token for token in required if token not in text]
 if missing:
     print("missing required structural markers:", missing)
     sys.exit(1)
+active_required = [
+    "P_active",
+    "There is no autonomous pair-only residual",
+    "chain-level incidence",
+    "Conjectural bridge",
+    "No continuation/restart conclusion",
+]
+active_missing = [token for token in active_required if token not in active_text]
+if active_missing:
+    print("missing active-map structural markers:", active_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
     "S^int = 0 is established",
 ]:
-    if forbidden in text:
+    if forbidden in text or forbidden in active_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")
