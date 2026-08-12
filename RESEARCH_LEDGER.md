@@ -928,3 +928,60 @@ or its expectation/projection.  That cross-state alignment remains open-literal.
 
 **Classification: Exact same-replica deformation/packet-metric duality; selector-to-
 replica alignment open-literal.**
+
+## 2026-08-12 — general vectorized stochastic-deformation covariance law
+
+The previous `C_D` notation was too compressed if read as the covariance of the
+matrix-valued deformation itself. The literal reverse-age state is
+`dX=-u(X,t-sigma) dsigma+sqrt(2nu)dW` together with the finite-variation law
+`D_sigma=D(grad u)^T`, `D_0=I`. Hence pathwise `D` has zero direct martingale q.v.
+For column-major `z=vec(D)`, the pathwise connection is
+`K_path=(grad u) tensor I`. Conditioning from the fixed current endpoint reverses
+the matrix ordering: with `H_h=partial_h+partial_t+u.grad-nu Delta`,
+`H_h Dbar=(grad u)^T Dbar`; equivalently the vectorized horizon connection is
+`B=I tensor (grad u)^T`.
+
+Define the full covariance `Sigma_D=Cov(vec D)`. Then the exact connected law is
+`H_h Sigma_D=B Sigma_D+Sigma_D B^T+Gamma_D^vec`, where
+`Gamma_D^vec=2nu sum_mu vec(partial_mu Dbar) vec(partial_mu Dbar)^T`.
+
+The packet-metric covariance is only the column partial trace
+`C_D^Gram=E[D D^T]-Dbar Dbar^T=ptr_col Sigma_D`, and therefore obeys
+`H_h C_D^Gram=(grad u)^T C_D^Gram+C_D^Gram(grad u)
+ +2nu sum_mu (partial_mu Dbar)(partial_mu Dbar)^T`.
+Both full and projected covariances have exact independent-two-replica pair forms.
+Same-replica packet duality becomes
+`rho^4 E[M_H]=Dbar Dbar^T+C_D^Gram`; it does not see every entry of `Sigma_D`, only
+this row-Gram projection.
+
+At a smooth current point,
+`Sigma_D(h)=(2nu/3)h^3 sum_mu vec((partial_mu grad u)^T)
+ vec((partial_mu grad u)^T)^T+O(h^4)`, and hence
+`C_D^Gram(h)=(2nu/3)h^3 sum_mu (partial_mu grad u)^T
+ (partial_mu grad u)+O(h^4)`.
+Thus the candidate `3 x 3` formula is correct precisely as the row-Gram projection;
+the full deformation covariance is `9 x 9` in three dimensions.
+
+The exact periodic one-mode NS shear satisfies the mean, second-moment, projected
+covariance, and full vectorized covariance PDEs symbolically. Its exact variance
+starts at `(2nu/3)|partial_y U_y|^2 h^3`, fixing the positive source sign, transpose,
+and coefficient. At `y=0` the deterministic selected deformation is exactly `I`
+while stochastic replicas have positive `C_D^Gram`, so naive deterministic = expected
+stochastic packet-metric alignment remains false. The exact affine-vortex NS
+calibration has spatially uniform `grad u`, hence zero deformation-dispersion source,
+as required.
+
+Physical placement is now explicit. `Sigma_D` is an exact same-clock vector
+conditional covariance sector on the augmented causal reverse-age state and has an
+exact same-ancestor pair face. `C_D^Gram` is its projection covariance. Neither is
+automatically the future-remaining bank `tau=Theta-t`, nor the reduced ancestry
+resolution covariance. A reduction that hides deformation would introduce a
+separate law-of-total-covariance resolution face. No part is called `S^int`,
+`Z_irr`, or irreducible without a theorem.
+
+**Status: Exact identity** for the mean/second-moment/vectorized/projected covariance
+laws and pair identities. **Status: Rigorous consequence** for the local smooth
+`h^3` asymptotic and PSD projections. **Status: Audited calibration** for one-mode
+shear and affine-vortex NS. Cross-clock, reduced-state, and deterministic-selected
+support identifications remain **Conjectural bridge / Open-literal**. No restart,
+continuation, or regularity theorem is claimed.

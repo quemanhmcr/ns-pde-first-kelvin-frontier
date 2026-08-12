@@ -1,49 +1,182 @@
 from __future__ import annotations
-import json,sys
+
+import json
+import sys
 from pathlib import Path
+
 import sympy as sp
-ROOT=Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT/'src'))
-from pde_audit.stochastic_cauchy_deformation import (
-    affine_vortex_cauchy_z_residual, affine_vortex_total_bank_envelope_residual,
-    cauchy_packet_metric_duality_residual,
-    one_mode_shear_second_moment, one_mode_shear_terminal_headroom,
-    one_mode_shear_terminal_supremum,
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from pde_audit.kelvin_packet_locality import (  # noqa: E402
+    affine_vortex_stretch_gradient,
+    affine_vortex_stretch_ns_residual,
 )
-a,r0,s,t,nu,k,y=sp.symbols('a r0 s t nu k y', positive=True)
-W=one_mode_shear_terminal_supremum(s,nu,k)
-D=sp.Matrix([[2,1],[1,1]]); rho=sp.symbols('rho', positive=True)
-Q=one_mode_shear_second_moment(y,t,s,nu,k)
-H=one_mode_shear_terminal_headroom(y,t,s,nu,k)
-report={
- 'classification':{
-   'fixed_past_cauchy_payoff':'Exact physical representation type Y=D omega(A_s^t,s); mean is current vorticity',
-   'total_bank_envelope':'Rigorous Loewner consequence Q<=W_s R with R=E[D D^T] and W_s=sup|omega(s)|^2',
-   'two_face_gap':'Exact W_s R-omega omega^T=(W_s R-Q)+(Q-omega omega^T): terminal directional headroom plus stochastic covariance',
-   'deformation_moment':'Exact reverse-age law R_sigma=2 E[D S D^T], generally not closed on R alone',
-   'fixed_past_uniform_bound':'Open: smooth past vorticity alone does not bound R; stochastic deformation moment remains physical obstruction',
-   'continuation_restart':'Open; no regularity conclusion',
- },
- 'affine_vortex':{
-   'cauchy_z_residual_zero':bool(affine_vortex_cauchy_z_residual(a,r0,s,t)==0),
-   'terminal_envelope_residual_zero':bool(affine_vortex_total_bank_envelope_residual(a,r0,s,t)==0),
-   'centered_covariance':'zero: spatially uniform vorticity and affine deformation are deterministic relative to anchor noise',
-   'interpretation':'all vorticity growth is carried by deformation, not centered covariance',
- },
- 'one_mode_shear':{
-   'terminal_supremum':str(W),
-   'second_moment':str(Q),
-   'terminal_headroom':str(H),
-   'vorticity_direction_deformation':'1',
-   'interpretation':'sampling/covariance sector is active while vorticity-direction deformation is absent',
- },
- 'packet_metric_duality':{
-   'residual_zero':bool(cauchy_packet_metric_duality_residual(D,rho)==sp.zeros(2)),
-   'identity':'D D^T = rho^4 M_H on the same stochastic replica deformation',
-   'interpretation':'stochastic Cauchy deformation Gram is the unscaled coherent Kelvin packet metric, not a new geometry',
- },
- 'frontier':{
-   'resolved':'fixed-past total-bank amplitude decomposes into terminal vorticity size times stochastic Cauchy deformation moment plus exact covariance/headroom faces',
-   'still_open':'uniform control and the programme-specific alignment of deterministic first-bad selected support with the same stochastic replica deformation whose packet metric equals D D^T',
- }
+from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
+    affine_vortex_cauchy_z_residual,
+    affine_vortex_total_bank_envelope_residual,
+    cauchy_packet_metric_duality_residual,
+    column_vectorize,
+    deformation_covariance_leading_projection_residual,
+    deformation_mean_horizon_residual,
+    deformation_second_moment_horizon_residual,
+    one_mode_shear_deformation_mean_coefficient,
+    one_mode_shear_deformation_second_coefficient,
+    one_mode_shear_deformation_variance,
+    one_mode_shear_deformation_variance_at_symmetry,
+    one_mode_shear_second_moment,
+    one_mode_shear_terminal_headroom,
+    one_mode_shear_terminal_supremum,
+    projected_deformation_covariance_horizon_residual,
+    projected_deformation_covariance_leading_tensor,
+    reverse_age_horizon_operator_matrix,
+    vectorized_deformation_covariance_horizon_residual,
+    vectorized_deformation_covariance_leading_tensor,
+)
+
+x, y, z, t, s, h, nu, k, a, r0 = sp.symbols(
+    "x y z t s h nu k a r0", positive=True
+)
+rho = sp.symbols("rho", positive=True)
+alpha = nu * k**2
+
+# Fixed-past bank quantities.
+W = one_mode_shear_terminal_supremum(s, nu, k)
+Q = one_mode_shear_second_moment(y, t, s, nu, k)
+headroom = one_mode_shear_terminal_headroom(y, t, s, nu, k)
+
+# Same-replica metric duality calibration.
+D_generic = sp.Matrix([[2, 1], [1, 1]])
+
+# Exact one-mode shear deformation covariance calibration.
+U = sp.exp(-alpha * t) * sp.cos(k * y)
+Uy = sp.diff(U, y)
+velocity = sp.Matrix([U, 0])
+A = sp.Matrix([[0, Uy], [0, 0]])
+mean_c = one_mode_shear_deformation_mean_coefficient(y, t, h, nu, k)
+second_c = one_mode_shear_deformation_second_coefficient(y, t, h, nu, k)
+variance = one_mode_shear_deformation_variance(y, t, h, nu, k)
+mean_D = sp.Matrix([[1, 0], [mean_c, 1]])
+R = sp.Matrix([[1, mean_c], [mean_c, 1 + second_c]])
+C_gram = sp.simplify(R - mean_D * mean_D.T)
+Hmean = reverse_age_horizon_operator_matrix(mean_D, h, t, velocity, nu, (x, y))
+HR = reverse_age_horizon_operator_matrix(R, h, t, velocity, nu, (x, y))
+HC = reverse_age_horizon_operator_matrix(C_gram, h, t, velocity, nu, (x, y))
+dmean = [sp.diff(mean_D, x), sp.diff(mean_D, y)]
+
+E21 = sp.Matrix([[0, 0], [1, 0]])
+v21 = column_vectorize(E21)
+Sigma = sp.simplify(variance * v21 * v21.T)
+HSigma = reverse_age_horizon_operator_matrix(Sigma, h, t, velocity, nu, (x, y))
+
+# General short-horizon tensor/projection audit with symbolic spatial derivatives.
+g11, g12, g21, g22, q11, q12, q21, q22 = sp.symbols(
+    "g11 g12 g21 g22 q11 q12 q21 q22"
+)
+dAx = sp.Matrix([[g11, g12], [g21, g22]])
+dAy = sp.Matrix([[q11, q12], [q21, q22]])
+full_leading = vectorized_deformation_covariance_leading_tensor([dAx, dAy], nu, h)
+projected_leading = projected_deformation_covariance_leading_tensor([dAx, dAy], nu, h)
+
+# Exact affine-vortex NS calibration: spatially uniform gradient means zero source.
+A_aff = affine_vortex_stretch_gradient(a, r0, t)
+ns_aff, _ = affine_vortex_stretch_ns_residual(a, r0, t, (x, y, z), nu)
+aff_derivatives = [sp.diff(A_aff, q) for q in (x, y, z)]
+aff_leading = vectorized_deformation_covariance_leading_tensor(aff_derivatives, nu, h)
+
+shear_mean0 = one_mode_shear_deformation_mean_coefficient(0, t, h, nu, k)
+shear_second0 = one_mode_shear_deformation_second_coefficient(0, t, h, nu, k)
+shear_var0 = one_mode_shear_deformation_variance_at_symmetry(t, h, nu, k)
+
+report = {
+    "status": {
+        "reverse_age_state": "Exact identity",
+        "mean_second_moment_covariance_laws": "Exact identity",
+        "pair_and_projection_identities": "Exact identity",
+        "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
+        "one_mode_shear": "Audited calibration",
+        "affine_vortex": "Audited calibration",
+        "future_remaining_bank_identification": "Open-literal",
+        "reduced_resolution_identification": "Open-literal",
+        "selected_support_alignment": "Conjectural bridge / Open-literal",
+        "restart_continuation_regularity": "Open; no theorem claimed",
+    },
+    "reverse_age_geometry": {
+        "pathwise_state": "dX=-u(X,t-sigma) dsigma+sqrt(2nu)dW; D_sigma=D(grad u)^T; [D,D]=0 pathwise",
+        "pathwise_vectorized_connection": "K_path=(grad u) tensor I",
+        "horizon_operator": "H_h=partial_h+partial_t+u.grad-nu Delta",
+        "horizon_mean_law": "H_h Dbar=(grad u)^T Dbar",
+        "horizon_vectorized_connection": "B=I tensor (grad u)^T",
+        "physical_typing": "finite-variation deformation dispersion generated by Brownian anchor sampling; not direct pathwise deformation q.v.",
+    },
+    "covariance_law": {
+        "full": "Sigma_D=Cov(vec D); H_h Sigma_D=B Sigma_D+Sigma_D B^T+Gamma_D^vec",
+        "carre_du_champ": "Gamma_D^vec=2nu sum_mu vec(partial_mu Dbar) vec(partial_mu Dbar)^T",
+        "projection": "C_D^Gram=ptr_col Sigma_D=E[D D^T]-Dbar Dbar^T",
+        "projected_law": "H_h C_D^Gram=A^T C_D^Gram+C_D^Gram A+2nu sum_mu (partial_mu Dbar)(partial_mu Dbar)^T",
+        "pair": "Sigma_D=(1/2)E[(vec D1-vec D2)(vec D1-vec D2)^T]; C_D^Gram is its row-Gram projection",
+        "packet_metric": "rho^4 E[M_H]=Dbar Dbar^T+C_D^Gram on the stochastic replica ensemble",
+    },
+    "short_horizon": {
+        "full_vectorized": "Sigma_D=(2nu/3)h^3 sum_mu vec((partial_mu grad u)^T) outer vec((partial_mu grad u)^T)+O(h^4)",
+        "row_gram_projection": "C_D^Gram=(2nu/3)h^3 sum_mu (partial_mu grad u)^T(partial_mu grad u)+O(h^4)",
+        "candidate_verdict": "the proposed 3x3 expression is correct for C_D^Gram, not for full 9x9 Sigma_D in 3D",
+        "symbolic_projection_residual_zero": bool(
+            deformation_covariance_leading_projection_residual([dAx, dAy], nu, h)
+            == sp.zeros(2)
+        ),
+        "full_leading_shape": list(full_leading.shape),
+        "projected_leading_shape": list(projected_leading.shape),
+    },
+    "one_mode_shear": {
+        "mean_horizon_residual_zero": bool(
+            deformation_mean_horizon_residual(mean_D, Hmean, A) == sp.zeros(2)
+        ),
+        "second_moment_horizon_residual_zero": bool(
+            deformation_second_moment_horizon_residual(R, HR, A) == sp.zeros(2)
+        ),
+        "projected_covariance_horizon_residual_zero": bool(
+            projected_deformation_covariance_horizon_residual(C_gram, HC, A, dmean, nu)
+            == sp.zeros(2)
+        ),
+        "vectorized_covariance_horizon_residual_zero": bool(
+            vectorized_deformation_covariance_horizon_residual(Sigma, HSigma, A, dmean, nu)
+            == sp.zeros(4)
+        ),
+        "symmetry_anchor_mean_coefficient": str(shear_mean0),
+        "symmetry_anchor_second_coefficient": str(shear_second0),
+        "symmetry_anchor_variance": str(shear_var0),
+        "small_h_onset": "Var(c_h)=(2nu/3)|partial_y U_y|^2 h^3+O(h^4)",
+        "referees": "positive source sign, horizon transpose/order, and coefficient 2nu/3",
+        "selected_vs_replica": "at y=0 deterministic material deformation is I while stochastic replica metric has positive C_D^Gram",
+    },
+    "affine_vortex": {
+        "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),
+        "cauchy_z_residual_zero": bool(affine_vortex_cauchy_z_residual(a, r0, s, t) == 0),
+        "terminal_envelope_residual_zero": bool(
+            affine_vortex_total_bank_envelope_residual(a, r0, s, t) == 0
+        ),
+        "spatial_gradient_covariance_source_zero": bool(aff_leading == sp.zeros(9)),
+        "interpretation": "spatially uniform grad u permits deformation/stretching but no anchor-induced deformation-dispersion source",
+    },
+    "fixed_past_bank": {
+        "terminal_supremum": str(W),
+        "second_moment": str(Q),
+        "terminal_directional_headroom": str(headroom),
+        "metric_duality_residual_zero": bool(
+            cauchy_packet_metric_duality_residual(D_generic, rho) == sp.zeros(2)
+        ),
+    },
+    "ledger_placement": {
+        "same_clock_face": "Sigma_D is an observable covariance sector on the augmented causal reverse-age state; C_D^Gram is its projection covariance",
+        "future_remaining_horizon": "not identified: causal past h=t-s is distinct from future remaining tau=Theta-t",
+        "resolution_covariance": "not identical without an explicit reduced-state conditional lift; hiding deformation would add a separate law-of-total-covariance face",
+        "S_int": "no identification with S^int, Z_irr, or irreducible content",
+    },
 }
-out=Path('audit-results/stochastic_cauchy_deformation_report.json'); out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n'); print(json.dumps(report,indent=2,sort_keys=True))
+
+out = Path("audit-results/stochastic_cauchy_deformation_report.json")
+out.parent.mkdir(parents=True, exist_ok=True)
+out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+print(json.dumps(report, indent=2, sort_keys=True))

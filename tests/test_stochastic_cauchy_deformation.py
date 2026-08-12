@@ -9,6 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 
 from pde_audit.kelvin_packet_locality import (  # noqa: E402
+    affine_vortex_stretch_gradient,
     affine_vortex_stretch_ns_residual,
 )
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
@@ -28,6 +29,34 @@ from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     incompressible_deformation_determinant_log_rate,
     packet_metric_from_area_frame,
     packet_metric_rate_residual_from_cauchy,
+    matrix_deformation_covariance,
+    matrix_deformation_pair_covariance_residual,
+    expected_packet_metric_split_residual,
+    deformation_second_moment_split_residual,
+    one_mode_shear_deformation_dispersion_residual,
+    one_mode_shear_deformation_mean_coefficient,
+    one_mode_shear_deformation_second_coefficient,
+    one_mode_shear_deformation_variance,
+    one_mode_shear_deformation_variance_at_symmetry,
+    one_mode_shear_deformation_variance_leading_residual,
+    column_vectorize,
+    deformation_carre_du_champ_projection_residual,
+    deformation_covariance_leading_projection_residual,
+    deformation_covariance_projection_residual,
+    deformation_mean_horizon_residual,
+    deformation_second_moment_horizon_residual,
+    horizon_connection_vectorization_residual,
+    matrix_deformation_vectorized_covariance,
+    projected_deformation_carre_du_champ,
+    projected_deformation_covariance_horizon_residual,
+    projected_deformation_covariance_leading_tensor,
+    reverse_age_horizon_operator_matrix,
+    reverse_age_path_vectorization_residual,
+    vectorized_deformation_covariance_horizon_residual,
+    vectorized_deformation_covariance_leading_tensor,
+    vectorized_deformation_pair_covariance_residual,
+    vectorized_horizon_connection,
+    vectorized_reverse_age_path_connection,
     one_mode_shear_second_moment,
     one_mode_shear_terminal_headroom,
     one_mode_shear_terminal_supremum,
@@ -135,6 +164,210 @@ class StochasticCauchyDeformationAudit(unittest.TestCase):
         A=sp.Matrix(sp.symbols('a0:4')).reshape(2,2)
         rho=sp.symbols('rho', nonzero=True)
         self.assertEqual(packet_metric_rate_residual_from_cauchy(D,A,rho),sp.zeros(2))
+
+
+    def test_matrix_deformation_second_moment_has_exact_mean_plus_dispersion_split(self) -> None:
+        c1,c2,p=sp.symbols('c1 c2 p')
+        D1=sp.Matrix([[1,0],[c1,1]])
+        D2=sp.Matrix([[1,0],[c2,1]])
+        weights=[p,1-p]
+        self.assertEqual(deformation_second_moment_split_residual([D1,D2],weights),sp.zeros(2))
+        C_D_gram=matrix_deformation_covariance([D1,D2],weights)
+        expected_var=sp.simplify(p*(1-p)*(c1-c2)**2)
+        self.assertEqual(sp.simplify(C_D_gram-sp.diag(0,expected_var)),sp.zeros(2))
+
+    def test_exact_one_mode_shear_deformation_dispersion_split(self) -> None:
+        y,t,h,nu,k=sp.symbols('y t h nu k', positive=True)
+        self.assertEqual(one_mode_shear_deformation_dispersion_residual(y,t,h,nu,k),sp.zeros(2))
+
+    def test_one_mode_shear_symmetry_point_has_zero_mean_but_positive_dispersion_formula(self) -> None:
+        t,h,nu,k=sp.symbols('t h nu k', positive=True)
+        mean=one_mode_shear_deformation_mean_coefficient(0,t,h,nu,k)
+        var=one_mode_shear_deformation_variance_at_symmetry(t,h,nu,k)
+        self.assertEqual(mean,0)
+        alpha=nu*k**2
+        expected=k**2*sp.exp(-2*alpha*t)/(2*alpha**2)*(sp.sinh(2*alpha*h)-2*alpha*h)
+        self.assertEqual(sp.simplify(var-expected),0)
+        # sinh(x)-x has positive Taylor coefficients after the linear term.
+        leading=sp.series(var,h,0,5).removeO()
+        self.assertTrue(sp.simplify(leading).has(h))
+
+    def test_shear_deformation_dispersion_starts_at_strain_gradient_squared_h_cubed(self) -> None:
+        y,t,h,nu,k=sp.symbols('y t h nu k', positive=True)
+        self.assertEqual(one_mode_shear_deformation_variance_leading_residual(y,t,h,nu,k),0)
+
+    def test_deterministic_selected_shear_at_y0_is_identity_while_stochastic_metric_has_extra_face(self) -> None:
+        t,h,nu,k=sp.symbols('t h nu k', positive=True)
+        mean=one_mode_shear_deformation_mean_coefficient(0,t,h,nu,k)
+        second=one_mode_shear_deformation_second_coefficient(0,t,h,nu,k)
+        self.assertEqual(mean,0)
+        R=sp.Matrix([[1,0],[0,1+second]])
+        # deterministic material anchor y=0 has U_y(0,r)=0 at every r, hence I.
+        self.assertNotEqual(R,sp.eye(2))
+        self.assertEqual(sp.simplify(R-sp.eye(2)),sp.diag(0,second))
+
+
+    def test_deformation_dispersion_is_exact_two_replica_pair_covariance(self) -> None:
+        c1,c2,p=sp.symbols('c1 c2 p')
+        D1=sp.Matrix([[1,0],[c1,1]])
+        D2=sp.Matrix([[1,0],[c2,1]])
+        self.assertEqual(matrix_deformation_pair_covariance_residual([D1,D2],[p,1-p]),sp.zeros(2))
+
+    def test_expected_packet_metric_splits_into_mean_deformation_metric_plus_dispersion(self) -> None:
+        c1,c2,p,rho=sp.symbols('c1 c2 p rho', nonzero=True)
+        D1=sp.Matrix([[1,0],[c1,1]])
+        D2=sp.Matrix([[1,0],[c2,1]])
+        self.assertEqual(expected_packet_metric_split_residual([D1,D2],[p,1-p],rho),sp.zeros(2))
+
+    def test_exact_shear_second_coefficient_solves_the_gaussian_two_time_kernel_integral_ode(self) -> None:
+        y,t,h,nu,k=sp.symbols('y t h nu k', positive=True)
+        alpha=nu*k**2
+        second=one_mode_shear_deformation_second_coefficient(y,t,h,nu,k)
+        kernel_at_h=k**2/sp.Integer(2)*(sp.exp(-2*alpha*(t-h))-sp.cos(2*k*y)*sp.exp(-2*alpha*(t+h)))
+        self.assertEqual(sp.trigsimp(sp.simplify(sp.diff(second,h,2)-2*kernel_at_h)),0)
+        self.assertEqual(sp.simplify(second.subs(h,0)),0)
+        self.assertEqual(sp.simplify(sp.diff(second,h).subs(h,0)),0)
+
+
+    def test_pathwise_and_horizon_vectorized_connections_have_distinct_ordering(self) -> None:
+        a11,a12,a21,a22=sp.symbols('a11 a12 a21 a22')
+        d11,d12,d21,d22=sp.symbols('d11 d12 d21 d22')
+        A=sp.Matrix([[a11,a12],[a21,a22]])
+        D=sp.Matrix([[d11,d12],[d21,d22]])
+        self.assertEqual(
+            reverse_age_path_vectorization_residual(D,sp.simplify(D*A.T),A),
+            sp.zeros(4,1),
+        )
+        self.assertEqual(horizon_connection_vectorization_residual(D,A),sp.zeros(4,1))
+        # For a generic nonsymmetric gradient these are genuinely different operators:
+        # pathwise D_sigma=D A^T gives A kron I, while current-end horizon conditioning
+        # gives left multiplication A^T M and hence I kron A^T.
+        self.assertNotEqual(
+            vectorized_reverse_age_path_connection(A),
+            vectorized_horizon_connection(A),
+        )
+
+    def test_full_vec_covariance_projects_exactly_to_row_gram_dispersion(self) -> None:
+        a,b,c,d,p=sp.symbols('a b c d p')
+        D1=sp.Matrix([[1,a],[b,1]])
+        D2=sp.Matrix([[1,c],[d,1]])
+        weights=[p,1-p]
+        Sigma=matrix_deformation_vectorized_covariance([D1,D2],weights)
+        self.assertEqual(Sigma.shape,(4,4))
+        self.assertEqual(deformation_covariance_projection_residual([D1,D2],weights),sp.zeros(2))
+        self.assertEqual(
+            vectorized_deformation_pair_covariance_residual([D1,D2],weights),
+            sp.zeros(4),
+        )
+
+    def test_vec_carre_du_champ_partial_trace_is_exact_row_gram_source(self) -> None:
+        a0,a1,a2,a3,b0,b1,b2,b3,nu=sp.symbols('a0:4 b0:4 nu')
+        Gx=sp.Matrix([[a0,a1],[a2,a3]])
+        Gy=sp.Matrix([[b0,b1],[b2,b3]])
+        self.assertEqual(
+            deformation_carre_du_champ_projection_residual([Gx,Gy],nu),
+            sp.zeros(2),
+        )
+        projected=projected_deformation_carre_du_champ([Gx,Gy],nu)
+        self.assertEqual(
+            projected,
+            sp.simplify(2*nu*(Gx*Gx.T+Gy*Gy.T)),
+        )
+
+    def test_exact_one_mode_shear_satisfies_mean_second_moment_and_covariance_horizon_pdes(self) -> None:
+        x,y,t,h,nu,k=sp.symbols('x y t h nu k', positive=True)
+        alpha=nu*k**2
+        U=sp.exp(-alpha*t)*sp.cos(k*y)
+        Uy=sp.diff(U,y)
+        velocity=sp.Matrix([U,0])
+        A=sp.Matrix([[0,Uy],[0,0]])
+        mean_c=one_mode_shear_deformation_mean_coefficient(y,t,h,nu,k)
+        second_c=one_mode_shear_deformation_second_coefficient(y,t,h,nu,k)
+        meanD=sp.Matrix([[1,0],[mean_c,1]])
+        R=sp.Matrix([[1,mean_c],[mean_c,1+second_c]])
+        C=sp.simplify(R-meanD*meanD.T)
+        Hmean=reverse_age_horizon_operator_matrix(meanD,h,t,velocity,nu,(x,y))
+        HR=reverse_age_horizon_operator_matrix(R,h,t,velocity,nu,(x,y))
+        HC=reverse_age_horizon_operator_matrix(C,h,t,velocity,nu,(x,y))
+        dM=[sp.diff(meanD,x),sp.diff(meanD,y)]
+        self.assertEqual(deformation_mean_horizon_residual(meanD,Hmean,A),sp.zeros(2))
+        self.assertEqual(deformation_second_moment_horizon_residual(R,HR,A),sp.zeros(2))
+        self.assertEqual(
+            projected_deformation_covariance_horizon_residual(C,HC,A,dM,nu),
+            sp.zeros(2),
+        )
+        # In the exact shear the connection kills the active covariance direction,
+        # leaving the carré-du-champ source 2 nu h^2 (d_y U_y)^2 e2e2^T exactly.
+        expected_source=sp.diag(0,sp.simplify(2*nu*h**2*sp.diff(Uy,y)**2))
+        self.assertEqual(
+            sp.trigsimp(sp.simplify(projected_deformation_carre_du_champ(dM,nu)-expected_source)),
+            sp.zeros(2),
+        )
+
+    def test_exact_one_mode_shear_full_vec_covariance_obeys_vectorized_law(self) -> None:
+        x,y,t,h,nu,k=sp.symbols('x y t h nu k', positive=True)
+        alpha=nu*k**2
+        U=sp.exp(-alpha*t)*sp.cos(k*y)
+        Uy=sp.diff(U,y)
+        velocity=sp.Matrix([U,0])
+        A=sp.Matrix([[0,Uy],[0,0]])
+        mean_c=one_mode_shear_deformation_mean_coefficient(y,t,h,nu,k)
+        meanD=sp.Matrix([[1,0],[mean_c,1]])
+        variance=one_mode_shear_deformation_variance(y,t,h,nu,k)
+        E21=sp.Matrix([[0,0],[1,0]])
+        v=column_vectorize(E21)
+        Sigma=sp.simplify(variance*v*v.T)
+        HSigma=reverse_age_horizon_operator_matrix(Sigma,h,t,velocity,nu,(x,y))
+        dM=[sp.diff(meanD,x),sp.diff(meanD,y)]
+        self.assertEqual(
+            vectorized_deformation_covariance_horizon_residual(Sigma,HSigma,A,dM,nu),
+            sp.zeros(4),
+        )
+
+    def test_general_short_horizon_tensor_projects_to_candidate_2nu_over_3_law(self) -> None:
+        h,nu=sp.symbols('h nu', positive=True)
+        g11,g12,g21,g22,q11,q12,q21,q22=sp.symbols('g11 g12 g21 g22 q11 q12 q21 q22')
+        dAx=sp.Matrix([[g11,g12],[g21,g22]])
+        dAy=sp.Matrix([[q11,q12],[q21,q22]])
+        full=vectorized_deformation_covariance_leading_tensor([dAx,dAy],nu,h)
+        projected=projected_deformation_covariance_leading_tensor([dAx,dAy],nu,h)
+        self.assertEqual(full.shape,(4,4))
+        self.assertEqual(
+            deformation_covariance_leading_projection_residual([dAx,dAy],nu,h),
+            sp.zeros(2),
+        )
+        expected=sp.simplify(sp.Rational(2,3)*nu*h**3*(dAx.T*dAx+dAy.T*dAy))
+        self.assertEqual(sp.simplify(projected-expected),sp.zeros(2))
+
+    def test_exact_shear_referees_short_horizon_coefficient_and_transpose(self) -> None:
+        y,t,h,nu,k=sp.symbols('y t h nu k', positive=True)
+        alpha=nu*k**2
+        Uy=-k*sp.exp(-alpha*t)*sp.sin(k*y)
+        A=sp.Matrix([[0,Uy],[0,0]])
+        dAy=sp.diff(A,y)
+        projected=projected_deformation_covariance_leading_tensor([sp.zeros(2),dAy],nu,h)
+        exact_var=one_mode_shear_deformation_variance(y,t,h,nu,k)
+        exact_leading=sp.series(exact_var,h,0,4).removeO()
+        self.assertEqual(
+            sp.trigsimp(sp.simplify(projected-sp.diag(0,exact_leading))),
+            sp.zeros(2),
+        )
+
+    def test_affine_vortex_exact_ns_has_zero_deformation_dispersion_source(self) -> None:
+        a,r0,t,h,nu=sp.symbols('a r0 t h nu', positive=True)
+        x,y,z=sp.symbols('x y z')
+        A=affine_vortex_stretch_gradient(a,r0,t)
+        ns,_=affine_vortex_stretch_ns_residual(a,r0,t,(x,y,z),nu)
+        self.assertEqual(sp.simplify(ns),sp.zeros(3,1))
+        derivatives=[sp.diff(A,q) for q in (x,y,z)]
+        self.assertEqual(
+            vectorized_deformation_covariance_leading_tensor(derivatives,nu,h),
+            sp.zeros(9),
+        )
+        self.assertEqual(
+            projected_deformation_covariance_leading_tensor(derivatives,nu,h),
+            sp.zeros(3),
+        )
 
     def test_smooth_past_vorticity_bound_does_not_remove_deformation_moment(self) -> None:
         W,r=sp.symbols('W r', positive=True)

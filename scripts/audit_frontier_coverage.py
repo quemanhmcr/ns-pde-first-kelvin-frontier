@@ -66,8 +66,14 @@ SEAMS = {
     "stochastic-cauchy-fixed-past-envelope": ("audited", "for the fixed-past Cauchy payoff Y=D omega(A_s^t,s), omega omega^T<=Q_s<=W_s R_s and W_s R_s-omega omega^T splits into terminal directional headroom plus centered covariance"),
     "stochastic-cauchy-deformation-moment-law": ("audited", "reverse-age deformation satisfies D_sigma=D(grad u)^T and R_sigma=2 E[D S D^T]; incompressibility preserves pathwise det D but not deformation second moment"),
     "stochastic-cauchy-packet-metric-duality": ("audited", "on the same stochastic replica F_C=D^T and H_C=rho^2 F_C^-T give D D^T=rho^4 (H_C^T H_C)^-1, so Cauchy deformation Gram is the unscaled coherent packet metric"),
+    "stochastic-cauchy-deformation-dispersion": ("audited", "full Sigma_D=Cov(vec D) has an exact two-replica form; C_D^Gram=E[D D^T]-Dbar Dbar^T is its column partial trace and rho^4 E[M_H]=Dbar Dbar^T+C_D^Gram"),
+    "stochastic-cauchy-deformation-horizon-law": ("audited", "causal reverse-age conditioning gives H_h Dbar=A^T Dbar and H_h Sigma_D=(I tensor A^T)Sigma_D+Sigma_D(I tensor A)+Gamma_D^vec, distinct from pathwise D_sigma=D A^T"),
+    "stochastic-cauchy-vectorized-short-horizon": ("audited-conditional", "for locally smooth NS, Sigma_D=(2nu/3)h^3 sum vec((partial_mu grad u)^T) outer itself+O(h^4), whose row-Gram projection is (2nu/3)h^3 sum (partial_mu grad u)^T(partial_mu grad u)+O(h^4)"),
+    "stochastic-cauchy-shear-dispersion-calibration": ("audited-calibration", "exact one-mode NS shear solves mean, second-moment, full-vectorized and projected covariance horizon laws; Var(c_h) starts at (2nu/3)|partial_y U_y|^2 h^3"),
+    "stochastic-cauchy-covariance-ledger-placement": ("audited", "Sigma_D is a same-clock observable covariance on augmented causal reverse-age state and C_D^Gram is its projection; future-remaining-bank and reduced-resolution identifications require separate bridges"),
     "stochastic-cauchy-mechanism-calibration": ("audited-calibration", "genuine affine-vortex NS carries vorticity growth through deformation with zero centered covariance, while one-mode shear activates covariance with no vorticity-direction deformation"),
-    "selected-support-cauchy-deformation-alignment": ("open-literal", "the selected coherent support deformation/frame is not yet identified line by line with the stochastic Cauchy deformation state or a closed projection of it"),
+    "deterministic-selected-vs-stochastic-metric-naive-equality": ("audited-calibration", "false universally: exact one-mode NS shear at y=0 has deterministic selected metric I while the expected stochastic replica metric has a positive deformation-dispersion face"),
+    "selected-support-cauchy-deformation-alignment": ("open-literal", "naive equality is excluded; a nontrivial conditional/projection/coupling law between deterministic first-bad selected support and stochastic replica packet metrics remains undefined"),
     "stochastic-cauchy-uniform-deformation-control": ("open", "no uniform first-bad/global bound controls the stochastic Cauchy deformation second moment or the sharper directional headroom near a candidate singular time"),
     "packet-support-uniform-locality": ("open", "no proof that the first-bad material packet remains support-local and sufficiently conditioned as scale collapses near a candidate singular time"),
     "backward-kelvin-infinitesimal-generator": ("audited-calibration", "Nanson plus exact NS gives the backward-Ito packet mean operator; exact shear covariance transfers the Kelvin Gram tensor"),
@@ -105,7 +111,7 @@ required = {
     "restart-scale-renormalization", "orientation-complete-restart-packet",
     "material-flux-metric-split", "future-covariance-full-state-tensor-law", "codeforming-kelvin-tensor-transfer", "resolved-future-total-second-moment", "codeforming-support-normalized-total-bank",
     "future-covariance-double-stokes", "future-covariance-fixed-state-stokes-limit",
-    "kelvin-packet-support-locality", "metric-whitened-local-tensor-topology", "joint-shape-flux-locality-factor", "coherent-microcell-primal-dual-geometry", "coherent-microcell-scale-anisotropy", "centered-surface-quadrupole-carrier", "material-refinement-two-sided-lineage", "exact-ns-refinement-strain-locality", "exact-ns-vortex-support-stretch-calibration", "kelvin-parabolic-support-scale", "first-bad-parabolic-scale-identification", "orientation-complete-quadrupole-closure", "support-vorticity-common-stretch-operator", "minimal-coherent-restart-core", "support-bank-three-face-factorization", "support-bank-causal-horizon-dichotomy", "support-bank-moving-terminal-face", "support-bank-terminal-local-rate", "support-bank-scale-covariance-horizon-identification", "support-bank-uniform-first-bad-envelope", "stochastic-cauchy-fixed-past-envelope", "stochastic-cauchy-deformation-moment-law", "stochastic-cauchy-packet-metric-duality", "stochastic-cauchy-mechanism-calibration", "selected-support-cauchy-deformation-alignment", "stochastic-cauchy-uniform-deformation-control", "packet-support-uniform-locality",
+    "kelvin-packet-support-locality", "metric-whitened-local-tensor-topology", "joint-shape-flux-locality-factor", "coherent-microcell-primal-dual-geometry", "coherent-microcell-scale-anisotropy", "centered-surface-quadrupole-carrier", "material-refinement-two-sided-lineage", "exact-ns-refinement-strain-locality", "exact-ns-vortex-support-stretch-calibration", "kelvin-parabolic-support-scale", "first-bad-parabolic-scale-identification", "orientation-complete-quadrupole-closure", "support-vorticity-common-stretch-operator", "minimal-coherent-restart-core", "support-bank-three-face-factorization", "support-bank-causal-horizon-dichotomy", "support-bank-moving-terminal-face", "support-bank-terminal-local-rate", "support-bank-scale-covariance-horizon-identification", "support-bank-uniform-first-bad-envelope", "stochastic-cauchy-fixed-past-envelope", "stochastic-cauchy-deformation-moment-law", "stochastic-cauchy-packet-metric-duality", "stochastic-cauchy-deformation-dispersion", "stochastic-cauchy-deformation-horizon-law", "stochastic-cauchy-vectorized-short-horizon", "stochastic-cauchy-shear-dispersion-calibration", "stochastic-cauchy-covariance-ledger-placement", "stochastic-cauchy-mechanism-calibration", "deterministic-selected-vs-stochastic-metric-naive-equality", "selected-support-cauchy-deformation-alignment", "stochastic-cauchy-uniform-deformation-control", "packet-support-uniform-locality",
     "backward-kelvin-infinitesimal-generator", "backward-kelvin-full-shape-kinematics",
     "finite-surface-xH-descent", "finite-shape-quadrupole-descent", "finite-shape-moment-hierarchy", "infinitesimal-xH-descent", "finite-shape-uniform-collapse",
     "ancestry-time-reversal-operator", "ancestry-reference-gauge", "ancestry-noisy-shape-distribution",
@@ -154,6 +160,9 @@ for exact_seam in (
     "stochastic-cauchy-fixed-past-envelope",
     "stochastic-cauchy-deformation-moment-law",
     "stochastic-cauchy-packet-metric-duality",
+    "stochastic-cauchy-deformation-dispersion",
+    "stochastic-cauchy-deformation-horizon-law",
+    "stochastic-cauchy-covariance-ledger-placement",
     "backward-kelvin-full-shape-kinematics",
     "finite-shape-moment-hierarchy",
     "infinitesimal-xH-descent",
@@ -200,6 +209,12 @@ if SEAMS["support-bank-scale-covariance-horizon-identification"][0] != "open-lit
     raise SystemExit("support-bank shrinking-scale/covariance horizon identification must remain open-literal")
 if SEAMS["support-bank-uniform-first-bad-envelope"][0] != "open":
     raise SystemExit("uniform/global support-bank first-bad envelope must remain open")
+if SEAMS["stochastic-cauchy-vectorized-short-horizon"][0] != "audited-conditional":
+    raise SystemExit("general h^3 deformation covariance asymptotic must remain local-smooth conditional, not a singular-frontier theorem")
+if SEAMS["stochastic-cauchy-shear-dispersion-calibration"][0] != "audited-calibration":
+    raise SystemExit("stochastic Cauchy shear deformation-dispersion must remain an exact NS calibration")
+if SEAMS["deterministic-selected-vs-stochastic-metric-naive-equality"][0] != "audited-calibration":
+    raise SystemExit("naive deterministic selected = expected stochastic metric must remain recorded as false by exact NS calibration")
 if SEAMS["stochastic-cauchy-mechanism-calibration"][0] != "audited-calibration":
     raise SystemExit("stochastic Cauchy mechanism split must remain an exact NS calibration pair")
 if SEAMS["selected-support-cauchy-deformation-alignment"][0] != "open-literal":
