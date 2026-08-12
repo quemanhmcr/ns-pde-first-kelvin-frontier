@@ -284,6 +284,12 @@ law is exact but the programme-specific `dot Q` is still open-literal.
 quantile-speed law and pair transport identity; first-bad quantile observable and
 outer-time realization open-literal.**
 
+This moving `Q_s` map is not the same object as the hysteretic rank-one first-bad
+projector `M_fb`.  The latter is coordinate-piecewise-constant while an active germ
+is unresolved and changes by finite entry/resolve events.  Consequently the missing
+badness/resolve predicates and the missing moving-quantile observable are separate
+programme data seams.
+
 ### 3.3 Anchor/orientation motion
 
 Let

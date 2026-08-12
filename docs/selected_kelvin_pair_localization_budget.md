@@ -922,7 +922,12 @@ K_s:G\to C_1^{\rm phys},
 \qquad B_xK_s=0,
 \]
 
-and the first-bad support projector in germ space as `M_fb(s)`.  Then
+and the first-bad support projector in germ space as `M_fb(s)`.  Literal code
+semantics are hysteretic: `bad_flags` and `resolved` are Boolean inputs, the active
+index is frozen while unresolved, and re-selection is a finite event.  Hence `M_fb`
+is distinct from the continuously moving quantile/shell maps `Q_s/H_s`.  The
+Navier--Stokes badness functional and resolve predicate generating those Boolean
+events are not yet defined line by line.  Then
 
 \[
 \boxed{P_{\rm fb}=K_sM_{\rm fb}}

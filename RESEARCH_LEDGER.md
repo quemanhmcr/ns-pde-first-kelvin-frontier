@@ -807,3 +807,26 @@ the Mahalanobis shell `g=x^T Sigma^-1 x` pointwise: `g_sigma+j.grad g=0`.
 
 **Classification: Exact affine NS/Gaussian calibration; no identification with the
 programme first-bad shell without its missing scalar germ observable/state lift.**
+
+
+## 2026-08-12 — first-bad projector is an event selector, not the moving cut
+
+The literal hysteresis implementation was audited separately from the quantile/shell
+restriction maps.  With an active `previous_index` and `resolved=False`,
+`M_fb` is independent of every change in `bad_flags`; hence coordinate `Mdot_fb=0`
+on frozen intervals.  Entry and resolve/reselection are finite jumps and use the
+already exact full tensor-square reset law.  The input `resolved` is independent of
+`bad_flags`: identical flags can keep the old germ or reselect a new first germ
+depending only on this bit.
+
+Therefore the programme has three distinct missing PDE definitions, not one: an
+NS-derived badness score/threshold generating `bad_flags`, an NS-derived resolve
+predicate generating `resolved`, and the separate scalar/state observable whose
+level sets define moving `Q_s/H_s`.  The latter already has an exact Reynolds/coarea
+probability-current speed law once specified.  Continuous germ-frame commutator
+`A_g M-M A_g` may remain in non-co-moving coordinates, but it is not threshold
+crossing `Mdot`.
+
+**Classification: Exact implementation/event semantics and type separation;
+badness functional, resolve predicate, and localization observable remain
+open-literal.  No restart claim.**

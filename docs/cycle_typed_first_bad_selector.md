@@ -69,9 +69,14 @@ The active physical current map is therefore
 
 This is the intrinsic active selector present in the selected-Kelvin observable.
 The threshold functions deciding which germ is bad determine `M_fb`; the current
-realization is carried by `K_s`.
+realization is carried by `K_s`.  In the present repository those threshold
+functions are **not defined**: the implementation receives `bad_flags` as a Boolean
+oracle.  The hysteresis release `resolved` is a second independent Boolean oracle.
+This does not affect the exact cycle-typing algebra, but it leaves the physical event
+times open-literal.
 
-**Classification: Exact definition of the cycle-typed selector.**
+**Classification: Exact definition of the cycle-typed selector; programme-specific
+badness and resolve predicates open-literal.**
 
 ---
 
@@ -250,16 +255,24 @@ Physical classification is therefore forced:
 
 - `G_K M`: anchor/orientation push-forward, frame/Hodge connection, refinement,
   or any genuine physical change in the realized cycle library;
-- `K G_M`: first-bad support transport, hence quantile/shell/localization crossing
-  when nonzero;
-- finite discontinuities of `M`: resolve/reset, treated by the exact finite jump
-  law below rather than by inventing a positive jump density.
+- `K G_M`: covariant support transport in germ coordinates.  For the literal
+  hysteretic `M_fb`, `Mdot=0` on every unresolved frozen interval, so any continuous
+  contribution there is the germ-frame commutator `A_gM-MA_g`, not a derivative of
+  the badness threshold;
+- finite discontinuities of `M`: entry/resolve/reselection events, treated by the
+  exact finite jump law below rather than by inventing a positive jump density.
 
-**Classification: Exact identity.**
+Moving quantile/shell restrictions `Q_s/H_s` are separate map types with their own
+`Qdot/Hdot_shell` Reynolds faces.  They must not be identified with the rank-one
+hysteretic first-bad projector merely because both perform localization.
+
+**Classification: Exact identity and exact type distinction.**
 
 If `K` is covariantly transported and the selector support is frozen in the same
-co-moving germ frame, both terms vanish on that interval.  In a fixed frame the
-nonzero `G_K` is connection geometry already identified by the Cartan audit.
+co-moving germ frame, both continuous terms vanish on that interval.  In a fixed
+frame the nonzero `G_K` is connection geometry already identified by the Cartan
+audit.  All coordinate-level `M_fb` change is then concentrated in finite
+entry/resolve events.
 
 **Classification: Rigorous consequence.**
 

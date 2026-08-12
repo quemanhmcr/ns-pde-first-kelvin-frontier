@@ -420,3 +420,27 @@ jobs:
         with:
           name: two-clock-kelvin-quantile
           path: audit-results/two_clock_kelvin_quantile_report.json
+
+  first-bad-event-semantics:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit hysteretic first-bad events versus moving localization cuts
+        run: python -m unittest -v tests.test_first_bad_event_semantics
+      - name: Build first-bad event-semantics artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_first_bad_event_semantics_report.py
+      - name: Upload first-bad event-semantics artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-bad-event-semantics
+          path: audit-results/first_bad_event_semantics_report.json

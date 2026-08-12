@@ -19,7 +19,11 @@ SEAMS = {
     "quantile-current-speed-law": ("audited-generic", "fixed-mass level sets move by the exact Reynolds/coarea weighted rate of g_t+j.grad g; in one dimension g=x gives adot=j"),
     "affine-reverse-quantile-support-gramian": ("audited-calibration", "exact linear-strain NS reverse-age Gaussian covariance is the time integral of reverse support Cauchy-Green geometry and Mahalanobis quantile shells are pointwise material for probability current"),
     "outer-time-cut-speed-underdetermination": ("audited-generic", "one-clock ancestry continuity does not determine arbitrary outer physical-time quantile motion"),
-    "first-bad-quantile-observable-definition": ("open-literal", "the scalar germ observable/threshold geometry whose level sets define the first-bad quantile chamber is not written line by line"),
+    "hysteretic-first-bad-event-structure": ("audited", "the literal M_fb selector is coordinate-piecewise-constant on unresolved intervals and changes by finite entry/resolve events with exact pair jump algebra"),
+    "selector-vs-localization-cut-distinction": ("audited", "the rank-one hysteretic M_fb event selector and moving Q_s/H_s localization maps are distinct typed operations"),
+    "first-bad-badness-functional-definition": ("open-literal", "bad_flags are Boolean oracle inputs; no Navier-Stokes badness score/threshold functional generates them"),
+    "first-bad-resolve-predicate-definition": ("open-literal", "resolved is an independent Boolean oracle input; no Navier-Stokes resolve condition generates it"),
+    "first-bad-quantile-observable-definition": ("open-literal", "the separate scalar/state observable whose level sets define the moving first-bad quantile/shell localization map is not written line by line"),
     "first-bad-moving-cut-speed-law": ("open-literal", "the generic current/coarea speed law is exact, but the first-bad observable and outer physical-time lift needed to instantiate Qdot/Hdot_shell are missing"),
     "two-clock-first-bad-kelvin-lift": ("open-literal", "the physical reverse-age Kelvin clock is exact, but the programme ancestry state and first-bad outer time have not been intertwined with that state family"),
     "cycle-typed-first-bad-boundary": ("audited", "closed Kelvin cycle library forces zero intrinsic selector physical boundary and pair boundary"),
@@ -81,7 +85,7 @@ ALLOWED = {"audited", "audited-calibration", "audited-generic", "audited-conditi
 required = {
     "freeze", "quantile", "anchor-orientation", "shell", "refinement",
     "resolve-reset", "physical-exit", "variable-frame-connection",
-    "active-pair-factorization", "parabolic-covariance-current", "moving-cut-time-face", "reverse-age-kelvin-generator", "future-bank-clock-reversal", "future-bank-clock-reversed-state-map", "quantile-current-speed-law", "affine-reverse-quantile-support-gramian", "outer-time-cut-speed-underdetermination", "first-bad-quantile-observable-definition", "first-bad-moving-cut-speed-law", "two-clock-first-bad-kelvin-lift", "cycle-typed-first-bad-boundary",
+    "active-pair-factorization", "parabolic-covariance-current", "moving-cut-time-face", "reverse-age-kelvin-generator", "future-bank-clock-reversal", "future-bank-clock-reversed-state-map", "quantile-current-speed-law", "affine-reverse-quantile-support-gramian", "outer-time-cut-speed-underdetermination", "hysteretic-first-bad-event-structure", "selector-vs-localization-cut-distinction", "first-bad-badness-functional-definition", "first-bad-resolve-predicate-definition", "first-bad-quantile-observable-definition", "first-bad-moving-cut-speed-law", "two-clock-first-bad-kelvin-lift", "cycle-typed-first-bad-boundary",
     "cycle-typed-first-bad-transport", "hodge-cycle-projector", "kelvin-ck-admissibility",
     "stochastic-ck-carre-du-champ", "vorticity-kelvin-microframe",
     "restart-scale-renormalization", "orientation-complete-restart-packet",
@@ -108,6 +112,8 @@ for exact_seam in (
     "parabolic-covariance-current",
     "reverse-age-kelvin-generator",
     "future-bank-clock-reversal",
+    "hysteretic-first-bad-event-structure",
+    "selector-vs-localization-cut-distinction",
     "cycle-typed-first-bad-boundary",
     "cycle-typed-first-bad-transport",
     "kelvin-ck-admissibility",
@@ -149,6 +155,10 @@ if SEAMS["affine-reverse-quantile-support-gramian"][0] != "audited-calibration":
     raise SystemExit("affine reverse quantile/support Gramian must remain an exact NS calibration, not a general first-bad shell theorem")
 if SEAMS["outer-time-cut-speed-underdetermination"][0] != "audited-generic":
     raise SystemExit("outer-time cut-speed underdetermination must remain explicitly audited")
+if SEAMS["first-bad-badness-functional-definition"][0] != "open-literal":
+    raise SystemExit("first-bad badness score/threshold must remain open-literal until derived from NS")
+if SEAMS["first-bad-resolve-predicate-definition"][0] != "open-literal":
+    raise SystemExit("first-bad resolve predicate must remain open-literal until derived from NS")
 if SEAMS["first-bad-quantile-observable-definition"][0] != "open-literal":
     raise SystemExit("first-bad quantile scalar observable/threshold geometry must remain open-literal")
 if SEAMS["first-bad-moving-cut-speed-law"][0] != "open-literal":
