@@ -71,6 +71,21 @@ from pde_audit.full_current_shape_covariance import (  # noqa: E402
     reverse_age_current_shape_diffusion_covariance,
     translation_cartan_residual,
 )
+from pde_audit.dynamic_reconstructed_kelvin_residual import (  # noqa: E402
+    full_dyad_block_decomposition_residual,
+    full_qv_block_decomposition_residual,
+    geometry_mismatch_flux_drift,
+    inverse_transpose_connection_residual,
+    local_error_noise_transfer_residual,
+    local_frame_kelvin_error_noise,
+    local_residual_cross_qv,
+    local_vorticity_flux_drift_residual,
+    reconstructed_kelvin_noise,
+    reconstructed_residual_drift,
+    reconstructed_residual_dyad_drift,
+    reconstructed_residual_energy_drift,
+    shape_drift_transfer_residual,
+)
 from pde_audit.finite_shape_kelvin_descent import (  # noqa: E402
     abc_origin_xy_kelvin_descent_error,
     abc_origin_xy_local_vorticity,
@@ -631,6 +646,67 @@ cubic_white_r2_zero = sp.simplify(
     recon_cubic_iso - sp.Matrix([0, 0, -cr**2 / 4])
 ) == sp.zeros(3, 1)
 
+# Dynamic orientation-reconstructed Kelvin residual on the literal reverse-age state.
+Adyn = sp.Matrix([[sp.Symbol("A00"), sp.Symbol("A01"), 0], [sp.Symbol("A10"), -sp.Symbol("A00"), 0], [0, 0, 0]])
+Hdyn = sp.Matrix([[2, 1, 0], [0, 3, 1], [1, 0, 2]])
+omega_dyn = sp.Matrix(sp.symbols("omega_dyn_0:3"))
+hR_dyn = sp.Matrix(sp.symbols("hR_dyn_0:3"))
+h_dyn = sp.Matrix(sp.symbols("h_dyn_0:3"))
+RA_dyn = sp.Matrix(sp.symbols("RA_dyn_0:3"))
+Gdyn = sp.Matrix(3, 3, sp.symbols("Gdyn_0:9"))
+AKdyn = sp.Matrix(3, 3, sp.symbols("AKdyn_0:9"))
+rdyn = sp.Matrix(sp.symbols("rdyn_0:3"))
+invT_connection_zero = inverse_transpose_connection_residual(Adyn, Hdyn) == sp.zeros(3)
+local_flux_drift_zero = local_vorticity_flux_drift_residual(Adyn, Hdyn, omega_dyn) == sp.zeros(3, 1)
+shape_transfer_zero = shape_drift_transfer_residual(Adyn, omega_dyn, hR_dyn, h_dyn, RA_dyn) == 0
+geometry_transfer_is_plus_shape = sp.simplify(
+    geometry_mismatch_flux_drift(Adyn, omega_dyn, hR_dyn, h_dyn, RA_dyn)
+    - (omega_dyn.T * RA_dyn)[0]
+) == 0
+AKrow_dyn = sp.Matrix(1, 3, sp.symbols("AKrow_dyn_0:3"))
+noise_transfer_zero = local_error_noise_transfer_residual(
+    AKrow_dyn, Gdyn, hR_dyn, h_dyn
+) == sp.zeros(1, 3)
+Qdyn = local_frame_kelvin_error_noise(AKdyn, Hdyn, Gdyn)
+Qhat_dyn = reconstructed_kelvin_noise(Qdyn, Hdyn)
+full_qv_blocks_zero = full_qv_block_decomposition_residual(AKdyn, Hdyn, Gdyn, nu) == sp.zeros(3)
+full_dyad_blocks_zero = full_dyad_block_decomposition_residual(
+    Adyn, omega_dyn, rdyn, Gdyn, Qhat_dyn, nu
+) == sp.zeros(3)
+dyad_dyn = reconstructed_residual_dyad_drift(Adyn, rdyn, Qhat_dyn, nu)
+energy_dyn = reconstructed_residual_energy_drift(Adyn, rdyn, Qhat_dyn, nu)
+dyad_energy_trace_zero = sp.simplify(sp.trace(dyad_dyn) / 2 - energy_dyn) == 0
+cross_dyn = local_residual_cross_qv(Gdyn, Qhat_dyn, nu)
+generic_dynamic_cross_nonzero = sp.simplify(cross_dyn) != sp.zeros(3)
+
+# Exact cubic dynamic conserved-mode calibration.
+A_cubic_dyn = sp.Matrix([[0, 6 * nu * t, 0], [0, 0, 0], [0, 0, 0]])
+r_cubic_dyn = sp.Matrix([0, 0, -sp.Rational(1, 4)])
+cubic_dynamic_drift_zero = reconstructed_residual_drift(A_cubic_dyn, r_cubic_dyn) == sp.zeros(3, 1)
+cubic_dynamic_energy_zero = reconstructed_residual_energy_drift(
+    A_cubic_dyn, r_cubic_dyn, sp.zeros(3), nu
+) == 0
+
+# Exact one-mode local/residual qv calibration.
+ax_dyn, by_dyn = sp.symbols("ax_dyn by_dyn", positive=True)
+eps_one_dyn = one_mode_shear_rectangle_error_mean(y, t, ax_dyn, by_dyn, nu, k)
+G_one_dyn = sp.zeros(3)
+G_one_dyn[2, 1] = -sp.diff(U, y, 2)
+Q_one_dyn = sp.zeros(3)
+Q_one_dyn[2, 1] = sp.diff(eps_one_dyn, y)
+cross_one_dyn = local_residual_cross_qv(G_one_dyn, Q_one_dyn, nu)
+one_mode_dynamic_cross_expected = sp.simplify(
+    2 * nu * (-sp.diff(U, y, 2)) * sp.diff(eps_one_dyn, y)
+)
+one_mode_dynamic_cross_zero = sp.simplify(
+    cross_one_dyn[2, 2] - one_mode_dynamic_cross_expected
+) == 0
+one_mode_dynamic_cross_nonzero = sp.simplify(one_mode_dynamic_cross_expected) != 0
+V_one_dyn = one_mode_shear_rectangle_error_variance(y, t, h, ax_dyn, by_dyn, nu, k)
+one_mode_dynamic_qv_onset_zero = sp.trigsimp(sp.simplify(
+    sp.diff(V_one_dyn, h).subs(h, 0) - 2 * nu * sp.diff(eps_one_dyn, y) ** 2
+)) == 0
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -690,6 +766,18 @@ report = {
         "fixed_state_whitened_topology_physical_typing": "Exact fixed-state topology identification",
         "codeforming_whitened_future_clock_identification": "Open-literal",
         "first_bad_reconstructed_kelvin_residual_collapse": "Open",
+        "actual_area_vs_local_frame_kelvin_error": "Exact identity / physical typing",
+        "finite_shape_drift_geometry_transfer": "Exact Navier--Stokes/Nanson transfer identity",
+        "local_frame_kelvin_error_pure_martingale": "Exact identity",
+        "dynamic_reconstructed_line_connection": "Exact identity",
+        "dynamic_reconstructed_residual_qv": "Exact identity",
+        "dynamic_local_residual_cross_qv": "Exact identity",
+        "dynamic_reconstructed_dyad_energy": "Exact Itô identity",
+        "dynamic_full_reconstructed_cross_blocks": "Exact identity",
+        "cubic_dynamic_reconstructed_conserved_mode": "Audited calibration / rigorous no-go consequence",
+        "one_mode_dynamic_reconstructed_cross_qv": "Audited calibration",
+        "dynamic_reconstructed_reduced_covariance_closure": "Open-literal",
+        "dynamic_reconstructed_future_clock_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
@@ -883,6 +971,38 @@ report = {
         "cubic_isotropic_whitened_r2": bool(cubic_white_r2_zero),
         "fixed_state_bridge": "for same-time NS, H^-T curl_xi beta_L=delta omega; for future random payoff the same whitening algebra applies only after its literal full state/clock is specified",
         "first_bad_verdict": "Open: must prove actual first-bad support locality and reconstructed residual collapse while retaining covariance cross blocks and selector/boundary/exit/reset faces; future-clock/ancestry identification remains Open-literal",
+    },
+    "dynamic_reconstructed_kelvin_residual": {
+        "actual_area_error": "epsilon_area=K-omega.h_R; drift=-omega.R_A",
+        "local_frame_error": "epsilon_lin=K-H^T omega; zero finite-variation drift",
+        "geometry_mismatch_transfer": "epsilon_lin=epsilon_area+omega.(h_R-h_local)",
+        "inverse_transpose_connection_residual_zero": bool(invT_connection_zero),
+        "local_flux_drift_residual_zero": bool(local_flux_drift_zero),
+        "shape_drift_transfer_residual_zero": bool(shape_transfer_zero),
+        "geometry_mismatch_drift_is_plus_omega_RA": bool(geometry_transfer_is_plus_shape),
+        "noise_transfer_residual_zero": bool(noise_transfer_zero),
+        "reconstructed_sde": "dr=-A r dsigma+sqrt(2nu) Qhat dW; Qhat=H^-T(A_K-H^T grad omega)",
+        "full_qv_block_decomposition_residual_zero": bool(full_qv_blocks_zero),
+        "full_dyad_block_decomposition_residual_zero": bool(full_dyad_blocks_zero),
+        "dyad_energy_trace_residual_zero": bool(dyad_energy_trace_zero),
+        "generic_local_residual_cross_qv_nonzero": bool(generic_dynamic_cross_nonzero),
+        "energy_law": "d|r|^2/2 drift=-r.S.r+nu||Qhat||_F^2",
+        "cubic": {
+            "residual": str(r_cubic_dyn),
+            "drift_zero": bool(cubic_dynamic_drift_zero),
+            "qv_zero": True,
+            "energy_drift_zero": bool(cubic_dynamic_energy_zero),
+            "verdict": "nonzero reconstructed residual can be exactly conserved while qv is zero",
+        },
+        "one_mode": {
+            "cross_qv_zz": str(one_mode_dynamic_cross_expected),
+            "cross_qv_formula_residual_zero": bool(one_mode_dynamic_cross_zero),
+            "cross_qv_generically_nonzero": bool(one_mode_dynamic_cross_nonzero),
+            "residual_variance_qv_onset_residual_zero": bool(one_mode_dynamic_qv_onset_zero),
+            "typing": "residual e_z martingale has zero line-connection drift but nonzero shared-anchor cross qv with local vorticity",
+        },
+        "reduced_covariance": "Open-literal: pathwise dyad law does not factor full-state correlations into an autonomous reduced centered covariance PDE",
+        "future_clock": "Open-literal: same-clock reverse-age dynamic residual is not identified with future-remaining or ancestry resolution bank",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),

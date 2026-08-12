@@ -1275,3 +1275,38 @@ programme ancestry lift.
 **Classification: Exact fixed-state topology/covariance identity.  Existing
 conditional local-limit theorem unchanged; cross-clock and uniform singular-time
 control remain Open-literal/Open.**
+
+---
+
+## 16. Dynamic warning: fixed-state reconstructed covariance is not an autonomous reduced bank
+
+On the actual reverse-age full current/local-frame state, the reconstructed finite
+residual satisfies
+
+\[
+dr=-A r\,d\sigma+\sqrt{2\nu}\,\widehat Q\,dW.
+\]
+
+Hence its pathwise dyad drift is
+
+\[
+-A rr^T-rr^T A^T+2\nu\widehat Q\widehat Q^T,
+\]
+
+and the local/residual mixed dyad has the additional signed source
+
+\[
+2\nu(\nabla\omega)\widehat Q^T.
+\]
+
+These identities strengthen, rather than remove, the fixed-state cross-block audit.
+A centered covariance equation on a reduced `(x,H)` state is not obtained by simply
+averaging and factorizing the connection: full-state correlations and hidden finite
+shape remain present unless a genuine generator intertwining/lumpability theorem is
+proved.
+
+This is a same-clock reverse-age statement and does not identify the dynamic residual
+with the future-remaining covariance bank.
+
+**Classification: Exact full-state pathwise identity.  Reduced covariance closure and
+future-clock identification remain Open-literal.**

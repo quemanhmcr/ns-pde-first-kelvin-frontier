@@ -1130,3 +1130,29 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
   meaning, but no theorem gives uniform first-bad support locality/reconstructed
   residual collapse or identifies the future-bank clock/ancestry lift.  No restart,
   continuation, or regularity claim.
+
+## 2026-08-13 — dynamic reconstructed finite Kelvin residual
+
+- **Exact transfer identity:** `K-omega.h_local=(K-omega.h_actual)+omega.(h_actual-h_local)`.
+  The actual-area error drift `-omega.R_A` and geometry-mismatch drift `+omega.R_A`
+  cancel exactly; the corresponding martingale coefficients transfer in the same
+  way.  Shape drift is moved between physical faces, not discarded.
+- **Exact identity:** for the orientation-complete local frame `Hdot=A^T H`, the
+  local flux `H^T omega` has zero reverse-age drift.  Since actual closed-current
+  Kelvin drift is pure gauge, `epsilon=K-H^T omega` is a pure orientation-coordinate
+  martingale with noise `Q=A_K-H^T grad omega`.
+- **Exact identity:** `W=H^-T K` and `r=H^-T epsilon=W-omega` obey the common reverse
+  material-line connection `-A`; `dr=-A r dsigma+sqrt(2nu) Qhat dW` with
+  `Qhat=H^-T Q`.
+- **Exact Itô identities:** `Gamma_r=2nu Qhat Qhat^T`,
+  `Gamma_omega,r=2nu grad(omega) Qhat^T`; residual energy drift is
+  `-r.S.r+nu||Qhat||_F^2`.  Full reconstructed q.v./dyad dynamics require both mixed
+  local/residual cross blocks.
+- **Audited exact-NS calibration:** cubic heat shear has nonzero reconstructed
+  `r=-e_z/4` with zero drift/q.v. at the symmetry point.  Zero residual q.v. does not
+  imply zero residual.
+- **Audited exact-NS calibration:** one-mode periodic shear has a pure residual
+  martingale in the `e_z` face and a generically nonzero local/residual cross q.v.
+- **Open-literal:** the pathwise full-state law does not supply an autonomous reduced
+  covariance PDE; full-state correlations, finite shape, selector/boundary/exit/reset,
+  and clock/state lift remain.  No restart/continuation/regularity claim.

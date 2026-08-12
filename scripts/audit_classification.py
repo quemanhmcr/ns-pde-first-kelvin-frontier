@@ -29,6 +29,7 @@ descent_note = ROOT / "docs" / "finite_shape_kelvin_descent_audit.md"
 moment_note = ROOT / "docs" / "surface_moment_hierarchy_audit.md"
 codeforming_note = ROOT / "docs" / "codeforming_surface_moment_tower_audit.md"
 whitened_codeforming_note = ROOT / "docs" / "codeforming_whitened_kelvin_remainder_audit.md"
+dynamic_reconstructed_note = ROOT / "docs" / "dynamic_reconstructed_kelvin_residual_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -54,6 +55,7 @@ descent_text = descent_note.read_text()
 moment_text = moment_note.read_text()
 codeforming_text = codeforming_note.read_text()
 whitened_codeforming_text = whitened_codeforming_note.read_text()
+dynamic_reconstructed_text = dynamic_reconstructed_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -476,6 +478,25 @@ if whitened_codeforming_missing:
     print("missing codeforming whitened-Kelvin structural markers:", whitened_codeforming_missing)
     sys.exit(1)
 
+dynamic_reconstructed_required = [
+    "Two finite-to-local errors",
+    "shape drift transfers",
+    "noise transfers",
+    "pure Kelvin martingale",
+    "reverse material-line connection",
+    "local--residual cross q.v.",
+    "residual energy",
+    "both cross blocks",
+    "nonzero conserved reconstructed mode",
+    "Reduced covariance closure Open-literal",
+    "future-clock/ancestry identification Open-literal",
+    "No restart/continuation/regularity theorem claimed",
+]
+dynamic_reconstructed_missing = [token for token in dynamic_reconstructed_required if token not in dynamic_reconstructed_text]
+if dynamic_reconstructed_missing:
+    print("missing dynamic reconstructed-Kelvin structural markers:", dynamic_reconstructed_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -591,8 +612,16 @@ for forbidden in [
     "beta_L is the future-bank remainder",
     "r_H is S^int",
     "r^2 whitened calibration proves first-bad collapse",
+    "actual-area error equals local-frame error",
+    "shape drift disappears in local-frame error",
+    "pure martingale means finite shape has no drift",
+    "zero reconstructed residual qv implies zero residual",
+    "dynamic local-residual cross qv can be dropped",
+    "pathwise residual dyad closes reduced covariance",
+    "reconstructed residual qv is the future bank",
+    "dynamic reconstructed residual proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

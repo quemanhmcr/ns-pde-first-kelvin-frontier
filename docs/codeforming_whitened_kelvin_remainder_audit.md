@@ -464,3 +464,38 @@ zero uniformly on the correct state/clock, while retaining selector, boundary,
 exit, reset, and covariance cross faces.
 
 **Status: Open-literal.  No restart/continuation/regularity theorem claimed.**
+
+---
+
+## 12. Dynamic reconstruction: the physical residual carries the reverse line connection
+
+The fixed-state reconstruction `r_H=H^-T epsilon_H` has now been differentiated on
+the literal reverse-age Kelvin state.  When `H` is the local reverse cofactor frame,
+`Hdot=A^T H`, so `(H^-T)dot=-A H^-T`.
+
+For the local-frame error `epsilon=K-H^T omega`, both the actual closed-current
+Kelvin drift and the local Nanson/vorticity-flux drift vanish exactly.  Thus
+`epsilon` is a pure orientation-coordinate martingale.  Its physical reconstruction
+satisfies
+
+\[
+\boxed{
+dr=-A r\,d\sigma+\sqrt{2\nu}\,H^{-T}(A_K-H^T\nabla\omega)\,dW.
+}
+\]
+
+Changing from the earlier actual-area error `K-omega.h_R` to `K-omega.h` does not
+discard finite shape drift: `-omega.R_A` is transferred exactly into the geometry
+mismatch `omega.(h_R-h)` with opposite sign.
+
+The reconstructed residual q.v. and the local-vorticity/residual cross q.v. are both
+literal.  The full reconstructed payoff `W=omega+r` requires both cross blocks in its
+q.v. and dyad dynamics.  Exact cubic heat shear gives a nonzero conserved residual
+with zero q.v.; exact one-mode shear activates a generically nonzero local/residual
+cross q.v.
+
+**Status: Exact same-clock dynamic identity / audited exact-NS calibrations.  Reduced
+covariance closure, future-clock identification, and first-bad uniform control remain
+Open-literal/Open.  No restart/continuation/regularity theorem claimed.**
+
+See `docs/dynamic_reconstructed_kelvin_residual_audit.md`.

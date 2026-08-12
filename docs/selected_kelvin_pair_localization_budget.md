@@ -2326,3 +2326,59 @@ uniform first-bad control and not the cross-clock future-bank/ancestry bridge.
 **Classification: Exact fixed-state reconstruction/covariance identities; audited
 exact-NS finite-scale calibration.  First-bad uniform collapse and cross-clock
 identification remain Open-literal.  No restart/continuation/regularity theorem.**
+
+---
+
+## 40. Dynamic reconstructed residual: shape-drift transfer, line connection, and cross q.v.
+
+Let `K` be the vector of three actual finite closed-current circulations and `H` the
+local reverse cofactor frame.  The local-frame error
+
+\[
+\varepsilon=K-H^T\omega
+\]
+
+is not the same observable as the earlier actual-area error `K-omega.h_R`.  Their
+exact relation transfers the shape drift:
+
+\[
+K-\omega.h
+=(K-\omega.h_R)+\omega.(h_R-h),
+\]
+
+with finite-variation drifts `-omega.R_A` and `+omega.R_A`.  Nothing is deleted.
+
+Because both actual closed-current Kelvin drift and local Nanson/vorticity-flux drift
+vanish, `epsilon` is a pure orientation-coordinate martingale.  Reconstructing
+physically,
+
+\[
+W=H^{-T}K,
+\qquad r=H^{-T}\varepsilon=W-\omega,
+\]
+
+and `Hdot=A^T H` give
+
+\[
+\boxed{
+dr=-A r\,d\sigma+\sqrt{2\nu}\,\widehat Q\,dW.
+}
+\]
+
+Thus reconstructed finite payoff, local vorticity and residual all share the same
+reverse material-line connection.  Their q.v. differs, and the full reconstructed
+payoff has the mandatory mixed source
+
+\[
+\Gamma_{\omega r}=2\nu(\nabla\omega)\widehat Q^T
+\]
+
+plus its transpose.  Exact cubic NS gives a nonzero conserved residual with zero q.v.;
+exact one-mode NS activates the mixed local/residual q.v.
+
+This is a full-state same-clock pathwise theorem.  It is not an autonomous reduced
+covariance bank and does not identify the future-bank clock.
+
+**Classification: Exact identity / audited exact-NS calibrations.  Reduced covariance
+closure and first-bad/future-clock bridges remain Open-literal/Open.  No restart,
+continuation, or regularity theorem.**
