@@ -316,6 +316,10 @@ cauchy_required = [
     "finite variation",
     "affine-vortex",
     "one-mode",
+    "D D^T",
+    "packet metric",
+    "same stochastic replica",
+    "Open-literal",
     "Open",
     "No continuation",
 ]
@@ -387,6 +391,8 @@ for forbidden in [
     "stochastic deformation is martingale q.v.",
     "selected material F equals stochastic Cauchy D",
     "stochastic Cauchy deformation is uniformly controlled",
+    "same-replica packet metric proves first-bad alignment",
+    "deterministic selected support equals stochastic replica support",
 ]:
     if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text:
         print("forbidden overclaim found:", forbidden)

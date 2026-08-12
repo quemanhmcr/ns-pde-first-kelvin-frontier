@@ -910,3 +910,21 @@ moment, with exact directional headroom quantifying looseness.
 **Classification: Exact stochastic-Cauchy tensor identities and exact NS calibration
 pair; uniform stochastic deformation control and alignment with selected support remain
 open.  No restart claim.**
+
+## 2026-08-12 — stochastic Cauchy deformation Gram equals the same-replica packet metric
+
+On each stochastic Cauchy replica define `F_C=D^T`.  The reverse-age law
+`D_sigma=D(grad u)^T` becomes the ordinary line-deformation law
+`(F_C)_sigma=(grad u)F_C`.  For a coherent replica microcell of fixed reference
+scale `rho`, `H_C=rho^2 F_C^-T`, so exact algebra gives
+`D D^T=F_C^T F_C=rho^4 (H_C^T H_C)^-1`.  Hence the Cauchy deformation Gram is
+exactly the unscaled orientation-complete packet metric on the same stochastic
+replica, and `R_s=rho^4 E[M_HC]`.  Its strain work is the same metric work:
+`rho^4 (M_HC)_sigma=2 D S D^T`.
+
+This closes the geometric identity inside each replica but does not identify the
+deterministic/hysteretic first-bad selected support with a stochastic Cauchy replica
+or its expectation/projection.  That cross-state alignment remains open-literal.
+
+**Classification: Exact same-replica deformation/packet-metric duality; selector-to-
+replica alignment open-literal.**

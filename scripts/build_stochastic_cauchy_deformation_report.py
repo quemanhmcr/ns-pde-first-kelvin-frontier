@@ -5,11 +5,13 @@ import sympy as sp
 ROOT=Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT/'src'))
 from pde_audit.stochastic_cauchy_deformation import (
     affine_vortex_cauchy_z_residual, affine_vortex_total_bank_envelope_residual,
+    cauchy_packet_metric_duality_residual,
     one_mode_shear_second_moment, one_mode_shear_terminal_headroom,
     one_mode_shear_terminal_supremum,
 )
 a,r0,s,t,nu,k,y=sp.symbols('a r0 s t nu k y', positive=True)
 W=one_mode_shear_terminal_supremum(s,nu,k)
+D=sp.Matrix([[2,1],[1,1]]); rho=sp.symbols('rho', positive=True)
 Q=one_mode_shear_second_moment(y,t,s,nu,k)
 H=one_mode_shear_terminal_headroom(y,t,s,nu,k)
 report={
@@ -34,9 +36,14 @@ report={
    'vorticity_direction_deformation':'1',
    'interpretation':'sampling/covariance sector is active while vorticity-direction deformation is absent',
  },
+ 'packet_metric_duality':{
+   'residual_zero':bool(cauchy_packet_metric_duality_residual(D,rho)==sp.zeros(2)),
+   'identity':'D D^T = rho^4 M_H on the same stochastic replica deformation',
+   'interpretation':'stochastic Cauchy deformation Gram is the unscaled coherent Kelvin packet metric, not a new geometry',
+ },
  'frontier':{
    'resolved':'fixed-past total-bank amplitude decomposes into terminal vorticity size times stochastic Cauchy deformation moment plus exact covariance/headroom faces',
-   'still_open':'uniform control of the stochastic deformation second moment and its relation to selected material support/first-bad geometry',
+   'still_open':'uniform control and the programme-specific alignment of deterministic first-bad selected support with the same stochastic replica deformation whose packet metric equals D D^T',
  }
 }
 out=Path('audit-results/stochastic_cauchy_deformation_report.json'); out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n'); print(json.dumps(report,indent=2,sort_keys=True))

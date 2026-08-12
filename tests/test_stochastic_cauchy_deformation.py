@@ -14,6 +14,9 @@ from pde_audit.kelvin_packet_locality import (  # noqa: E402
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
+    cauchy_packet_metric_duality_residual,
+    cauchy_spatial_support_spectral_trace_residual,
+    coherent_area_frame_from_cauchy,
     cauchy_sample,
     cauchy_two_face_envelope_residual,
     deformation_gram_rate_residual,
@@ -21,7 +24,10 @@ from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     ensemble_cauchy_moments,
     ensemble_deformation_rate_residual,
     ensemble_terminal_headroom_residual,
+    forward_deformation_from_cauchy,
     incompressible_deformation_determinant_log_rate,
+    packet_metric_from_area_frame,
+    packet_metric_rate_residual_from_cauchy,
     one_mode_shear_second_moment,
     one_mode_shear_terminal_headroom,
     one_mode_shear_terminal_supremum,
@@ -100,6 +106,35 @@ class StochasticCauchyDeformationAudit(unittest.TestCase):
         special=sp.simplify(headroom.subs({y:sp.pi/(2*k),t:s+h}))
         expected=sp.simplify(W/2*(1-sp.exp(-4*nu*k**2*h)))
         self.assertEqual(sp.simplify(special-expected),0)
+
+
+    def test_cauchy_deformation_gram_is_exactly_unscaled_coherent_packet_metric(self) -> None:
+        D=sp.Matrix([[2,1,0],[1,1,1],[0,1,1]])
+        rho=sp.symbols('rho', nonzero=True)
+        self.assertEqual(cauchy_packet_metric_duality_residual(D,rho),sp.zeros(3))
+
+    def test_forward_cauchy_deformation_and_area_frame_have_expected_duality(self) -> None:
+        D=sp.Matrix([[2,1],[1,1]])
+        rho=sp.symbols('rho', nonzero=True)
+        F=forward_deformation_from_cauchy(D)
+        H=coherent_area_frame_from_cauchy(D,rho)
+        self.assertEqual(F,D.T)
+        self.assertEqual(sp.simplify(H-rho**2*F.inv().T),sp.zeros(2))
+        M=packet_metric_from_area_frame(H)
+        self.assertEqual(sp.simplify(rho**4*M-D*D.T),sp.zeros(2))
+
+    def test_cauchy_material_metric_and_spatial_support_have_same_trace_spectrum_invariant(self) -> None:
+        D=sp.Matrix([[2,1],[0,1]])
+        self.assertEqual(cauchy_spatial_support_spectral_trace_residual(D),0)
+        # det and characteristic singular values also agree because F=D^T.
+        F=D.T
+        self.assertEqual(sp.det(D*D.T),sp.det(F*F.T))
+
+    def test_packet_metric_rate_is_same_cauchy_strain_work(self) -> None:
+        D=sp.Matrix([[2,1],[1,1]])
+        A=sp.Matrix(sp.symbols('a0:4')).reshape(2,2)
+        rho=sp.symbols('rho', nonzero=True)
+        self.assertEqual(packet_metric_rate_residual_from_cauchy(D,A,rho),sp.zeros(2))
 
     def test_smooth_past_vorticity_bound_does_not_remove_deformation_moment(self) -> None:
         W,r=sp.symbols('W r', positive=True)

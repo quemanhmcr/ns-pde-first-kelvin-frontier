@@ -223,3 +223,55 @@ def one_mode_shear_terminal_headroom(
     W = one_mode_shear_terminal_supremum(past_time, nu, k)
     Q = one_mode_shear_second_moment(y, current_time, past_time, nu, k)
     return sp.simplify(W - Q)
+
+
+def forward_deformation_from_cauchy(deformation: Matrix) -> sp.Matrix:
+    """F_C=D^T, the forward deformation dual to the backflow Cauchy matrix."""
+    return sp.simplify(deformation.T)
+
+
+def coherent_area_frame_from_cauchy(
+    deformation: Matrix,
+    reference_scale: sp.Expr,
+) -> sp.Matrix:
+    """H=rho^2 F_C^-T=rho^2 D^-1 for the same stochastic replica deformation."""
+    F = forward_deformation_from_cauchy(deformation)
+    return sp.simplify(reference_scale**2 * F.inv().T)
+
+
+def packet_metric_from_area_frame(area_frame: Matrix) -> sp.Matrix:
+    return sp.simplify((area_frame.T * area_frame).inv())
+
+
+def cauchy_packet_metric_duality_residual(
+    deformation: Matrix,
+    reference_scale: sp.Expr,
+) -> sp.Matrix:
+    """DD^T-rho^4 M_H for H=rho^2(D^T)^-T."""
+    H = coherent_area_frame_from_cauchy(deformation, reference_scale)
+    M = packet_metric_from_area_frame(H)
+    return sp.simplify(deformation * deformation.T - reference_scale**4 * M)
+
+
+def cauchy_spatial_support_spectral_trace_residual(deformation: Matrix) -> sp.Expr:
+    """tr(DD^T)-tr(F_C F_C^T)=0: material metric and spatial support share spectrum."""
+    F = forward_deformation_from_cauchy(deformation)
+    return sp.simplify(sp.trace(deformation * deformation.T) - sp.trace(F * F.T))
+
+
+def packet_metric_rate_residual_from_cauchy(
+    deformation: Matrix,
+    grad_u: Matrix,
+    reference_scale: sp.Expr,
+) -> sp.Matrix:
+    """rho^4 Mdot - 2 D S D^T for fixed rho on the same stochastic deformation."""
+    Ddot = sp.simplify(deformation * grad_u.T)
+    H = coherent_area_frame_from_cauchy(deformation, reference_scale)
+    M = packet_metric_from_area_frame(H)
+    # Differentiate M through the exact identity rho^4 M=DD^T rather than
+    # introducing a coordinate derivative of symbolic matrix entries.
+    Mdot_from_duality = sp.simplify(
+        (Ddot * deformation.T + deformation * Ddot.T) / reference_scale**4
+    )
+    S = sp.simplify((grad_u + grad_u.T) / 2)
+    return sp.simplify(reference_scale**4 * Mdot_from_duality - 2 * deformation * S * deformation.T)
