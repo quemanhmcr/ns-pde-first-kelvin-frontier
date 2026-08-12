@@ -592,3 +592,137 @@ anchor/relative-shape state constructed here.  See
 
 **Classification: Exact operator-side handoff; state identification remains
 open-literal.**
+
+---
+
+## 14. Quadrupole is the first missing carrier, not an exact finite-state closure
+
+The cubic heat shear shows that the second surface moment is the first correction
+beyond the area frame.  It would still be incorrect to stop there and declare
+`(X,H,Q_Sigma)` a closed finite-state model.
+
+Every polynomial heat shear
+
+\[
+\boxed{
+U_n(y,t)=e^{\nu t\partial_{yy}}y^n
+=\sum_{j=0}^{\lfloor n/2\rfloor}
+\frac{n!}{(n-2j)!j!}(\nu t)^j y^{n-2j}
+}
+\]
+
+satisfies
+
+\[
+\partial_tU_n=\nu\partial_{yy}U_n.
+\]
+
+Hence `u=(U_n(y,t),0,0)` is an exact Navier--Stokes shear with constant pressure.
+
+For `n=5`,
+
+\[
+\boxed{
+U_5=y^5+20\nu t y^3+60\nu^2t^2y,
+}
+\]
+
+so
+
+\[
+U_{5,y}=5y^4+60\nu t y^2+60\nu^2t^2.
+\]
+
+Take centered `yz` strips with width functions
+
+\[
+w_0(y)=1,
+\qquad
+w_1(y)=1+\frac12P_4(y),
+\]
+
+where
+
+\[
+P_4(y)=\frac{35y^4-30y^2+3}{8}.
+\]
+
+Since `P_4 >= -3/7` on `[-1,1]`, `w_1 >= 11/14>0`; both are legitimate positive
+surfaces.  Legendre orthogonality gives
+
+\[
+\int P_4\,dy=0,
+\qquad
+\int y^2P_4\,dy=0,
+\]
+
+so the two surfaces have the same area vector and the same `yy` quadrupole.  But
+
+\[
+\int y^4P_4(y)\,dy=\frac{16}{315},
+\]
+
+and therefore their exact material area-vector rates differ by
+
+\[
+\boxed{
+\dot H_1-\dot H_0
+=-\frac8{63}e_y.
+}
+\]
+
+Thus even `(X,H,Q_Sigma)` is not an exact finite-scale Markov quotient.
+
+**Classification: Exact Navier--Stokes counter-calibration.**
+
+---
+
+## 15. No finite surface-moment truncation closes universally
+
+The same construction is not special to the fourth moment.  For every `m>=1`, use
+
+\[
+w_1=1+\varepsilon P_{2m},
+\qquad |arepsilon|<1,
+\]
+
+and the exact heat shear `U_{2m+1}`.  Legendre orthogonality gives
+
+\[
+\int_{-1}^1 y^{2j}P_{2m}(y)\,dy=0,
+\qquad 0\le j<m,
+\]
+
+while
+
+\[
+\boxed{
+\int_{-1}^1 y^{2m}P_{2m}(y)\,dy
+=
+\frac{2^{2m+1}[(2m)!]^2}{(4m+1)!}>0.
+}
+\]
+
+The derivative `U_{2m+1,y}` contains the leading term
+`(2m+1)y^{2m}` and only lower even powers.  All lower moments cancel between the
+two surfaces, leaving the exact nonzero generator difference
+
+\[
+\boxed{
+\Delta\dot H_y
+=-(2m+1)\varepsilon
+\frac{2^{2m+1}[(2m)!]^2}{(4m+1)!}.
+}
+\]
+
+Therefore for every finite list of even centered surface moments, there is a smooth
+exact Navier--Stokes heat shear that sees the next unresolved moment.
+
+The finite current-shape state is genuinely an **infinite moment/embedding
+hierarchy**.  The restart programme should not attempt to close it by adding a
+finite number of ad hoc moments.  The correct remaining theorem is the already
+identified one: prove uniform collapse of the entire finite-shape remainder as the
+physical first-bad packet scale becomes local.
+
+**Classification: Rigorous structural consequence of an exact infinite family of
+Navier--Stokes calibrations.**

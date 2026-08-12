@@ -15,6 +15,8 @@ packet_note = ROOT / "docs" / "orientation_complete_restart_packet.md"
 future_tensor_note = ROOT / "docs" / "future_covariance_tensor_audit.md"
 shape_note = ROOT / "docs" / "kelvin_shape_generator_audit.md"
 time_note = ROOT / "docs" / "ancestry_time_reversal_audit.md"
+locality_note = ROOT / "docs" / "kelvin_packet_locality_audit.md"
+resolution_note = ROOT / "docs" / "ancestry_resolution_kernel_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -26,6 +28,8 @@ packet_text = packet_note.read_text()
 future_tensor_text = future_tensor_note.read_text()
 shape_text = shape_note.read_text()
 time_text = time_note.read_text()
+locality_text = locality_note.read_text()
+resolution_text = resolution_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -142,7 +146,8 @@ if packet_missing:
 future_tensor_required = [
     "Full-state vector conditional moments",
     "double-Stokes",
-    "conditional mean-square",
+    "metric-whitened",
+    "support locality",
     "vorticity dyad",
     "backward-Kelvin",
     "Generator descent",
@@ -176,12 +181,42 @@ time_required = [
     "midpoint",
     "w_{\\rm required}",
     "w=u",
+    "reference gauge",
     "Open-literal state-identification bridge",
     "No regularity conclusion",
 ]
 time_missing = [token for token in time_required if token not in time_text]
 if time_missing:
     print("missing ancestry time-reversal structural markers:", time_missing)
+    sys.exit(1)
+
+locality_required = [
+    "Small area is not spatial locality",
+    "metric-whitened",
+    "sigma_{\\min}",
+    "long-thin",
+    "Rigorous conditional fixed-state theorem",
+    "Open singular-time bridge",
+]
+locality_missing = [token for token in locality_required if token not in locality_text]
+if locality_missing:
+    print("missing Kelvin packet locality structural markers:", locality_missing)
+    sys.exit(1)
+
+resolution_required = [
+    "law of total covariance",
+    "resolution covariance",
+    "same ancestor",
+    "affine shear",
+    "rank `3`",
+    "Full-state ancestry",
+    "reduced ancestry",
+    "S^int",
+    "Open-literal ancestry-state semantics",
+]
+resolution_missing = [token for token in resolution_required if token not in resolution_text]
+if resolution_missing:
+    print("missing ancestry resolution-kernel structural markers:", resolution_missing)
     sys.exit(1)
 
 for forbidden in [
@@ -200,8 +235,20 @@ for forbidden in [
     "shape residual is S^int",
     "ancestry state is proved identical to physical Kelvin state",
     "w=u is established generally",
+    "H->0 implies packet locality",
+    "small area frame proves support locality",
+    "raw Frobenius remainder is sufficient",
+    "ancestry full-rank diffusion carries Kelvin shape",
+    "reduced same ancestor has only viscous branching",
+    "resolution covariance is viscous q.v.",
+    "resolution covariance is S^int",
+    "finite quadrupole closes the full shape state",
+    "finite moment hierarchy closes exactly",
+    "Kelvin parabolic scale is the first-bad threshold",
+    "parabolic support coefficient 1/2 proves regularity",
+    "co-deforming total bank proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

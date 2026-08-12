@@ -476,7 +476,7 @@ occupation measure
 
 ---
 
-## 10. The actual pair source is diagonal viscous branching, not drift traffic
+## 10. The full-state continuous pair source is diagonal viscous branching, not drift traffic
 
 Write the full diffusion generator abstractly as
 
@@ -521,7 +521,7 @@ Consequently
 qj_{\rm circ}\otimes j_{\rm circ}
 \]
 
-is a deterministic traffic tensor, **not** the canonical Kelvin branching source.
+is a deterministic traffic tensor, **not** the canonical full-state viscous Kelvin branching source.
 
 **Classification: Rigorous consequence.**
 
@@ -1160,7 +1160,7 @@ carré-du-champ.
 
 **Classification: Exact identities; exact Kelvin stochastic calibration.**
 
-The canonical ancestry source `2 nu q K delta_Delta` has the same diagonal
+The full-state continuous ancestry source `2 nu q K delta_Delta` has the same diagonal
 carré-du-champ form, but a coefficient-level identification with a future stochastic
 CK coordinate requires its literal state map and is therefore a Conjectural bridge.
 
@@ -1464,19 +1464,42 @@ C_s(\partial\Sigma_i,\partial\Sigma_j)
 \]
 
 Exact gauge cochains vanish by boundary-squared-zero before any small-loop limit.
-Conditional mean-square continuity of `zeta_s=d beta_s` then yields the rigorous
-fixed-state tensor
+The independent locality audit shows that conditional mean-square continuity alone
+is not enough for an arbitrary anisotropic material packet: its support must also
+shrink and its error must be small in the packet metric.  Writing
+
+\[
+X_r=H_r^T\zeta_s(x)+\varepsilon_r,
+\]
+
+the invariant fixed-state condition is
+
+\[
+\boxed{H_r^{-T}\varepsilon_r\to0\quad\text{in conditional }L^2.}
+\]
+
+A sufficient criterion is support diameter `delta_r -> 0` together with
 
 \[
 \boxed{
-\mathcal C_s(x)=\operatorname{Cov}_s(\zeta_s(x)),
-\qquad
-C_{H_r}^{\rm future}=H_r^T\mathcal C_s(x)H_r+o(|H_r|^2).
+\frac{(\sum_j A_{r,j}^2)^{1/2}}{\sigma_{\min}(H_r)}
+\omega_2(\delta_r)\to0.
 }
 \]
 
-For centered conditionally `C^2` packets, the raw remainder begins at `r^6`, hence
-is only `r^2` after the packet metric normalization.
+Then
+
+\[
+\boxed{
+H_r^{-T}C_{H_r}^{\rm future}H_r^{-1}
+\to
+\mathcal C_s(x)=\operatorname{Cov}_s(\zeta_s(x)).
+}
+\]
+
+For centered, genuinely local and uniformly conditioned conditionally `C^2`
+packets, the raw remainder begins at `r^6`, hence is only `r^2` after the packet
+metric normalization.
 
 Navier--Stokes supplies an independent tensor identity.  With
 `E_omega=omega omega^T`, `A=grad u`,
@@ -1657,3 +1680,261 @@ drift, not an internal pair source.
 ancestry-to-physical-Kelvin state map remains open-literal.**
 
 See `docs/ancestry_time_reversal_audit.md`.
+
+
+---
+
+## 29. Packet locality is a separate physical seam from small area
+
+The independent locality audit gives the exact incompressible witness
+
+\[
+F_r=\operatorname{diag}(r^{-1},1,r),
+\qquad
+H_r=r^2F_r^{-T}=\operatorname{diag}(r^3,r^2,r)\to0,
+\]
+
+while the largest transported line scale remains
+
+\[
+\boxed{
+\sqrt{\det H_r}/\sigma_{\min}(H_r)=1.
+}
+\]
+
+Thus a shrinking area-frame bank can remain spatially nonlocal.  The local future
+covariance theorem must instead use the whitened error
+
+\[
+\boxed{H_r^{-T}\varepsilon_r\to0\quad\text{in conditional }L^2,}
+\]
+
+with explicit support locality.  A sufficient condition is
+
+\[
+\frac{(\sum_jA_{r,j}^2)^{1/2}}{\sigma_{\min}(H_r)}
+\omega_2(\operatorname{diam}\Sigma_r)\to0.
+\]
+
+**Classification: Exact kinematic/covariance counterexample plus rigorous
+conditional repaired Stokes criterion.  Uniform first-bad support locality remains
+open.**
+
+---
+
+## 30. The ancestry reference gauge and the real state-map data
+
+The ancestry representation has the exact gauge
+
+\[
+\phi'=e^g\phi,
+\qquad
+f'=e^{-g}f,
+\qquad
+w'=w-\nu K\nabla g,
+\]
+
+under which
+
+\[
+\boxed{q,j,\mathscr L,b_+,b_-\text{ are unchanged}.}
+\]
+
+Therefore `f`, `phi`, and `w` are not independent physical state coordinates.  The
+state-map domain must be the as-yet-unspecified ancestry state `y` together with its
+gauge-invariant diffusion data `(K,b_-)`.
+
+If `K=BB^T`, zero-q.v. physical relative shape requires
+
+\[
+\boxed{D\Pi_{\rm shape}B=0.}
+\]
+
+A full-rank `K` therefore cannot encode a nontrivial smooth current shape on an open
+region; the ancestry state must contain deterministic/null directions or be enlarged
+by path/history information.
+
+**Classification: Exact reference-gauge and diffusion-factorization identities;
+open-literal ancestry-state construction.**
+
+---
+
+## 31. Reduced ancestry introduces an exact resolution-covariance pair face
+
+If the stored ancestry state `y` is coarser than the physical Kelvin current-shape
+state `Y`, let `kappa_y(dY)` be the conditional lift kernel.  For full-state terminal
+mean `m(Y)` and covariance `C(Y)`, the reduced covariance is exactly
+
+\[
+\boxed{
+\bar C(y)
+=
+\int C(Y)\,\kappa_y(dY)
++
+\operatorname{Cov}_{\kappa_y}(m(Y)).
+}
+\]
+
+The second term has the pair form
+
+\[
+\boxed{
+C_{\rm res}(y)
+=
+\frac12\iint
+[m(Y_1)-m(Y_2)]^{\otimes2}
+\,\kappa_y(dY_1)\kappa_y(dY_2).
+}
+\]
+
+It is full cross-orientation pair content and can be nonzero even when `nu=0` and
+the full-state future variance vanishes.  Thus it is a **state-resolution covariance
+face**, not the viscous branching tensor.
+
+The canonical `2 nu q K delta_Delta` source remains exact when `q` is on the full
+diffusion state.  If `q` is reduced, `C_res` must be added at the reduction face or
+the phrase “same ancestor” loses physical state information.
+
+**Classification: Exact law-of-total-covariance identity and rigorous state-resolution
+dichotomy.  No identification with undefined `S^int / Z_irr`.**
+
+
+---
+
+## 32. One anisotropy tensor controls support and Kelvin metric amplification
+
+For a coherent microcell,
+
+\[
+\boxed{
+G_{\rm line}=\rho^2\mathcal A,
+\qquad
+M_H=\rho^{-4}\mathcal A,
+\qquad
+\det\mathcal A=1.
+}
+\]
+
+Incompressible material evolution leaves `rho` fixed and lets strain act on
+`mathcal A`; physical refinement/reselection supplies the scale jumps.  Therefore
+uniform packet support locality and metric-whitened covariance control are not two
+unrelated geometries.  They are two contractions of the same material anisotropy
+against opposite scale powers.
+
+For centered planar faces the first finite-size shape and flux errors also share one
+physical carrier,
+
+\[
+Q_\Sigma=\int_\Sigma\xi\xi^T\,dA.
+\]
+
+For quadratic Taylor fields,
+
+\[
+E_{\rm shape}
+=-\frac12 Q_\Sigma:\partial^2(\nabla u)^Tn,
+\qquad
+\varepsilon_{\rm flux}
+=\frac12 Q_\Sigma:\partial^2\zeta\,\cdot n.
+\]
+
+Thus the two previously separate fixed-state `r^2` remainders are manifestations of
+the same centered quadrupole geometry, with different PDE fields attached.
+
+**Classification: Exact cofactor/scale algebra and exact centered quadratic Taylor
+identities.  Uniform singular-time control remains open.**
+
+---
+
+## 33. Viscosity is internal transfer in the resolved-plus-future second-moment bank
+
+In co-deforming Kelvin coordinates, let `C_tilde` be the future covariance and
+`Sigma_fut=F C_tilde F^T`.  Then
+
+\[
+\boxed{
+T_{\rm tot}=\omega\omega^T+\Sigma_{\rm fut}
+}
+\]
+
+has exact backward-Kelvin tensor law
+
+\[
+\boxed{
+\mathfrak D_K^-T_{\rm tot}
+=(\nabla u)T_{\rm tot}+T_{\rm tot}(\nabla u)^T.
+}
+\]
+
+The Kelvin Gram tensor is lost by the resolved mean dyad and gained by future
+covariance with equal magnitude.  Consequently
+
+\[
+\boxed{
+\mathfrak D_K^-
+\left(\frac12|\omega|^2+\mathcal B_{\rm fut}\right)
+=\operatorname{tr}(S T_{\rm tot}),
+}
+\]
+
+where `B_fut=(1/2)tr(C_tilde F^T F)` for the coherent isotropic packet lineage.
+The hard local channel is therefore total second-moment strain work, not a proposed
+pointwise domination of stretching by instantaneous viscous payment.
+
+**Classification: Exact full-state identity.  Localized singular-time capacity and
+restart remain open.**
+
+---
+
+## 34. A co-deforming total bank cancels both q.v. transfer and common strain
+
+After combining resolved vorticity dyad with future covariance into `T_tot`, use the
+shape-only support tensor `B_F=F F^T`.  Then
+
+\[
+\boxed{
+\mathcal I_{\rm cof}
+=\frac12\operatorname{tr}(B_F^{-1}T_{\rm tot})
+=\frac12\operatorname{tr}Q_{\rm tot}.
+}
+\]
+
+The Kelvin Gram source has already canceled between mean and covariance, and the
+common two-sided strain cancels exactly against the evolution of `B_F^{-1}`.  Thus
+`I_cof` is homogeneous on the full physical backward-Kelvin state.
+
+This does not prove physical vorticity remains bounded: recovering physical
+coordinates requires the actual support/refinement geometry.  The result instead
+isolates the remaining obstruction to that geometry and to the already named
+localization/state-resolution faces.
+
+**Classification: Exact identity; restart/continuation remains open.**
+
+---
+
+## 35. Shape and covariance remainders share one support-amplification factor
+
+Define
+
+\[
+\chi_H
+=
+\frac{(\sum_jA_j^2)^{1/2}}{\sigma_{\min}(H)}.
+\]
+
+The exact finite-shape connection and metric-whitened flux errors satisfy
+
+\[
+\|E_{\rm shape}H^{-1}\|_F
+\le\chi_H\omega_{\nabla u}(\delta),
+\qquad
+\|H^{-T}\varepsilon_{\rm flux}\|_{L^2_s}
+\le\chi_H\omega_{\zeta,2}(\delta).
+\]
+
+Thus finite-shape collapse and local future-covariance collapse are not separate
+geometric problems.  Their common geometry is support diameter plus packet
+anisotropy/conditioning; the PDE fields differ.
+
+**Classification: Rigorous joint sufficient criterion.  Uniform first-bad control
+remains open.**

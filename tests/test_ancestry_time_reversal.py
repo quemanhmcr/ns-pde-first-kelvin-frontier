@@ -12,7 +12,10 @@ from src.pde_audit.ancestry_time_reversal import (
     midpoint_current_residual,
     naive_w_equals_u_mismatch,
     probability_current_residual,
+    reference_gauge_invariance_residuals,
     repository_current_velocity,
+    shape_noise_distribution,
+    state_map_diffusion_factorization,
     reversed_drift,
     weighted_diffusion_connection,
 )
@@ -120,6 +123,47 @@ class AncestryTimeReversalAudit(unittest.TestCase):
         Pi = sp.Matrix([x**2])
         drift = backward_state_map_drift(Pi, sp.Matrix([0]), sp.Matrix([[1]]), (x,), nu)
         self.assertEqual(drift, sp.Matrix([-2 * nu]))
+
+
+    def test_reference_gauge_changes_phi_f_w_but_preserves_all_physical_diffusion_data(self) -> None:
+        x, y, nu = self.x, self.y, self.nu
+        psi = x**3 + x * y + y**2
+        g = x**2 - 2 * y
+        residuals = reference_gauge_invariance_residuals(
+            psi, self.w, self.K, self.phi, self.f, g, self.coords, nu
+        )
+        self.assertEqual(residuals["q"], 0)
+        self.assertEqual(residuals["j"], sp.zeros(2, 1))
+        self.assertEqual(residuals["L"], 0)
+        self.assertEqual(residuals["b_plus"], sp.zeros(2, 1))
+        self.assertEqual(residuals["b_minus"], sp.zeros(2, 1))
+
+    def test_physical_shape_zero_qv_means_shape_map_annihilates_noisy_distribution(self) -> None:
+        x, r, z = sp.symbols("x r z")
+        coords = (x, r, z)
+        # One noisy anchor direction and one hidden noisy direction; r is deterministic.
+        B = sp.Matrix([[1, 0], [0, 0], [0, 1]])
+        shape_good = sp.Matrix([r])
+        self.assertEqual(shape_noise_distribution(shape_good, B, coords), sp.zeros(1, 2))
+        JB, pushed = state_map_diffusion_factorization(shape_good, B, coords)
+        self.assertEqual(JB, sp.zeros(1, 2))
+        self.assertEqual(pushed, sp.zeros(1))
+
+        shape_bad = sp.Matrix([r + z])
+        JB_bad, pushed_bad = state_map_diffusion_factorization(shape_bad, B, coords)
+        self.assertEqual(JB_bad, sp.Matrix([[0, 1]]))
+        self.assertEqual(pushed_bad, sp.Matrix([[1]]))
+
+    def test_full_rank_ancestry_noise_cannot_encode_nonconstant_zero_qv_shape(self) -> None:
+        x, y = sp.symbols("x y")
+        a, b = sp.symbols("a b", real=True)
+        B = sp.eye(2)
+        shape = sp.Matrix([a * x + b * y])
+        JB, pushed = state_map_diffusion_factorization(shape, B, (x, y))
+        self.assertEqual(JB, sp.Matrix([[a, b]]))
+        self.assertEqual(pushed, sp.Matrix([[a**2 + b**2]]))
+        # Over the reals, zero shape q.v. forces a=b=0, hence the map is locally constant.
+        self.assertEqual(sp.trace(pushed), a**2 + b**2)
 
     def test_constant_density_and_flat_reference_remove_osmotic_mismatch(self) -> None:
         x, y, nu = self.x, self.y, self.nu

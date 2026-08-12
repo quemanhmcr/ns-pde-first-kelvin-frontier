@@ -428,11 +428,12 @@ before any limit is taken.
 
 ---
 
-## 7. Fixed-state local covariance tensor theorem
+## 7. Fixed-state local covariance tensor theorem — repaired locality topology
 
-The previous note treated the existence of a local future tensor as entirely open.
-That was too coarse.  At a fixed regular state there is a simple conditional Stokes
-theorem.
+The first fixed-state statement was still too coarse: conditional mean-square
+continuity of the random vorticity field is not sufficient if the packet area tends
+to zero while its spatial support stays nonlocal or its area frame becomes
+arbitrarily ill-conditioned.
 
 Let
 
@@ -440,101 +441,118 @@ Let
 \zeta_s(y)=d\beta_s(y)
 \]
 
-be the random terminal vorticity two-form, identified with a random vector in 3D.
-Assume conditional mean-square continuity at `x`:
+be the random terminal vorticity two-form/vector.  For three packet faces
+`Sigma_{r,j}` define
+
+\[
+X_{r,j}=\int_{\Sigma_{r,j}}\zeta_s(y)\cdot n\,dA,
+\qquad
+H_r=(h_{r,1},h_{r,2},h_{r,3}),
+\]
+
+where `h_{r,j}=\int n dA`.  Write
 
 \[
 \boxed{
-\mathbb E_s|\zeta_s(y)-\zeta_s(x)|^2
-\longrightarrow0
-\quad(y\to x).
+X_r=H_r^T\zeta_s(x)+\varepsilon_r.
 }
 \]
 
-For a small planar surface `Sigma_r(x,n)` of area `A_r`, define
-
-\[
-X_r(n)
-=\int_{\Sigma_r}\zeta_s(y)\cdot n\,dS.
-\]
-
-Then
-
-\[
-\frac{X_r(n)}{A_r}-\zeta_s(x)\cdot n
-=
-\frac1{A_r}\int_{\Sigma_r}
-(\zeta_s(y)-\zeta_s(x))\cdot n\,dS.
-\]
-
-Conditional Jensen gives
-
-\[
-\mathbb E_s
-\left|
-\frac{X_r(n)}{A_r}-\zeta_s(x)\cdot n
-\right|^2
-\le
-\frac1{A_r}\int_{\Sigma_r}
-\mathbb E_s|\zeta_s(y)-\zeta_s(x)|^2\,dS,
-\]
-
-hence
+The metric-normalized packet reads the **whitened** vector
 
 \[
 \boxed{
-X_r(n)/A_r
-\longrightarrow
-\zeta_s(x)\cdot n
+H_r^{-T}X_r
+=
+\zeta_s(x)+H_r^{-T}\varepsilon_r.
+}
+\]
+
+Therefore the invariant fixed-state condition is
+
+\[
+\boxed{
+H_r^{-T}\varepsilon_r\longrightarrow0
 \quad\text{in conditional }L^2.
 }
 \]
 
-Therefore for a packet with oriented area columns
+A concrete sufficient condition is obtained from a support diameter `delta_r` and
+conditional `L^2` modulus
 
 \[
-H_r=(h_{r,1},h_{r,2},h_{r,3}),
+\omega_2(\delta)
+=
+\sup_{|y-x|\le\delta}
+\|\zeta_s(y)-\zeta_s(x)\|_{L^2_s}.
+\]
+
+If `A_{r,j}` are the face areas, then
+
+\[
+\boxed{
+\|H_r^{-T}\varepsilon_r\|_{L^2_s}
+\le
+\frac{(\sum_jA_{r,j}^2)^{1/2}}
+{\sigma_{\min}(H_r)}
+\omega_2(\delta_r).
+}
+\]
+
+Hence it is sufficient that
+
+\[
+\boxed{
+\delta_r\to0,
 \qquad
-h_{r,j}=A_{r,j}n_j,
-\]
-
-its future covariance has the area-squared local tensor limit
-
-\[
-\boxed{
-C^{\rm future}_{H_r}
-=H_r^T\mathcal C_s(x)H_r+o(|H_r|^2),
+\frac{(\sum_jA_{r,j}^2)^{1/2}}
+{\sigma_{\min}(H_r)}
+\omega_2(\delta_r)	o0.
 }
 \]
 
-where
+Under this condition,
+
+\[
+H_r^{-T}X_r\to\zeta_s(x)
+\quad\text{in conditional }L^2,
+\]
+
+and therefore
 
 \[
 \boxed{
+H_r^{-T}C^{\rm future}_{H_r}H_r^{-1}
+\to
 \mathcal C_s(x)
-=\operatorname{Cov}_s(\zeta_s(x),\zeta_s(x)).
+:=\operatorname{Cov}_s(\zeta_s(x)).
 }
 \]
 
-Equivalently, `mathcal C_s(x)` is the diagonal density of
+Equivalently,
 
 \[
-(d\boxtimes d)\mathbb K_s
+\operatorname{tr}
+[C^{\rm future}_{H_r}(H_r^TH_r)^{-1}]
+\to
+\operatorname{tr}\mathcal C_s(x).
 \]
 
-when that diagonal trace is regular.
+For uniformly conditioned genuinely local packets this reduces to the previous
+area-normalized Stokes statement.  The independent long-thin audit proves that
+`H_r -> 0` alone is not enough.
 
-**Classification: Rigorous conditional theorem at a fixed state under conditional
-mean-square continuity.**
+**Classification: Rigorous conditional fixed-state theorem under support locality
+and metric-whitened conditional `L^2` control.**
 
-What remains open is uniformity of this continuity and remainder as a candidate
-singular time is approached.
+Uniform support locality, conditioning, and whitened remainder control near a
+candidate singular time remain open.
 
 ---
 
 ## 8. Centered smooth packets improve the remainder to the safe side of `r^4`
 
-For a centered symmetric surface and a conditionally `C^2` random field, the first
+For a centered symmetric **genuinely local, uniformly conditioned** surface packet and a conditionally `C^2` random field, the first
 spatial moment vanishes.  Taylor expansion gives
 
 \[
@@ -939,10 +957,10 @@ The following no longer belong to the unknown frontier:
 - vectorization of the future covariance bank;
 - mixed cross-orientation carré-du-champ;
 - mean-square/future-covariance transfer;
-- same-ancestor pair source at tensor level;
+- full-state same-ancestor diffusion source at tensor level, with reduced-state resolution covariance kept separate;
 - double-Stokes identification with the existing pair covariance cochain;
 - gauge blindness of the local flux covariance;
-- fixed-state local tensor existence under conditional mean-square continuity;
+- fixed-state local tensor existence under support-local metric-whitened conditional continuity;
 - centered `C^2` packet remainder scaling `r^6` raw / `r^2` after metric
   normalization;
 - full NS vorticity-dyad tensor identity;
@@ -989,3 +1007,219 @@ The sharper question is
 **Classification: Rigorous structural reduction.  Generator descent, causal
 future/backward identification, uniform singular-time tensor control, restart, and
 regularity remain open.**
+
+---
+
+## 15. Co-deforming Kelvin coordinates remove nonlinear stretching from the tensor bank
+
+Let `F` be the physical material deformation gradient,
+
+\[
+D_tF=(\nabla u)F,
+\]
+
+and define the pulled-back vorticity/flux-density mean
+
+\[
+\boxed{\eta=F^{-1}\omega.}
+\]
+
+The Navier--Stokes vorticity equation gives
+
+\[
+(\partial_t+u\cdot\nabla-\nu\Delta)\omega=(\nabla u)\omega.
+\]
+
+Including the deformation drift in the physical backward-Kelvin state therefore
+gives
+
+\[
+\boxed{\mathscr D_K^-\eta=0.}
+\]
+
+At fixed deformation coordinate, spatial Brownian noise acts only on `X`, so the
+full matrix carré-du-champ of `eta` is
+
+\[
+\boxed{
+\widetilde{\mathcal G}_K
+=2\nu F^{-1}(\nabla\omega)(\nabla\omega)^TF^{-T}.
+}
+\]
+
+The backward physical-time product rule has negative diffusion cross term, hence
+
+\[
+\boxed{
+\mathscr D_K^-(\eta\eta^T)
+=-\widetilde{\mathcal G}_K.
+}
+\]
+
+The exact full-state conditional-covariance identity gives the opposite transfer on
+the unresolved future covariance `C_tilde`,
+
+\[
+\boxed{
+\mathscr D_K^-\widetilde C
+=+\widetilde{\mathcal G}_K,
+}
+\]
+
+with causal terminal orientation as audited earlier.  Therefore
+
+\[
+\boxed{
+\mathscr D_K^-(\eta\eta^T+\widetilde C)=0.
+}
+\]
+
+This is the general tensor mechanism behind the exact one-mode shear calibration.
+In co-deforming physical Kelvin coordinates, nonlinear vortex stretching is absent
+from the mean/covariance transfer ledger.  It reappears only when the tensor is
+pushed back to the physical metric, exactly as in the material-flux/metric-work
+audit.
+
+**Classification: Exact Navier--Stokes mean identity plus exact full-state
+carré-du-champ/covariance transfer.**
+
+---
+
+## 16. Resolved enstrophy plus future Kelvin covariance has no net viscous/q.v. source
+
+Let `C_tilde` be the future covariance in co-deforming Kelvin coordinates and define
+its physical pushforward
+
+\[
+\Sigma_{\rm fut}=F\widetilde C F^T.
+\]
+
+The pulled-back Kelvin Gram tensor satisfies the exact contraction
+
+\[
+\boxed{
+\frac12\operatorname{tr}
+[\widetilde{\mathcal G}_K F^TF]
+=\nu|\nabla\omega|^2.
+}
+\]
+
+Thus the same bulk quantity lost by the resolved vorticity dyad is gained by future
+covariance.  The metric work of that covariance is
+
+\[
+\boxed{
+\frac12\operatorname{tr}
+[\widetilde C\,D_t(F^TF)]
+=\operatorname{tr}(S\Sigma_{\rm fut}).
+}
+\]
+
+Define the total physical conditional second-moment tensor
+
+\[
+\boxed{
+T_{\rm tot}
+=\omega\omega^T+\Sigma_{\rm fut}.
+}
+\]
+
+The Kelvin Gram terms cancel internally between the resolved and unresolved
+sectors.  Hence, on the physical backward-Kelvin full state,
+
+\[
+\boxed{
+\mathfrak D_K^-T_{\rm tot}
+=(\nabla u)T_{\rm tot}
++T_{\rm tot}(\nabla u)^T.
+}
+\]
+
+Taking half the trace gives
+
+\[
+\boxed{
+\mathfrak D_K^-
+\left[
+\frac12|\omega|^2
++\frac12\operatorname{tr}(\widetilde C F^TF)
+\right]
+=\operatorname{tr}(S T_{\rm tot}).
+}
+\]
+
+So in the resolved-plus-future bank, viscosity/quadratic variation is an **internal
+transfer**, not a net source or sink.  The surviving local nonlinear channel is
+strain acting on the total second-moment tensor.  Spatial/boundary/exit terms reappear
+when this full-state local identity is converted to the physical localized material
+germ ledger.
+
+This explains the earlier exact ABC no-go: comparing vortex stretching only with
+instantaneous viscous payment compares two internal sectors of a larger tensor bank.
+
+**Classification: Exact full-state tensor transfer and exact scalar contraction.**
+
+---
+
+## 17. Co-deforming support normalization cancels total strain exactly
+
+Let
+
+\[
+B_F=FF^T
+\]
+
+be the shape-only spatial support tensor of a coherent material cell after the
+physical refinement scale has been separated, and write
+
+\[
+T_{\rm tot}=FQ_{\rm tot}F^T.
+\]
+
+Define
+
+\[
+\boxed{
+\mathcal I_{\rm cof}
+=\frac12\operatorname{tr}(B_F^{-1}T_{\rm tot}).
+}
+\]
+
+Cofactor/deformation algebra gives immediately
+
+\[
+\boxed{
+\mathcal I_{\rm cof}
+=\frac12\operatorname{tr}Q_{\rm tot}.
+}
+\]
+
+Both `B_F` and `T_tot` carry the same physical stretch operator.  Therefore
+
+\[
+\dot B_F=AB_F+B_FA^T,
+\qquad
+\mathfrak D_K^-T_{\rm tot}=AT_{\rm tot}+T_{\rm tot}A^T
+\]
+
+imply, by differentiating `B_F^{-1}` exactly,
+
+\[
+\boxed{
+\mathfrak D_K^-\mathcal I_{\rm cof}=0.
+}
+\]
+
+This contraction is not introduced as an external continuation norm.  It is the
+resolved-plus-unresolved Kelvin second moment measured in the packet's own physical
+co-deforming support geometry.  Kelvin q.v. has already canceled internally in
+`T_tot`; common strain cancels against the support deformation itself.
+
+For isotropic physical refinement, the separate cell scale changes while `B_F`
+and this shape-normalized contraction do not.  The remaining restart problem is
+therefore the passage back to physical coordinates through the actual refinement
+scale, anisotropy/support locality, finite quadrupole errors, state-resolution
+covariance, and physical boundary/exit/reset faces.
+
+**Classification: Exact cofactor/support contraction and exact common-stretch
+cancellation.  No continuation theorem.**

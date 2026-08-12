@@ -176,3 +176,86 @@ def packet_shape_residual_matrix(first_loop_residual: Matrix) -> sp.Matrix:
     out = sp.zeros(3)
     out[:, 0] = first_loop_residual
     return out
+
+
+def polynomial_heat_shear(degree: int, y: sp.Symbol, t: sp.Expr, nu: sp.Expr) -> sp.Expr:
+    """Exact polynomial heat shear e^{nu t d_yy} y^degree."""
+    if degree < 0:
+        raise ValueError("degree must be nonnegative")
+    out = sp.Integer(0)
+    for j in range(degree // 2 + 1):
+        coeff = sp.factorial(degree) / (
+            sp.factorial(degree - 2 * j) * sp.factorial(j)
+        )
+        out += coeff * (nu * t) ** j * y ** (degree - 2 * j)
+    return sp.expand(out)
+
+
+def polynomial_heat_shear_residual(
+    degree: int,
+    y: sp.Symbol,
+    t: sp.Symbol,
+    nu: sp.Expr,
+) -> sp.Expr:
+    U = polynomial_heat_shear(degree, y, t, nu)
+    return sp.simplify(sp.diff(U, t) - nu * sp.diff(U, y, 2))
+
+
+def legendre_width_density(order: int, y: sp.Symbol, epsilon: sp.Expr) -> sp.Expr:
+    """Positive-width perturbation 1+epsilon P_order(y) when |epsilon|<1."""
+    if order < 0:
+        raise ValueError("Legendre order must be nonnegative")
+    return sp.expand(1 + epsilon * sp.legendre(order, y))
+
+
+def width_surface_area(width: sp.Expr, y: sp.Symbol) -> sp.Expr:
+    """Area of yz graph-strip {y in [-1,1], z in [-w(y)/2,w(y)/2]} with normal e_x."""
+    return sp.simplify(sp.integrate(width, (y, -1, 1)))
+
+
+def width_surface_even_moment(
+    width: sp.Expr,
+    y: sp.Symbol,
+    moment_order: int,
+) -> sp.Expr:
+    if moment_order < 0:
+        raise ValueError("moment order must be nonnegative")
+    return sp.simplify(sp.integrate(y ** moment_order * width, (y, -1, 1)))
+
+
+def width_surface_shear_area_rate(
+    shear_derivative: sp.Expr,
+    width: sp.Expr,
+    y: sp.Symbol,
+) -> sp.Matrix:
+    """Area-vector rate for centered yz strip with width w(y), normal e_x."""
+    return sp.Matrix([
+        0,
+        sp.simplify(-sp.integrate(shear_derivative * width, (y, -1, 1))),
+        0,
+    ])
+
+
+def legendre_leading_moment(order: int) -> sp.Expr:
+    """Exact integral int_{-1}^1 y^n P_n(y) dy."""
+    if order < 0:
+        raise ValueError("order must be nonnegative")
+    n = order
+    return sp.simplify(
+        2 ** (n + 1) * sp.factorial(n) ** 2 / sp.factorial(2 * n + 1)
+    )
+
+
+def moment_hierarchy_shear_rate_difference(
+    m: int,
+    epsilon: sp.Expr,
+) -> sp.Expr:
+    """Difference in y-component Hdot for w=1+eps P_{2m} vs w=1 under U_{2m+1}.
+
+    All lower even moments cancel by Legendre orthogonality.  Only the leading
+    derivative coefficient (2m+1)y^{2m} survives.
+    """
+    if m <= 0:
+        raise ValueError("m must be positive")
+    n = 2 * m
+    return sp.simplify(-(n + 1) * epsilon * legendre_leading_moment(n))

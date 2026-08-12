@@ -671,12 +671,18 @@ For a material area frame,
 M_H=(H^TH)^{-1}.
 \]
 
-The exact logarithmic determinant rate is
+The material area-frame law used here is already the incompressible Nanson
+specialization `D_t H=-(grad u)^T H`.  On this domain the metric determinant is
+constant.  For reference, the **general** three-dimensional Nanson law is
 
 \[
-\boxed{
-D_t\log\det M_H=2\nabla\cdot u.
-}
+D_tH=[(\nabla\cdot u)I-(\nabla u)^T]H,
+\]
+
+which gives
+
+\[
+\boxed{D_t\log\det M_H=-4\nabla\cdot u.}
 \]
 
 Thus incompressibility gives
@@ -748,66 +754,87 @@ family.**
 
 ---
 
-## 16. Local future-covariance tensor: fixed-state theorem, uniform frontier
+## 16. Local future-covariance tensor: repaired support-local theorem
 
-The subsequent tensor audit sharpens the earlier conjectural bridge.  The fixed-state
-local tensor is not an arbitrary new object.  The repository already has the pair
-momentum covariance cochain
-
-\[
-\mathbb K_s=\mathbb E_s[(\beta-\bar\beta_s)\boxtimes(\beta-\bar\beta_s)].
-\]
-
-For closed loops `Z_i=partial Sigma_i`, double Stokes gives exactly
+The pair momentum covariance cochain still localizes exactly by double Stokes,
 
 \[
 \boxed{
-C_s(Z_i,Z_j)
-=\langle(d\boxtimes d)\mathbb K_s,\Sigma_i\boxtimes\Sigma_j\rangle.
+C_s(\partial\Sigma_i,\partial\Sigma_j)
+=\langle(d\boxtimes d)\mathbb K_s,
+\Sigma_i\boxtimes\Sigma_j\rangle.
 }
 \]
 
-If the random terminal vorticity two-form `zeta_s=d beta_s` is conditionally
-mean-square continuous at `x`, conditional Jensen gives
+However the independent locality audit shows that a small area frame does not by
+itself make a material packet local.  For an isotropic reference packet transported
+by an incompressible deformation `F`,
 
 \[
-\frac1{A_r}\int_{\Sigma_r(x,n)}\zeta_s(y)\cdot n\,dS
-\longrightarrow\zeta_s(x)\cdot n
-\quad\text{in conditional }L^2.
+H_r=r^2F^{-T},
 \]
 
-Hence the packet covariance has the rigorous fixed-state limit
+and the largest transported line scale is
 
 \[
 \boxed{
-C_{H_r}^{\rm future}
-=H_r^T\mathcal C_s(x)H_r+o(|H_r|^2),
+\ell_{\max}
+=
+\frac{\sqrt{\det H_r}}{\sigma_{\min}(H_r)}.
+}
+\]
+
+The exact deformation `F_r=diag(r^{-1},1,r)` has `H_r->0` while
+`ell_max=1`.  Thus a local Stokes limit must control spatial support as well as area.
+
+Writing the packet payoff as
+
+\[
+X_r=H_r^T\zeta_s(x)+\varepsilon_r,
+\]
+
+the invariant condition is
+
+\[
+\boxed{H_r^{-T}\varepsilon_r\to0
+\quad\text{in conditional }L^2.}
+\]
+
+A sufficient condition is
+
+\[
+\boxed{
+\operatorname{diam}(\Sigma_r)\to0,
 \qquad
+\frac{(\sum_jA_{r,j}^2)^{1/2}}
+{\sigma_{\min}(H_r)}
+\omega_2(\operatorname{diam}\Sigma_r)	o0.
+}
+\]
+
+Only under this support-local, metric-whitened topology does the fixed-state tensor
+convergence read
+
+\[
+\boxed{
+H_r^{-T}C^{\rm future}_{H_r}H_r^{-1}
+\to
 \mathcal C_s(x)=\operatorname{Cov}_s(\zeta_s(x)).
 }
 \]
 
-The local scalar bank is therefore
-
-\[
-\boxed{\mathcal B_{\rm loc}=\frac12\operatorname{tr}\mathcal C_s(x).}
-\]
-
-For a centered conditionally `C^2` packet, symmetry improves the raw covariance
-expansion to `r^4 C_0+r^6 C_1+...`; after the `r^-4` packet metric the remainder is
-`r^2 C_1+...` and vanishes at each fixed regular state.
+For centered local uniformly conditioned `C^2` packets the earlier `r^6` raw / `r^2`
+normalized remainder law remains valid.  The long-thin witness shows why it must not
+be extrapolated to arbitrary anisotropic packets.
 
 **Classification: Exact double-Stokes identity plus rigorous conditional fixed-state
-Stokes theorem.**
+Stokes theorem after the locality/whitening repair.**
 
-What remains open is stronger and more specific: uniform conditional continuity and
-remainder control near a candidate singular time, the descent of the full stochastic
-Kelvin generator to the proposed reduced `(x,H)`/germ state, and the literal causal
-identification between the abstract forward future-ancestry bank and the physical
-backward-Kelvin martingale bank.
+What remains open is uniform support locality, conditioning and whitened remainder
+control near a candidate singular time, together with finite-shape current collapse,
+ancestry-state identification and the signed physical restart ledger.
 
-**Classification: Conjectural/open-literal bridge only for uniform singular-time
-control and state/time descent.**
+**Classification: Open singular-time bridge.**
 
 ---
 
@@ -942,3 +969,55 @@ setting `w=u` silently.
 
 **Classification: Exact operator identity; physical state identification remains
 open-literal.**
+
+
+---
+
+## 20. Coherent microcell scale and anisotropy are different physical faces
+
+For a coherent primal material line frame `L`, write
+
+\[
+L=\rho\widetilde L,
+\qquad
+\rho=(\det L)^{1/3},
+\qquad
+\det\widetilde L=1,
+\qquad
+\mathcal A=\widetilde L^T\widetilde L.
+\]
+
+The dual area frame satisfies `H=cof L`, and exact cofactor algebra gives
+
+\[
+\boxed{
+L^TL=\rho^2\mathcal A,
+\qquad
+M_H=(H^TH)^{-1}=\rho^{-4}\mathcal A.
+}
+\]
+
+Thus the same anisotropy tensor controls both physical support geometry and the
+metric amplification of Kelvin covariance.  In incompressible material transport,
+
+\[
+\boxed{D_t\rho=0,}
+\]
+
+so continuous NS strain changes only `mathcal A`.  Physical scale collapse in a
+first-bad sequence must come through actual current refinement/reselection/reset.
+For `L^+=L^-R`,
+
+\[
+\boxed{
+\rho^+=\rho^-(\det R)^{1/3},
+\qquad
+\mathcal A^+=(\det R)^{-2/3}R^T\mathcal A^-R.
+}
+\]
+
+An isotropic refinement changes only `rho`; an anisotropic refinement changes both
+scale and shape.  This is a physical current operation, not passive packet-coordinate
+motion.
+
+**Classification: Exact coherent-microcell scale/shape algebra.**

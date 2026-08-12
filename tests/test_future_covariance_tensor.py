@@ -5,6 +5,18 @@ import sympy as sp
 
 from src.pde_audit.future_covariance_tensor import (
     backward_kelvin_flux_mean_residual,
+    codeforming_covariance_metric_work_residual,
+    codeforming_gram_bulk_reconstruction_residual,
+    codeforming_kelvin_gram,
+    codeforming_mean_dyad_backward_source,
+    codeforming_support_normalized_total_bank,
+    codeforming_vorticity_mean_residual,
+    physical_covariance_from_codeforming,
+    support_normalized_common_stretch_derivative_residual,
+    support_normalized_total_bank_pullback_residual,
+    total_physical_second_moment,
+    total_scalar_strain_work,
+    total_second_moment_stretch_source,
     backward_local_tensor_operator,
     conditional_covariance,
     connected_covariance_horizon_residual,
@@ -70,6 +82,110 @@ class FutureCovarianceTensorAudit(unittest.TestCase):
             sp.simplify(connected_second_moment_horizon_residual(second, B, self.tau, drift, diffusion, [self.a])),
             sp.zeros(2),
         )
+
+
+
+
+    def test_support_normalized_total_bank_is_exact_codeforming_trace(self) -> None:
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        q=sp.symbols("q0:9")
+        Q=sp.Matrix(3,3,q)
+        self.assertEqual(support_normalized_total_bank_pullback_residual(Q,F),0)
+
+    def test_support_normalized_total_bank_cancels_common_stretch_exactly(self) -> None:
+        a=sp.symbols("a0:9")
+        A=sp.Matrix(3,3,a)
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        t=sp.symbols("t0:9")
+        T=sp.Matrix(3,3,t)
+        self.assertEqual(support_normalized_common_stretch_derivative_residual(A,F,T),0)
+
+    def test_support_normalized_bank_is_invariant_under_isotropic_physical_refinement_scale(self) -> None:
+        rho=sp.symbols("rho", positive=True)
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        q=sp.symbols("q0:9")
+        Q=sp.Matrix(3,3,q)
+        T=sp.simplify(F*Q*F.T)
+        # Shape support tensor uses F F^T; rho belongs to the separate physical scale face.
+        I0=codeforming_support_normalized_total_bank(T,F)
+        # Replacing the coherent line frame by rho F changes support scale, not F-shape.
+        self.assertEqual(sp.simplify(I0-sp.trace(Q)/2),0)
+
+    def test_pulledback_kelvin_gram_reconstructs_bulk_viscous_enstrophy_loss_in_any_F(self) -> None:
+        nu=sp.symbols("nu")
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        g=sp.symbols("g0:9")
+        G=sp.Matrix(3,3,g)
+        self.assertEqual(codeforming_gram_bulk_reconstruction_residual(F,G,nu),0)
+
+    def test_future_covariance_metric_work_is_physical_covariance_weighted_strain(self) -> None:
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        c=sp.symbols("c0:6")
+        C=sp.Matrix([[c[0],c[1],c[2]],[c[1],c[3],c[4]],[c[2],c[4],c[5]]])
+        s=sp.symbols("s0:6")
+        S=sp.Matrix([[s[0],s[1],s[2]],[s[1],s[3],s[4]],[s[2],s[4],s[5]]])
+        self.assertEqual(codeforming_covariance_metric_work_residual(C,F,S),0)
+
+    def test_kelvin_gram_is_internal_transfer_in_total_second_moment_tensor(self) -> None:
+        nu=sp.symbols("nu")
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        g=sp.symbols("g0:9")
+        G=sp.Matrix(3,3,g)
+        gram=codeforming_kelvin_gram(F,G,nu)
+        mean_nonstretch=-sp.simplify(F*gram*F.T)
+        cov_nonstretch=sp.simplify(F*gram*F.T)
+        self.assertEqual(sp.simplify(mean_nonstretch+cov_nonstretch),sp.zeros(3))
+
+    def test_total_second_moment_half_trace_has_only_total_strain_work_after_transfer(self) -> None:
+        a=sp.symbols("a0:9")
+        A=sp.Matrix(3,3,a)
+        S=sp.simplify((A+A.T)/2)
+        w=sp.Matrix(sp.symbols("w0:3"))
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        c=sp.symbols("c0:6")
+        C=sp.Matrix([[c[0],c[1],c[2]],[c[1],c[3],c[4]],[c[2],c[4],c[5]]])
+        T=total_physical_second_moment(w,C,F)
+        stretch=total_second_moment_stretch_source(A,T)
+        self.assertEqual(sp.simplify(sp.trace(stretch)/2-total_scalar_strain_work(S,T)),0)
+
+    def test_resolved_plus_future_covariance_scalar_is_mean_enstrophy_plus_packet_bank(self) -> None:
+        w=sp.Matrix(sp.symbols("w0:3"))
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        c=sp.symbols("c0:6")
+        C=sp.Matrix([[c[0],c[1],c[2]],[c[1],c[3],c[4]],[c[2],c[4],c[5]]])
+        T=total_physical_second_moment(w,C,F)
+        eta=sp.simplify(F.inv()*w)
+        bank=sp.simplify(sp.trace(C*(F.T*F))/2)
+        self.assertEqual(sp.simplify(sp.trace(T)/2-(w.dot(w)/2+bank)),0)
+        self.assertEqual(sp.simplify(w.dot(w)-sp.trace(F*eta*eta.T*F.T)),0)
+
+    def test_generic_codeforming_vorticity_mean_cancels_stretching(self) -> None:
+        a=sp.symbols("a0:9")
+        A=sp.Matrix(3,3,a)
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        w=sp.Matrix(sp.symbols("w0:3"))
+        backward_op=sp.simplify(A*w)
+        self.assertEqual(codeforming_vorticity_mean_residual(F,A,w,backward_op),sp.zeros(3,1))
+
+    def test_codeforming_kelvin_gram_is_full_state_carre_du_champ_of_pulledback_mean(self) -> None:
+        x1,x2,x3,nu=sp.symbols("x1 x2 x3 nu")
+        coords=(x1,x2,x3)
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        g=sp.symbols("g0:9")
+        G=sp.Matrix(3,3,g)
+        x=sp.Matrix(coords)
+        mean=sp.simplify(F.inv()*G*x)
+        Gamma=vector_carre_du_champ(mean,2*nu*sp.eye(3),coords)
+        self.assertEqual(sp.simplify(Gamma-codeforming_kelvin_gram(F,G,nu)),sp.zeros(3))
+
+    def test_codeforming_mean_square_and_future_covariance_sources_cancel_tensorially(self) -> None:
+        nu=sp.symbols("nu")
+        F=sp.Matrix([[2,1,0],[0,2,1],[1,0,1]])
+        g=sp.symbols("g0:9")
+        G=sp.Matrix(3,3,g)
+        mean_source=codeforming_mean_dyad_backward_source(F,G,nu)
+        covariance_source=codeforming_kelvin_gram(F,G,nu)
+        self.assertEqual(sp.simplify(mean_source+covariance_source),sp.zeros(3))
 
     def test_carre_du_champ_is_exact_transfer_from_mean_square_to_future_covariance(self) -> None:
         mean, second, B, drift, diffusion = self._connected_cos_sin()

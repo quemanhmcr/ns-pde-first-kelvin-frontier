@@ -323,3 +323,51 @@ jobs:
         with:
           name: ancestry-time-reversal
           path: audit-results/ancestry_time_reversal_report.json
+
+  kelvin-packet-locality:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit Nanson determinant, packet support locality, and metric-whitened Stokes topology
+        run: python -m unittest -v tests.test_kelvin_packet_locality
+      - name: Build Kelvin packet locality artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_kelvin_packet_locality_report.py
+      - name: Upload Kelvin packet locality artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kelvin-packet-locality
+          path: audit-results/kelvin_packet_locality_report.json
+
+  ancestry-resolution-kernel:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit reduced/full ancestry resolution covariance and exact affine NS singular-state calibration
+        run: python -m unittest -v tests.test_ancestry_resolution_kernel
+      - name: Build ancestry resolution-kernel artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_ancestry_resolution_kernel_report.py
+      - name: Upload ancestry resolution-kernel artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ancestry-resolution-kernel
+          path: audit-results/ancestry_resolution_kernel_report.json

@@ -413,3 +413,142 @@ def backward_local_tensor_operator(
     adv = sp.Matrix(tensor.rows, tensor.cols, lambda i, j: sum(velocity[k] * sp.diff(tensor[i, j], coords[k]) for k in range(3)))
     lap = sp.Matrix(tensor.rows, tensor.cols, lambda i, j: sum(sp.diff(tensor[i, j], x, 2) for x in coords))
     return sp.simplify(sp.diff(tensor, t) + adv - nu * lap - A * tensor - tensor * A.T)
+
+
+def codeforming_vorticity_mean_residual(
+    deformation: Matrix,
+    grad_u: Matrix,
+    omega: Matrix,
+    backward_vorticity_operator: Matrix,
+) -> sp.Matrix:
+    """Residual for eta=F^-1 omega under Fdot=A F.
+
+    ``backward_vorticity_operator`` means (partial_t+u.grad-nu Delta) omega.
+    Navier--Stokes gives this as A omega, so the co-deforming mean residual is zero.
+    """
+    if deformation.shape != (3, 3) or grad_u.shape != (3, 3) or omega.shape != (3, 1) or backward_vorticity_operator.shape != (3, 1):
+        raise ValueError("co-deforming vorticity mean is 3D")
+    Finv = sp.simplify(deformation.inv())
+    return sp.simplify(Finv * backward_vorticity_operator - Finv * grad_u * omega)
+
+
+def codeforming_kelvin_gram(
+    deformation: Matrix,
+    grad_omega: Matrix,
+    nu: sp.Expr,
+) -> sp.Matrix:
+    """2 nu F^-1 grad(omega) grad(omega)^T F^-T."""
+    if deformation.shape != (3, 3) or grad_omega.shape != (3, 3):
+        raise ValueError("co-deforming Kelvin Gram is 3D")
+    Finv = sp.simplify(deformation.inv())
+    return sp.simplify(2 * nu * Finv * grad_omega * grad_omega.T * Finv.T)
+
+
+def codeforming_mean_dyad_backward_source(
+    deformation: Matrix,
+    grad_omega: Matrix,
+    nu: sp.Expr,
+) -> sp.Matrix:
+    """Physical-time backward operator source on eta eta^T: minus the pulled-back Gram."""
+    return sp.simplify(-codeforming_kelvin_gram(deformation, grad_omega, nu))
+
+
+def right_cauchy_green(deformation: Matrix) -> sp.Matrix:
+    if deformation.shape != (3, 3):
+        raise ValueError("deformation must be 3x3")
+    return sp.simplify(deformation.T * deformation)
+
+
+def physical_covariance_from_codeforming(
+    codeforming_covariance: Matrix,
+    deformation: Matrix,
+) -> sp.Matrix:
+    """Sigma=F Ctilde F^T."""
+    return sp.simplify(deformation * codeforming_covariance * deformation.T)
+
+
+def codeforming_gram_bulk_reconstruction_residual(
+    deformation: Matrix,
+    grad_omega: Matrix,
+    nu: sp.Expr,
+) -> sp.Expr:
+    """1/2 tr(Gtilde F^T F)-nu|grad omega|^2."""
+    Gtilde = codeforming_kelvin_gram(deformation, grad_omega, nu)
+    Cg = right_cauchy_green(deformation)
+    target = nu * sum(grad_omega[i, j] ** 2 for i in range(3) for j in range(3))
+    return sp.simplify(sp.trace(Gtilde * Cg) / 2 - target)
+
+
+def codeforming_covariance_metric_work_residual(
+    codeforming_covariance: Matrix,
+    deformation: Matrix,
+    strain: Matrix,
+) -> sp.Expr:
+    """1/2 tr(Ctilde Cdot_F)-tr(S F Ctilde F^T), Cdot_F=2F^T S F."""
+    Cg_dot = sp.simplify(2 * deformation.T * strain * deformation)
+    lhs = sp.simplify(sp.trace(codeforming_covariance * Cg_dot) / 2)
+    Sigma = physical_covariance_from_codeforming(codeforming_covariance, deformation)
+    rhs = sp.simplify(sp.trace(strain * Sigma))
+    return sp.simplify(lhs - rhs)
+
+
+def total_physical_second_moment(
+    omega: Matrix,
+    codeforming_covariance: Matrix,
+    deformation: Matrix,
+) -> sp.Matrix:
+    """omega omega^T + F Ctilde F^T."""
+    if omega.shape != (3, 1):
+        raise ValueError("omega must be a 3-vector")
+    return sp.simplify(
+        omega * omega.T
+        + physical_covariance_from_codeforming(codeforming_covariance, deformation)
+    )
+
+
+def total_second_moment_stretch_source(
+    grad_u: Matrix,
+    total_tensor: Matrix,
+) -> sp.Matrix:
+    """A T+T A^T, after Kelvin Gram transfer cancels internally."""
+    return sp.simplify(grad_u * total_tensor + total_tensor * grad_u.T)
+
+
+def total_scalar_strain_work(strain: Matrix, total_tensor: Matrix) -> sp.Expr:
+    """Half-trace of A T+T A^T for symmetric T equals tr(S T)."""
+    return sp.simplify(sp.trace(strain * total_tensor))
+
+
+def codeforming_support_normalized_total_bank(
+    total_physical_tensor: Matrix,
+    deformation: Matrix,
+) -> sp.Expr:
+    """1/2 tr((F F^T)^-1 T_total), the total second moment in support coordinates."""
+    B = sp.simplify(deformation * deformation.T)
+    return sp.simplify(sp.trace(B.inv() * total_physical_tensor) / 2)
+
+
+def support_normalized_total_bank_pullback_residual(
+    codeforming_total_tensor: Matrix,
+    deformation: Matrix,
+) -> sp.Expr:
+    """Residual I_cof - 1/2 tr(Qtilde) for T=F Qtilde F^T."""
+    T = sp.simplify(deformation * codeforming_total_tensor * deformation.T)
+    return sp.simplify(
+        codeforming_support_normalized_total_bank(T, deformation)
+        - sp.trace(codeforming_total_tensor) / 2
+    )
+
+
+def support_normalized_common_stretch_derivative_residual(
+    grad_u: Matrix,
+    deformation: Matrix,
+    total_physical_tensor: Matrix,
+) -> sp.Expr:
+    """Pure common stretch creates zero d[1/2 tr((F F^T)^-1 T)]."""
+    B = sp.simplify(deformation * deformation.T)
+    Bdot = sp.simplify(grad_u * B + B * grad_u.T)
+    Binv = sp.simplify(B.inv())
+    Binv_dot = sp.simplify(-Binv * Bdot * Binv)
+    Tdot = sp.simplify(grad_u * total_physical_tensor + total_physical_tensor * grad_u.T)
+    return sp.simplify(sp.trace(Binv_dot * total_physical_tensor + Binv * Tdot) / 2)

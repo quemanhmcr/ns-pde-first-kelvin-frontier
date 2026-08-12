@@ -326,7 +326,7 @@ by a spatially uniform Wiener motion and the backward Itô chain rule produces t
 
 ---
 
-## 10. The open state map is an explicit backward-Itô system
+## 10. A deterministic state map, when applicable, obeys an explicit backward-Itô system
 
 Let `Y` denote ancestry coordinates and let
 
@@ -381,3 +381,119 @@ identification.
 
 **Classification: Exact backward-Itô state-map conditions and exact obstruction
 witness.  Existence of the actual programme-specific map remains open-literal.**
+
+
+---
+
+## 11. `f`, `phi`, and `w` are reference-gauge data, not three physical coordinates
+
+The decomposition
+
+\[
+q=f\phi
+\]
+
+has an exact reference gauge.  For any scalar `g`, define
+
+\[
+\boxed{
+\phi'=e^g\phi,
+\qquad
+f'=e^{-g}f,
+\qquad
+w'=w-\nu K\nabla g.
+}
+\]
+
+For symmetric `K`, direct substitution gives
+
+\[
+\boxed{
+q'=q,
+\qquad
+j'=j,
+\qquad
+\mathscr L'=\mathscr L,
+\qquad
+b_+'=b_+,
+\qquad
+b_-'=b_-.
+}
+\]
+
+Thus `phi`, `f`, and `w` separately are **reference representation data**.  They
+must not be interpreted as independent physical hidden state variables.  The
+state-map problem is defined by the underlying ancestry state manifold together
+with the gauge-invariant diffusion data `(K,b_-)` and the Kelvin payoff.
+
+The current repository uses a full ancestry kernel `P_{s,t}(y,dy')` but does not
+supply a line-by-line construction of the state coordinate/manifold `y`.  This is a
+literal definition seam, not an estimate.
+
+**Classification: Exact reference-gauge identity; open-literal ancestry-state
+manifold definition.**
+
+---
+
+## 12. Zero-q.v. Kelvin shape forces a degenerate ancestry noise sector
+
+Factor the symmetric positive-semidefinite ancestry diffusion tensor as
+
+\[
+K=BB^T.
+\]
+
+For a proposed physical relative-shape coordinate `Pi_shape`, the pushed quadratic
+variation is
+
+\[
+\boxed{
+D\Pi_{\rm shape}K D\Pi_{\rm shape}^T
+=
+(D\Pi_{\rm shape}B)(D\Pi_{\rm shape}B)^T.
+}
+\]
+
+Physical backward-Kelvin relative shape has zero q.v. after anchoring.  Therefore
+
+\[
+\boxed{D\Pi_{\rm shape}B=0.}
+\]
+
+So every physical shape coordinate must be constant along the ancestry noisy
+distribution `Range(B)`.
+
+If `K` is positive definite on an open connected ancestry state region, then `B` is
+invertible and the condition forces
+
+\[
+D\Pi_{\rm shape}=0
+\]
+
+throughout that region.  Hence a nontrivial instantaneous finite-variation Kelvin
+shape cannot be encoded as a smooth function of a purely full-rank diffusion state.
+One needs either
+
+1. deterministic/null directions of `K` carrying shape; or
+2. a larger path/history state rather than a Markov function of the current
+   full-rank diffusion coordinate.
+
+This is a structural necessary condition for the state map, not a regularity
+estimate.
+
+**Classification: Exact diffusion-factorization identity and rigorous local no-go
+for full-rank ancestry diffusion encoding nontrivial zero-q.v. shape.**
+
+
+---
+
+## 13. Deterministic `Pi` is only one branch of the state lift
+
+A later full/reduced-state audit shows that the physical lift need not be a
+deterministic map.  If ancestry state `y` is reduced, the general object is a
+conditional kernel `kappa(y,dY_K)`.  The deterministic equations above remain exact
+when `kappa` is Dirac, but a non-Dirac lift carries the separate resolution covariance
+`Cov_kappa(m(Y_K))`.
+
+**Classification: Rigorous structural correction; see
+`docs/ancestry_resolution_kernel_audit.md`.**

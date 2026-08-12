@@ -11,7 +11,7 @@ This repository was created as a standalone local Git project so the PDE-first/K
 - Canonical Kelvin mixed current: the germ differential of instantaneous Kelvin action is a signed polarization/Hodge transfer, not a standalone positive payment.
 - Normalized ancestry law: it yields an exact distributed future-variance/current balance; Fisher/osmotic entropy is a distinct bank with a distinct conjugate potential.
 - Strong-Hodge case: `q j_circ` is a closed occupation current and therefore globally performs zero work against an exact covariance potential; localization turns this into boundary-crossing covariance flux.
-- Same-ancestor two-replica construction: future replicas must be independent after the common ancestor. The true second-order branching source is the diagonal viscous tensor `2 nu q K delta_Delta`, not `q j_circ tensor j_circ`.
+- Same-ancestor two-replica construction: future replicas must be independent after the **full physical** common ancestor. On the full diffusion state the continuous second-order branching source is the diagonal viscous tensor `2 nu q K delta_Delta`, not `q j_circ tensor j_circ`. A reduced ancestor has an additional conditional resolution-covariance face.
 - Exact smooth periodic shear calibrations rule out several tempting selector-independent scalar reservoirs at the current structural level.
 
 ### Current frontier
@@ -357,7 +357,7 @@ Kelvin audit checks that Brownian anchor covariance `2 nu` gives q.v. density
 
 **Classification: Exact Itô identities and exact Kelvin stochastic calibration.**
 
-The canonical same-ancestor source `2 nu q K delta_Delta` is structurally the same
+The full-state continuous same-ancestor source `2 nu q K delta_Delta` is structurally the same
 diagonal carré-du-champ class, but no new coordinate-level identification is made
 without a literal state map.  `S^int` remains undefined; no continuation/restart or
 regularity conclusion follows.
@@ -603,3 +603,125 @@ common Brownian noise lives only in the anchor while relative shape has zero q.v
 **Classification: Exact weighted time-reversal/Fokker--Planck identities.  Physical
 state identification, uniform singular-time shape/covariance collapse, restart
 capacity, and continuation remain open.**
+
+
+## 2026-08-12 — adversarial locality repair separates area, support, and whitened covariance
+
+An independent audit found a genuine gap in the wording of the local future-tensor
+bridge: `H_r -> 0` does not imply spatial support locality.  The exact incompressible
+deformation `F_r=diag(r^-1,1,r)` sends an isotropic reference packet to
+`H_r=diag(r^3,r^2,r)->0` while the largest transported line scale
+`sqrt(det H_r)/sigma_min(H_r)` remains `1`.  A smooth flux witness
+`X cos(x_1)e_2` then has an order-area payoff error and order-`r^4` covariance defect,
+so the area-only local tensor statement is false.
+
+The fixed-state theorem was repaired to the invariant topology
+`H_r^{-T} epsilon_r -> 0` in conditional `L^2`.  A sufficient condition is support
+diameter -> 0 together with
+`sqrt(sum A_j^2)/sigma_min(H_r) * omega_2(diameter) -> 0`.  Raw Frobenius remainder
+smallness is not enough: the long-thin witness has raw remainder small relative to
+`|H|_F^2` while the metric-whitened contraction remains order one.  The general
+Nanson determinant wording was also corrected: `D_t log det M_H=-4 div u`; only its
+incompressible consequence `D_t det M_H=0` is used in the NS programme.
+
+**Classification: Exact identities/counterexamples plus rigorous conditional
+fixed-state repair.  Uniform singular-time packet locality remains open.**
+
+## 2026-08-12 — ancestry reference gauge exposes the true state-map domain
+
+The normalized ancestry coefficients have the exact gauge
+`phi'=e^g phi`, `f'=e^-g f`, `w'=w-nu K grad g`.  The density `q`, current velocity
+`j`, generator `L`, and both Ito drifts `b_+,b_-` remain unchanged.  Thus `f,phi,w`
+are representation data, not independent physical hidden state coordinates.
+
+Writing `K=BB^T`, the physical Kelvin fact that anchored relative shape has zero
+quadratic variation forces `D Pi_shape B=0`.  Hence a positive-definite/full-rank
+ancestry diffusion cannot encode nontrivial smooth Kelvin shape on an open region;
+the true ancestry state must contain deterministic/null directions carrying shape,
+or shape must be represented by enlarged path/history state.  The repository still
+does not define the full ancestry state coordinate/manifold `y` line by line, so the
+programme-specific state map remains definition-blocked rather than estimate-blocked.
+
+**Classification: Exact reference-gauge/diffusion identities and rigorous generic
+no-go; ancestry state manifold remains open-literal.**
+
+## 2026-08-12 — same ancestor is state-resolution sensitive
+
+The ancestry-state audit was generalized from deterministic state maps to a
+conditional lift kernel `kappa(y,dY_K)`.  The exact law of total covariance gives a
+new named physical object,
+`C_res=Cov_kappa(m(Y_K))=1/2 int int (m(Y1)-m(Y2))^{otimes2} dkappa dkappa`.
+It is the covariance created by conditioning on a reduced ancestry label that does
+not resolve the full physical current shape.  It can be nonzero with zero full-state
+future variance and even with zero hidden dynamics, so it is not viscous q.v.
+
+An exact affine Navier--Stokes shear `u=(a y,0,0)` shows why the alternative
+full-state interpretation is nontrivial: fixed relative shape evolves
+deterministically while the anchor diffuses, giving a joint `(X,R)` covariance of
+rank 3 in dimension 6 and determinant zero.  Hence a smooth positive density with
+respect to ordinary full current-shape volume is not universal.  A full-state
+ancestry route needs degenerate/submanifold/hypoelliptic measure geometry; a reduced
+route needs `kappa` and its resolution pair face.
+
+The old viscous branching tensor `2 nu q K delta_Delta` remains exact on the full
+diffusion state.  Its scope is now explicit: it is not the whole pair content after
+a state reduction.  No identification of `C_res` with the still-undefined
+`S^int/Z_irr` is made.
+
+**Classification: Exact identities and exact NS calibration; ancestry-state
+semantics remain open-literal.**
+
+## 2026-08-12 — resolved enstrophy and future covariance form one tensor bank
+
+Combining the physical backward-Kelvin state `(X,F)` with the full-state covariance
+law gives a general co-deforming identity.  `eta=F^-1 omega` has zero backward mean
+residual and carré-du-champ
+`Gtilde=2 nu F^-1 grad(omega) grad(omega)^T F^-T`.  The resolved mean dyad loses
+`Gtilde`, future covariance gains `Gtilde`, and their sum is homogeneous in the
+co-deforming frame.  After pushing forward physically,
+`T_tot=omega omega^T+Sigma_fut` obeys only the common two-sided stretch operator.
+Half-trace gives
+`D_K^-(|omega|^2/2+B_fut)=tr(S T_tot)`: viscous q.v. is internal transfer between
+resolved and unresolved second moment.  This retypes the restart obstruction as
+strain work on the **total** second-moment tensor plus localization/boundary/exit and
+finite-size/state-resolution faces.
+
+**Classification: Exact full-state tensor identity.  No continuation claim.**
+
+## 2026-08-12 — ideal coherent restart core collapses to `(rho,F,Q_tot)`
+
+After the locality, deformation and future-covariance audits are combined, an
+isotropically refined coherent infinitesimal packet has exact factorization
+`L=rho F`, `H=rho^2 F^-T`, `Q_flux_raw=rho^4 Q_tot`, and
+`T_tot=F Q_tot F^T`.  The packet metric is `rho^-4 F^T F`, so the ideal normalized
+bank is exactly `tr(T_tot)/2`: physical scale cancels.  The variables have distinct
+physical roles: `rho` is changed only by actual refinement/reselection, `F` carries
+material support/strain, and `Q_tot` carries resolved plus unresolved Kelvin second
+moment with viscous q.v. only as internal transfer.
+
+The exact affine vortex-stretch calibration prevents an overclaim: the
+support-normalized scalar `tr(Q_tot)/2` can stay constant while physical enstrophy
+grows exponentially, so deformation/support geometry remains indispensable for
+restart.  The remaining nonideal faces are finite quadrupole/locality error,
+state-resolution covariance, and physical boundary/exit/reset currents.
+
+**Classification: Exact factorization and exact NS no-go; no restart theorem.**
+
+## 2026-08-12 — exact polynomial NS shears rule out finite shape-moment closure
+
+The cubic heat shear identified the centered surface quadrupole as the first
+finite-size shape carrier, but an exact quintic heat shear shows that quadrupole is
+not a finite closure.  Two positive centered `yz` surfaces with widths
+`1` and `1+(1/2)P_4(y)` have identical area and identical second moment by Legendre
+orthogonality, while their fourth moments differ by `8/315`.  Under
+`U_5=y^5+20 nu t y^3+60 nu^2 t^2 y`, an exact NS heat shear, their material area
+rates differ exactly by `-(8/63)e_y`.
+
+More generally, for every `m`, the perturbation `P_{2m}` preserves all lower even
+moments while the exact heat shear `U_{2m+1}=exp(nu t d_yy)y^{2m+1}` detects the
+`2m`-th moment.  Hence no finite centered surface-moment truncation universally
+closes the exact finite current generator.  The physical shape hierarchy is real;
+the viable restart route is uniform finite-shape collapse, not finite-dimensional
+moment completion.
+
+**Classification: Exact NS calibration family and rigorous structural no-go.**

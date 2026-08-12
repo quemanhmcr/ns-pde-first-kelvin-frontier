@@ -429,7 +429,12 @@ def material_metric_derivative(grad_u: Matrix, area_frame: Matrix) -> sp.Matrix:
 
 
 def material_metric_logdet_rate(grad_u: Matrix, area_frame: Matrix) -> sp.Expr:
-    """d log det M / dt; equals 2 div u and vanishes for incompressible flow."""
+    """Incompressible-specialized d log det M/dt under Hdot=-(grad u)^T H.
+
+    The helper ``material_area_frame_rhs`` is already the div-free Nanson law.
+    Within that specialization this expression is 2 div u and therefore zero.
+    The general compressible Nanson law instead gives d log det M/dt=-4 div u.
+    """
     M = area_frame_metric(area_frame)
     Mdot = material_metric_derivative(grad_u, area_frame)
     return sp.simplify(sp.trace(M.inv() * Mdot))

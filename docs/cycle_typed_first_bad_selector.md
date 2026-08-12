@@ -558,8 +558,8 @@ extension selects a whole three-loop block `M_fb tensor I_3`, retains the full
 `3 x 3` cross-orientation covariance, and normalizes by the packet metric
 `(H^T H)^(-1)`.  Passive orientation/scale/shear changes then cancel exactly.  What
 remains is material metric-stretching work and the metric-amplified departure of
-future covariance from an area-squared local tensor law; raw rank-one loop variance
-is not sufficient by itself.
+future covariance from a support-local, metric-whitened local tensor law; raw
+rank-one loop variance and small area-frame entries are not sufficient by themselves.
 
 **Classification: Rigorous consequence; no continuation claim.**
 

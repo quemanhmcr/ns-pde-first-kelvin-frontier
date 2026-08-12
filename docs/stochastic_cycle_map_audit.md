@@ -168,7 +168,7 @@ explicit.
 
 ---
 
-## 5. Relation to the canonical same-ancestor pair source
+## 5. Relation to the canonical full-state same-ancestor diffusion source
 
 The tensor form
 
@@ -177,7 +177,7 @@ The tensor form
 \]
 
 is the universal Itô form of a diagonal pair quadratic-variation source.  The
-programme's canonical same-ancestor ancestry source is independently audited as
+programme's canonical **full-state continuous** same-ancestor ancestry source is independently audited as
 
 \[
 2\nu qK\,\delta_\Delta.

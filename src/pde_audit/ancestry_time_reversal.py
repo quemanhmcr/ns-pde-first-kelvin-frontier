@@ -226,3 +226,105 @@ def backward_state_map_residuals(
     if target_drift.shape != drift.shape or target_K.shape != diffusion.shape:
         raise ValueError("target state dimensions do not match the proposed map")
     return sp.simplify(drift - target_drift), sp.simplify(diffusion - target_K)
+
+
+def weighted_operator_scalar(
+    psi: sp.Expr,
+    w: Matrix,
+    K: Matrix,
+    phi: sp.Expr,
+    coords: Sequence[sp.Symbol],
+    nu: sp.Expr,
+) -> sp.Expr:
+    """L psi=w.grad psi+nu phi^-1 div(phi K grad psi)."""
+    n = len(coords)
+    grad_psi = gradient(psi, coords)
+    first = sum(w[i] * grad_psi[i] for i in range(n))
+    second = sum(
+        sp.diff(phi * sum(K[i, j] * grad_psi[j] for j in range(n)), coords[i])
+        for i in range(n)
+    )
+    return sp.simplify(first + nu * second / phi)
+
+
+def reference_gauge_transform(
+    w: Matrix,
+    phi: sp.Expr,
+    f: sp.Expr,
+    K: Matrix,
+    g: sp.Expr,
+    coords: Sequence[sp.Symbol],
+    nu: sp.Expr,
+) -> tuple[sp.Matrix, sp.Expr, sp.Expr]:
+    """Reference-gauge change preserving q, j and L for symmetric K.
+
+    phi' = e^g phi, f' = e^-g f, w' = w - nu K grad g.
+    """
+    phi_new = sp.simplify(sp.exp(g) * phi)
+    f_new = sp.simplify(sp.exp(-g) * f)
+    w_new = sp.simplify(w - nu * K * gradient(g, coords))
+    return w_new, phi_new, f_new
+
+
+def reference_gauge_invariance_residuals(
+    psi: sp.Expr,
+    w: Matrix,
+    K: Matrix,
+    phi: sp.Expr,
+    f: sp.Expr,
+    g: sp.Expr,
+    coords: Sequence[sp.Symbol],
+    nu: sp.Expr,
+) -> dict[str, sp.Expr | sp.Matrix]:
+    """Residuals showing q,j,L,b_+,b_- are reference-gauge invariant."""
+    w2, phi2, f2 = reference_gauge_transform(w, phi, f, K, g, coords, nu)
+    q_res = sp.simplify(f2 * phi2 - f * phi)
+    j_res = sp.simplify(
+        repository_current_velocity(w2, K, f2, coords, nu)
+        - repository_current_velocity(w, K, f, coords, nu)
+    )
+    L_res = sp.simplify(
+        weighted_operator_scalar(psi, w2, K, phi2, coords, nu)
+        - weighted_operator_scalar(psi, w, K, phi, coords, nu)
+    )
+    bp_res = sp.simplify(
+        expanded_forward_drift(w2, K, phi2, coords, nu)
+        - expanded_forward_drift(w, K, phi, coords, nu)
+    )
+    bm_res = sp.simplify(
+        reversed_drift(w2, K, phi2, f2, coords, nu)
+        - reversed_drift(w, K, phi, f, coords, nu)
+    )
+    return {
+        "q": q_res,
+        "j": j_res,
+        "L": L_res,
+        "b_plus": bp_res,
+        "b_minus": bm_res,
+    }
+
+
+def state_map_diffusion_factorization(
+    map_components: Matrix,
+    noise_factor: Matrix,
+    coords: Sequence[sp.Symbol],
+) -> tuple[sp.Matrix, sp.Matrix]:
+    """For K=B B^T, return JB and pushed covariance (JB)(JB)^T."""
+    J = sp.Matrix([
+        [sp.diff(map_components[a], x) for x in coords]
+        for a in range(map_components.rows)
+    ])
+    if noise_factor.rows != len(coords):
+        raise ValueError("noise factor row dimension must match ancestry coordinates")
+    JB = sp.simplify(J * noise_factor)
+    return JB, sp.simplify(JB * JB.T)
+
+
+def shape_noise_distribution(
+    shape_components: Matrix,
+    noise_factor: Matrix,
+    coords: Sequence[sp.Symbol],
+) -> sp.Matrix:
+    """D Pi_shape B. Physical Kelvin relative shape requires this to vanish."""
+    JB, _ = state_map_diffusion_factorization(shape_components, noise_factor, coords)
+    return JB

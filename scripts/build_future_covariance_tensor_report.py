@@ -13,6 +13,18 @@ from pde_audit.future_covariance_tensor import (  # noqa: E402
     backward_kelvin_flux_mean_residual,
     backward_local_tensor_operator,
     conditional_covariance,
+    total_second_moment_stretch_source,
+    total_scalar_strain_work,
+    total_physical_second_moment,
+    support_normalized_total_bank_pullback_residual,
+    support_normalized_common_stretch_derivative_residual,
+    physical_covariance_from_codeforming,
+    codeforming_vorticity_mean_residual,
+    codeforming_support_normalized_total_bank,
+    codeforming_mean_dyad_backward_source,
+    codeforming_kelvin_gram,
+    codeforming_gram_bulk_reconstruction_residual,
+    codeforming_covariance_metric_work_residual,
     connected_covariance_horizon_residual,
     connected_mean_horizon_residual,
     connected_mean_square_horizon_residual,
@@ -147,6 +159,24 @@ def main() -> None:
     local_source = sp.simplify(2 * nu * g * g.T)
     packet_pullback_res = sp.simplify(packet_tensor_pullback(local_source, H) - area_frame_qv_matrix(g, H, nu))
 
+    # Generic co-deforming total-bank witness.
+    Fco = sp.Matrix([[2, 1, 0], [0, 2, 1], [1, 0, 1]])
+    Gco = sp.Matrix(3, 3, sp.symbols("gc0:9"))
+    Csymv = sp.symbols("cc0:6")
+    Cco = sp.Matrix([[Csymv[0],Csymv[1],Csymv[2]],[Csymv[1],Csymv[3],Csymv[4]],[Csymv[2],Csymv[4],Csymv[5]]])
+    Avec = sp.Matrix(3,3,sp.symbols("aa0:9"))
+    Sco = sp.simplify((Avec+Avec.T)/2)
+    omegaco = sp.Matrix(sp.symbols("om0:3"))
+    Ttotco = total_physical_second_moment(omegaco,Cco,Fco)
+    pulled_gram = codeforming_kelvin_gram(Fco,Gco,nu)
+    codeforming_source_cancel = sp.simplify(codeforming_mean_dyad_backward_source(Fco,Gco,nu)+pulled_gram)
+    total_stretch = total_second_moment_stretch_source(Avec,Ttotco)
+    total_trace_res = sp.simplify(sp.trace(total_stretch)/2-total_scalar_strain_work(Sco,Ttotco))
+    support_bank_res = support_normalized_total_bank_pullback_residual(Cco,Fco)
+    support_stretch_res = support_normalized_common_stretch_derivative_residual(Avec,Fco,Ttotco)
+    gram_bulk_res = codeforming_gram_bulk_reconstruction_residual(Fco,Gco,nu)
+    cov_metric_res = codeforming_covariance_metric_work_residual(Cco,Fco,Sco)
+
     orient = sp.Matrix([1, 0, -1])
     scalar_mean = sp.exp(-nu * k**2 * tau) * sp.cos(k * a)
     orient_mean = orient * scalar_mean
@@ -159,9 +189,12 @@ def main() -> None:
             "mean_square_to_covariance_transfer": "Exact: the same carre-du-champ is lost by conditional mean-square and gained by future covariance",
             "same_ancestor_pair_diagonal_defect": "Exact matrix cross-derivation equal to vector carre-du-champ",
             "double_stokes_pair_covariance": "Exact current/cochain identity; closed-loop future covariance is double exterior derivative of pair momentum covariance",
-            "fixed_state_local_tensor": "Rigorous conditional Stokes theorem under conditional mean-square continuity of the random vorticity two-form",
+            "fixed_state_local_tensor": "Rigorous conditional Stokes theorem under support locality plus metric-whitened conditional L2 control; mean-square continuity alone is insufficient for anisotropic packets",
             "centered_C2_remainder": "Exact symmetric-loop scaling model; raw remainder starts at r^6 and metric-normalized remainder at r^2",
             "vorticity_dyad_tensor": "Exact 3D Navier-Stokes tensor identity; Kelvin Gram tensor is the viscous defect tensor of omega tensor omega",
+            "codeforming_kelvin_transfer": "Exact: eta=F^-1 omega removes stretching; mean dyad loses and future covariance gains the same pulled-back Kelvin Gram tensor",
+            "resolved_future_total_tensor": "Exact: T_tot=omega omega^T+Sigma_fut has no net Kelvin-Gram source and carries only common two-sided stretch locally",
+            "support_normalized_total_bank": "Exact: (1/2)tr((F F^T)^-1 T_tot) is the co-deforming trace and common stretch cancels exactly",
             "backward_kelvin_infinitesimal_generator": "Exact NS cancellation for the backward-Ito packet operator on H^T omega",
             "backward_kelvin_covariance_transfer": "Exact one-mode NS shear calibration: backward covariance gains Gamma while omega omega^T loses Gamma",
             "forward_future_vs_backward_kelvin_identification": "Open-literal; causal time orientation/full-state identification must be written before equating the two banks",
@@ -200,7 +233,7 @@ def main() -> None:
             "raw_covariance": smat(raw),
             "metric_amplified_remainder": smat(amplified),
             "leading_normalized_remainder_order": "r^2 for centered C^2 loop packets",
-            "analytic_condition": "conditional L2 continuity gives the area-squared tensor limit; C2 centered symmetry improves the raw remainder to r^6",
+            "analytic_condition": "for genuinely local uniformly conditioned packets, conditional L2 continuity gives the whitened tensor limit; centered C2 symmetry improves the raw remainder to r^6",
         },
         "ns_tensor_enstrophy": {
             "shear_dyad_residual_zero": zmat(shear_dyad_res),
@@ -218,6 +251,14 @@ def main() -> None:
             "local_gamma_tensor": smat(shear_Gamma),
             "causal_orientation": "past terminal t0 < t for the backward Kelvin martingale; forcing T>t into the anti-diffusive operator is not a positive conditional-variance semigroup",
         },
+        "codeforming_total_bank": {
+            "mean_covariance_source_cancel_zero": zmat(codeforming_source_cancel),
+            "pulled_gram_bulk_residual_zero": gram_bulk_res == 0,
+            "future_covariance_metric_work_residual_zero": cov_metric_res == 0,
+            "total_half_trace_strain_residual_zero": total_trace_res == 0,
+            "support_normalized_pullback_residual_zero": support_bank_res == 0,
+            "support_normalized_common_stretch_residual_zero": support_stretch_res == 0,
+        },
         "packet_source_consistency": {
             "local_source_pullback_residual_zero": zmat(packet_pullback_res),
             "orientation_rank_one_cross_negative": sp.simplify(orient_gamma[0, 2]) != 0 and sp.simplify(orient_gamma[0, 2] / (2 * nu * sp.diff(scalar_mean, a) ** 2)) == -1,
@@ -226,10 +267,10 @@ def main() -> None:
         "frontier": {
             "new_exact_object": "full-state vector future covariance tensor with complete mixed carre-du-champ source",
             "localization_object": "diagonal density of double-Stokes pair covariance (d box d) K_s",
-            "fixed_state_limit": "available conditionally from mean-square Stokes continuity",
-            "true_generator_obstruction": "full stochastic Kelvin state must intertwine with the proposed reduced spatial/current-frame state; hidden shape/history cannot be dropped by declaration",
-            "time_orientation_obstruction": "backward physical Kelvin martingale and forward abstract future-ancestry bank need a literal causal/time-reversal identification",
-            "true_singular_obstruction": "uniform diagonal trace/remainder control and material metric/boundary/exit work up to candidate singular time",
+            "fixed_state_limit": "available conditionally from support-local metric-whitened Stokes continuity",
+            "true_generator_obstruction": "finite (x,H) descent is already false by exact NS calibration; only infinitesimal descent is exact, so finite-shape collapse must be controlled",
+            "time_orientation_obstruction": "time-reversal operator algebra is audited; the remaining issue is the undefined ancestry state manifold and its pushforward to physical Kelvin state",
+            "true_singular_obstruction": "uniform support locality, packet conditioning, whitened covariance/shape remainder control and material metric/boundary/exit work up to candidate singular time",
         },
     }
 
@@ -243,6 +284,7 @@ def main() -> None:
     print("generator descent bad/good:", report["generator_descent"]["hidden_shape_bad_descends"], report["generator_descent"]["lumpable_good_descends"])
     print("NS dyad shear/ABC residuals:", report["ns_tensor_enstrophy"]["shear_dyad_residual_zero"], report["ns_tensor_enstrophy"]["abc_dyad_residual_zero"])
     print("backward shear mean/cov/Q/positivity:", report["exact_ns_backward_kelvin_shear"]["packet_mean_residual_zero"], report["exact_ns_backward_kelvin_shear"]["covariance_tensor_residual_zero"], report["exact_ns_backward_kelvin_shear"]["total_second_moment_residual_zero"], report["exact_ns_backward_kelvin_shear"]["manifest_positive_factorization_residual_zero"])
+    print("codeforming total bank:", report["codeforming_total_bank"])
     print("packet source pullback residual:", report["packet_source_consistency"]["local_source_pullback_residual_zero"])
     print("fixed-state normalized remainder order:", report["fixed_state_small_loop"]["leading_normalized_remainder_order"])
 

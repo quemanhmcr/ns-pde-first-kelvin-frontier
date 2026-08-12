@@ -14,7 +14,15 @@ from src.pde_audit.kelvin_shape_generator import (
     cubic_shear_residual_from_second_moment,
     local_nanson_area_rate,
     oriented_rectangle_area_vector_yz,
+    legendre_leading_moment,
+    legendre_width_density,
+    moment_hierarchy_shear_rate_difference,
     packet_shape_residual_matrix,
+    polynomial_heat_shear,
+    polynomial_heat_shear_residual,
+    width_surface_area,
+    width_surface_even_moment,
+    width_surface_shear_area_rate,
     rectangle_oriented_second_moment_yy,
     scaled_cubic_shape_residual,
     yz_rectangle_shear_area_rate_direct,
@@ -65,6 +73,70 @@ class KelvinShapeGeneratorAudit(unittest.TestCase):
         u1 = sp.Matrix([(x + r) ** 2, 0, 0])
         drift = anchor_relative_drifts(u0, [u1])[0]
         self.assertEqual(sp.simplify(drift - sp.Matrix([2 * x * r + r**2, 0, 0])), sp.zeros(3, 1))
+
+
+    def test_quintic_heat_shear_is_exact_navier_stokes(self) -> None:
+        y,t,nu=sp.symbols("y t nu")
+        U=polynomial_heat_shear(5,y,t,nu)
+        self.assertEqual(U,y**5+20*nu*t*y**3+60*nu**2*t**2*y)
+        self.assertEqual(polynomial_heat_shear_residual(5,y,t,nu),0)
+
+    def test_legendre_P4_surfaces_have_same_area_and_quadrupole_but_different_fourth_moment(self) -> None:
+        y=sp.symbols("y", real=True)
+        eps=sp.Rational(1,2)
+        w0=sp.Integer(1)
+        w1=legendre_width_density(4,y,eps)
+        P4=sp.legendre(4,y)
+        self.assertEqual(P4,(35*y**4-30*y**2+3)/8)
+        self.assertEqual(width_surface_area(w1,y),width_surface_area(w0,y))
+        self.assertEqual(width_surface_even_moment(w1,y,2),width_surface_even_moment(w0,y,2))
+        self.assertEqual(
+            sp.simplify(width_surface_even_moment(w1,y,4)-width_surface_even_moment(w0,y,4)),
+            sp.Rational(8,315),
+        )
+        # P4 >= -3/7 on [-1,1], so w1 >= 11/14 > 0.
+        self.assertEqual(sp.simplify(1+eps*sp.Rational(-3,7)),sp.Rational(11,14))
+
+    def test_same_area_and_quadrupole_do_not_determine_finite_surface_generator_in_exact_quintic_ns_shear(self) -> None:
+        y,t,nu=sp.symbols("y t nu")
+        eps=sp.Rational(1,2)
+        w0=sp.Integer(1)
+        w1=legendre_width_density(4,y,eps)
+        Uy=sp.diff(polynomial_heat_shear(5,y,t,nu),y)
+        rate0=width_surface_shear_area_rate(Uy,w0,y)
+        rate1=width_surface_shear_area_rate(Uy,w1,y)
+        self.assertEqual(width_surface_area(w1,y),width_surface_area(w0,y))
+        self.assertEqual(width_surface_even_moment(w1,y,2),width_surface_even_moment(w0,y,2))
+        self.assertEqual(sp.simplify(rate1-rate0),sp.Matrix([0,-sp.Rational(8,63),0]))
+
+    def test_legendre_hierarchy_hides_all_lower_even_moments_but_exposes_next_one(self) -> None:
+        y,eps=sp.symbols("y eps", real=True)
+        for m in range(1,6):
+            n=2*m
+            P=sp.legendre(n,y)
+            for j in range(m):
+                self.assertEqual(sp.integrate(y**(2*j)*P,(y,-1,1)),0)
+            self.assertEqual(
+                sp.simplify(sp.integrate(y**n*P,(y,-1,1))-legendre_leading_moment(n)),
+                0,
+            )
+
+    def test_every_finite_even_moment_truncation_is_seen_by_a_higher_exact_heat_shear(self) -> None:
+        y,t,nu,eps=sp.symbols("y t nu eps")
+        for m in range(1,5):
+            degree=2*m+1
+            self.assertEqual(polynomial_heat_shear_residual(degree,y,t,nu),0)
+            w0=sp.Integer(1)
+            w1=legendre_width_density(2*m,y,eps)
+            for j in range(m):
+                self.assertEqual(
+                    sp.simplify(width_surface_even_moment(w1,y,2*j)-width_surface_even_moment(w0,y,2*j)),
+                    0,
+                )
+            Uy=sp.diff(polynomial_heat_shear(degree,y,t,nu),y)
+            diff=sp.simplify(width_surface_shear_area_rate(Uy,w1,y)[1]-width_surface_shear_area_rate(Uy,w0,y)[1])
+            self.assertEqual(sp.simplify(diff-moment_hierarchy_shear_rate_difference(m,eps)),0)
+            self.assertNotEqual(moment_hierarchy_shear_rate_difference(m,sp.Integer(1)),0)
 
     def test_affine_shear_area_frame_descends_exactly_to_local_nanson(self) -> None:
         y, a, b, c = sp.symbols("y a b c")
