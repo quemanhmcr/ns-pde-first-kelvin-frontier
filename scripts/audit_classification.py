@@ -13,6 +13,8 @@ stochastic_note = ROOT / "docs" / "stochastic_cycle_map_audit.md"
 vorticity_note = ROOT / "docs" / "vorticity_kelvin_restart_audit.md"
 packet_note = ROOT / "docs" / "orientation_complete_restart_packet.md"
 future_tensor_note = ROOT / "docs" / "future_covariance_tensor_audit.md"
+shape_note = ROOT / "docs" / "kelvin_shape_generator_audit.md"
+time_note = ROOT / "docs" / "ancestry_time_reversal_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -22,6 +24,8 @@ stochastic_text = stochastic_note.read_text()
 vorticity_text = vorticity_note.read_text()
 packet_text = packet_note.read_text()
 future_tensor_text = future_tensor_note.read_text()
+shape_text = shape_note.read_text()
+time_text = time_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -142,12 +146,42 @@ future_tensor_required = [
     "vorticity dyad",
     "backward-Kelvin",
     "Generator descent",
-    "Open-literal",
+    "open-literal physical state",
     "No continuation/restart theorem",
 ]
 future_tensor_missing = [token for token in future_tensor_required if token not in future_tensor_text]
 if future_tensor_missing:
     print("missing future-covariance tensor structural markers:", future_tensor_missing)
+    sys.exit(1)
+
+shape_required = [
+    "common Wiener",
+    "zero martingale part",
+    "E_{\\rm shape}",
+    "cubic heat shear",
+    "same anchor",
+    "r^4",
+    "r^2",
+    "No regularity conclusion",
+]
+shape_missing = [token for token in shape_required if token not in shape_text]
+if shape_missing:
+    print("missing Kelvin current-shape structural markers:", shape_missing)
+    sys.exit(1)
+
+time_required = [
+    "Fokker--Planck",
+    "b_+",
+    "b_-",
+    "midpoint",
+    "w_{\\rm required}",
+    "w=u",
+    "Open-literal state-identification bridge",
+    "No regularity conclusion",
+]
+time_missing = [token for token in time_required if token not in time_text]
+if time_missing:
+    print("missing ancestry time-reversal structural markers:", time_missing)
     sys.exit(1)
 
 for forbidden in [
@@ -161,8 +195,13 @@ for forbidden in [
     "spatial future-covariance generator descent is proved",
     "forward future bank equals backward Kelvin bank",
     "future covariance tensor closes restart",
+    "finite-scale (x,H) generator descent is exact",
+    "finite shape hierarchy is uniformly controlled",
+    "shape residual is S^int",
+    "ancestry state is proved identical to physical Kelvin state",
+    "w=u is established generally",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

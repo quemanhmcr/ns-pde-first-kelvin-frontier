@@ -910,3 +910,35 @@ for generator descent, causal time identification, and uniform singular-time
 control.**
 
 No continuation/restart theorem and no regularity claim.
+
+
+---
+
+## Current-shape generator update
+
+The later audit `docs/kelvin_shape_generator_audit.md` resolves the full-state
+shape question more literally.  Uniform Wiener noise is common translation, so
+relative shape has zero q.v.; a differential area frame closes by Nanson, while a
+finite surface carries the exact strain-gradient residual
+`E_shape=-int_S[(grad u(y)-grad u(x))^T n] dA`.  Exact cubic NS shear proves that
+finite `(x,H)` descent fails even for centered equal-area surfaces.  The centered
+residual is raw `r^4`, relative-to-area `r^2`; uniform collapse near a candidate
+singular time remains open.
+
+**Classification: Exact kinematics + exact NS no-descent calibration; singular-time
+shape collapse remains open.**
+
+
+---
+
+## Causal ancestry update
+
+The normalized ancestry operator now has an exact weighted forward/backward drift
+split: `b_+=w+nu c_phi`, `b_-=w-nu c_phi-2nu K grad log f`, and
+`j=(b_++b_-)/2`.  Therefore the remaining causal seam is not time orientation in
+the abstract; it is the literal state map from the ancestry backward process to the
+physical backward-Kelvin anchor/current-shape state.  No identification is made by
+setting `w=u` silently.
+
+**Classification: Exact operator identity; physical state identification remains
+open-literal.**

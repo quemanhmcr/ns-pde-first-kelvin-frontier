@@ -24,8 +24,12 @@ SEAMS = {
     "future-covariance-double-stokes": ("audited", "closed-loop future covariance is the double-Stokes localization of the existing pair momentum covariance cochain"),
     "future-covariance-fixed-state-stokes-limit": ("audited-conditional", "conditional mean-square continuity gives the fixed-state area-squared local covariance tensor; centered C2 packets have r^2 normalized remainder"),
     "backward-kelvin-infinitesimal-generator": ("audited-calibration", "Nanson plus exact NS gives the backward-Ito packet mean operator; exact shear covariance transfers the Kelvin Gram tensor"),
-    "future-covariance-generator-descent": ("open-literal", "the full stochastic Kelvin current/shape state generator has not been shown to intertwine with the reduced first-bad spatial/area-frame state"),
-    "future-backward-time-identification": ("open-literal", "the abstract forward future-ancestry bank has not been line-by-line identified with the causal physical backward-Kelvin martingale bank"),
+    "backward-kelvin-full-shape-kinematics": ("audited", "uniform common Wiener motion acts only on the material anchor; relative current shape has finite-variation velocity-difference drift"),
+    "finite-surface-xH-descent": ("audited-calibration", "exact smooth NS cubic heat shear gives identical anchor/area-vector states with different finite-surface H drift"),
+    "infinitesimal-xH-descent": ("audited", "differential material area frames close exactly on anchor plus H by Nanson under uniform common noise"),
+    "finite-shape-uniform-collapse": ("open", "centered finite-surface shape residual is r^2 relative at fixed smooth scale in calibration, but no uniform first-bad singular-time collapse is proved"),
+    "ancestry-time-reversal-operator": ("audited", "weighted ancestry operator determines forward and backward Ito drifts exactly and j is their midpoint current velocity"),
+    "ancestry-physical-kelvin-state-map": ("open-literal", "the exact backward-Ito pushforward equations DPi K DPi^T=K_K and DPi b_- - nu K:Hess Pi=B_K are known, but no programme-specific ancestry-to-Kelvin state/payoff map is constructed"),
     "future-covariance-uniform-singular-limit": ("open", "fixed-state tensor existence is conditional-rigorous, but no uniform diagonal trace/remainder control is proved near a candidate singular time"),
     "restart-capacity": ("open", "uniform tensor remainder plus material metric-stretching and physical boundary/exit work remain uncontrolled"),
     "active-ck-pillar-ii": ("open-literal", "selector and deterministic/stochastic admissible CK operation classes are classified; S^int itself or any independently intended Z_irr is not defined line by line"),
@@ -42,8 +46,9 @@ required = {
     "restart-scale-renormalization", "orientation-complete-restart-packet",
     "material-flux-metric-split", "future-covariance-full-state-tensor-law",
     "future-covariance-double-stokes", "future-covariance-fixed-state-stokes-limit",
-    "backward-kelvin-infinitesimal-generator", "future-covariance-generator-descent",
-    "future-backward-time-identification", "future-covariance-uniform-singular-limit",
+    "backward-kelvin-infinitesimal-generator", "backward-kelvin-full-shape-kinematics",
+    "finite-surface-xH-descent", "infinitesimal-xH-descent", "finite-shape-uniform-collapse",
+    "ancestry-time-reversal-operator", "ancestry-physical-kelvin-state-map", "future-covariance-uniform-singular-limit",
     "restart-capacity", "active-ck-pillar-ii", "continuation-restart",
 }
 
@@ -64,6 +69,9 @@ for exact_seam in (
     "material-flux-metric-split",
     "future-covariance-full-state-tensor-law",
     "future-covariance-double-stokes",
+    "backward-kelvin-full-shape-kinematics",
+    "infinitesimal-xH-descent",
+    "ancestry-time-reversal-operator",
 ):
     if SEAMS[exact_seam][0] != "audited":
         raise SystemExit(f"{exact_seam} must remain explicitly audited")
@@ -71,9 +79,12 @@ if SEAMS["future-covariance-fixed-state-stokes-limit"][0] != "audited-conditiona
     raise SystemExit("fixed-state future-covariance Stokes limit must remain explicitly conditional on mean-square continuity")
 if SEAMS["backward-kelvin-infinitesimal-generator"][0] != "audited-calibration":
     raise SystemExit("backward-Kelvin infinitesimal generator must remain an exact/calibrated NS result")
-for seam in ("future-covariance-generator-descent", "future-backward-time-identification"):
-    if SEAMS[seam][0] != "open-literal":
-        raise SystemExit(f"{seam} must remain open-literal until the full state/time map is written line by line")
+if SEAMS["finite-surface-xH-descent"][0] != "audited-calibration":
+    raise SystemExit("finite-surface (x,H) descent must remain recorded as false by exact NS calibration")
+if SEAMS["finite-shape-uniform-collapse"][0] != "open":
+    raise SystemExit("finite-shape singular-time collapse must remain open until the strain-gradient hierarchy is controlled")
+if SEAMS["ancestry-physical-kelvin-state-map"][0] != "open-literal":
+    raise SystemExit("ancestry/physical Kelvin state map must remain open-literal until the state pushforward is written line by line")
 if SEAMS["future-covariance-uniform-singular-limit"][0] != "open":
     raise SystemExit("uniform singular-time future-covariance trace/remainder control must remain open")
 if SEAMS["active-ck-pillar-ii"][0] != "open-literal":

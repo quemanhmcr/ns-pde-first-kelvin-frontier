@@ -275,3 +275,51 @@ jobs:
         with:
           name: future-covariance-tensor
           path: audit-results/future_covariance_tensor_report.json
+
+  kelvin-current-shape-generator:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit common-noise current shape, finite-surface descent, and exact NS cubic shear
+        run: python -m unittest -v tests.test_kelvin_shape_generator
+      - name: Build Kelvin current-shape generator artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_kelvin_shape_generator_report.py
+      - name: Upload Kelvin current-shape generator artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: kelvin-current-shape-generator
+          path: audit-results/kelvin_shape_generator_report.json
+
+  ancestry-time-reversal:
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install symbolic audit dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
+      - name: Audit weighted ancestry forward/backward drift split and physical Kelvin matching condition
+        run: python -m unittest -v tests.test_ancestry_time_reversal
+      - name: Build ancestry time-reversal audit artifact
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_ancestry_time_reversal_report.py
+      - name: Upload ancestry time-reversal audit artifact
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ancestry-time-reversal
+          path: audit-results/ancestry_time_reversal_report.json

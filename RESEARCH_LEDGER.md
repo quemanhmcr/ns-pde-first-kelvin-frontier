@@ -536,3 +536,70 @@ Open: programme-specific full-state generator descent, forward-future/backward-
 Kelvin causal identification, uniform singular-time diagonal trace/remainder,
 material metric/boundary/exit capacity, literal `S^int` if separately intended, and
 continuation/restart.  No regularity claim.
+
+
+
+## 2026-08-12 — backward-Kelvin full current-shape state resolves the generator dichotomy
+
+The stochastic generator frontier was descended from an abstract hidden-state
+question to the literal material current.  Constantin--Iyer/Eyink uniform Wiener
+transport means all points of one current share the same Brownian increment.  With a
+material anchor `X` and relative embedding `R`, the exact backward kinematics is
+`d^-X=u(X)dt+sqrt(2nu)d^-W` and
+`d^-R=[u(X+R)-u(X)]dt`.  Therefore relative shape has zero q.v.; the finite-cylinder
+generator contains `-nu Delta_X` only in the anchor coordinate and first-order
+velocity-difference drift in shape.
+
+For differential area elements this closes exactly on `(X,H)` by Nanson.  For a
+finite material surface the exact law is
+`Hdot=-(grad u(X))^T H+E_shape`, where
+`E_shape=-int_S[(grad u(y)-grad u(X))^T n]dA`.  This term is physical
+finite-variation strain-gradient/surface-shape deformation.
+
+The exact smooth Navier--Stokes heat shear
+`u=(y^3+6 nu t y,0,0)` gives two centered `yz` rectangles with the same anchor and
+same area vector `4 e_x`, but `E_shape=-4e_y` and `-16e_y`.  Thus finite-scale
+`(x,H)` generator descent is rigorously false even in exact NS; orientation
+completion does not encode higher surface shape.  The missing term is exactly
+`-3 int_S y^2 dA e_y` in this calibration, exposing the surface quadrupole as the
+first centered hidden shape state.  Under linear scaling `r`, the raw residual is
+`r^4` while its size relative to area is exactly `r^2`.
+
+This resolves the old binary generator-descent seam: full current-shape kinematics is
+literal, infinitesimal `(x,H)` descent is exact, finite `(x,H)` descent is false, and
+the living question is uniform collapse/control of the finite-shape hierarchy near
+a candidate singular time.  The `r^2` order matches the centered covariance
+localization remainder geometrically, but the two physical channels are not
+identified.
+
+**Classification: Exact stochastic/material identities + exact NS calibration +
+rigorous structural consequence.  Uniform singular-time shape collapse,
+forward-future/backward-Kelvin identification, restart capacity, and continuation
+remain open.**
+
+
+
+## 2026-08-12 — normalized ancestry time reversal turns the causal seam into a state-map question
+
+The normalized ancestry operator was expanded before identifying any symbol with the
+physical Kelvin drift.  For symmetric `K`, with
+`L psi=w.grad psi+nu phi^{-1} div(phi K grad psi)` and `q=f phi`, define
+`(c_phi)_j=phi^{-1} partial_i(phi K_ij)`.  The exact forward Itô drift is
+`b_+=w+nu c_phi`; the exact time-reversed drift is
+`b_-=w-nu c_phi-2nu K grad log f`; and the stored current velocity satisfies
+`j=(b_++b_-)/2=w-nu K grad log f`.  The Fokker--Planck current is exactly `qj`.
+
+Therefore the operator-level forward/backward orientation is no longer an open
+bridge.  If the ancestry backward drift is the physical backward-Kelvin drift `u`,
+then `w` is forced to be `u+nu c_phi+2nu K grad log f`.  Setting `w=u` by notation
+alone leaves the explicit mismatch `-nu c_phi-2nu K grad log f`, classified as
+reference-geometry plus time-reversal/osmotic drift rather than an internal source.
+
+What remains open-literal is the actual state map from the ancestry variables
+`(f,phi,K,w,...)` to the physical backward Kelvin anchor/current-shape state.  This
+is especially nontrivial because the physical current-shape diffusion is degenerate:
+common Brownian noise lives only in the anchor while relative shape has zero q.v.
+
+**Classification: Exact weighted time-reversal/Fokker--Planck identities.  Physical
+state identification, uniform singular-time shape/covariance collapse, restart
+capacity, and continuation remain open.**

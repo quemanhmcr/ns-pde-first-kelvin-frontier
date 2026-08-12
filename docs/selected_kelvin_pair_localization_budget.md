@@ -1535,3 +1535,125 @@ generator descent, forward-future/backward-Kelvin identification, uniform
 singular-time diagonal remainder control, restart, and regularity remain open.**
 
 See `docs/future_covariance_tensor_audit.md`.
+
+
+---
+
+## 27. Literal backward-Kelvin current-shape state and the finite-shape current
+
+The generator-descent seam can now be typed more sharply.  For a smooth material
+current under the uniform backward Wiener flow, choose one material anchor `X` and
+relative embedding `R`.  Then
+
+\[
+\widehat d_tX=u(X,t)dt+\sqrt{2\nu}\widehat dW_t,
+\qquad
+\boxed{
+\widehat d_tR(\sigma)
+=[u(X+R(\sigma),t)-u(X,t)]dt.
+}
+\]
+
+Thus relative shape has zero stochastic quadratic variation.  On cylinder
+observables the exact backward generator is
+
+\[
+\boxed{
+\mathscr K^-
+=u(X)\cdot\nabla_X-\nu\Delta_X
++\sum_p[u(X+R_p)-u(X)]\cdot\nabla_{R_p}.
+}
+\]
+
+A differential area frame closes exactly:
+
+\[
+D_tH=-(\nabla u(X))^TH.
+\]
+
+A finite surface does not.  Its exact drift is
+
+\[
+\boxed{
+\dot H=-(\nabla u(X))^TH+E_{\rm shape},
+\qquad
+E_{\rm shape}
+=-\int_\Sigma[(\nabla u(y)-\nabla u(X))^Tn]dA.
+}
+\]
+
+The exact smooth NS shear `u=(y^3+6 nu t y,0,0)` supplies two centered surfaces with
+the same anchor and area vector `4e_x` but shape residuals `-4e_y` and `-16e_y`.
+Therefore finite `(x,H)` is not an exact quotient state.  For centered scale `r`, the
+calibration gives `E_shape=O(r^4)` raw and `E_shape/H=O(r^2)` exactly.
+
+**Physical classification:** `E_shape` is finite-variation strain-gradient/material
+shape deformation.  It is not martingale q.v., not pressure/gauge, and not `S^int`.
+
+**Classification: Exact current-shape generator identity and exact NS no-descent
+calibration.  Uniform singular-time collapse of the shape hierarchy remains open.**
+
+See `docs/kelvin_shape_generator_audit.md`.
+
+
+---
+
+## 28. The normalized ancestry current is the forward/backward drift midpoint
+
+The causal seam can be read directly from the existing normalized ancestry operator
+
+\[
+\mathscr L\psi
+=w\cdot\nabla\psi
++\nu\phi^{-1}\nabla\cdot(\phi K\nabla\psi),
+\qquad q=f\phi.
+\]
+
+For symmetric `K`, define
+
+\[
+(c_\phi)_j=\phi^{-1}\partial_i(\phi K_{ij}).
+\]
+
+Then the expanded forward Itô drift is
+
+\[
+\boxed{b_+=w+\nu c_\phi.}
+\]
+
+The exact time-reversed drift at density `q` is
+
+\[
+\boxed{
+b_-=w-\nu c_\phi-2\nu K\nabla\log f.
+}
+\]
+
+The repository current velocity therefore satisfies
+
+\[
+\boxed{
+j=w-\nu K\nabla\log f
+=\frac{b_++b_-}{2},
+}
+\]
+
+and the Fokker--Planck current is exactly `J=qj`.
+
+If the ancestry backward drift is to be identified with the physical backward
+Kelvin drift `u`, then the forward ancestry symbol must obey
+
+\[
+\boxed{
+w=u+\nu c_\phi+2\nu K\nabla\log f.
+}
+\]
+
+Silently setting `w=u` instead leaves the explicit mismatch
+`-nu c_phi-2nu K grad log f`, which is time-reversal/osmotic plus reference-geometry
+drift, not an internal pair source.
+
+**Classification: Exact weighted time-reversal/Fokker--Planck identities.  The
+ancestry-to-physical-Kelvin state map remains open-literal.**
+
+See `docs/ancestry_time_reversal_audit.md`.

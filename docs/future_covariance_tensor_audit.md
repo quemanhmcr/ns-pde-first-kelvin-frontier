@@ -791,12 +791,15 @@ This is an exact NS tensor transfer calibration.
 **Classification: Exact one-mode Navier--Stokes backward-Kelvin covariance
 calibration.**
 
-The repository also uses an abstract **future** ancestry variance bank.  The algebra
-is the same after a remaining-horizon reversal, but the global identification of the
-forward ancestry state with the physical backward stochastic Kelvin state has not
-been written line by line.
+The repository also uses an abstract **future** ancestry variance bank.  The later
+ancestry time-reversal audit now derives its forward and backward Itô drifts exactly
+from the normalized operator and proves that the stored current velocity is their
+midpoint.  Thus the operator-level time orientation is no longer open.  What remains
+literal-open is the state map identifying that ancestry backward process with the
+physical backward stochastic Kelvin anchor/current-shape state.
 
-**Classification: Open-literal time-orientation/state-identification bridge.**
+**Classification: Exact time-reversal operator algebra; open-literal physical state
+identification.**
 
 ---
 
@@ -856,11 +859,27 @@ The residual is a literal hidden-state flux, not an algebraic nuisance.
 **Classification: Exact generic generator-descent criterion plus exact
 counterexample.**
 
-For the actual NS/Kelvin construction, the infinitesimal `(x,H)` mean operator is
-now audited, but the complete full-state covariance/current-shape generator has not
-been written line by line in this repository.
+The subsequent current-shape audit writes the physical state more literally.  Under
+the uniform backward Wiener flow, one material anchor carries the entire Brownian
+increment while the relative loop/surface embedding has finite variation driven by
+velocity differences.  Thus the full smooth-current kinematics is explicit at the
+cylinder level.  It also shows that the proposed finite-scale quotient `(x,H)` is
+**not** exact in general: a finite material surface has the additional physical
+strain-gradient shape current
 
-**Classification: Open-literal programme-specific generator descent.**
+\[
+E_{\rm shape}
+=-\int_\Sigma[(\nabla u(y)-\nabla u(x))^Tn]\,dA.
+\]
+
+Exact cubic Navier--Stokes shear gives identical `(x,H)` states with different
+`Hdot`, while the differential-area limit closes exactly by Nanson.  The remaining
+programme-specific problem is therefore uniform collapse/control of this finite
+shape hierarchy as the first-bad scale tends to zero, not an unspecified generator
+compatibility question.
+
+**Classification: Exact descent dichotomy; uniform singular-time shape collapse is
+open.**
 
 ---
 

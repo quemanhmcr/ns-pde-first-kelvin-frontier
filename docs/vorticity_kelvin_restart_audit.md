@@ -822,3 +822,27 @@ uniform singular-time control, not the existence of a fixed-state tensor.
 rigorous conditional fixed-state Stokes theorem.  No continuation/restart theorem.**
 
 See `docs/future_covariance_tensor_audit.md`.
+
+
+---
+
+## Finite-loop generator correction: strain-gradient surface current
+
+The infinitesimal Kelvin microframe is not the same object as a finite loop packet.
+Under the uniform backward stochastic flow, relative loop shape has zero martingale
+part, but a finite material spanning surface obeys
+
+\[
+\dot h_\Sigma=-(\nabla u(x))^T h_\Sigma
+-\int_\Sigma[(\nabla u(y)-\nabla u(x))^Tn]\,dA.
+\]
+
+The second term is a physical finite-variation strain-gradient/surface-shape
+current.  The exact NS shear `u=(y^3+6 nu t y,0,0)` gives equal-anchor equal-area
+surfaces with different values of this current, so finite `(x,H)` generator descent
+is false in general.  For centered scaled rectangles the residual is raw `r^4` and
+relative-to-area `r^2`, matching the geometric order of the independently derived
+centered future-covariance remainder without identifying the two physical terms.
+
+**Classification: Exact material-surface identity and exact NS calibration.  Uniform
+first-bad shape collapse remains open.**
