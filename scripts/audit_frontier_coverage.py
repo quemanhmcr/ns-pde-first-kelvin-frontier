@@ -332,7 +332,13 @@ SEAMS = {
     "critical-merger-affine-target-noise-coboundary": ("audited-calibration", "common merged vorticity and critical grad omega=0 force d=0 and N_target=0 for the instantiated branch-resolved event"),
     "critical-merger-same-replica-cross-block-quotient": ("audited-calibration", "nonzero common packet noise at collision gives identical diagonal/cross label qv blocks; normalized quotient is invariant only when cross blocks are retained"),
     "critical-merger-selector-zero-jump-cusp": ("audited-calibration", "a label projection can jump at collision with zero physical packet jump, while the side packet branch rate inherits the singular critical-coordinate speed"),
-    "critical-merger-ancestry-identification": ("open-literal", "instantaneous packet-state collision does not identify the distinct central/side branch histories with the programme ancestry state"),
+    "critical-merger-sheet-vs-material-transport": ("audited-calibration", "exact heat shear has u_y=0 while side critical sheets move normally, so sheet attachment is a moving-cut/reanchoring operation rather than material Kelvin transport"),
+    "critical-merger-literal-kelvin-ancestry-qv-no-go": ("audited-calibration", "Kelvin anchor y qv rate is 2 nu while the deterministic critical-sheet path has zero qv, excluding literal path identity"),
+    "critical-merger-nanson-history-memory": ("audited-calibration", "the exact branch gap q_side-q_central=-e^{-nu t}(1-r)^2/(2r) forces unequal central/side Nanson shear histories at merger after any common pre-merger initialization"),
+    "critical-merger-residual-vs-support-memory": ("audited-calibration", "central and side transported endpoint packets can share circulation/target/residual while retaining different line and area frames"),
+    "critical-merger-moving-cut-circulation-law": ("audited-calibration", "the packet derivative splits exactly into viscous heat flux plus critical-sheet Reynolds moving-cut flux; the latter equals the prior residual cusp after area normalization"),
+    "critical-merger-finite-variation-moving-cut": ("audited-calibration", "the isolated side critical cut has divergent instantaneous speed but finite total variation d(t0) and continuous endpoint state"),
+    "critical-merger-ancestry-identification": ("open-literal", "literal critical-path/Kelvin-ancestry equality is now excluded in the exact merger calibration; a nontrivial programme ancestry lift/readout remains unspecified"),
     "first-bad-critical-merger-selector-identification": ("open-literal", "no theorem maps this exact critical-sheet merger to the programme badness/resolve selector or proves general endogenous selector local finiteness"),
     "reverse-codeforming-future-bank-identification": ("open-literal", "the same-clock co-deforming martingale core is not identified with the future conditional covariance bank or ancestry state"),
     "first-bad-full-shape-local-descent": ("open-literal", "the exact descent-error SDE is now known, but no theorem controls deterministic bias, strain-shape drift, vorticity-gradient residual, metric-whitened covariance remainder, and actual support locality uniformly on the migrating first-bad current"),
@@ -392,6 +398,12 @@ required |= {
     "critical-merger-affine-target-noise-coboundary",
     "critical-merger-same-replica-cross-block-quotient",
     "critical-merger-selector-zero-jump-cusp",
+    "critical-merger-sheet-vs-material-transport",
+    "critical-merger-literal-kelvin-ancestry-qv-no-go",
+    "critical-merger-nanson-history-memory",
+    "critical-merger-residual-vs-support-memory",
+    "critical-merger-moving-cut-circulation-law",
+    "critical-merger-finite-variation-moving-cut",
     "critical-merger-ancestry-identification",
     "first-bad-critical-merger-selector-identification",
 }
@@ -804,6 +816,9 @@ if SEAMS["first-bad-branch-competition-hysteresis-identification"][0] != "open-l
 for seam in ("two-mode-shear-critical-sheet-merger", "critical-merger-scalar-to-full-packet-no-go", "critical-merger-branch-resolved-event-map", "critical-merger-affine-target-noise-coboundary", "critical-merger-same-replica-cross-block-quotient", "critical-merger-selector-zero-jump-cusp"):
     if SEAMS[seam][0] != "audited-calibration":
         raise SystemExit(f"{seam} must remain an exact NS merger calibration/no-go")
+for seam in ("critical-merger-sheet-vs-material-transport", "critical-merger-literal-kelvin-ancestry-qv-no-go", "critical-merger-nanson-history-memory", "critical-merger-residual-vs-support-memory", "critical-merger-moving-cut-circulation-law", "critical-merger-finite-variation-moving-cut"):
+    if SEAMS[seam][0] != "audited-calibration":
+        raise SystemExit(f"{seam} must remain an exact NS transport/Nanson/moving-cut calibration")
 if SEAMS["fixed-shape-critical-packet-coalescence"][0] != "audited-conditional":
     raise SystemExit("full instantaneous packet coalescence must remain conditional on the explicitly supplied fixed-shape packet functor")
 for seam in ("critical-merger-ancestry-identification", "first-bad-critical-merger-selector-identification"):
