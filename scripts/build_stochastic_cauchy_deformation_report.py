@@ -279,6 +279,15 @@ from pde_audit.selected_residual_combined_event import (  # noqa: E402
     same_space_event_interaction_residual,
     same_space_sequential_product_rule_residuals,
 )
+from pde_audit.selected_residual_combined_qv_rate import (  # noqa: E402
+    combined_continuous_qv_rate_revaluation_faces,
+    combined_continuous_qv_rate_revaluation_residual,
+    one_mode_hidden_synthesis_qv_rate_calibration,
+    post_selected_noise_response,
+    pre_selected_noise_response,
+    selected_continuous_qv_rate_from_noise,
+    source_revaluation_vs_jump_square_calibrations,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1419,6 +1428,29 @@ one_mode_combined_mixed_closes=sp.simplify(
     one_mode_combined["total_jump"]-one_mode_combined["selector_old_jump"]-one_mode_combined["mixed_jump"]
 ) == sp.zeros(3,1)
 
+# Continuous selected Brownian-source rate revaluation across the combined event.
+Nrate=sp.Matrix(6,3,sp.symbols("nr0:18"))
+combined_rate_revaluation_zero=combined_continuous_qv_rate_revaluation_residual(
+    Nrate,Acomb,2,0,2,1,nu
+) == sp.zeros(3)
+Bpre_rate=pre_selected_noise_response(Nrate,2,0)
+Bpost_rate=post_selected_noise_response(Nrate,Acomb,2,1)
+combined_endpoint_rate_shapes=(Bpre_rate.shape,Bpost_rate.shape) == ((3,3),(3,3))
+rate_left,rate_right,rate_quad=combined_continuous_qv_rate_revaluation_faces(
+    Nrate,Acomb,2,0,2,1,nu
+)
+combined_rate_faces_nontrivial=rate_left != sp.zeros(3) and rate_quad != sp.zeros(3)
+source_jump_separation=source_revaluation_vs_jump_square_calibrations()
+source_nonzero_jump_zero=bool(source_jump_separation["rate_revaluation_nonzero_with_zero_state_jump_square"])
+source_zero_jump_nonzero=bool(source_jump_separation["zero_rate_revaluation_with_nonzero_state_jump_square"])
+
+one_mode_rate=one_mode_hidden_synthesis_qv_rate_calibration(t,nu,k)
+one_mode_rate_opposite=one_mode_rate["opposite_noise_residual"] == 0
+one_mode_rate_selector_only_same=one_mode_rate["selector_only_post_qv_rate"] == one_mode_rate["pre_qv_rate"]
+one_mode_rate_post_zero=one_mode_rate["actual_post_qv_rate"] == sp.zeros(3)
+one_mode_rate_actual_negative_pre=one_mode_rate["actual_rate_revaluation"] == sp.simplify(-one_mode_rate["pre_qv_rate"])
+one_mode_rate_pair_faces_close=one_mode_rate["rate_revaluation_residual"] == sp.zeros(3)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1610,6 +1642,15 @@ report = {
         "naive_additive_physical_selector_event_no_go": "Audited calibration / rigorous no-naive-additivity consequence",
         "selected_hybrid_with_simultaneous_linear_events": "Rigorous conditional composition of exact same-clock identities",
         "first_bad_simultaneous_event_instantiation": "Open-literal",
+        "combined_selected_continuous_noise_readout": "Exact identity",
+        "combined_selected_continuous_qv_rate": "Exact identity",
+        "combined_continuous_qv_rate_full_pair_revaluation": "Exact identity",
+        "signed_qv_rate_revaluation_typing": "Exact physical typing consequence",
+        "continuous_qv_rate_vs_jump_qv_independence": "Rigorous consequence of exact state/noise typing",
+        "one_mode_hidden_event_continuous_qv_cancellation": "Audited exact-NS calibration",
+        "selector_only_qv_rate_hidden_event_no_go": "Audited calibration / rigorous hidden-event necessity",
+        "selected_hybrid_source_jump_ledger": "Rigorous conditional composition of exact same-clock identities",
+        "first_bad_hybrid_source_event_instantiation": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -2005,6 +2046,27 @@ report = {
         },
         "typing": "physical library event and selector readout are distinct; simultaneous event uses the discrete product rule and full pair jump",
         "first_bad": "Open-literal only at NS-generated badness/resolve timing and actual event-map/state instantiation",
+    },
+    "selected_residual_combined_qv_rate": {
+        "continuous_qv_rate_revaluation_residual_zero": bool(combined_rate_revaluation_zero),
+        "pre_post_selected_noise_response_shapes_expected": bool(combined_endpoint_rate_shapes),
+        "rate_revaluation_faces_nontrivial": bool(combined_rate_faces_nontrivial),
+        "source_rate_can_change_with_zero_state_jump_square": bool(source_nonzero_jump_zero),
+        "state_jump_square_can_be_nonzero_with_zero_source_rate_change": bool(source_zero_jump_nonzero),
+        "one_mode_ns": {
+            "opposite_same_replica_noise_coefficients": bool(one_mode_rate_opposite),
+            "selector_only_qv_rate_unchanged": bool(one_mode_rate_selector_only_same),
+            "actual_post_event_qv_rate_zero": bool(one_mode_rate_post_zero),
+            "actual_rate_revaluation_is_minus_pre_rate": bool(one_mode_rate_actual_negative_pre),
+            "full_pair_rate_revaluation_residual_zero": bool(one_mode_rate_pair_faces_close),
+            "q0": str(one_mode_rate["q0"]),
+            "q1": str(one_mode_rate["q1"]),
+            "pre_qv_rate": str(one_mode_rate["pre_qv_rate"]),
+            "actual_rate_revaluation": str(one_mode_rate["actual_rate_revaluation"]),
+            "typing": "selector-only source rate misses a hidden physical synthesis that cancels the actual post-event same-replica Brownian response",
+        },
+        "typing": "jump optional qv and adjacent-interval continuous Brownian source-rate revaluation are distinct exact tensors",
+        "first_bad": "Open-literal at actual library/badness/timing/event/clock instantiation",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),

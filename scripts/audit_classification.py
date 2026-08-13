@@ -42,6 +42,7 @@ selected_residual_readout_note = ROOT / "docs" / "first_bad_selected_residual_re
 same_replica_library_note = ROOT / "docs" / "same_replica_residual_library_dynamics_audit.md"
 hybrid_selected_note = ROOT / "docs" / "selected_residual_hybrid_semimartingale_audit.md"
 combined_event_note = ROOT / "docs" / "selected_residual_combined_event_audit.md"
+combined_qv_rate_note = ROOT / "docs" / "selected_residual_combined_qv_rate_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -80,6 +81,7 @@ selected_residual_readout_text = selected_residual_readout_note.read_text()
 same_replica_library_text = same_replica_library_note.read_text()
 hybrid_selected_text = hybrid_selected_note.read_text()
 combined_event_text = combined_event_note.read_text()
+combined_qv_rate_text = combined_qv_rate_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -740,6 +742,22 @@ if combined_event_missing:
     print("missing selected residual combined-event markers:", combined_event_missing)
     sys.exit(1)
 
+combined_qv_rate_required = [
+    "Pre/post selected Brownian response",
+    "rate revaluation uses the same full pair product rule",
+    "signed rate revaluation is not negative q.v. production",
+    "Continuous source-rate revaluation and jump optional q.v. are independent",
+    "Exact one-mode Navier--Stokes referee",
+    "selector switch only",
+    "Updated hybrid ledger",
+    "actual first-bad library/timing/event/clock instantiation",
+    "No restart/continuation/regularity theorem claimed",
+]
+combined_qv_rate_missing = [token for token in combined_qv_rate_required if token not in combined_qv_rate_text]
+if combined_qv_rate_missing:
+    print("missing selected residual combined qv-rate markers:", combined_qv_rate_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -897,6 +915,10 @@ for forbidden in [
     "jump square closes combined reset covariance",
     "simultaneous selected event algebra proves restart",
     "first-bad physical event map is derived from Navier-Stokes",
+    "qv rate revaluation is negative Brownian production",
+    "jump qv determines the continuous source rate",
+    "continuous source rate determines jump qv",
+    "combined qv rate ledger proves restart",
     "generic germ mixing commutes with per-germ spectral blocks",
     "diagonal-only spectral refinement is sufficient",
     "quadratic selector reset is a positive physical payment",
@@ -949,7 +971,7 @@ for forbidden in [
     "hybrid selected path law determines first-bad event times",
     "hybrid selected semimartingale proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

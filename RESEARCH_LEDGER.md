@@ -1304,3 +1304,15 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Rigorous conditional composition:** with supplied same-clock library/event/selector data, continuous Brownian and all finite linear selected-event faces are now literal.
 - **Open-literal:** actual first-bad badness/resolve timing, physical event map/state, support locality, and cross-clock/future-bank identification.
 - **Open:** restart/continuation/regularity.
+
+
+## Continuous Brownian-source revaluation across combined selected events
+
+- **Exact identity:** pre/post selected noise responses are `B_-=E_- N` and `B_+=E_+ A N`; endpoint continuous q.v. rates are `2nu B_-B_-^T` and `2nu B_+B_+^T`.
+- **Exact identity:** with `dB=(E_+A-E_-)N`, the signed rate revaluation is `2nu[dB B_-^T+B_- dB^T+dB dB^T]`.
+- **Exact physical typing:** the signed difference of two PSD q.v. rates is a finite source-rate revaluation, not negative Brownian production.
+- **Rigorous consequence:** continuous source-rate revaluation and finite jump optional q.v. are independent state functions; either can vanish while the other is nonzero.
+- **Audited calibration:** exact one-mode NS has opposite same-replica packet noises; selector-only rate is unchanged, but hidden synthesis `g_1 -> g_1+g_0` followed by `0 -> 1` makes the actual post-event continuous q.v. rate exactly zero.
+- **Rigorous conditional composition:** continuous source, finite state jump, jump q.v. atom, source-rate revaluation, and second-moment reset are now separately typed on supplied same-clock paths.
+- **Open-literal:** actual first-bad library/badness/timing/event maps and cross-clock/future-bank identification.
+- **Open:** restart/continuation/regularity.
