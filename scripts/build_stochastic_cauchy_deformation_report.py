@@ -269,6 +269,16 @@ from pde_audit.selected_residual_hybrid_semimartingale import (  # noqa: E402
     selector_jump_optional_qv,
     selector_readout_jump,
 )
+from pde_audit.selected_residual_combined_event import (  # noqa: E402
+    combined_jump_square,
+    combined_second_moment_jump_faces,
+    combined_second_moment_jump_residual,
+    combined_selected_jump_operator,
+    one_mode_hidden_germ_synthesis_calibration,
+    same_space_event_interaction_faces,
+    same_space_event_interaction_residual,
+    same_space_sequential_product_rule_residuals,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1376,6 +1386,39 @@ one_mode_hybrid_state_zero=one_mode_hybrid["state_change"] == sp.zeros(3,1) and 
 one_mode_hybrid_jump_opposite=one_mode_hybrid["jump_10"] == sp.simplify(-one_mode_hybrid["jump_01"])
 one_mode_hybrid_jump_qv_nonzero=one_mode_hybrid["jump_optional_qv"] != sp.zeros(3) and sp.simplify(one_mode_hybrid["jump_optional_qv_trace"]) != 0
 
+# Simultaneous physical packet event plus selector switch.
+Icomb=sp.eye(3); Zcomb=sp.zeros(3)
+Acomb=sp.Matrix.vstack(
+    sp.Matrix.hstack(Icomb,Zcomb),
+    sp.Matrix.hstack(Icomb,Icomb),
+)
+combined_interaction_zero=same_space_event_interaction_residual(Acomb,2,0,1) == sp.zeros(3,6)
+combined_seq_phys,combined_seq_sel=same_space_sequential_product_rule_residuals(Acomb,2,0,1)
+combined_sequential_zero=combined_seq_phys == sp.zeros(3,6) and combined_seq_sel == sp.zeros(3,6)
+combined_physical_face,combined_selector_face,combined_mixed_face=same_space_event_interaction_faces(Acomb,2,0,1)
+combined_mixed_nonzero=combined_mixed_face != sp.zeros(3,6)
+combined_naive_missing_mixed=sp.simplify(
+    combined_selected_jump_operator(Acomb,2,0,2,1)-combined_physical_face-combined_selector_face
+) == combined_mixed_face
+Qcomb=sp.diag(1,2,3,4,5,6)
+combined_second_moment_zero=combined_second_moment_jump_residual(Qcomb,Acomb,2,0,2,1) == sp.zeros(3)
+Xcomb=sp.Matrix([1,2,3,4,5,6])
+Qcomb_path=sp.simplify(Xcomb*Xcomb.T)
+_,_,combined_quad_face=combined_second_moment_jump_faces(Qcomb_path,Acomb,2,0,2,1)
+combined_jump_square_zero=sp.simplify(
+    combined_quad_face-combined_jump_square(Xcomb,Acomb,2,0,2,1)
+) == sp.zeros(3)
+
+one_mode_combined=one_mode_hidden_germ_synthesis_calibration(t,nu,k)
+one_mode_combined_opposite=one_mode_combined["chi1"] == sp.simplify(-one_mode_combined["chi0"])
+one_mode_combined_physical_old_zero=one_mode_combined["physical_old_jump"] == sp.zeros(3,1)
+one_mode_combined_mixed_nonzero=one_mode_combined["mixed_jump"] != sp.zeros(3,1)
+one_mode_combined_post_zero=one_mode_combined["post_selected"] == sp.zeros(3,1)
+one_mode_combined_naive_false=one_mode_combined["total_jump"] != one_mode_combined["selector_old_jump"]
+one_mode_combined_mixed_closes=sp.simplify(
+    one_mode_combined["total_jump"]-one_mode_combined["selector_old_jump"]-one_mode_combined["mixed_jump"]
+) == sp.zeros(3,1)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1557,6 +1600,16 @@ report = {
         "one_mode_selector_optional_qv_closed_excursion": "Audited exact-NS calibration",
         "selector_jump_qv_vs_reset_covariance": "Exact identity / rigorous typing consequence",
         "first_bad_selected_hybrid_path_instantiation": "Open-literal",
+        "combined_selected_post_event_readout": "Exact identity",
+        "combined_selected_jump_operator": "Exact identity",
+        "combined_event_discrete_product_rule": "Exact identity",
+        "combined_event_physical_selector_mixed_face": "Exact identity / rigorous interaction necessity",
+        "combined_event_second_moment_full_pair_jump": "Exact identity",
+        "combined_event_jump_square_typing": "Exact semimartingale typing consequence",
+        "one_mode_combined_event_mixed_face": "Audited exact-NS payload calibration",
+        "naive_additive_physical_selector_event_no_go": "Audited calibration / rigorous no-naive-additivity consequence",
+        "selected_hybrid_with_simultaneous_linear_events": "Rigorous conditional composition of exact same-clock identities",
+        "first_bad_simultaneous_event_instantiation": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1929,6 +1982,29 @@ report = {
         },
         "typing": "continuous Brownian bracket and finite selector jump squares are distinct path-variation faces; jump square is not a continuous stochastic covariance producer",
         "first_bad": "Open-literal at NS-generated selector timing and any simultaneous physical packet event; hybrid algebra is exact once path data are supplied",
+    },
+    "selected_residual_combined_event": {
+        "interaction_product_rule_residual_zero": bool(combined_interaction_zero),
+        "sequential_product_rules_residual_zero": bool(combined_sequential_zero),
+        "mixed_physical_selector_face_nonzero": bool(combined_mixed_nonzero),
+        "naive_old_reference_faces_miss_exactly_mixed_face": bool(combined_naive_missing_mixed),
+        "second_moment_full_pair_jump_residual_zero": bool(combined_second_moment_zero),
+        "jump_square_equals_quadratic_pair_face": bool(combined_jump_square_zero),
+        "event_law": "D=E_+ A-E_-=E_- DeltaA+DeltaE+DeltaE DeltaA",
+        "one_mode_ns": {
+            "opposite_pre_event_residuals": bool(one_mode_combined_opposite),
+            "old_selector_physical_face_zero": bool(one_mode_combined_physical_old_zero),
+            "mixed_face_nonzero": bool(one_mode_combined_mixed_nonzero),
+            "post_selected_residual_zero": bool(one_mode_combined_post_zero),
+            "naive_selector_only_jump_false": bool(one_mode_combined_naive_false),
+            "mixed_face_closes_exact_jump": bool(one_mode_combined_mixed_closes),
+            "selector_old_jump": str(one_mode_combined["selector_old_jump"]),
+            "mixed_jump": str(one_mode_combined["mixed_jump"]),
+            "total_jump": str(one_mode_combined["total_jump"]),
+            "typing": "exact one-mode NS residual payload under specified hidden-germ current synthesis activates the finite physical-selector interaction",
+        },
+        "typing": "physical library event and selector readout are distinct; simultaneous event uses the discrete product rule and full pair jump",
+        "first_bad": "Open-literal only at NS-generated badness/resolve timing and actual event-map/state instantiation",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),

@@ -1292,3 +1292,15 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited no-bank calibration:** a closed selector excursion can return to the identical selected state with positive accumulated jump-square.
 - **Audited exact-NS calibration:** the half-period one-mode packets realize this closed excursion exactly, so positive selector jump q.v. is not a monotone physical covariance/uncertainty bank.
 - **Open-literal:** the hybrid law does not generate badness/resolve timing, choose simultaneous physical packet events, or identify the programme cross-clock ancestry/future bank.  Restart, continuation, and regularity remain open.
+
+
+## Simultaneous physical packet event + selector switch
+
+- **Exact identity:** post-event selected readout is `E_+ A X`; the jump operator is `D=E_+ A-E_-`.
+- **Exact identity:** on a common library space, `D=E_- DeltaA+DeltaE+DeltaE DeltaA`; the mixed `DeltaE DeltaA` face is mandatory finite physical--selector interaction.
+- **Exact identity:** equivalently `D=E_- DeltaA+DeltaE A=DeltaE+E_+ DeltaA`.
+- **Exact identity:** selected second-moment jump is `D Q E_-^T+E_- Q D^T+D Q D^T`; jump optional q.v. is only the quadratic pathwise face.
+- **Audited calibration:** exact half-period one-mode NS residuals plus the specified current synthesis `g_1 -> g_1+g_0` give zero old-selector physical face, nonzero selector and mixed faces, and prove naive physical-plus-selector additivity false.
+- **Rigorous conditional composition:** with supplied same-clock library/event/selector data, continuous Brownian and all finite linear selected-event faces are now literal.
+- **Open-literal:** actual first-bad badness/resolve timing, physical event map/state, support locality, and cross-clock/future-bank identification.
+- **Open:** restart/continuation/regularity.
