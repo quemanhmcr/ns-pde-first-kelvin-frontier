@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from pde_audit.ancestry_resolution_kernel import (  # noqa: E402
     vector_total_covariance_decomposition,
 )
-from pde_audit.cycle_selector import two_cycle_library  # noqa: E402
+from pde_audit.cycle_selector import rank_one_selector, two_cycle_library  # noqa: E402
 from pde_audit.codeforming_surface_moment_tower import (  # noqa: E402
     codeforming_homogeneous_scale_shape_residual,
     codeforming_anchor_one_form_derivative,
@@ -154,6 +154,20 @@ from pde_audit.principal_kelvin_residual_channels import (  # noqa: E402
     simple_spectrum_connection,
     simple_spectrum_connection_skew_residual,
     two_replica_pathwise_channel_residual,
+)
+from pde_audit.selected_principal_kelvin_lineage import (  # noqa: E402
+    coefficient_synthesis_map,
+    first_bad_pair_spectral_commutator,
+    first_bad_spectral_commutator,
+    germ_extraction_map,
+    one_mode_half_period_lineage_calibration,
+    selected_library_spectral_decomposition_residual,
+    selector_excursion_pair_face_sums,
+    selector_reset_excursion_residual,
+    selector_reset_weighted_faces,
+    selector_reset_weighted_residual,
+    spectral_synthesis_pair_expansion_residual,
+    synthesis_pair_functor_residual,
 )
 from pde_audit.reverse_codeforming_kelvin_martingale import (  # noqa: E402
     codeforming_residual_energy_drift,
@@ -1007,6 +1021,60 @@ try:
 except ValueError:
     degeneracy_rejected = True
 
+# Literal first-bad selector / principal-channel lineage.
+Slin = rank_one_selector(2,1)
+P0lin = [sp.diag(1,0,0),sp.diag(0,1,0),sp.diag(0,0,1)]
+clin = sp.sqrt(2)/2
+v1lin=sp.Matrix([clin,clin,0]); v2lin=sp.Matrix([clin,-clin,0]); v3lin=sp.Matrix([0,0,1])
+P1lin=[v1lin*v1lin.T,v2lin*v2lin.T,v3lin*v3lin.T]
+lam0lin=(1,4,9); lam1lin=(2,5,7)
+M0lin=sum((lam0lin[i]*P0lin[i] for i in range(3)),sp.zeros(3))
+M1lin=sum((lam1lin[i]*P1lin[i] for i in range(3)),sp.zeros(3))
+selector_spectral_zero = first_bad_spectral_commutator(Slin,[P0lin[0],P1lin[0]]) == sp.zeros(6)
+selector_pair_spectral_zero = first_bad_pair_spectral_commutator(Slin,[P0lin[0],P1lin[0]]) == sp.zeros(36)
+Smixlin=sp.Matrix([[0,1],[1,0]])
+generic_germ_mixing_nonzero = first_bad_spectral_commutator(Smixlin,[P0lin[0],P1lin[1]]) != sp.zeros(6)
+Qlin=sp.Matrix([
+    [3,1,0, 1,0,1], [1,2,0, 0,1,0], [0,0,4, 1,0,2],
+    [1,0,1, 5,2,0], [0,1,0, 2,6,1], [1,0,2, 0,1,7],
+])
+selected_endpoint_spectral_zero = selected_library_spectral_decomposition_residual(
+    Qlin,Slin,[M0lin,M1lin],[P0lin,P1lin],[lam0lin,lam1lin]
+) == 0
+Alin=coefficient_synthesis_map([sp.Rational(2,3),-sp.Rational(1,2)])
+synthesis_pair_zero=synthesis_pair_functor_residual(Qlin,Alin) == sp.zeros(9,1)
+spectral_pair_expansion_zero=spectral_synthesis_pair_expansion_residual(
+    Qlin,[sp.Rational(2,3),-sp.Rational(1,2)],sp.Integer(5),sp.diag(1,0,1)
+) == 0
+A0lin,A1lin=germ_extraction_map(2,0),germ_extraction_map(2,1)
+selector_reset_zero=selector_reset_weighted_residual(Qlin,A0lin,A1lin,M0lin,M1lin) == 0
+reset_faces_lin=selector_reset_weighted_faces(Qlin,A0lin,A1lin,M0lin,M1lin)
+reset_four_face_zero=sp.simplify(reset_faces_lin.total_jump-reset_faces_lin.reconstructed) == 0
+
+one_mode_lineage=one_mode_half_period_lineage_calibration(t,nu,k)
+one_mode_lineage_opposite_zero=one_mode_lineage["opposite_residual_zero"] == 0
+one_mode_lineage_parent_zero=one_mode_lineage["full_parent_channel"] == 0
+one_mode_lineage_diag_nonzero=sp.simplify(one_mode_lineage["diagonal_parent_channel"]) != 0
+one_mode_lineage_cross_cancels=sp.simplify(
+    one_mode_lineage["cross_child_channel"]+one_mode_lineage["diagonal_parent_channel"]
+) == 0
+one_mode_lineage_reset_zero=one_mode_lineage["reset_total_jump"] == 0 and one_mode_lineage["reset_reconstruction_residual"] == 0
+one_mode_lineage_reset_signed=sp.simplify(one_mode_lineage["reset_pair_left"]-one_mode_lineage["reset_pair_right"]) == 0 and sp.simplify(one_mode_lineage["reset_pair_quadratic"]+2*one_mode_lineage["reset_pair_left"]) == 0
+Qoline=one_mode_lineage["library_second_moment"]
+side_line=sp.pi/(2*k); Moline=sp.simplify(side_line**2*sp.eye(3))
+closed_excursion_zero=selector_reset_excursion_residual(Qoline,[A0lin,A1lin,A0lin],[Moline,Moline,Moline]) == 0
+geo_line,left_line,right_line,quad_line=selector_excursion_pair_face_sums(Qoline,[A0lin,A1lin,A0lin],[Moline,Moline,Moline])
+closed_excursion_faces_cancel=geo_line == 0 and sp.simplify(left_line+right_line+quad_line) == 0
+closed_excursion_quad_positive=bool(sp.N(quad_line.subs({t:1,nu:1,k:1})) > 0)
+closed_excursion_signed_negative=bool(sp.N((left_line+right_line).subs({t:1,nu:1,k:1})) < 0)
+
+Qaxis=sp.diag(3,1,2); e1axis,e2axis=sp.eye(3)[:,0],sp.eye(3)[:,1]
+uaxis=sp.simplify((e1axis+e2axis)/sp.sqrt(2)); vaxis=sp.simplify((e1axis-e2axis)/sp.sqrt(2))
+axis_before=((e1axis.T*Qaxis*e1axis)[0],(e2axis.T*Qaxis*e2axis)[0])
+axis_after=(sp.simplify((uaxis.T*Qaxis*uaxis)[0]),sp.simplify((vaxis.T*Qaxis*vaxis)[0]))
+cross_event_axis_values_change=axis_before != axis_after
+cross_event_block_total_invariant=sp.simplify(sum(axis_before)-sum(axis_after)) == 0
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1115,6 +1183,19 @@ report = {
         "degenerate_eigenspace_projector_gauge": "Exact gauge identity / theorem-domain correction",
         "linear_shear_principal_mixing_calibration": "Audited calibration",
         "first_bad_principal_channel_collapse": "Open",
+        "selected_first_bad_spectral_factor_commutation": "Exact identity",
+        "generic_germ_mixing_spectral_scope": "Audited generic algebraic scope counterexample",
+        "selected_endpoint_block_spectral_bank": "Exact identity",
+        "physical_residual_linear_synthesis_pair_functor": "Exact identity",
+        "spectral_refinement_cross_child_content": "Exact identity",
+        "selected_weighted_reset_pair_resolution": "Exact fixed/conditioned finite-event identity",
+        "one_mode_spectral_cross_child_cancellation": "Audited calibration / rigorous cross-child necessity",
+        "one_mode_selected_reset_signed_revaluation": "Audited calibration",
+        "selected_reset_positive_path_no_go": "Audited calibration / rigorous no-positive-path consequence",
+        "cross_event_principal_axis_lineage": "Open-literal",
+        "first_bad_physical_residual_refinement_lift": "Open-literal",
+        "selected_spectral_hybrid_same_clock_ledger": "Rigorous conditional composition of exact identities",
+        "first_bad_selected_spectral_lineage": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1466,6 +1547,39 @@ report = {
         },
         "random_frame_typing": "pathwise spectral products retain geometry-residual correlation without mean-metric factorization",
         "first_bad": "Open: weighted channel collapse is an exact reformulation of residual descent but does not prove support locality or close physical event/cross-clock faces",
+    },
+    "selected_principal_kelvin_lineage": {
+        "selector_spectral_commutator_zero": bool(selector_spectral_zero),
+        "selector_pair_spectral_commutator_zero": bool(selector_pair_spectral_zero),
+        "generic_germ_mixing_commutator_nonzero": bool(generic_germ_mixing_nonzero),
+        "selected_endpoint_spectral_decomposition_residual_zero": bool(selected_endpoint_spectral_zero),
+        "synthesis_pair_functor_residual_zero": bool(synthesis_pair_zero),
+        "spectral_pair_expansion_residual_zero": bool(spectral_pair_expansion_zero),
+        "selector_reset_residual_zero": bool(selector_reset_zero),
+        "selector_reset_four_face_residual_zero": bool(reset_four_face_zero),
+        "one_mode": {
+            "opposite_half_period_residual_zero": bool(one_mode_lineage_opposite_zero),
+            "full_parent_channel_zero": bool(one_mode_lineage_parent_zero),
+            "diagonal_parent_channel_nonzero": bool(one_mode_lineage_diag_nonzero),
+            "cross_child_cancels_diagonal": bool(one_mode_lineage_cross_cancels),
+            "selector_reset_total_zero": bool(one_mode_lineage_reset_zero),
+            "selector_reset_signed_face_identity": bool(one_mode_lineage_reset_signed),
+            "typing": "exact one-mode NS half-period finite residuals force cross-child spectral cancellation and signed reset revaluation",
+        },
+        "closed_selector_excursion": {
+            "telescope_residual_zero": bool(closed_excursion_zero),
+            "signed_faces_cancel": bool(closed_excursion_faces_cancel),
+            "quadratic_path_face_positive": bool(closed_excursion_quad_positive),
+            "linear_pair_sum_negative": bool(closed_excursion_signed_negative),
+            "typing": "positive quadratic selector path length is cancelled by signed pair faces and is not a physical bank",
+        },
+        "cross_event_axis_gauge": {
+            "rank_one_channel_values_change": bool(cross_event_axis_values_change),
+            "projector_block_total_invariant": bool(cross_event_block_total_invariant),
+            "typing": "endpoint spectral blocks are canonical; individual axes are not canonically matched through a degenerate event without physical transport",
+        },
+        "hybrid_same_clock": "frozen selector: stretch+content+mixing; finite event: geometry+left+right+quadratic pair reset; degeneracy: projector blocks",
+        "first_bad": "Open-literal: actual current-to-residual refinement lift, badness/resolve predicates, moving cut time faces, support locality, and cross-clock ancestry remain missing",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),

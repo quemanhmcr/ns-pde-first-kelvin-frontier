@@ -34,6 +34,7 @@ reverse_codeforming_note = ROOT / "docs" / "reverse_codeforming_kelvin_martingal
 weighted_codeforming_note = ROOT / "docs" / "weighted_codeforming_kelvin_residual_audit.md"
 directional_refinement_note = ROOT / "docs" / "directional_refinement_kelvin_residual_audit.md"
 principal_channels_note = ROOT / "docs" / "principal_kelvin_residual_channels_audit.md"
+selected_lineage_note = ROOT / "docs" / "selected_principal_kelvin_lineage_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -64,6 +65,7 @@ reverse_codeforming_text = reverse_codeforming_note.read_text()
 weighted_codeforming_text = weighted_codeforming_note.read_text()
 directional_refinement_text = directional_refinement_note.read_text()
 principal_channels_text = principal_channels_note.read_text()
+selected_lineage_text = selected_lineage_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -578,6 +580,23 @@ if principal_channels_missing:
     print("missing principal Kelvin residual channel markers:", principal_channels_missing)
     sys.exit(1)
 
+selected_lineage_required = [
+    "no intrinsic selector--spectral commutator source",
+    "full pair functor",
+    "cross-child/cross-germ",
+    "four signed faces",
+    "positive quadratic selector increment is not a physical reset payment",
+    "no positive selector path-length bank",
+    "do not canonically match across an event",
+    "Hybrid selected-lineage law",
+    "actual first-bad residual-refinement lift",
+    "No restart/continuation/regularity theorem claimed",
+]
+selected_lineage_missing = [token for token in selected_lineage_required if token not in selected_lineage_text]
+if selected_lineage_missing:
+    print("missing selected principal Kelvin lineage markers:", selected_lineage_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -731,8 +750,16 @@ for forbidden in [
     "principal channel collapse proves support locality",
     "principal channel energy is the future covariance bank",
     "principal channel law proves restart",
+    "generic germ mixing commutes with per-germ spectral blocks",
+    "diagonal-only spectral refinement is sufficient",
+    "quadratic selector reset is a positive physical payment",
+    "individual principal axes match canonically across reset",
+    "generic synthesis law proves the actual first-bad residual refinement",
+    "selected spectral lineage proves support locality",
+    "selected spectral lineage is the future covariance bank",
+    "selected spectral lineage proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

@@ -1215,3 +1215,15 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited calibration:** exact linear NS shear `u=(gamma y,0,0)` with anisotropic frame `diag(2,1,3)` gives `Omega_12=2 gamma/3` and activates nonzero principal-axis mixing whose total is exactly the off-diagonal strain/metric work.
 - **Exact degeneracy gauge:** within a repeated-eigenvalue subspace, individual axes are gauge but the projector-block energy `lambda tr(PQ)` is invariant under internal orthogonal rotations.
 - **Open:** control pathwise spectral channel products on the same first-bad packet as support locality and all physical event faces.  No future-bank/restart/continuation/regularity theorem is claimed.
+
+## Selected principal Kelvin lineage
+
+- **Exact identity:** the cycle-typed diagonal rank-one first-bad selector lifts as `M_fb tensor I_3` and commutes with per-germ block-diagonal spectral fiber operators; the full pair lifts commute as well.  Generic germ mixing need not commute, so the theorem is typed to the literal first-bad selector.
+- **Exact identity:** the selected endpoint weighted energy is the sum of the selected germ's spectral-projector channels.  Off-diagonal germ pair blocks remain in the full library state and enter finite selector resets.
+- **Exact identity:** once a physical common-fiber synthesis `A=[a_i I_3]` is actually specified, `Q_A=A Q_lib A^T` and the pair map is `A tensor A`; each parent spectral channel contains every ordered child pair, including cross-child blocks.
+- **Audited calibration:** exact half-period one-mode NS finite residuals are opposite.  The full `(1,1)` parent spectral channel vanishes while diagonal-only child channels are positive and are cancelled exactly by cross-child content.
+- **Exact conditional event identity:** on a frozen/conditioned residual library a finite selector reset has four signed weighted faces: metric geometry, pair-left, pair-right, and pair-quadratic.
+- **Audited calibration:** the exact one-mode selector reset has equal endpoint energies, negative left/right pair faces, and positive quadratic face with exact cancellation.  The closed `g0 -> g1 -> g0` excursion has positive accumulated quadratic path length but zero net revaluation.
+- **Exact projector-gauge obstruction:** endpoint spectral projector blocks are canonical, but individual principal axes do not canonically match across a finite event without an explicit transport map; degeneracy makes that obstruction literal.
+- **Rigorous conditional composition:** on one compatible clock, frozen-selector simple-spectrum intervals use stretch/content/eigenframe-mixing traffic and finite hysteresis events use geometry plus full pair reset; at degeneracy use projector blocks.
+- **Open-literal:** the actual moving first-bad current-to-reconstructed-residual refinement lift is not yet derived; neither are the badness/resolve predicates, moving quantile/shell outer-time law, or cross-event principal-axis transport.  Support locality, uniform selected-channel collapse, future-bank/ancestry identification, restart, continuation, and regularity remain open.
