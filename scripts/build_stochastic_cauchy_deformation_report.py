@@ -335,6 +335,11 @@ from pde_audit.enstrophy_critical_hessian_evolution import (  # noqa: E402
     hessian_strain_rotation_logdet_rates,
     nonzero_determinant_from_lograte,
 )
+from pde_audit.enstrophy_critical_branch_competition import (  # noqa: E402
+    nondegenerate_value_crossing_geometry_calibration,
+    three_mode_branch_crossing_calibration,
+    transverse_crossing_orientation,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1662,6 +1667,24 @@ abc_he_jacobi_zero=abc_he["jacobi_residual"] == 0
 abc_he_div_zero=abc_he["divergence"] == 0
 abc_he_connection_zero=abc_he["connection_logdet_rate"] == 0 and abc_he["connection_divergence_residual"] == 0
 
+# Critical-branch competition and ranking crossing.
+geom_bc=nondegenerate_value_crossing_geometry_calibration(t)
+geom_bc_cross_zero=geom_bc["gap"].subs(t,0) == 0
+geom_bc_transverse=geom_bc["gap_rate"] == 2
+geom_bc_nondegenerate=geom_bc["det_hessian_1"] != 0 and geom_bc["det_hessian_2"] != 0
+
+shear_bc=three_mode_branch_crossing_calibration(x_lg,y_lg,z_lg,t,nu)
+shear_bc_ns_zero=shear_bc["ns_residual"] == sp.zeros(3,1)
+shear_bc_critical=shear_bc["critical_y_derivative_0"] == 0 and shear_bc["critical_y_derivative_pi"] == 0
+shear_bc_tie=shear_bc["value_0"] == shear_bc["value_pi"] == sp.Rational(9,2)*sp.exp(-2)
+shear_bc_curvatures=shear_bc["hessian_yy_0"] == -12*sp.exp(-2) and shear_bc["hessian_yy_pi"] == -60*sp.exp(-2)
+shear_bc_gap_rate=shear_bc["gap_rate_at_crossing"] == 48*nu*sp.exp(-2) and transverse_crossing_orientation(shear_bc["gap_rate_at_crossing"]) == 1
+shear_bc_pure_curvature=shear_bc["stretching_0"] == 0 and shear_bc["stretching_pi"] == 0 and shear_bc["kelvin_bulk_0"] == 0 and shear_bc["kelvin_bulk_pi"] == 0 and shear_bc["gap_rate_face_residual"] == 0
+shear_bc_rates_expected=shear_bc["time_rate_0"] == -12*nu*sp.exp(-2) and shear_bc["time_rate_pi"] == -60*nu*sp.exp(-2)
+shear_bc_both_decrease=bool(shear_bc["time_rate_0"] < 0 and shear_bc["time_rate_pi"] < 0)
+shear_bc_selector_value_continuous=shear_bc["selector_scalar_jump_at_tie"] == 0
+shear_bc_envelope_switch=shear_bc["envelope"]["derivative_jump"] == 48*nu*sp.exp(-2)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1906,6 +1929,15 @@ report = {
         "abc_critical_hessian_logdet_calibration": "Audited exact periodic-NS calibration",
         "critical_hessian_logdet_degeneracy_domain": "Exact theorem-domain correction",
         "first_bad_critical_branch_degeneracy_identification": "Open-literal",
+        "critical_branch_value_gap_rate": "Exact identity",
+        "critical_branch_three_face_competition": "Exact conditional Navier--Stokes identity",
+        "critical_value_crossing_vs_hessian_degeneracy": "Audited generic geometry separation",
+        "three_mode_shear_critical_sheet_crossing": "Audited exact periodic-NS calibration",
+        "three_mode_shear_pure_curvature_competition": "Audited exact-NS calibration",
+        "critical_value_crossing_no_positive_growth": "Audited exact-NS calibration / rigorous no-growth-switch consequence",
+        "selected_max_tie_continuity_derivative_switch": "Exact envelope consequence / audited NS calibration",
+        "critical_event_taxonomy_ranking_degeneracy_packet": "Rigorous structural consequence",
+        "first_bad_branch_competition_hysteresis_identification": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -2458,6 +2490,31 @@ report = {
         "curvature_volume_law": "for incompressible flow on a nondegenerate critical branch, d log|det H|/dt retains only growth-Hessian and relative-critical-transport faces",
         "conditional_nondegeneracy": "finite limiting integrated lograte preserves nonzero det H on an already smooth nondegenerate branch; this is not Navier-Stokes continuation",
         "first_bad": "Open-literal: no identification of critical-Hessian degeneracy/branch loss with the programme first-bad event or continuation failure",
+    },
+    "enstrophy_critical_branch_competition": {
+        "generic_geometry_crossing_at_equal_value": bool(geom_bc_cross_zero),
+        "generic_geometry_crossing_transverse": bool(geom_bc_transverse),
+        "generic_geometry_hessians_nondegenerate": bool(geom_bc_nondegenerate),
+        "three_mode_shear": {
+            "ns_residual_zero": bool(shear_bc_ns_zero),
+            "two_persistent_critical_sheets": bool(shear_bc_critical),
+            "crossing_value_expected": bool(shear_bc_tie),
+            "transverse_curvatures_expected": bool(shear_bc_curvatures),
+            "gap_rate_48nu_e_minus2": bool(shear_bc_gap_rate),
+            "pure_curvature_competition": bool(shear_bc_pure_curvature),
+            "branch_rates_expected": bool(shear_bc_rates_expected),
+            "both_branch_values_decrease": bool(shear_bc_both_decrease),
+            "selected_scalar_jump_zero_at_tie": bool(shear_bc_selector_value_continuous),
+            "selected_envelope_derivative_switch_expected": bool(shear_bc_envelope_switch),
+            "value": str(shear_bc["value_0"]),
+            "curvature_y0": str(shear_bc["hessian_yy_0"]),
+            "curvature_ypi": str(shear_bc["hessian_yy_pi"]),
+            "rate_y0": str(shear_bc["time_rate_0"]),
+            "rate_ypi": str(shear_bc["time_rate_pi"]),
+            "typing": "exact periodic NS critical-sheet ranking switch driven purely by different curvature decay rates; both values decrease and no sheet is created/destroyed",
+        },
+        "event_typing": "value crossing, critical-geometry degeneracy/birth/death, and physical packet events are distinct mechanisms",
+        "first_bad": "Open-literal: no mapping from programme badness/resolve hysteresis to enstrophy critical-value competition is defined",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),

@@ -1377,3 +1377,15 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited exact periodic-NS calibration:** ABC strict maximum has `Hdot=-2nu H`, logdet rate `-6nu`, determinant `-(A^6/2)e^-6nu t`, and zero incompressible connection logdet face.
 - **Exact theorem-domain correction:** inverse-Hessian/logdet formulas stop at Hessian degeneracy; branch creation/loss/merger is a separate geometry/event seam.
 - **Open-literal:** identification of critical-branch degeneracy with the actual first-bad selector/event/continuation mechanism.
+
+
+## Enstrophy critical-branch competition and value crossing
+
+- **Exact identity:** branch ranking gap `Delta e=e1-e2` has rate equal to the difference of the two critical-value rates.
+- **Exact conditional NS identity:** gap rate splits into relative stretching, relative Kelvin-bulk loss, and relative curvature diffusion.
+- **Audited geometry calibration:** transverse value crossing and full Hessian degeneracy are independent conditions; two negative-definite Hessians can persist through a value tie.
+- **Audited exact periodic-NS calibration:** a three-mode heat shear has persistent critical sheets `y=0,pi` crossing at `t*=1/nu`, equal value `9e^-2/2`, and negative transverse curvatures `-12e^-2`, `-60e^-2`.
+- **Audited exact-NS mechanism:** at the crossing both stretching and Kelvin bulk vanish; branch rates are pure curvature `-12nu e^-2` and `-60nu e^-2`, so both values decrease while the winner switches with gap rate `48nu e^-2`.
+- **Exact envelope consequence:** selected scalar max is continuous at the tie but its derivative switches; selector index can jump without a scalar state jump.
+- **Rigorous structural consequence:** branch ranking crossing, branch degeneracy/birth/death, and physical packet events are distinct event types.
+- **Open-literal:** actual first-bad badness/resolve hysteresis and its mapping to critical-branch competition.
