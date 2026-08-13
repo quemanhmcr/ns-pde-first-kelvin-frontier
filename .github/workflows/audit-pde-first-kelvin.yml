@@ -508,7 +508,7 @@ jobs:
       - name: Install symbolic audit dependency
         run: python -m pip install --disable-pip-version-check -r requirements-audit.txt
       - name: Audit stochastic Cauchy deformation, full current-shape covariance, and finite-shape Kelvin descent
-        run: python -m unittest -v tests.test_stochastic_cauchy_deformation tests.test_deformation_current_pair_coupling tests.test_full_current_shape_covariance tests.test_finite_shape_kelvin_descent tests.test_surface_moment_hierarchy tests.test_codeforming_surface_moment_tower tests.test_codeforming_whitened_kelvin_remainder tests.test_dynamic_reconstructed_kelvin_residual tests.test_reverse_codeforming_kelvin_martingale tests.test_weighted_codeforming_kelvin_residual tests.test_directional_refinement_kelvin_residual tests.test_principal_kelvin_residual_channels tests.test_selected_principal_kelvin_lineage tests.test_frame_aware_kelvin_residual_refinement tests.test_spectral_kelvin_event_transfer tests.test_kelvin_event_normal_form tests.test_first_bad_selected_residual_readout tests.test_same_replica_residual_library_dynamics tests.test_selected_residual_hybrid_semimartingale tests.test_selected_residual_combined_event tests.test_selected_residual_combined_qv_rate tests.test_random_selected_event_correlation tests.test_own_local_kelvin_affine_event tests.test_first_bad_rule_admissibility tests.test_local_enstrophy_kelvin_growth_gate tests.test_moving_enstrophy_critical_point tests.test_enstrophy_critical_hessian_evolution tests.test_enstrophy_critical_branch_competition tests.test_critical_sheet_merger_kelvin_event tests.test_critical_sheet_transport_nanson_event tests.test_kelvin_ancestry_moving_readout tests.test_intrinsic_enstrophy_localization tests.test_intrinsic_chamber_kelvin_support
+        run: python -m unittest -v tests.test_stochastic_cauchy_deformation tests.test_deformation_current_pair_coupling tests.test_full_current_shape_covariance tests.test_finite_shape_kelvin_descent tests.test_surface_moment_hierarchy tests.test_codeforming_surface_moment_tower tests.test_codeforming_whitened_kelvin_remainder tests.test_dynamic_reconstructed_kelvin_residual tests.test_reverse_codeforming_kelvin_martingale tests.test_weighted_codeforming_kelvin_residual tests.test_directional_refinement_kelvin_residual tests.test_principal_kelvin_residual_channels tests.test_selected_principal_kelvin_lineage tests.test_frame_aware_kelvin_residual_refinement tests.test_spectral_kelvin_event_transfer tests.test_kelvin_event_normal_form tests.test_first_bad_selected_residual_readout tests.test_same_replica_residual_library_dynamics tests.test_selected_residual_hybrid_semimartingale tests.test_selected_residual_combined_event tests.test_selected_residual_combined_qv_rate tests.test_random_selected_event_correlation tests.test_own_local_kelvin_affine_event tests.test_first_bad_rule_admissibility tests.test_local_enstrophy_kelvin_growth_gate tests.test_moving_enstrophy_critical_point tests.test_enstrophy_critical_hessian_evolution tests.test_enstrophy_critical_branch_competition tests.test_critical_sheet_merger_kelvin_event tests.test_critical_sheet_transport_nanson_event tests.test_kelvin_ancestry_moving_readout tests.test_intrinsic_enstrophy_localization tests.test_intrinsic_chamber_kelvin_support tests.test_intrinsic_curvature_support_grammar
       - name: Build stochastic Cauchy deformation artifact
         if: matrix.python-version == '3.12'
         run: python scripts/build_stochastic_cauchy_deformation_report.py
@@ -563,3 +563,12 @@ jobs:
         with:
           name: intrinsic-chamber-kelvin-support
           path: audit-results/intrinsic_chamber_kelvin_support_report.json
+      - name: Build intrinsic curvature-support grammar report
+        if: matrix.python-version == '3.12'
+        run: python scripts/build_intrinsic_curvature_support_grammar_report.py
+      - name: Upload intrinsic curvature-support grammar report
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: intrinsic-curvature-support-grammar
+          path: audit-results/intrinsic_curvature_support_grammar_report.json

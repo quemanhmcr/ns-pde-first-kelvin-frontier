@@ -348,6 +348,12 @@ SEAMS = {
     "intrinsic-enstrophy-ancestry-flux-split": ("audited", "ancestry mass flux through an intrinsic enstrophy boundary splits exactly into fluid/probability-current mismatch plus compatibility level-slip, with no selector force"),
     "intrinsic-one-mode-compatibility-cancellation": ("audited-calibration", "exact periodic one-mode heat shear has stationary g=cos^2(ny) and zero compatibility defect although Kelvin bulk and curvature separately scale like n^6"),
     "intrinsic-four-mode-global-max-crossing": ("audited-calibration", "an exact four-mode periodic heat shear has two true global enstrophy maxima crossing at t=1/nu with M=18, negative transverse Hessians, zero value jump, and Dini-rate jump 96nu"),
+    "intrinsic-curvature-covariant-transport": ("audited", "at max-normalized enstrophy critical points Q=-Hess(g) obeys D_t Q+A^T Q+Q A=K with K=-Hess(Phi) exactly"),
+    "intrinsic-curvature-support-dual-cancellation": ("audited", "for physical line transport D_t L=A L, the dimensionless packet curvature C=L^T Q L obeys D_t C=L^T K L, so deformation connection cancels matrix-wise"),
+    "intrinsic-curvature-kernel-local-source": ("audited", "on ker Q the max-normalization face vanishes and kernel opening is governed by local NS source curvature, plus literal critical-branch reanchoring when present"),
+    "intrinsic-curvature-psd-kernel-viability": ("audited-conditional", "a differentiable right-persistent maximum branch must satisfy P0 K_* P0 positive semidefinite on ker Q; negative compression is incompatible with PSD maximum curvature"),
+    "intrinsic-curvature-three-mode-diffusive-kernel-birth": ("audited-calibration", "an exact periodic three-mode heat shear has a unique quartic global enstrophy maximum with Q=0 and pure curvature-diffusion kernel opening Kzz=24nu"),
+    "first-bad-intrinsic-kernel-closure": ("open-literal", "no theorem yet identifies genuine first-bad continuation failure with failure or exhaustion of the intrinsic curvature-kernel closure hierarchy"),
     "intrinsic-chamber-kelvin-packet-lift": ("audited", "the max-normalized one-mode chamber admits an explicit orientation-complete Kelvin/Nanson packet lift with exact current, support, qv, finite-shape, and ancestry faces"),
     "intrinsic-chamber-flux-blind-transverse-face": ("audited-calibration", "in exact periodic one-mode NS the O(1) face normal to the chamber direction has zero Kelvin flux/target/error because vorticity is tangent to that face"),
     "intrinsic-chamber-tangential-support-no-go": ("audited-calibration", "nested chambers have zero scalar compatibility and collapsing Kelvin residual while P B P stays diag(1,0,1), so scalar/current compatibility does not imply support locality"),
@@ -433,6 +439,12 @@ required |= {
     "intrinsic-enstrophy-ancestry-flux-split",
     "intrinsic-one-mode-compatibility-cancellation",
     "intrinsic-four-mode-global-max-crossing",
+    "intrinsic-curvature-covariant-transport",
+    "intrinsic-curvature-support-dual-cancellation",
+    "intrinsic-curvature-kernel-local-source",
+    "intrinsic-curvature-psd-kernel-viability",
+    "intrinsic-curvature-three-mode-diffusive-kernel-birth",
+    "first-bad-intrinsic-kernel-closure",
     "intrinsic-chamber-kelvin-packet-lift",
     "intrinsic-chamber-flux-blind-transverse-face",
     "intrinsic-chamber-tangential-support-no-go",
@@ -866,6 +878,15 @@ for seam in ("intrinsic-ns-similarity-weights", "intrinsic-max-enstrophy-envelop
 for seam in ("intrinsic-absolute-threshold-similarity-no-go", "intrinsic-one-mode-compatibility-cancellation", "intrinsic-four-mode-global-max-crossing"):
     if SEAMS[seam][0] != "audited-calibration":
         raise SystemExit(f"{seam} must remain an exact periodic-NS calibration/no-go")
+for seam in ("intrinsic-curvature-covariant-transport", "intrinsic-curvature-support-dual-cancellation", "intrinsic-curvature-kernel-local-source"):
+    if SEAMS[seam][0] != "audited":
+        raise SystemExit(f"{seam} must remain an exact intrinsic curvature/support identity")
+if SEAMS["intrinsic-curvature-psd-kernel-viability"][0] != "audited-conditional":
+    raise SystemExit("PSD kernel viability must remain conditional on a differentiable persistent maximum branch")
+if SEAMS["intrinsic-curvature-three-mode-diffusive-kernel-birth"][0] != "audited-calibration":
+    raise SystemExit("three-mode diffusive kernel birth must remain an exact NS calibration")
+if SEAMS["first-bad-intrinsic-kernel-closure"][0] != "open-literal":
+    raise SystemExit("first-bad intrinsic kernel closure must remain Open-literal")
 if SEAMS["first-bad-intrinsic-filtration-identification"][0] != "open-literal":
     raise SystemExit("intrinsic enstrophy filtration to actual first-bad continuation identification must remain Open-literal")
 for seam in ("critical-merger-uniform-ancestry-chamber", "critical-merger-readout-quartic-regularization", "critical-merger-readout-variance-two-face"):
