@@ -1282,3 +1282,13 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Exact model distinction:** independent per-germ Brownian drivers delete physical same-replica cross-germ q.v. and define a different stochastic model.
 - **Audited exact-NS calibration:** two one-mode packets in the same replica have opposite residual anchor-noise coefficients, negative cross-germ q.v., and zero synthesized common-noise q.v.; the independent-noise counterfactual is strictly positive.
 - **Frontier correction:** persistent library dynamics is structurally audited-conditional once a finite same-replica physical packet library is specified.  The actual first-bad candidate library, its packet/replica/clock semantics, moving cuts, support locality, future-bank/ancestry identification, restart, continuation, and regularity remain open.
+
+## Selected residual hybrid semimartingale
+
+- **Exact frozen-branch law:** `dY=sqrt(2nu)E_g Qstack dW` and `d[Y]^c/dsigma=E_g Gamma_lib E_g^T`.
+- **Exact selector-only jump:** with continuous library state, `DeltaY=(E_+-E_-)Chi`; the selector creates no continuous Brownian q.v. source.
+- **Exact càdlàg q.v. clarification:** total optional q.v. adds the finite jump square `DeltaY DeltaY^T`.  This jump variation is physically distinct from the continuous stochastic producer.
+- **Exact reset dyad:** `Delta(YY^T)=DeltaY Y_-^T+Y_- DeltaY^T+DeltaY DeltaY^T`; jump q.v. is only the quadratic reset face.
+- **Audited no-bank calibration:** a closed selector excursion can return to the identical selected state with positive accumulated jump-square.
+- **Audited exact-NS calibration:** the half-period one-mode packets realize this closed excursion exactly, so positive selector jump q.v. is not a monotone physical covariance/uncertainty bank.
+- **Open-literal:** the hybrid law does not generate badness/resolve timing, choose simultaneous physical packet events, or identify the programme cross-clock ancestry/future bank.  Restart, continuation, and regularity remain open.

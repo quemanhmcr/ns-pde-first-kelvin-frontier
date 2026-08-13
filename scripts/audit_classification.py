@@ -40,6 +40,7 @@ spectral_event_note = ROOT / "docs" / "spectral_kelvin_event_transfer_audit.md"
 event_normal_form_note = ROOT / "docs" / "kelvin_event_normal_form_audit.md"
 selected_residual_readout_note = ROOT / "docs" / "first_bad_selected_residual_readout_audit.md"
 same_replica_library_note = ROOT / "docs" / "same_replica_residual_library_dynamics_audit.md"
+hybrid_selected_note = ROOT / "docs" / "selected_residual_hybrid_semimartingale_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -76,6 +77,7 @@ spectral_event_text = spectral_event_note.read_text()
 event_normal_form_text = event_normal_form_note.read_text()
 selected_residual_readout_text = selected_residual_readout_note.read_text()
 same_replica_library_text = same_replica_library_note.read_text()
+hybrid_selected_text = hybrid_selected_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -701,6 +703,24 @@ if same_replica_library_missing:
     print("missing same-replica residual-library markers:", same_replica_library_missing)
     sys.exit(1)
 
+hybrid_selected_required = [
+    "Frozen-selector intervals inherit the active library martingale",
+    "pure selector event is a finite readout jump",
+    "Optional quadratic variation contains the jump square",
+    "does **not** contradict",
+    "jump dyad reproduces the exact reset faces",
+    "Closed selector excursion",
+    "Exact one-mode Navier--Stokes selector excursion",
+    "not a replacement for reset covariance algebra",
+    "Physical packet events remain a separate jump type",
+    "actual first-bad timing/event instantiation remains Open-literal/Open",
+    "No restart/continuation/regularity theorem claimed",
+]
+hybrid_selected_missing = [token for token in hybrid_selected_required if token not in hybrid_selected_text]
+if hybrid_selected_missing:
+    print("missing selected residual hybrid semimartingale markers:", hybrid_selected_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -899,8 +919,14 @@ for forbidden in [
     "same-replica residual library is the future covariance bank",
     "first-bad candidate library is already identified with the stochastic-flow library",
     "same-replica library dynamics proves restart",
+    "finite-variation selector has no jump quadratic variation",
+    "selector jump square is a Brownian covariance source",
+    "selector jump qv is a monotone physical covariance bank",
+    "jump qv replaces the selector reset pair ledger",
+    "hybrid selected path law determines first-bad event times",
+    "hybrid selected semimartingale proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

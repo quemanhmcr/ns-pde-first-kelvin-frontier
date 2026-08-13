@@ -260,6 +260,15 @@ from pde_audit.same_replica_residual_library_dynamics import (  # noqa: E402
     selected_qv_readout_residual,
     stacked_martingale_mean_rate,
 )
+from pde_audit.selected_residual_hybrid_semimartingale import (  # noqa: E402
+    hybrid_optional_qv,
+    one_mode_selector_excursion_calibration,
+    selected_continuous_qv_factorization_residual,
+    selector_closed_excursion,
+    selector_jump_dyad_residual,
+    selector_jump_optional_qv,
+    selector_readout_jump,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1346,6 +1355,27 @@ one_mode_library_common_cancel=one_mode_library["synthesized_common_qv"] == sp.z
 one_mode_library_independent_positive=one_mode_library["synthesized_independent_qv"] != sp.zeros(3)
 one_mode_library_event_functor_zero=one_mode_library["common_event_functor_residual"] == sp.zeros(3)
 
+# Hybrid selected residual semimartingale: continuous common-noise branch plus finite selector jumps.
+Qhy0=sp.Matrix([[1,0,1],[0,1,0],[1,0,2]])
+Qhy1=sp.Matrix([[0,1,0],[1,0,1],[0,1,1]])
+hybrid_continuous_qv_zero=selected_continuous_qv_factorization_residual([Qhy0,Qhy1],0,nu) == sp.zeros(3)
+Xhy=sp.Matrix([1,2,3,4,5,6])
+Jhy=selector_readout_jump(Xhy,2,0,1)
+hybrid_jump_square_expected=selector_jump_optional_qv(Xhy,2,0,1) == sp.simplify(Jhy*Jhy.T)
+hybrid_jump_dyad_zero=selector_jump_dyad_residual(Xhy,2,0,1) == sp.zeros(3)
+Ghy=sp.diag(1,2,3)
+hybrid_total_qv_expected=hybrid_optional_qv([Ghy],[Jhy]) == sp.simplify(Ghy+Jhy*Jhy.T)
+closed_hybrid=selector_closed_excursion(Xhy,2,[0,1,0])
+closed_hybrid_state_zero=closed_hybrid["state_change"] == sp.zeros(3,1)
+closed_hybrid_jump_sum_zero=closed_hybrid["jump_sum"] == sp.zeros(3,1)
+closed_hybrid_jump_qv_nonzero=closed_hybrid["jump_optional_qv"] != sp.zeros(3)
+
+one_mode_hybrid=one_mode_selector_excursion_calibration(t,nu,k)
+one_mode_hybrid_opposite=one_mode_hybrid["chi1"] == sp.simplify(-one_mode_hybrid["chi0"])
+one_mode_hybrid_state_zero=one_mode_hybrid["state_change"] == sp.zeros(3,1) and one_mode_hybrid["jump_sum"] == sp.zeros(3,1)
+one_mode_hybrid_jump_opposite=one_mode_hybrid["jump_10"] == sp.simplify(-one_mode_hybrid["jump_01"])
+one_mode_hybrid_jump_qv_nonzero=one_mode_hybrid["jump_optional_qv"] != sp.zeros(3) and sp.simplify(one_mode_hybrid["jump_optional_qv_trace"]) != 0
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1518,6 +1548,15 @@ report = {
         "one_mode_same_replica_cross_qv_cancellation": "Audited calibration / rigorous cross-block necessity",
         "first_bad_candidate_library_instantiation": "Open-literal",
         "first_bad_library_clock_replica_identification": "Open-literal",
+        "selected_residual_frozen_interval_martingale": "Exact identity",
+        "selector_readout_finite_jump": "Exact pathwise identity",
+        "selector_fv_zero_continuous_qv_vs_jump_qv": "Exact semimartingale clarification",
+        "selector_jump_dyad_three_face": "Exact identity",
+        "selected_hybrid_semimartingale_law": "Audited-conditional on supplied same-replica library and selector path",
+        "selector_jump_qv_bank_no_go": "Audited closed-excursion calibration / rigorous no-bank consequence",
+        "one_mode_selector_optional_qv_closed_excursion": "Audited exact-NS calibration",
+        "selector_jump_qv_vs_reset_covariance": "Exact identity / rigorous typing consequence",
+        "first_bad_selected_hybrid_path_instantiation": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1869,6 +1908,27 @@ report = {
         },
         "random_frame_typing": "pathwise spectral products retain geometry-residual correlation without mean-metric factorization",
         "first_bad": "Open: weighted channel collapse is an exact reformulation of residual descent but does not prove support locality or close physical event/cross-clock faces",
+    },
+    "selected_residual_hybrid_semimartingale": {
+        "frozen_selector_continuous_qv_factorization_residual_zero": bool(hybrid_continuous_qv_zero),
+        "selector_jump_square_expected": bool(hybrid_jump_square_expected),
+        "selector_jump_dyad_residual_zero": bool(hybrid_jump_dyad_zero),
+        "hybrid_optional_qv_sum_expected": bool(hybrid_total_qv_expected),
+        "closed_selector_excursion": {
+            "state_change_zero": bool(closed_hybrid_state_zero),
+            "jump_sum_zero": bool(closed_hybrid_jump_sum_zero),
+            "jump_optional_qv_nonzero": bool(closed_hybrid_jump_qv_nonzero),
+        },
+        "one_mode_ns": {
+            "opposite_endpoint_residuals": bool(one_mode_hybrid_opposite),
+            "closed_excursion_state_zero": bool(one_mode_hybrid_state_zero),
+            "jumps_opposite": bool(one_mode_hybrid_jump_opposite),
+            "jump_optional_qv_nonzero": bool(one_mode_hybrid_jump_qv_nonzero),
+            "jump_optional_qv_trace": str(one_mode_hybrid["jump_optional_qv_trace"]),
+            "typing": "exact one-mode NS closed selector excursion accumulates positive cadlag jump qv while returning to the identical selected residual",
+        },
+        "typing": "continuous Brownian bracket and finite selector jump squares are distinct path-variation faces; jump square is not a continuous stochastic covariance producer",
+        "first_bad": "Open-literal at NS-generated selector timing and any simultaneous physical packet event; hybrid algebra is exact once path data are supplied",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),
