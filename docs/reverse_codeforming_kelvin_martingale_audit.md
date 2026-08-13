@@ -651,32 +651,30 @@ bridges remain Open-literal/Open.**
 
 ---
 
-## 13. Refined first-bad target
+## 13. First-bad target requires physical frame weighting
 
-The exact martingale core suggests a sharper literal target than any positive
-"payment" inequality.
-
-A first-bad theorem would need to show, on the actual migrating selected packet, that
-both
+The martingale core identifies the exact same-clock variables, but **raw `chi` is
+not yet the physical descent topology**.  The physical reconstructed residual is
 
 \[
-\boxed{\mathbb E[\chi]\to0}
+\boxed{r=L\chi.}
 \]
 
-and
+Exact quadratic and one-mode Navier--Stokes calibrations in
+`weighted_codeforming_kelvin_residual_audit.md` show that raw mean bias and raw
+codeforming q.v. can remain order one while the physical residual and physical q.v.
+shrink to zero.  Thus demanding `E chi -> 0` and `Cov(chi) -> 0` was a sufficient-looking
+but unnecessarily strong target.
+
+The corrected literal first-bad object is the frame-weighted full-state energy
 
 \[
-\boxed{\operatorname{Cov}(\chi)\to0}
+\boxed{\mathbb E[\chi^TL^TL\chi],}
 \]
 
-in the correct physical/refinement topology, while the material frame does not
-amplify the pullback so badly that `r=L chi` remains macroscopic.
+including the mixed metric--residual correlation when `L` is random.  Support
+locality, selector/refinement/boundary/exit/reset faces, and cross-clock
+identification remain separate.
 
-The first condition is a **bias/current-shape** problem.  The second is a **stochastic
-spread/q.v.** problem.  Exact NS examples show neither can replace the other.
-
-No theorem in the repository currently forces the mean bias to vanish on the
-migrating first-bad support, nor identifies that support with the full-period or
-fixed-current calibrations used above.
-
-**Status: Open-literal/Open.  No restart/continuation/regularity theorem claimed.**
+**Status: theorem-target correction; weighted physical collapse remains
+Open-literal/Open.  No restart/continuation/regularity theorem claimed.**

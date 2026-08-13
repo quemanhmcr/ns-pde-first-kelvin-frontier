@@ -147,6 +147,20 @@ from pde_audit.reverse_codeforming_kelvin_martingale import (  # noqa: E402
     reverse_codeforming_vorticity_noise,
     second_moment_minus_covariance_source_residual,
 )
+from pde_audit.weighted_codeforming_kelvin_residual import (  # noqa: E402
+    homogeneous_weighted_exponent_residual,
+    one_mode_asymmetric_codeforming_noise,
+    one_mode_asymmetric_codeforming_residual,
+    one_mode_shear as weighted_one_mode_shear,
+    quadratic_asymmetric_square_exact_residual,
+    quadratic_heat_shear_residual,
+    two_state_mean_metric_mean_second_moment,
+    two_state_metric_residual_correlation,
+    two_state_metric_residual_decomposition_residual,
+    two_state_weighted_energy,
+    weighted_bias_spread_residual,
+    weighted_qv_trace_residual,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -801,6 +815,61 @@ full_period_qv_cancellation_zero = sp.simplify(
 full_period_local_qv_nonzero = sp.simplify(gamma_eta_cof) != 0
 full_period_cross_qv_nonzero = sp.simplify(gamma_cross_cof) != 0
 
+# Physical frame-weighted codeforming residual topology and exact NS target corrections.
+Yw = sp.symbols("Yw", real=True)
+rhow = sp.symbols("rhow", positive=True)
+quad_weighted_ns_zero = quadratic_heat_shear_residual(Yw, t, nu) == 0
+eps_quad_w, chi_quad_w, r_quad_w = quadratic_asymmetric_square_exact_residual(
+    Yw, t, nu, rhow
+)
+quad_raw_bias_nonzero = sp.simplify(chi_quad_w) != 0
+quad_raw_bias_constant = sp.simplify(chi_quad_w + 1) == 0
+quad_physical_residual_limit_zero = sp.limit(r_quad_w, rhow, 0, dir="+") == 0
+quad_weighted_bias_r2 = sp.simplify(r_quad_w**2 - rhow**2) == 0
+
+chi_one_w = one_mode_asymmetric_codeforming_residual(Yw, t, rhow, nu, k)
+qchi_one_w = one_mode_asymmetric_codeforming_noise(Yw, t, rhow, nu, k)
+U_one_w = weighted_one_mode_shear(Yw, t, nu, k)
+chi_one_limit_residual_zero = sp.simplify(
+    sp.limit(chi_one_w, rhow, 0, dir="+") + sp.diff(U_one_w, Yw, 2) / 2
+) == 0
+qchi_one_limit_residual_zero = sp.simplify(
+    sp.limit(qchi_one_w, rhow, 0, dir="+") + sp.diff(U_one_w, Yw, 3) / 2
+) == 0
+one_physical_bias_limit_zero = sp.simplify(
+    sp.limit(rhow * chi_one_w, rhow, 0, dir="+")
+) == 0
+one_physical_noise_limit_zero = sp.simplify(
+    sp.limit(rhow * qchi_one_w, rhow, 0, dir="+")
+) == 0
+
+Lw = sp.Matrix([[2, 1, 0], [0, 3, 1], [1, 0, 2]])
+mw = sp.Matrix(sp.symbols("mw0:3"))
+cw = sp.symbols("cw0:6")
+Cw = sp.Matrix([[cw[0], cw[1], cw[2]], [cw[1], cw[3], cw[4]], [cw[2], cw[4], cw[5]]])
+weighted_fixed_frame_split_zero = weighted_bias_spread_residual(mw, Cw, Lw) == 0
+Qnoise_w = sp.Matrix(3, 2, sp.symbols("qnw0:6"))
+weighted_qv_trace_zero = weighted_qv_trace_residual(Lw, Qnoise_w, nu) == 0
+
+Lw1 = sp.diag(2, 1, 1)
+Lw2 = sp.eye(3)
+chw1 = sp.Matrix([1, 0, 0])
+chw2 = sp.zeros(3, 1)
+random_frame_energy = two_state_weighted_energy(Lw1, chw1, Lw2, chw2)
+random_frame_factorized = two_state_mean_metric_mean_second_moment(Lw1, chw1, Lw2, chw2)
+random_frame_mixed = two_state_metric_residual_correlation(Lw1, chw1, Lw2, chw2)
+random_frame_decomposition_zero = two_state_metric_residual_decomposition_residual(
+    Lw1, chw1, Lw2, chw2
+) == 0
+random_frame_factorization_false = sp.simplify(random_frame_energy-random_frame_factorized) != 0
+random_frame_mixed_signed_positive = random_frame_mixed == sp.Rational(3, 4)
+random_frame_mixed_signed_negative = two_state_metric_residual_correlation(
+    Lw1, chw2, Lw2, chw1
+) == -sp.Rational(3, 4)
+homogeneous_weighted_exponents_zero = all(
+    homogeneous_weighted_exponent_residual(rhow, p, a) == 0 for p in range(2, 8)
+)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -882,8 +951,15 @@ report = {
         "cubic_codeforming_bias_qv_blind": "Audited calibration / rigorous covariance-only no-go",
         "one_mode_full_period_cross_qv_cancellation": "Audited calibration / rigorous cross-block necessity",
         "reverse_codeforming_clock_sign": "Exact clock-orientation identity",
-        "first_bad_codeforming_bias_collapse": "Open-literal",
-        "first_bad_codeforming_spread_collapse": "Open",
+        "first_bad_codeforming_bias_collapse": "Audited calibration: false as a necessary physical-descent condition",
+        "first_bad_codeforming_spread_collapse": "Audited calibration: false as a necessary physical-descent condition",
+        "codeforming_physical_weighted_topology": "Exact identity",
+        "codeforming_fixed_frame_bias_spread": "Exact fixed-frame / conditional identity",
+        "codeforming_random_frame_residual_correlation": "Exact two-replica identity / rigorous cross-face necessity",
+        "quadratic_raw_codeforming_bias_no_go": "Audited calibration / rigorous target correction",
+        "one_mode_raw_codeforming_spread_no_go": "Audited calibration / rigorous spread-target correction",
+        "homogeneous_weighted_residual_exponent": "Exact identity",
+        "first_bad_weighted_physical_residual_collapse": "Open",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1147,6 +1223,40 @@ report = {
         "physical_pushforward": "r=L chi restores signed strain as frame/metric work",
         "future_clock": "Open-literal: reverse-age co-deforming martingale covariance is not identified with the future conditional covariance bank",
         "first_bad": "Open: must force both mean-bias and spread collapse with actual support/conditioning and moving physical faces",
+    },
+    "weighted_codeforming_kelvin_residual": {
+        "physical_topology": "r=L chi; |r|^2=chi^T L^T L chi",
+        "fixed_frame_bias_spread_residual_zero": bool(weighted_fixed_frame_split_zero),
+        "weighted_qv_trace_residual_zero": bool(weighted_qv_trace_zero),
+        "quadratic": {
+            "ns_residual_zero": bool(quad_weighted_ns_zero),
+            "epsilon": str(eps_quad_w),
+            "chi": str(chi_quad_w),
+            "r": str(r_quad_w),
+            "raw_bias_nonzero": bool(quad_raw_bias_nonzero),
+            "raw_bias_exact_minus_one": bool(quad_raw_bias_constant),
+            "physical_residual_limit_zero": bool(quad_physical_residual_limit_zero),
+            "weighted_bias_exact_rho2": bool(quad_weighted_bias_r2),
+        },
+        "one_mode": {
+            "chi_jet_limit_residual_zero": bool(chi_one_limit_residual_zero),
+            "noise_jet_limit_residual_zero": bool(qchi_one_limit_residual_zero),
+            "physical_bias_limit_zero": bool(one_physical_bias_limit_zero),
+            "physical_noise_limit_zero": bool(one_physical_noise_limit_zero),
+            "typing": "raw codeforming bias/noise can stay O(1) while physical L-weighted residual/noise vanish",
+        },
+        "random_frame": {
+            "exact_energy": str(random_frame_energy),
+            "mean_metric_times_mean_Q": str(random_frame_factorized),
+            "mixed_face": str(random_frame_mixed),
+            "decomposition_residual_zero": bool(random_frame_decomposition_zero),
+            "factorization_without_mixed_face_false": bool(random_frame_factorization_false),
+            "mixed_face_positive_example": bool(random_frame_mixed_signed_positive),
+            "mixed_face_negative_example": bool(random_frame_mixed_signed_negative),
+        },
+        "homogeneous_exponent_p2_to_p7_residual_zero": bool(homogeneous_weighted_exponents_zero),
+        "first_bad": "Open: control E[chi^T L^T L chi] on the actual migrating packet with random-frame correlation plus selector/refinement/boundary/exit/reset faces; support locality remains separate",
+        "future_clock": "Open-literal: same-clock weighted physical residual is not the future conditional covariance bank",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),

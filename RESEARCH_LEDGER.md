@@ -1183,3 +1183,13 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Open-literal/Open:** no first-bad theorem forces mean bias and covariance to
   vanish simultaneously with support locality; reduced-state and future-bank bridges
   remain open.  No restart/continuation/regularity claim.
+
+## 2026-08-13 — Physical frame-weighted codeforming Kelvin residual
+
+- **Exact identity:** the reverse codeforming residual is a material coordinate; the physical residual is `r=L chi`, so the literal pathwise energy is `chi^T L^T L chi`.
+- **Exact fixed-frame / conditional identity:** for fixed geometry, `E|r|^2=m_chi^T M_L m_chi+tr(C_chi M_L)`, separating physical deterministic bias from physical stochastic spread.
+- **Exact full-state pair identity:** if the line frame is random, mean metric times mean residual second moment is not closed.  Two equal replicas require the signed mixed face `(1/4) tr[(M1-M2)(Q1-Q2)]`.
+- **Audited calibration / target correction:** exact quadratic heat shear has `epsilon_z=-rho^3`, `chi_z=-1`, but `r_z=-rho -> 0`; raw codeforming mean-bias collapse is therefore not necessary for physical descent.
+- **Audited calibration / spread correction:** exact one-mode shear on an asymmetric shrinking face has `q_chi -> -(1/2)U_yyy` generically nonzero while the physical noise `rho q_chi ->0`; raw codeforming q.v./spread collapse is not necessary either.
+- **Exact homogeneous scale law:** a degree-`p` nonaffine jet has physical weighted residual energy `rho^(2p-2)`; at `p=2` the raw codeforming residual is order one while the physical energy is order `rho^2`.
+- **Open:** the corrected first-bad target is the literal full-state `E[chi^T L^T L chi]` together with random-frame correlation and all selector/refinement/boundary/exit/reset faces.  Support locality remains a separate physical requirement.  No future-bank, restart, continuation, or regularity theorem is claimed.
