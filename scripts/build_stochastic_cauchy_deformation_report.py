@@ -250,6 +250,16 @@ from pde_audit.spectral_kelvin_event_transfer import (  # noqa: E402
     transfer_sector_sums,
     two_child_opposite_residual_transfer_calibration,
 )
+from pde_audit.same_replica_residual_library_dynamics import (  # noqa: E402
+    independent_vs_common_qv_difference,
+    library_qv_block_residual,
+    linear_event_qv_functor_residual,
+    one_mode_two_packet_common_noise_calibration,
+    qv_image_rank_bound,
+    same_replica_library_qv,
+    selected_qv_readout_residual,
+    stacked_martingale_mean_rate,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1313,6 +1323,29 @@ selector_same_germ_event_factor_zero=selected_physical_event_factorization_resid
     sp.diag(B0sel,B1sel),2,0,2,0,B0sel
 ) == sp.zeros(3,6)
 
+# Same-replica persistent residual-library dynamics.
+Qlib1=sp.Matrix([[1,0,2],[0,1,0],[1,0,1]])
+Qlib2=sp.Matrix([[0,1,0],[1,0,1],[0,1,1]])
+Glib=same_replica_library_qv([Qlib1,Qlib2],nu)
+library_cross_block_zero=library_qv_block_residual([Qlib1,Qlib2],0,1,nu) == sp.zeros(3)
+library_cross_block_expected=Glib[:3,3:] == sp.simplify(2*nu*Qlib1*Qlib2.T)
+library_selector_readout_zero=selected_qv_readout_residual([Qlib1,Qlib2],1,nu) == sp.zeros(3)
+Alib=sp.Matrix([[1,0,0,1,0,0],[0,1,0,0,1,0],[0,0,1,0,0,1]])
+library_event_qv_zero=linear_event_qv_functor_residual([Qlib1,Qlib2],Alib,nu) == sp.zeros(3)
+library_independent_diff=independent_vs_common_qv_difference([Qlib1,Qlib2],nu)
+library_independent_diff_nonzero=library_independent_diff != sp.zeros(6)
+library_independent_diag_zero=library_independent_diff[:3,:3] == sp.zeros(3) and library_independent_diff[3:,3:] == sp.zeros(3)
+library_mean_rate_zero=stacked_martingale_mean_rate(2) == sp.zeros(6,1)
+library_rank,library_driver=qv_image_rank_bound([Qlib1,Qlib2],sp.Integer(1))
+library_rank_bounded=library_rank <= library_driver and library_driver == 3
+
+one_mode_library=one_mode_two_packet_common_noise_calibration(t,nu,k)
+one_mode_library_noise_opposite=one_mode_library["opposite_noise_residual"] == 0 and one_mode_library["q1"] != 0
+one_mode_library_cross_negative=one_mode_library["cross_qv"] == sp.simplify(-one_mode_library["diagonal_qv"])
+one_mode_library_common_cancel=one_mode_library["synthesized_common_qv"] == sp.zeros(3)
+one_mode_library_independent_positive=one_mode_library["synthesized_independent_qv"] != sp.zeros(3)
+one_mode_library_event_functor_zero=one_mode_library["common_event_functor_residual"] == sp.zeros(3)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1474,7 +1507,17 @@ report = {
         "selector_switch_admissible_subspace_factorization": "Exact conditional factorization identity",
         "physical_event_plus_selector_factorization": "Exact generic factorization criterion / audited obstruction",
         "persistent_library_selected_observer_architecture": "Rigorous consequence of exact selector/event typing",
-        "first_bad_persistent_library_dynamics": "Open-literal",
+        "first_bad_persistent_library_dynamics": "Audited-conditional for a specified finite same-replica physical packet library",
+        "same_replica_residual_library_common_noise": "Exact identity",
+        "same_replica_residual_library_qv_gram": "Exact identity",
+        "same_replica_residual_library_qv_rank": "Rigorous Gram-rank consequence",
+        "same_replica_selector_qv_readout": "Exact identity",
+        "same_replica_event_qv_functor": "Exact identity",
+        "same_replica_library_bias_spread": "Exact martingale consequence under stated scope",
+        "independent_per_germ_noise_model_distinction": "Exact physical model distinction",
+        "one_mode_same_replica_cross_qv_cancellation": "Audited calibration / rigorous cross-block necessity",
+        "first_bad_candidate_library_instantiation": "Open-literal",
+        "first_bad_library_clock_replica_identification": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1826,6 +1869,30 @@ report = {
         },
         "random_frame_typing": "pathwise spectral products retain geometry-residual correlation without mean-metric factorization",
         "first_bad": "Open: weighted channel collapse is an exact reformulation of residual descent but does not prove support locality or close physical event/cross-clock faces",
+    },
+    "same_replica_residual_library_dynamics": {
+        "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),
+        "cross_germ_qv_block_expected": bool(library_cross_block_expected),
+        "selector_qv_readout_residual_zero": bool(library_selector_readout_zero),
+        "linear_event_qv_functor_residual_zero": bool(library_event_qv_zero),
+        "independent_noise_model_differs": bool(library_independent_diff_nonzero),
+        "independent_common_difference_has_zero_diagonal_blocks": bool(library_independent_diag_zero),
+        "stacked_martingale_mean_rate_zero": bool(library_mean_rate_zero),
+        "instantaneous_qv_rank": int(library_rank),
+        "common_driver_dimension": int(library_driver),
+        "rank_bounded_by_driver": bool(library_rank_bounded),
+        "one_mode_ns": {
+            "opposite_noise_coefficients": bool(one_mode_library_noise_opposite),
+            "cross_qv_is_negative_diagonal": bool(one_mode_library_cross_negative),
+            "synthesized_common_qv_zero": bool(one_mode_library_common_cancel),
+            "synthesized_independent_qv_nonzero": bool(one_mode_library_independent_positive),
+            "event_qv_functor_residual_zero": bool(one_mode_library_event_functor_zero),
+            "q1": str(one_mode_library["q1"]),
+            "q2": str(one_mode_library["q2"]),
+            "typing": "exact one-mode NS same-replica packet noises require signed cross-germ qv; independent-per-germ noise gives the wrong synthesized source",
+        },
+        "library_law": "dChi=sqrt(2nu) Qstack dW; Gamma=2nu Qstack Qstack^T with one common three-dimensional W",
+        "first_bad": "Open-literal at actual candidate-library and clock/replica instantiation; same-replica structural dynamics is exact once the physical library is specified",
     },
     "first_bad_selected_residual_readout": {
         "distinct_selector_universal_factorization_nonzero": bool(selector_factorization_nonzero),
