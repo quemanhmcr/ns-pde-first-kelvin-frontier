@@ -338,7 +338,12 @@ SEAMS = {
     "critical-merger-residual-vs-support-memory": ("audited-calibration", "central and side transported endpoint packets can share circulation/target/residual while retaining different line and area frames"),
     "critical-merger-moving-cut-circulation-law": ("audited-calibration", "the packet derivative splits exactly into viscous heat flux plus critical-sheet Reynolds moving-cut flux; the latter equals the prior residual cusp after area normalization"),
     "critical-merger-finite-variation-moving-cut": ("audited-calibration", "the isolated side critical cut has divergent instantaneous speed but finite total variation d(t0) and continuous endpoint state"),
-    "critical-merger-ancestry-identification": ("open-literal", "literal critical-path/Kelvin-ancestry equality is now excluded in the exact merger calibration; a nontrivial programme ancestry lift/readout remains unspecified"),
+    "ancestry-moving-readout-three-layer-covariance": ("audited", "a reduced/full Kelvin ancestry lift followed by normalized Eulerian localization has exactly intrinsic, hidden-resolution, and localization covariance layers"),
+    "ancestry-moving-readout-boundary-revaluation": ("audited", "moving Eulerian boundaries act on selected mean/covariance by signed Reynolds mass-flux revaluation; no independent selector Brownian source is created"),
+    "critical-merger-uniform-ancestry-chamber": ("audited-calibration", "the exact periodic merger shear has stationary uniform Kelvin-anchor y marginal, while the side critical chamber is a moving sub-Markov readout with finite total mass variation"),
+    "critical-merger-readout-quartic-regularization": ("audited-calibration", "the exact critical chamber has q_side-q_mean=O(d^4), so the 1/d cut speed gives normalized mean rate O(d^2) tending to zero"),
+    "critical-merger-readout-variance-two-face": ("audited-calibration", "selected vorticity variance is O(d^8) and its exact rate is intrinsic -2nu<|grad q|^2> plus signed moving-cut covariance revaluation, both O(d^6)"),
+    "critical-merger-ancestry-identification": ("open-literal", "literal critical-path/Kelvin-ancestry equality is excluded; a physical-anchor conditional moving-readout lift is now instantiated in the merger calibration, while the global programme ancestry state/lift remains unspecified"),
     "first-bad-critical-merger-selector-identification": ("open-literal", "no theorem maps this exact critical-sheet merger to the programme badness/resolve selector or proves general endogenous selector local finiteness"),
     "reverse-codeforming-future-bank-identification": ("open-literal", "the same-clock co-deforming martingale core is not identified with the future conditional covariance bank or ancestry state"),
     "first-bad-full-shape-local-descent": ("open-literal", "the exact descent-error SDE is now known, but no theorem controls deterministic bias, strain-shape drift, vorticity-gradient residual, metric-whitened covariance remainder, and actual support locality uniformly on the migrating first-bad current"),
@@ -404,6 +409,11 @@ required |= {
     "critical-merger-residual-vs-support-memory",
     "critical-merger-moving-cut-circulation-law",
     "critical-merger-finite-variation-moving-cut",
+    "ancestry-moving-readout-three-layer-covariance",
+    "ancestry-moving-readout-boundary-revaluation",
+    "critical-merger-uniform-ancestry-chamber",
+    "critical-merger-readout-quartic-regularization",
+    "critical-merger-readout-variance-two-face",
     "critical-merger-ancestry-identification",
     "first-bad-critical-merger-selector-identification",
 }
@@ -819,6 +829,12 @@ for seam in ("two-mode-shear-critical-sheet-merger", "critical-merger-scalar-to-
 for seam in ("critical-merger-sheet-vs-material-transport", "critical-merger-literal-kelvin-ancestry-qv-no-go", "critical-merger-nanson-history-memory", "critical-merger-residual-vs-support-memory", "critical-merger-moving-cut-circulation-law", "critical-merger-finite-variation-moving-cut"):
     if SEAMS[seam][0] != "audited-calibration":
         raise SystemExit(f"{seam} must remain an exact NS transport/Nanson/moving-cut calibration")
+for seam in ("ancestry-moving-readout-three-layer-covariance", "ancestry-moving-readout-boundary-revaluation"):
+    if SEAMS[seam][0] != "audited":
+        raise SystemExit(f"{seam} must remain an exact ancestry/readout structural identity")
+for seam in ("critical-merger-uniform-ancestry-chamber", "critical-merger-readout-quartic-regularization", "critical-merger-readout-variance-two-face"):
+    if SEAMS[seam][0] != "audited-calibration":
+        raise SystemExit(f"{seam} must remain an exact NS moving-readout calibration")
 if SEAMS["fixed-shape-critical-packet-coalescence"][0] != "audited-conditional":
     raise SystemExit("full instantaneous packet coalescence must remain conditional on the explicitly supplied fixed-shape packet functor")
 for seam in ("critical-merger-ancestry-identification", "first-bad-critical-merger-selector-identification"):

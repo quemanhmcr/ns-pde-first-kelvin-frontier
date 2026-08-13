@@ -1430,3 +1430,17 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Rigorous architecture consequence:** the Eulerian critical selector and Kelvin/material ancestry must remain separate state semantics.  The earlier fixed-shape coalescence theorem is an instantaneous Eulerian rebuild statement; dynamically history-carrying Nanson packets do not canonically coalesce in full support/frame state.
 - **Open-literal:** actual first-bad badness/resolve definition, whether first-bad localization is critical-sheet based, the nontrivial Kelvin-ancestry-to-selector lift/readout, and future-bank/cross-clock identification.
 - **Open:** uniform first-bad support/finite-shape collapse, restart capacity, continuation/global regularity.  No restart/continuation/regularity theorem is claimed.
+
+## Kelvin ancestry -> Eulerian moving readout
+
+- **Exact identity:** after a conditional reduced/full ancestry lift `kappa`, normalized Eulerian selection has exactly three covariance layers: averaged intrinsic full-Kelvin covariance, averaged hidden-state resolution covariance, and localization covariance of the conditional mean.
+- **Exact Reynolds identity:** a moving Eulerian boundary with signed ancestry-mass flux `lambda` revalues a normalized selected average by `M^-1 sum lambda(A_boundary-A_selected)`; selected covariance uses `C_boundary+(m_boundary-m)(m_boundary-m)^T-C_selected`.
+- **Exact structural consequence:** applying the boundary law separately to intrinsic, resolution, and localization layers telescopes to the total selected-covariance law.  The selector/readout supplies no independent Brownian covariance producer.
+- **Audited exact-NS calibration:** in the periodic two-mode merger shear the reverse-age Kelvin anchor has zero `y` drift, so the uniform `1/(2pi)` torus marginal is stationary while the side critical chamber `[pi-d,pi]` moves through it.
+- **Exact chamber law:** `M=d/(2pi)`, `d_dot=-3 nu cot d`; instantaneous mass-loss rate diverges like `-3nu/(2pi d)` but the total selected-mass variation to merger is finite.
+- **Exact critical readout law:** the selected vorticity mean is `qbar=-(3/4)e^-1 cos(d)^(-1/3) sin(d)/d`; both endpoints are vorticity-critical, so its entire first-moment rate is the Reynolds moving-cut face.
+- **Exact NS cancellation:** `q_side-qbar=-(e^-1/15)d^4+O(d^6)` while `d_dot/d~ -3nu/d^2`; therefore `qbar_dot=(nu e^-1/5)d^2+O(d^4)->0` despite the singular boundary speed.
+- **Exact covariance law:** selected vorticity variance is `(e^-2/525)d^8+O(d^10)` and obeys `Vdot=-2nu<|grad q|^2>+(d_dot/d)[(q_side-qbar)^2-V]`.
+- **Exact face coefficients:** Kelvin bulk is `-(4nu e^-2/105)d^6+O(d^8)`, moving-cut revaluation is `-(4nu e^-2/525)d^6+O(d^8)`, and total `Vdot=-(8nu e^-2/175)d^6+O(d^8)->0`.
+- **Frontier correction:** the ancestry-to-moving-Eulerian-readout semantics and second-order transport law are now literal once the localization is supplied.  The actual NS first-bad observable defining that localization, global ancestry state/lift, two-clock future-bank identification, general endogenous interface accumulation, uniform first-bad support/finite-shape collapse, restart, continuation and regularity remain **Open-literal/Open**.
+- **No claim:** no first-bad threshold, restart, continuation, blow-up exclusion, or global-regularity theorem follows from this milestone.
