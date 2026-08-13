@@ -1403,3 +1403,15 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audit verdict:** the PR #2 enstrophy, critical-point-speed, and critical-Hessian checks survive in their stated smooth/nondegenerate domains.
 - **Open-literal:** actual NS first-bad packet/anchor event, badness/resolve predicates, endogenous event local finiteness or interface law, support locality, and same-replica-to-restart-clock bridge.
 - **No claim:** no restart, continuation, blow-up exclusion, or global-regularity theorem follows from this layer.
+
+## Exact critical-sheet merger -> physical Kelvin packet event
+
+- **Exact identity / Audited calibration:** the periodic two-mode heat shear `u=(-e^{-nu t} sin y-(e^3/8)e^{-4nu t}sin2y,0,0)` is an exact smooth 3D NS solution.  Its side enstrophy critical sheets `y=pi+-d`, `cos d=e^{3(nu t-1)}`, merge into the persistent `y=pi` sheet at `t*=1/nu`; `q_*=-3/(4e)` and `e_yyyy(pi,t*)=-9/(4e^2)` while the PDE field remains analytic.
+- **Exact identity:** a one-sided orientation-complete box packet anchored to a critical sheet has literal finite circulation `K_z=ell int_a^{a+s} q dy`, own-local residual `r=H^{-T}(K-H^T omega(a))`, and at merger nonzero codeforming anchor-noise `N_zy=e^{-1}(1-cos s)^2/(2sm)`.
+- **Rigorous consequence, conditional on the supplied physical packet functor:** with one common fixed shape `(ell,s,m)` translated to the three critical sheets, support placement, frames, circulation, target, residual, and Brownian response all coalesce in the instantaneous physical packet state.
+- **Rigorous no-go / exact NS counterexample:** critical position/enstrophy coalescence alone does not force full packet-state coalescence.  At the same merged sheet, `s=pi/2` and `s=pi/3` give different area frames and `Delta r_z=e^{-1}(-32+21sqrt(3))/(16pi) != 0`, with different nonzero noise coefficients.
+- **Exact instantiated event law:** for the branch-resolved rule one fixed-shape packet per critical sheet, the persistent central branch gives `A=E_0`, `AS=I` on `S=1_3 tensor I`, and common collision target plus `grad omega=0` give exactly `d=0` and `N_target=0`.
+- **Exact same-replica law:** all collision noise blocks equal `N_*`; every q.v. diagonal/cross-label block is `2nu N_*N_*^T`.  Any normalized collision quotient preserves the physical q.v.; deleting cross blocks creates the spurious `sum w_i^2` factor (equal weights lose `2/3`).
+- **Exact interface identity / Audited calibration:** `(E_0-E_side)Sx=0` type label changes have zero physical packet jump on the collision subspace, but for the one-sided packet `partial_a r_z|_*=e^{-1}(1-cos s)^2/(2s)` and the side-sheet speed yields a singular one-sided packet branch rate with finite `d|r_dot|` coefficient.
+- **Open-literal:** branch-history/ancestry identification, actual first-bad badness/resolve mapping, and general endogenous selector local finiteness/interface accumulation.
+- **Open:** restart/continuation/regularity consequences.  The merger distance has not been identified with Kelvin diffusion scale merely from a shared square-root exponent.

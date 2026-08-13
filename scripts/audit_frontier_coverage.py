@@ -325,6 +325,15 @@ SEAMS = {
     "selected-max-tie-continuity-derivative-switch": ("audited", "the nonhysteretic max envelope is continuous at an exact tie but generally changes one-sided derivative when the active branch switches"),
     "critical-event-taxonomy-ranking-degeneracy-packet": ("audited", "branch value crossing, critical branch degeneracy/birth/death, and physical packet events are distinct typed event mechanisms"),
     "first-bad-branch-competition-hysteresis-identification": ("open-literal", "no theorem maps the programme badness/resolve hysteresis to enstrophy critical-value crossing or specifies when a ranking tie triggers a selector event"),
+    "two-mode-shear-critical-sheet-merger": ("audited-calibration", "exact periodic two-mode heat shear has two enstrophy side critical sheets merging into the persistent y=pi sheet at t=1/nu while the NS field remains analytic"),
+    "fixed-shape-critical-packet-coalescence": ("audited-conditional", "for the explicitly supplied translation-covariant fixed-shape physical Kelvin box functor, support/frame/current/target/residual/noise all coalesce at the exact merger"),
+    "critical-merger-scalar-to-full-packet-no-go": ("audited-calibration", "the same merged critical sheet admits different physical packet shapes with different frames, residuals, and anchor-noise coefficients, so scalar geometry alone does not force full packet state"),
+    "critical-merger-branch-resolved-event-map": ("audited-calibration", "for one fixed-shape packet per critical sheet the persistent central branch gives A=E0 and AS=I on the collision subspace"),
+    "critical-merger-affine-target-noise-coboundary": ("audited-calibration", "common merged vorticity and critical grad omega=0 force d=0 and N_target=0 for the instantiated branch-resolved event"),
+    "critical-merger-same-replica-cross-block-quotient": ("audited-calibration", "nonzero common packet noise at collision gives identical diagonal/cross label qv blocks; normalized quotient is invariant only when cross blocks are retained"),
+    "critical-merger-selector-zero-jump-cusp": ("audited-calibration", "a label projection can jump at collision with zero physical packet jump, while the side packet branch rate inherits the singular critical-coordinate speed"),
+    "critical-merger-ancestry-identification": ("open-literal", "instantaneous packet-state collision does not identify the distinct central/side branch histories with the programme ancestry state"),
+    "first-bad-critical-merger-selector-identification": ("open-literal", "no theorem maps this exact critical-sheet merger to the programme badness/resolve selector or proves general endogenous selector local finiteness"),
     "reverse-codeforming-future-bank-identification": ("open-literal", "the same-clock co-deforming martingale core is not identified with the future conditional covariance bank or ancestry state"),
     "first-bad-full-shape-local-descent": ("open-literal", "the exact descent-error SDE is now known, but no theorem controls deterministic bias, strain-shape drift, vorticity-gradient residual, metric-whitened covariance remainder, and actual support locality uniformly on the migrating first-bad current"),
     "selected-support-cauchy-deformation-alignment": ("open-literal", "the full physical current-shape source and deformation-Kelvin cross law are now exact, but programme-specific ancestry identification and first-bad finite-shape-to-local descent remain unresolved"),
@@ -373,6 +382,18 @@ required = {
     "ancestry-resolution-kernel-covariance", "ancestry-resolution-dynamic-transfer", "physical-anchor-conditional-shape-kernel", "ancestry-anchor-identification", "ancestry-fullstate-density-singularity",
     "ancestry-state-semantics", "ancestry-physical-kelvin-state-lift", "future-covariance-uniform-singular-limit",
     "restart-capacity", "active-ck-pillar-ii", "continuation-restart",
+}
+
+required |= {
+    "two-mode-shear-critical-sheet-merger",
+    "fixed-shape-critical-packet-coalescence",
+    "critical-merger-scalar-to-full-packet-no-go",
+    "critical-merger-branch-resolved-event-map",
+    "critical-merger-affine-target-noise-coboundary",
+    "critical-merger-same-replica-cross-block-quotient",
+    "critical-merger-selector-zero-jump-cusp",
+    "critical-merger-ancestry-identification",
+    "first-bad-critical-merger-selector-identification",
 }
 
 if set(SEAMS) != required:
@@ -780,6 +801,14 @@ for seam in ("three-mode-shear-critical-sheet-crossing", "three-mode-shear-pure-
         raise SystemExit(f"{seam} must remain an exact periodic-NS critical-sheet calibration")
 if SEAMS["first-bad-branch-competition-hysteresis-identification"][0] != "open-literal":
     raise SystemExit("branch-competition to first-bad hysteresis identification must remain open-literal")
+for seam in ("two-mode-shear-critical-sheet-merger", "critical-merger-scalar-to-full-packet-no-go", "critical-merger-branch-resolved-event-map", "critical-merger-affine-target-noise-coboundary", "critical-merger-same-replica-cross-block-quotient", "critical-merger-selector-zero-jump-cusp"):
+    if SEAMS[seam][0] != "audited-calibration":
+        raise SystemExit(f"{seam} must remain an exact NS merger calibration/no-go")
+if SEAMS["fixed-shape-critical-packet-coalescence"][0] != "audited-conditional":
+    raise SystemExit("full instantaneous packet coalescence must remain conditional on the explicitly supplied fixed-shape packet functor")
+for seam in ("critical-merger-ancestry-identification", "first-bad-critical-merger-selector-identification"):
+    if SEAMS[seam][0] != "open-literal":
+        raise SystemExit(f"{seam} must remain Open-literal")
 if SEAMS["selected-spectral-hybrid-projector-event-ledger"][0] != "audited-conditional":
     raise SystemExit("hybrid projector event ledger must remain a same-clock conditional composition")
 for seam in ("first-bad-orientation-packet-refinement-instantiation", "first-bad-spectral-event-transfer-instantiation", "first-bad-selected-spectral-lineage"):
