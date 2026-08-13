@@ -322,6 +322,19 @@ from pde_audit.moving_enstrophy_critical_point import (  # noqa: E402
     nondegenerate_scalar_critical_velocity_at,
     scalar_critical_constraint_speed_residual_at,
 )
+from pde_audit.enstrophy_critical_hessian_evolution import (  # noqa: E402
+    abc_hessian_logdet_calibration,
+    critical_hessian_evolution_faces_at,
+    determinant_jacobi_residual,
+    hessian_connection_logdet_divergence_residual,
+    hessian_connection_logdet_rate,
+    hessian_connection_strain_rotation_faces,
+    hessian_connection_strain_rotation_residual,
+    hessian_logdet_face_rates,
+    hessian_logdet_rate,
+    hessian_strain_rotation_logdet_rates,
+    nonzero_determinant_from_lograte,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1600,6 +1613,55 @@ aff_mc_speed_nonunique=aff_mc["speed_residual_v1"] == sp.zeros(3,1) and aff_mc["
 ft_mc=sp.symbols("ft_mc")
 value_speed_independent=critical_path_value_derivative_residual(ft_mc,ft_mc,sp.zeros(3,1),sp.Matrix([3,-2,5])) == 0
 
+# Critical-Hessian evolution and curvature-volume law.
+a_he,b_he,c1_he,c2_he,c3_he=sp.symbols("a_he b_he c1_he c2_he c3_he")
+e_he=-(x_lg-a_he*t)**2-2*(y_lg-b_he*t)**2-3*z_lg**2
+u_he=sp.Matrix([c1_he,c2_he,c3_he])
+grad_e_he=sp.Matrix([sp.diff(e_he,q) for q in coords_lg])
+R_he=sp.simplify(sp.diff(e_he,t)+(grad_e_he.T*u_he)[0])
+point_he={x_lg:a_he*t,y_lg:b_he*t,z_lg:0}
+v_he=sp.Matrix([a_he,b_he,0])
+faces_he=critical_hessian_evolution_faces_at(e_he,u_he,R_he,coords_lg,t,point_he,v_he)
+hessian_evolution_zero=faces_he["residual"] == sp.zeros(3)
+
+p_he,q_he=sp.symbols("p_he q_he")
+Gu_he=sp.Matrix([[p_he,2,0],[0,q_he,1],[3,0,-p_he-q_he]])
+H_he=sp.diag(-2,-3,-5)
+strain_he,rotation_he=hessian_connection_strain_rotation_faces(Gu_he,H_he)
+connection_split_zero=hessian_connection_strain_rotation_residual(Gu_he,H_he) == sp.zeros(3)
+connection_nonzero=strain_he+rotation_he != sp.zeros(3)
+connection_logdet_zero=hessian_connection_logdet_rate(Gu_he,H_he) == 0
+connection_divergence_zero=hessian_connection_logdet_divergence_residual(Gu_he,H_he) == 0
+strain_rate_he,rotation_rate_he=hessian_strain_rotation_logdet_rates(Gu_he,H_he)
+strain_rotation_rates_expected=strain_rate_he == 0 and rotation_rate_he == 0
+
+Hj_he=sp.diag(-sp.exp(t),-2*sp.exp(2*t),-3*sp.exp(-t))
+Hjd_he=sp.diff(Hj_he,t)
+detjd_he=sp.diff(Hj_he.det(),t)
+jacobi_he_zero=determinant_jacobi_residual(Hj_he,Hjd_he,detjd_he) == 0
+logdet_he_expected=hessian_logdet_rate(Hj_he,Hjd_he) == 2
+
+Gface_he=sp.diag(1,2,3)
+Cface_he=sp.Matrix([[0,1,0],[1,0,0],[0,0,0]])
+Rface_he=sp.diag(-1,0,1)
+face_rates_he=hessian_logdet_face_rates({
+    "hessian":sp.diag(-2,-3,-4),
+    "path_derivative":Gface_he+Cface_he+Rface_he,
+    "growth_hessian":Gface_he,
+    "connection":Cface_he,
+    "relative_transport":Rface_he,
+})
+face_rates_sum_zero=sp.simplify(face_rates_he["total"]-face_rates_he["growth"]-face_rates_he["connection"]-face_rates_he["relative"]) == 0
+finite_lograte_nonzero=nonzero_determinant_from_lograte(sp.Integer(2),sp.Integer(3)) != 0
+
+abc_he=abc_hessian_logdet_calibration(A_mc,nu,t,coords_lg)
+abc_he_hdot_expected=abc_he["hessian_dot_plus_2nu_hessian"] == sp.zeros(3)
+abc_he_det_nonzero=abc_he["determinant"] != 0
+abc_he_logdet_expected=abc_he["logdet_rate"] == -6*nu
+abc_he_jacobi_zero=abc_he["jacobi_residual"] == 0
+abc_he_div_zero=abc_he["divergence"] == 0
+abc_he_connection_zero=abc_he["connection_logdet_rate"] == 0 and abc_he["connection_divergence_residual"] == 0
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1834,6 +1896,16 @@ report = {
         "affine_degenerate_critical_speed_nonuniqueness": "Audited exact-NS degeneracy calibration",
         "critical_hessian_inversion_theorem_domain": "Exact theorem-domain correction",
         "first_bad_enstrophy_critical_path_identification": "Open-literal",
+        "critical_hessian_evolution_three_face": "Exact conditional identity",
+        "critical_hessian_connection_strain_rotation_split": "Exact identity / physical typing",
+        "incompressible_critical_hessian_connection_logdet_cancellation": "Exact incompressible cancellation",
+        "critical_hessian_strain_rotation_logdet_split": "Exact identity / theorem-type correction",
+        "critical_hessian_incompressible_curvature_volume_law": "Rigorous consequence conditional on nondegeneracy",
+        "critical_hessian_jacobi_logdet_law": "Exact conditional identity",
+        "critical_branch_finite_lograte_nondegeneracy": "Rigorous conditional consequence",
+        "abc_critical_hessian_logdet_calibration": "Audited exact periodic-NS calibration",
+        "critical_hessian_logdet_degeneracy_domain": "Exact theorem-domain correction",
+        "first_bad_critical_branch_degeneracy_identification": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -2361,6 +2433,31 @@ report = {
         },
         "speed_law": "H_e(xdot_*-u)+grad[stretching-Kelvin_bulk+nu Delta e]=0 on a differentiable critical branch; invert H_e only when nondegenerate",
         "first_bad": "Open-literal: the programme first-bad observable is not identified with a nondegenerate enstrophy critical branch",
+    },
+    "enstrophy_critical_hessian_evolution": {
+        "generic_three_face_evolution_residual_zero": bool(hessian_evolution_zero),
+        "connection_strain_rotation_split_residual_zero": bool(connection_split_zero),
+        "incompressible_connection_tensor_nonzero": bool(connection_nonzero),
+        "incompressible_connection_logdet_rate_zero": bool(connection_logdet_zero),
+        "connection_logdet_minus_two_divergence_residual_zero": bool(connection_divergence_zero),
+        "incompressible_strain_and_rotation_logdet_rates_zero": bool(strain_rotation_rates_expected),
+        "jacobi_determinant_residual_zero": bool(jacobi_he_zero),
+        "generic_logdet_rate_expected": bool(logdet_he_expected),
+        "logdet_face_rates_sum_residual_zero": bool(face_rates_sum_zero),
+        "finite_integrated_lograte_example_keeps_nonzero_determinant": bool(finite_lograte_nonzero),
+        "abc": {
+            "hessian_dot_equals_minus_2nu_hessian": bool(abc_he_hdot_expected),
+            "determinant_nonzero_at_finite_time": bool(abc_he_det_nonzero),
+            "logdet_rate_minus_6nu": bool(abc_he_logdet_expected),
+            "jacobi_residual_zero": bool(abc_he_jacobi_zero),
+            "divergence_zero": bool(abc_he_div_zero),
+            "connection_logdet_face_zero": bool(abc_he_connection_zero),
+            "determinant": str(abc_he["determinant"]),
+            "typing": "exact periodic ABC critical Hessian decays isotropically in amplitude while local incompressible connection contributes zero curvature-volume rate",
+        },
+        "curvature_volume_law": "for incompressible flow on a nondegenerate critical branch, d log|det H|/dt retains only growth-Hessian and relative-critical-transport faces",
+        "conditional_nondegeneracy": "finite limiting integrated lograte preserves nonzero det H on an already smooth nondegenerate branch; this is not Navier-Stokes continuation",
+        "first_bad": "Open-literal: no identification of critical-Hessian degeneracy/branch loss with the programme first-bad event or continuation failure",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),

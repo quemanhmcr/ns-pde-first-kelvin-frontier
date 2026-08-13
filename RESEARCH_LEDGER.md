@@ -1364,3 +1364,16 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited exact periodic-NS calibration:** ABC strict maximum at `(pi/4)^3` has invertible negative Hessian, nonzero fluid velocity, but fixed critical position `xdot_*=0`.
 - **Audited exact-NS degeneracy calibration:** affine uniform enstrophy has `H_e=0`; distinct critical-path velocities satisfy the same constraint, so inverse-Hessian speed is not canonical through degeneracy.
 - **Open-literal:** identification of the programme first-bad observable with a differentiable nondegenerate enstrophy-max branch and reconciliation with selector/refinement events.
+
+
+## Enstrophy critical-Hessian evolution and curvature volume
+
+- **Exact conditional identity:** along a differentiable critical branch, `Hdot=Hess(R)-(grad u)^T H-H grad u+((xdot_*-u).grad)H`, with `R=stretching-Kelvin_bulk+nu Delta e`.
+- **Exact physical split:** local connection is strain reshaping `-(S H+H S)` plus rotation commutator `W H-H W`.
+- **Exact identity:** connection contribution to `d log|det H|/dt` is `-2 div u`; rotation contributes zero and strain contributes `-2 tr S`.
+- **Rigorous incompressible consequence:** local linear deformation can reshape Hessian but has zero direct curvature-volume rate when `div u=0`.
+- **Exact conditional Jacobi law:** `det H(t)=det H(t0) exp(int tr(H^-1 Hdot))` on a nondegenerate branch.
+- **Rigorous conditional consequence:** finite integrated log-rate prevents a smooth nondegenerate branch from reaching `det H=0`; a continuous determinant collapse requires log-rate integral `-> -infinity`.  This is not Navier--Stokes continuation.
+- **Audited exact periodic-NS calibration:** ABC strict maximum has `Hdot=-2nu H`, logdet rate `-6nu`, determinant `-(A^6/2)e^-6nu t`, and zero incompressible connection logdet face.
+- **Exact theorem-domain correction:** inverse-Hessian/logdet formulas stop at Hessian degeneracy; branch creation/loss/merger is a separate geometry/event seam.
+- **Open-literal:** identification of critical-branch degeneracy with the actual first-bad selector/event/continuation mechanism.
