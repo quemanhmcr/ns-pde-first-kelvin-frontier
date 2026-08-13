@@ -296,6 +296,17 @@ from pde_audit.random_selected_event_correlation import (  # noqa: E402
     two_replica_mean_output_faces,
     two_replica_mean_output_residual,
 )
+from pde_audit.first_bad_rule_admissibility import (  # noqa: E402
+    adaptive_event_joint_law_obstruction,
+    first_bad_admissibility_ledger,
+    full_coherence_event_obstruction,
+    passive_event_gauge_calibration,
+    passive_raw_ranking_flip_calibration,
+    physical_residual_support_locality_no_go,
+    physical_score_passive_gauge_residual,
+    persistent_library_switch_obstruction,
+    raw_score_passive_gauge_change,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1493,6 +1504,37 @@ Nq1=sp.Matrix([[1,0],[0,0]]); Nq2=sp.Matrix([[0,0],[0,2]])
 Gq1=sp.simplify(Nq1*Nq1.T); Gq2=sp.simplify(Nq2*Nq2.T)
 random_qv_congruence_zero=two_replica_congruence_residual(Cq1,Gq1,Cq2,Gq2) == sp.zeros(1)
 
+# Necessary physical admissibility constraints for future first-bad rules.
+eps_adm=sp.Matrix([2,-1,3])
+H_adm=sp.Matrix([[2,1,0],[0,3,1],[1,0,2]])
+S_adm=sp.Matrix([[1,1,0],[0,2,0],[1,0,1]])
+admiss_physical_gauge_zero=physical_score_passive_gauge_residual(eps_adm,H_adm,S_adm) == 0
+admiss_raw_gauge_nonzero=raw_score_passive_gauge_change(sp.Matrix([1,0,0]),sp.eye(3),sp.diag(2,1,1)) != 0
+admiss_ranking=passive_raw_ranking_flip_calibration()
+admiss_raw_ranking_flips=admiss_ranking["raw_winner_before"] != admiss_ranking["raw_winner_after"]
+admiss_physical_ranking_fixed=admiss_ranking["physical_winner_before"] == admiss_ranking["physical_winner_after"] and admiss_ranking["physical_before"] == admiss_ranking["physical_after"]
+admiss_event_gauge=passive_event_gauge_calibration()
+admiss_event_raw_changes=bool(admiss_event_gauge["raw_block_changes"])
+admiss_event_physical_fixed=admiss_event_gauge["physical_event_gauge_residual"] == sp.zeros(3)
+rho_adm=sp.symbols("rho_adm", positive=True)
+Y_adm=sp.symbols("Y_adm", real=True)
+admiss_support=physical_residual_support_locality_no_go(Y_adm,t,nu,rho_adm)
+admiss_residual_collapse_support_nonlocal=admiss_support["physical_energy_limit"] == 0 and admiss_support["support_line_limit"] == 1
+admiss_library=persistent_library_switch_obstruction()
+admiss_library_all=all(admiss_library.values())
+admiss_coherence=full_coherence_event_obstruction()
+admiss_coherence_needed=admiss_coherence["input_channels_equal"] and admiss_coherence["parent_channels_different"] and admiss_coherence["parent_channel_difference"] == 2
+admiss_adaptive=adaptive_event_joint_law_obstruction()
+admiss_adaptive_needed=admiss_adaptive["aligned_mean_closure_false"] and admiss_adaptive["anti_aligned_mean_closure_false"]
+admiss_ledger=first_bad_admissibility_ledger(Y_adm,t,nu,rho_adm)
+admiss_necessary_flags=all(bool(admiss_ledger[k]) for k in [
+    "raw_ranking_is_gauge_artifact","physical_ranking_gauge_invariant",
+    "physical_event_map_gauge_invariant","residual_collapse_does_not_imply_support_locality",
+    "persistent_library_needed_for_switch","full_coherence_needed_for_linear_events",
+    "adaptive_joint_law_needed",
+])
+admiss_no_sufficiency=not bool(admiss_ledger["sufficient_first_bad_functional_defined"]) and not bool(admiss_ledger["restart_continuation_regularity_proved"])
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1702,6 +1744,15 @@ report = {
         "adaptive_event_qv_gram_congruence": "Exact identity",
         "selected_adaptive_event_expectation_ledger": "Rigorous conditional composition of exact replica identities",
         "first_bad_adaptive_event_joint_law": "Open-literal",
+        "first_bad_physical_score_passive_gauge": "Exact physical gauge identity",
+        "raw_first_bad_score_passive_gauge_no_go": "Audited calibration / rigorous observer-artifact no-go",
+        "first_bad_event_map_passive_gauge_equivariance": "Exact event gauge identity",
+        "first_bad_physical_residual_vs_support_locality": "Audited exact-NS calibration / rigorous insufficiency",
+        "first_bad_persistent_library_memory_necessity": "Rigorous consequence of exact selector-switch obstruction",
+        "first_bad_full_coherence_event_memory_necessity": "Audited PSD calibration / rigorous coherence necessity",
+        "first_bad_adaptive_joint_law_necessity": "Rigorous consequence of exact adaptive-event algebra",
+        "first_bad_rule_physical_admissibility_ledger": "Rigorous synthesis of necessary physical constraints; not sufficient",
+        "first_bad_badness_resolve_functional_after_admissibility": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -2146,6 +2197,41 @@ report = {
         },
         "typing": "adaptive event-map dispersion and signed event-state correlation are mandatory expectation-level faces",
         "first_bad": "Open-literal at actual badness/resolve rule, adaptive event-map distribution, joint law, and outer clock",
+    },
+    "first_bad_rule_admissibility": {
+        "physical_score_passive_gauge_residual_zero": bool(admiss_physical_gauge_zero),
+        "raw_score_passive_gauge_change_nonzero": bool(admiss_raw_gauge_nonzero),
+        "raw_ranking_flips_under_passive_basis": bool(admiss_raw_ranking_flips),
+        "physical_ranking_unchanged_under_passive_basis": bool(admiss_physical_ranking_fixed),
+        "raw_event_block_changes_under_passive_bases": bool(admiss_event_raw_changes),
+        "physical_event_map_gauge_residual_zero": bool(admiss_event_physical_fixed),
+        "physical_residual_collapse_with_nonlocal_support": bool(admiss_residual_collapse_support_nonlocal),
+        "persistent_library_switch_obstruction_all_true": bool(admiss_library_all),
+        "full_coherence_event_obstruction_expected": bool(admiss_coherence_needed),
+        "adaptive_joint_law_obstruction_expected": bool(admiss_adaptive_needed),
+        "all_necessary_admissibility_flags_true": bool(admiss_necessary_flags),
+        "no_sufficient_functional_or_regularity_claim": bool(admiss_no_sufficiency),
+        "ranking_calibration": {
+            "raw_before": [str(x) for x in admiss_ranking["raw_before"]],
+            "raw_after": [str(x) for x in admiss_ranking["raw_after"]],
+            "physical_before": [str(x) for x in admiss_ranking["physical_before"]],
+            "physical_after": [str(x) for x in admiss_ranking["physical_after"]],
+            "raw_winner_before": int(admiss_ranking["raw_winner_before"]),
+            "raw_winner_after": int(admiss_ranking["raw_winner_after"]),
+            "physical_winner_before": int(admiss_ranking["physical_winner_before"]),
+            "physical_winner_after": int(admiss_ranking["physical_winner_after"]),
+        },
+        "support_no_go": {
+            "physical_energy": str(admiss_support["physical_energy"]),
+            "physical_energy_limit_zero": bool(admiss_support["physical_energy_limit"] == 0),
+            "long_support_line_squared": str(admiss_support["long_x_line_squared"]),
+            "support_line_limit_one": bool(admiss_support["support_line_limit"] == 1),
+        },
+        "coherence_parent_channel_difference": str(admiss_coherence["parent_channel_difference"]),
+        "adaptive_aligned_exact_vs_naive": [str(admiss_adaptive["aligned_exact"]),str(admiss_adaptive["aligned_naive"])],
+        "adaptive_anti_aligned_exact_vs_naive": [str(admiss_adaptive["anti_aligned_exact"]),str(admiss_adaptive["anti_aligned_naive"])],
+        "typing": "necessary physical admissibility only: gauge, support, persistent-library memory, full coherence, and adaptive joint-law constraints",
+        "first_bad": "Open-literal: no sufficient Navier-Stokes badness/resolve functional is defined",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),

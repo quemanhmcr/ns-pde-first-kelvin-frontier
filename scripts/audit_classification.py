@@ -44,6 +44,7 @@ hybrid_selected_note = ROOT / "docs" / "selected_residual_hybrid_semimartingale_
 combined_event_note = ROOT / "docs" / "selected_residual_combined_event_audit.md"
 combined_qv_rate_note = ROOT / "docs" / "selected_residual_combined_qv_rate_audit.md"
 random_event_note = ROOT / "docs" / "random_selected_event_correlation_audit.md"
+first_bad_admissibility_note = ROOT / "docs" / "first_bad_rule_admissibility_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -84,6 +85,7 @@ hybrid_selected_text = hybrid_selected_note.read_text()
 combined_event_text = combined_event_note.read_text()
 combined_qv_rate_text = combined_qv_rate_note.read_text()
 random_event_text = random_event_note.read_text()
+first_bad_admissibility_text = first_bad_admissibility_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -777,6 +779,24 @@ if random_event_missing:
     print("missing random/adaptive selected-event markers:", random_event_missing)
     sys.exit(1)
 
+first_bad_admissibility_required = [
+    "Passive packet coordinates are not physical badness",
+    "Exact passive-gauge ranking flip",
+    "Physical event rules must also be passive-gauge equivariant",
+    "Gauge-invariant residual smallness is still not support locality",
+    "Genuine hysteretic switches require persistent-library state",
+    "Diagonal spectral channels do not retain event coherence",
+    "Adaptive first-bad events require the event--state joint law",
+    "Necessary physical admissibility ledger",
+    "These are **necessary physical admissibility constraints**",
+    "first-bad badness/resolve functional remains Open-literal",
+    "No restart/continuation/regularity theorem claimed",
+]
+first_bad_admissibility_missing = [token for token in first_bad_admissibility_required if token not in first_bad_admissibility_text]
+if first_bad_admissibility_missing:
+    print("missing first-bad rule admissibility markers:", first_bad_admissibility_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -942,6 +962,11 @@ for forbidden in [
     "adaptive event correlation is always positive",
     "event-map dispersion exhausts adaptive event randomness",
     "adaptive event joint law proves restart",
+    "raw residual norm is a physical first-bad score",
+    "gauge-invariant residual smallness proves support locality",
+    "admissibility checklist is a sufficient first-bad criterion",
+    "full coherence admissibility proves regularity",
+    "first-bad badness functional is now defined",
     "generic germ mixing commutes with per-germ spectral blocks",
     "diagonal-only spectral refinement is sufficient",
     "quadratic selector reset is a positive physical payment",
@@ -994,7 +1019,7 @@ for forbidden in [
     "hybrid selected path law determines first-bad event times",
     "hybrid selected semimartingale proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text or forbidden in random_event_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text or forbidden in random_event_text or forbidden in first_bad_admissibility_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

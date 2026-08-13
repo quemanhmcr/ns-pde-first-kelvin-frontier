@@ -1328,3 +1328,16 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Rigorous structural consequence:** adaptive first-bad expectation/covariance bookkeeping requires the joint event-map/library law; `mean C x mean Q x mean C^T` is not an identity.
 - **Open-literal:** actual first-bad badness/resolve rule, adaptive event map, event/state joint law, and clock identification.
 - **Open:** restart/continuation/regularity.
+
+
+## Necessary physical admissibility of any future first-bad rule
+
+- **Exact identity:** passive packet basis `H->HS`, `epsilon->S^T epsilon` leaves `r=H^-T epsilon` and `|r|^2` invariant; raw `|epsilon|^2` is not invariant.
+- **Audited calibration:** two fixed physical germs have raw scores `(1,9/4)`; a passive basis change on germ 0 gives `(4,9/4)` and flips the raw winner `1->0`, while physical scores/ranking remain unchanged.
+- **Exact gauge identity:** raw event blocks transform equivariantly under independent parent/child packet bases while physical event map `A=H_p^-T R H_c^T` is invariant.
+- **Audited exact-NS calibration:** gauge-correct physical residual energy `rho^2->0` does not imply support locality; one physical support line remains exactly length one.
+- **Rigorous consequence:** genuine hysteretic switches require persistent-library state; old selected endpoint/second moment is not universally compositional.
+- **Audited PSD calibration:** identical diagonal spectral channels can have different cross coherence and differ by exactly `2` under the same later linear event.
+- **Rigorous consequence:** adaptive first-bad expectation-level bookkeeping requires the event-map/state joint law, not mean map x mean payload.
+- **Necessary only:** no sufficient first-bad functional, restart, continuation, or regularity theorem is claimed.
+- **Open-literal:** actual Navier--Stokes badness/resolve functional and event generation.
