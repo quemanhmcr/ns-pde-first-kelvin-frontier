@@ -25,8 +25,8 @@ SEAMS = {
     "first-bad-resolve-predicate-definition": ("open-literal", "resolved is an independent Boolean oracle input; no Navier-Stokes resolve condition generates it"),
     "naive-instantaneous-badness-threshold-no-go": ("audited-calibration", "arbitrary-amplitude smooth periodic ABC flow makes raw vorticity, enstrophy, stretching, Kelvin bulk qv, growth margin, and stretch/bulk ratio exceed every finite threshold, so none alone certifies continuation failure"),
     "abc-local-growth-gate-scope-check": ("audited", "for the full Beltrami ABC family omega.S.omega=u.grad e, so every enstrophy critical point has zero stretching; ABC cannot falsify the local-maximum necessary growth gate"),
-    "first-bad-quantile-observable-definition": ("open-literal", "the separate scalar/state observable whose level sets define the moving first-bad quantile/shell localization map is not written line by line"),
-    "first-bad-moving-cut-speed-law": ("open-literal", "the generic current/coarea speed law is exact, but the first-bad observable and outer physical-time lift needed to instantiate Qdot/Hdot_shell are missing"),
+    "first-bad-quantile-observable-definition": ("open-literal", "max-normalized enstrophy now supplies a fully written intrinsic superlevel candidate, but no theorem identifies it with the programme actual first-bad quantile/shell observable"),
+    "first-bad-moving-cut-speed-law": ("open-literal", "the max-normalized enstrophy candidate now has an exact physical boundary-speed law, but actual first-bad identification and the programme outer physical-time lift remain missing"),
     "two-clock-first-bad-kelvin-lift": ("open-literal", "the physical reverse-age Kelvin clock is exact, but the programme ancestry state and first-bad outer time have not been intertwined with that state family"),
     "cycle-typed-first-bad-boundary": ("audited", "closed Kelvin cycle library forces zero intrinsic selector physical boundary and pair boundary"),
     "cycle-typed-first-bad-transport": ("audited", "support transport is exact germ cut current; finite hysteresis switch is reset revaluation"),
@@ -340,6 +340,15 @@ SEAMS = {
     "critical-merger-finite-variation-moving-cut": ("audited-calibration", "the isolated side critical cut has divergent instantaneous speed but finite total variation d(t0) and continuous endpoint state"),
     "ancestry-moving-readout-three-layer-covariance": ("audited", "a reduced/full Kelvin ancestry lift followed by normalized Eulerian localization has exactly intrinsic, hidden-resolution, and localization covariance layers"),
     "ancestry-moving-readout-boundary-revaluation": ("audited", "moving Eulerian boundaries act on selected mean/covariance by signed Reynolds mass-flux revaluation; no independent selector Brownian source is created"),
+    "intrinsic-ns-similarity-weights": ("audited", "NS similarity gives forced weights e~lambda^4, three-face enstrophy rates~lambda^6, grad e~lambda^5, and boundary speed~lambda"),
+    "intrinsic-absolute-threshold-similarity-no-go": ("audited-calibration", "exact integer-frequency periodic heat shears make raw max enstrophy and Kelvin bulk arbitrarily large while the max-normalized compatibility defect remains zero"),
+    "intrinsic-max-enstrophy-envelope-dini": ("audited", "for smooth periodic enstrophy the scalar global maximum has one-sided Dini rates given by extrema of the active-set NS three-face rates, without a branch-selector path"),
+    "intrinsic-max-normalized-enstrophy-filtration": ("audited", "g=e/max(e) and all superlevels {g>=theta} form an NS-generated similarity-neutral candidate localization filtration"),
+    "intrinsic-superlevel-compatibility-speed": ("audited", "on a regular superlevel boundary V_n-u.n=(stretch-Kelvin_bulk+nu Delta e-theta Mdot)/|grad e| exactly"),
+    "intrinsic-enstrophy-ancestry-flux-split": ("audited", "ancestry mass flux through an intrinsic enstrophy boundary splits exactly into fluid/probability-current mismatch plus compatibility level-slip, with no selector force"),
+    "intrinsic-one-mode-compatibility-cancellation": ("audited-calibration", "exact periodic one-mode heat shear has stationary g=cos^2(ny) and zero compatibility defect although Kelvin bulk and curvature separately scale like n^6"),
+    "intrinsic-four-mode-global-max-crossing": ("audited-calibration", "an exact four-mode periodic heat shear has two true global enstrophy maxima crossing at t=1/nu with M=18, negative transverse Hessians, zero value jump, and Dini-rate jump 96nu"),
+    "first-bad-intrinsic-filtration-identification": ("open-literal", "the max-normalized enstrophy filtration is now a fully instantiated intrinsic candidate, but no theorem identifies its compatibility pattern with actual continuation failure or a sufficient badness/resolve rule"),
     "critical-merger-uniform-ancestry-chamber": ("audited-calibration", "the exact periodic merger shear has stationary uniform Kelvin-anchor y marginal, while the side critical chamber is a moving sub-Markov readout with finite total mass variation"),
     "critical-merger-readout-quartic-regularization": ("audited-calibration", "the exact critical chamber has q_side-q_mean=O(d^4), so the 1/d cut speed gives normalized mean rate O(d^2) tending to zero"),
     "critical-merger-readout-variance-two-face": ("audited-calibration", "selected vorticity variance is O(d^8) and its exact rate is intrinsic -2nu<|grad q|^2> plus signed moving-cut covariance revaluation, both O(d^6)"),
@@ -411,6 +420,15 @@ required |= {
     "critical-merger-finite-variation-moving-cut",
     "ancestry-moving-readout-three-layer-covariance",
     "ancestry-moving-readout-boundary-revaluation",
+    "intrinsic-ns-similarity-weights",
+    "intrinsic-absolute-threshold-similarity-no-go",
+    "intrinsic-max-enstrophy-envelope-dini",
+    "intrinsic-max-normalized-enstrophy-filtration",
+    "intrinsic-superlevel-compatibility-speed",
+    "intrinsic-enstrophy-ancestry-flux-split",
+    "intrinsic-one-mode-compatibility-cancellation",
+    "intrinsic-four-mode-global-max-crossing",
+    "first-bad-intrinsic-filtration-identification",
     "critical-merger-uniform-ancestry-chamber",
     "critical-merger-readout-quartic-regularization",
     "critical-merger-readout-variance-two-face",
@@ -832,6 +850,14 @@ for seam in ("critical-merger-sheet-vs-material-transport", "critical-merger-lit
 for seam in ("ancestry-moving-readout-three-layer-covariance", "ancestry-moving-readout-boundary-revaluation"):
     if SEAMS[seam][0] != "audited":
         raise SystemExit(f"{seam} must remain an exact ancestry/readout structural identity")
+for seam in ("intrinsic-ns-similarity-weights", "intrinsic-max-enstrophy-envelope-dini", "intrinsic-max-normalized-enstrophy-filtration", "intrinsic-superlevel-compatibility-speed", "intrinsic-enstrophy-ancestry-flux-split"):
+    if SEAMS[seam][0] != "audited":
+        raise SystemExit(f"{seam} must remain an exact intrinsic NS localization identity")
+for seam in ("intrinsic-absolute-threshold-similarity-no-go", "intrinsic-one-mode-compatibility-cancellation", "intrinsic-four-mode-global-max-crossing"):
+    if SEAMS[seam][0] != "audited-calibration":
+        raise SystemExit(f"{seam} must remain an exact periodic-NS calibration/no-go")
+if SEAMS["first-bad-intrinsic-filtration-identification"][0] != "open-literal":
+    raise SystemExit("intrinsic enstrophy filtration to actual first-bad continuation identification must remain Open-literal")
 for seam in ("critical-merger-uniform-ancestry-chamber", "critical-merger-readout-quartic-regularization", "critical-merger-readout-variance-two-face"):
     if SEAMS[seam][0] != "audited-calibration":
         raise SystemExit(f"{seam} must remain an exact NS moving-readout calibration")

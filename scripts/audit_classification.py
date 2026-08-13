@@ -52,6 +52,7 @@ branch_competition_note = ROOT / "docs" / "enstrophy_critical_branch_competition
 critical_merger_kelvin_note = ROOT / "docs" / "critical_sheet_merger_kelvin_event_audit.md"
 critical_transport_nanson_note = ROOT / "docs" / "critical_sheet_transport_nanson_event_audit.md"
 kelvin_ancestry_readout_note = ROOT / "docs" / "kelvin_ancestry_moving_readout_audit.md"
+intrinsic_enstrophy_localization_note = ROOT / "docs" / "intrinsic_enstrophy_localization_audit.md"
 own_local_affine_note = ROOT / "docs" / "own_local_kelvin_affine_event_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
@@ -101,6 +102,7 @@ branch_competition_text = branch_competition_note.read_text()
 critical_merger_kelvin_text = critical_merger_kelvin_note.read_text()
 critical_transport_nanson_text = critical_transport_nanson_note.read_text()
 kelvin_ancestry_readout_text = kelvin_ancestry_readout_note.read_text()
+intrinsic_enstrophy_localization_text = intrinsic_enstrophy_localization_note.read_text()
 own_local_affine_text = own_local_affine_note.read_text()
 required = [
     "Exact identity",
@@ -956,6 +958,24 @@ if kelvin_ancestry_readout_missing:
     print("missing Kelvin-ancestry moving-readout markers:", kelvin_ancestry_readout_missing)
     sys.exit(1)
 
+intrinsic_enstrophy_localization_required = [
+    "Exact NS similarity grammar",
+    "Absolute first-bad magnitudes are not intrinsic",
+    "The max envelope needs no branch selector",
+    "The intrinsic localization filtration",
+    "The boundary compatibility defect",
+    "Kelvin ancestry sees exactly two boundary-flux faces",
+    "Exact one-mode compatibility cancellation",
+    "Exact four-mode global-max crossing",
+    "What bottleneck this resolves",
+    "Open-literal/Open",
+    "No restart/continuation/regularity theorem claimed",
+]
+intrinsic_enstrophy_localization_missing = [token for token in intrinsic_enstrophy_localization_required if token not in intrinsic_enstrophy_localization_text]
+if intrinsic_enstrophy_localization_missing:
+    print("missing intrinsic enstrophy localization markers:", intrinsic_enstrophy_localization_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -975,6 +995,9 @@ for forbidden in [
     "moving readout defines the first-bad functional",
     "selector boundary revaluation is Brownian q.v.",
     "critical chamber cancellation proves continuation",
+    "max-normalized enstrophy filtration proves continuation",
+    "compatibility defect is the first-bad functional",
+    "intrinsic filtration proves global regularity",
     "H->0 implies packet locality",
     "small area frame proves support locality",
     "raw Frobenius remainder is sufficient",
@@ -1216,7 +1239,7 @@ for forbidden in [
     "hybrid selected path law determines first-bad event times",
     "hybrid selected semimartingale proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text or forbidden in random_event_text or forbidden in first_bad_admissibility_text or forbidden in local_growth_gate_text or forbidden in moving_critical_text or forbidden in critical_hessian_text or forbidden in branch_competition_text or forbidden in critical_merger_kelvin_text or forbidden in critical_transport_nanson_text or forbidden in kelvin_ancestry_readout_text or forbidden in own_local_affine_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text or forbidden in random_event_text or forbidden in first_bad_admissibility_text or forbidden in local_growth_gate_text or forbidden in moving_critical_text or forbidden in critical_hessian_text or forbidden in branch_competition_text or forbidden in critical_merger_kelvin_text or forbidden in critical_transport_nanson_text or forbidden in kelvin_ancestry_readout_text or forbidden in intrinsic_enstrophy_localization_text or forbidden in own_local_affine_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

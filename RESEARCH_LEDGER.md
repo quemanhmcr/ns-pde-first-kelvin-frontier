@@ -1444,3 +1444,13 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Exact face coefficients:** Kelvin bulk is `-(4nu e^-2/105)d^6+O(d^8)`, moving-cut revaluation is `-(4nu e^-2/525)d^6+O(d^8)`, and total `Vdot=-(8nu e^-2/175)d^6+O(d^8)->0`.
 - **Frontier correction:** the ancestry-to-moving-Eulerian-readout semantics and second-order transport law are now literal once the localization is supplied.  The actual NS first-bad observable defining that localization, global ancestry state/lift, two-clock future-bank identification, general endogenous interface accumulation, uniform first-bad support/finite-shape collapse, restart, continuation and regularity remain **Open-literal/Open**.
 - **No claim:** no first-bad threshold, restart, continuation, blow-up exclusion, or global-regularity theorem follows from this milestone.
+
+## 2026-08-13 — Intrinsic max-normalized enstrophy localization milestone
+
+- Replaced the external-threshold picture at the candidate localization layer by the PDE-generated filtration `e -> M=max e -> g=e/M -> {g>=theta}`.
+- Derived the exact regular-boundary compatibility law `V_n-u.n=(stretching-Kelvin_bulk+nu Delta e-theta Mdot)/|grad e|` and its NS-similarity-invariant normalization.
+- Composed the boundary with a generic ancestry continuity current: mass flux is exactly fluid/current mismatch plus intrinsic level slip; no selector force or selector Brownian source appears.
+- Exact periodic integer-frequency one-mode NS gives raw `M~n^4` and Kelvin bulk `~n^6` but stationary `g=cos^2(ny)` and zero compatibility defect, ruling out absolute-magnitude first-bad thresholds as intrinsic criteria.
+- Built an exact four-mode periodic heat shear whose `y=0,pi` points are true global enstrophy maxima at `t*=1/nu`; exact polynomial bounds certify the global claim, and the max envelope switches one-sided rates from `-336nu` to `-240nu` with zero value jump.
+- Classification: similarity/localization/speed/ancestry-flux laws Exact/Rigorous; one-mode and four-mode witnesses Audited exact-NS calibrations; actual first-bad/continuation identification remains Open-literal/Open.
+- No restart/continuation/global-regularity claim.  No geometric scale is identified with the Kelvin diffusion scale merely from an exponent.
