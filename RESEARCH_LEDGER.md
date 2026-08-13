@@ -1316,3 +1316,15 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Rigorous conditional composition:** continuous source, finite state jump, jump q.v. atom, source-rate revaluation, and second-moment reset are now separately typed on supplied same-clock paths.
 - **Open-literal:** actual first-bad library/badness/timing/event maps and cross-clock/future-bank identification.
 - **Open:** restart/continuation/regularity.
+
+
+## Random/adaptive selected-event map correlation
+
+- **Exact identity:** two-replica mean output is `Cbar xbar + (1/4) DeltaC Deltax`; mean event map x mean state is not universal when event choice is state dependent.
+- **Exact identity:** `E_2[C Q C^T]` has four faces: mean-map/mean-payload, positive event-map dispersion, and two signed event--state correlation faces.
+- **Rigorous consequence:** fixed event map removes all event-randomness faces; fixed payload leaves pure positive event-map dispersion.
+- **Audited calibration:** PSD aligned replicas give `1+1+1+1=4`; PSD anti-aligned replicas give `1+1-1-1=0`.
+- **Exact identity:** the same congruence law applies to continuous q.v. Gram payloads.
+- **Rigorous structural consequence:** adaptive first-bad expectation/covariance bookkeeping requires the joint event-map/library law; `mean C x mean Q x mean C^T` is not an identity.
+- **Open-literal:** actual first-bad badness/resolve rule, adaptive event map, event/state joint law, and clock identification.
+- **Open:** restart/continuation/regularity.

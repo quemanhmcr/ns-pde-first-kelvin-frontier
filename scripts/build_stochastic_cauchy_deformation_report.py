@@ -288,6 +288,14 @@ from pde_audit.selected_residual_combined_qv_rate import (  # noqa: E402
     selected_continuous_qv_rate_from_noise,
     source_revaluation_vs_jump_square_calibrations,
 )
+from pde_audit.random_selected_event_correlation import (  # noqa: E402
+    adaptive_event_alignment_calibrations,
+    event_dispersion_face_psd_quadratic_form,
+    two_replica_congruence_faces,
+    two_replica_congruence_residual,
+    two_replica_mean_output_faces,
+    two_replica_mean_output_residual,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1451,6 +1459,40 @@ one_mode_rate_post_zero=one_mode_rate["actual_post_qv_rate"] == sp.zeros(3)
 one_mode_rate_actual_negative_pre=one_mode_rate["actual_rate_revaluation"] == sp.simplify(-one_mode_rate["pre_qv_rate"])
 one_mode_rate_pair_faces_close=one_mode_rate["rate_revaluation_residual"] == sp.zeros(3)
 
+# Random/adaptive selected event-map correlation.
+Cr1=sp.Matrix([[1,2],[0,1]])
+Cr2=sp.Matrix([[2,0],[1,1]])
+xr1=sp.Matrix([3,1]); xr2=sp.Matrix([0,2])
+random_mean_residual_zero=two_replica_mean_output_residual(Cr1,xr1,Cr2,xr2) == sp.zeros(2,1)
+_,random_mean_corr=two_replica_mean_output_faces(Cr1,xr1,Cr2,xr2)
+random_mean_corr_nonzero=random_mean_corr != sp.zeros(2,1)
+Qr1=sp.Matrix([[3,1],[1,2]])
+Qr2=sp.Matrix([[1,0],[0,4]])
+random_congruence_zero=two_replica_congruence_residual(Cr1,Qr1,Cr2,Qr2) == sp.zeros(2)
+_,random_disp,random_corr_l,random_corr_r=two_replica_congruence_faces(Cr1,Qr1,Cr2,Qr2)
+random_disp_nonzero=random_disp != sp.zeros(2)
+random_corr_nonzero=random_corr_l != sp.zeros(2) or random_corr_r != sp.zeros(2)
+random_disp_probe=event_dispersion_face_psd_quadratic_form(
+    sp.eye(2),sp.diag(2,5),sp.Matrix([[0,1],[1,0]]),sp.Matrix([3,-1])
+)
+random_disp_probe_nonnegative=bool(random_disp_probe >= 0)
+random_alignment=adaptive_event_alignment_calibrations()
+random_alignment_positive_expected=(
+    random_alignment["positive_exact"],random_alignment["positive_naive"],
+    random_alignment["positive_dispersion"],random_alignment["positive_corr_left"],
+    random_alignment["positive_corr_right"]
+) == (4,1,1,1,1)
+random_alignment_negative_expected=(
+    random_alignment["negative_exact"],random_alignment["negative_naive"],
+    random_alignment["negative_dispersion"],random_alignment["negative_corr_left"],
+    random_alignment["negative_corr_right"]
+) == (0,1,1,-1,-1)
+random_payloads_psd=bool(random_alignment["all_payloads_psd"])
+Cq1=sp.Matrix([[1,0]]); Cq2=sp.Matrix([[0,1]])
+Nq1=sp.Matrix([[1,0],[0,0]]); Nq2=sp.Matrix([[0,0],[0,2]])
+Gq1=sp.simplify(Nq1*Nq1.T); Gq2=sp.simplify(Nq2*Nq2.T)
+random_qv_congruence_zero=two_replica_congruence_residual(Cq1,Gq1,Cq2,Gq2) == sp.zeros(1)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1651,6 +1693,15 @@ report = {
         "selector_only_qv_rate_hidden_event_no_go": "Audited calibration / rigorous hidden-event necessity",
         "selected_hybrid_source_jump_ledger": "Rigorous conditional composition of exact same-clock identities",
         "first_bad_hybrid_source_event_instantiation": "Open-literal",
+        "adaptive_selected_event_mean_correlation": "Exact two-replica identity",
+        "adaptive_selected_event_congruence_four_face": "Exact identity",
+        "adaptive_event_map_dispersion_face": "Rigorous PSD consequence",
+        "adaptive_event_state_correlation_faces": "Exact signed correlation identity",
+        "mean_event_map_mean_payload_closure": "Audited PSD calibration: false universally",
+        "adaptive_event_alignment_correlation_sign": "Audited PSD calibration",
+        "adaptive_event_qv_gram_congruence": "Exact identity",
+        "selected_adaptive_event_expectation_ledger": "Rigorous conditional composition of exact replica identities",
+        "first_bad_adaptive_event_joint_law": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -2067,6 +2118,34 @@ report = {
         },
         "typing": "jump optional qv and adjacent-interval continuous Brownian source-rate revaluation are distinct exact tensors",
         "first_bad": "Open-literal at actual library/badness/timing/event/clock instantiation",
+    },
+    "random_selected_event_correlation": {
+        "mean_output_correlation_residual_zero": bool(random_mean_residual_zero),
+        "mean_output_correlation_face_nonzero": bool(random_mean_corr_nonzero),
+        "second_order_four_face_residual_zero": bool(random_congruence_zero),
+        "event_map_dispersion_nonzero": bool(random_disp_nonzero),
+        "event_state_correlation_faces_nonzero": bool(random_corr_nonzero),
+        "event_dispersion_probe_nonnegative": bool(random_disp_probe_nonnegative),
+        "all_alignment_payloads_psd": bool(random_payloads_psd),
+        "aligned_faces_expected_1_1_1_1_to_4": bool(random_alignment_positive_expected),
+        "anti_aligned_faces_expected_1_1_minus1_minus1_to_0": bool(random_alignment_negative_expected),
+        "qv_gram_congruence_residual_zero": bool(random_qv_congruence_zero),
+        "aligned": {
+            "exact": str(random_alignment["positive_exact"]),
+            "naive": str(random_alignment["positive_naive"]),
+            "dispersion": str(random_alignment["positive_dispersion"]),
+            "corr_left": str(random_alignment["positive_corr_left"]),
+            "corr_right": str(random_alignment["positive_corr_right"]),
+        },
+        "anti_aligned": {
+            "exact": str(random_alignment["negative_exact"]),
+            "naive": str(random_alignment["negative_naive"]),
+            "dispersion": str(random_alignment["negative_dispersion"]),
+            "corr_left": str(random_alignment["negative_corr_left"]),
+            "corr_right": str(random_alignment["negative_corr_right"]),
+        },
+        "typing": "adaptive event-map dispersion and signed event-state correlation are mandatory expectation-level faces",
+        "first_bad": "Open-literal at actual badness/resolve rule, adaptive event-map distribution, joint law, and outer clock",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),
