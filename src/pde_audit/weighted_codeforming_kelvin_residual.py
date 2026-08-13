@@ -176,20 +176,31 @@ def quadratic_heat_shear_residual(y: sp.Symbol, t: sp.Symbol, nu: sp.Expr) -> sp
     return sp.simplify(sp.diff(U, t) - nu * sp.diff(U, y, 2))
 
 
+def asymmetric_rectangle_shear_error_from_velocity(
+    shear_velocity: sp.Expr,
+    anchor_y: sp.Symbol,
+    length_x: sp.Expr,
+    length_y: sp.Expr,
+) -> sp.Expr:
+    """Kelvin local-frame error on [0,lx]_x x [0,ly]_y, normal +e_z.
+
+    For x-shear u=(U(y),0,0), omega_z=-U_y.  Stokes gives
+      epsilon = lx*[U(Y)-U(Y+ly)] + lx*ly*U_y(Y).
+    """
+    U0 = shear_velocity
+    U1 = shear_velocity.subs(anchor_y, anchor_y + length_y)
+    Uy0 = sp.diff(shear_velocity, anchor_y)
+    return sp.simplify(length_x * (U0 - U1) + length_x * length_y * Uy0)
+
+
 def asymmetric_square_shear_error_from_velocity(
     shear_velocity: sp.Expr,
     anchor_y: sp.Symbol,
     side: sp.Expr,
 ) -> sp.Expr:
-    """Kelvin local-frame error on [0,side]_x x [0,side]_y, normal +e_z.
-
-    For x-shear u=(U(y),0,0), omega_z=-U_y.  Stokes gives
-      epsilon = side*[U(Y)-U(Y+side)] + side^2 U_y(Y).
-    """
-    U0 = shear_velocity
-    U1 = shear_velocity.subs(anchor_y, anchor_y + side)
-    Uy0 = sp.diff(shear_velocity, anchor_y)
-    return sp.simplify(side * (U0 - U1) + side**2 * Uy0)
+    return asymmetric_rectangle_shear_error_from_velocity(
+        shear_velocity, anchor_y, side, side
+    )
 
 
 def asymmetric_square_codeforming_residual(

@@ -71,6 +71,19 @@ from pde_audit.full_current_shape_covariance import (  # noqa: E402
     reverse_age_current_shape_diffusion_covariance,
     translation_cartan_residual,
 )
+from pde_audit.directional_refinement_kelvin_residual import (  # noqa: E402
+    directional_weighted_energy_residual,
+    ensemble_event_three_face_residual,
+    ensemble_event_three_faces,
+    homogeneous_isotropic_refinement_residual,
+    midpoint_revaluation_faces,
+    midpoint_revaluation_residual,
+    passive_reparameterization_energy_residual,
+    quadratic_long_support_calibration,
+    reverse_material_weighted_energy_rate_residual,
+    right_refinement_metric_residual,
+    scale_shape_smooth_rate_residual,
+)
 from pde_audit.dynamic_reconstructed_kelvin_residual import (  # noqa: E402
     full_dyad_block_decomposition_residual,
     full_qv_block_decomposition_residual,
@@ -870,6 +883,72 @@ homogeneous_weighted_exponents_zero = all(
     homogeneous_weighted_exponent_residual(rhow, p, a) == 0 for p in range(2, 8)
 )
 
+# Directional/refinement/event balance of the physical weighted Kelvin residual.
+Vdir = sp.Matrix([[sp.Rational(3,5), -sp.Rational(4,5), 0], [sp.Rational(4,5), sp.Rational(3,5), 0], [0,0,1]])
+s2dir = (sp.Integer(1), sp.Integer(4), sp.Integer(9))
+Qdir = sp.Matrix([[2,1,0],[1,3,1],[0,1,5]])
+directional_decomposition_zero = directional_weighted_energy_residual(Qdir, Vdir, s2dir) == 0
+
+Lref = sp.Matrix([[2,1,0],[0,1,1],[1,0,1]])
+Rref = sp.Matrix([[1,1,0],[0,1,0],[0,0,2]])
+right_refinement_metric_zero = right_refinement_metric_residual(Lref, Rref) == sp.zeros(3)
+
+Mm_evt = sp.Matrix([[2,1],[1,3]])
+Qm_evt = sp.Matrix([[4,1],[1,2]])
+Mp_evt = sp.Matrix([[5,2],[2,4]])
+Qp_evt = sp.Matrix([[3,2],[2,6]])
+midpoint_event_zero = midpoint_revaluation_residual(Mm_evt, Qm_evt, Mp_evt, Qp_evt) == 0
+mid_geometry_evt, mid_state_evt = midpoint_revaluation_faces(Mm_evt, Qm_evt, Mp_evt, Qp_evt)
+
+Mpass = sp.diag(2,3,5)
+Qpass = sp.Matrix([[1,1,0],[1,2,0],[0,0,1]])
+Rpass = sp.Matrix([[1,1,0],[0,1,0],[0,0,1]])
+passive_gl_total_zero = passive_reparameterization_energy_residual(Mpass, Qpass, Rpass) == 0
+Mpass_p = sp.simplify(Rpass.T*Mpass*Rpass)
+Qpass_p = sp.simplify(Rpass.inv()*Qpass*Rpass.inv().T)
+pass_geometry, pass_state = midpoint_revaluation_faces(Mpass, Qpass, Mpass_p, Qpass_p)
+passive_gl_geometry_nonzero = sp.simplify(pass_geometry) != 0
+passive_gl_state_nonzero = sp.simplify(pass_state) != 0
+passive_gl_faces_cancel = sp.simplify(pass_geometry + pass_state) == 0
+
+Me_m = sp.eye(3)
+Qe_m = sp.diag(1,0,0)
+Me_p = sp.diag(4,1,1)
+Qe_p = sp.diag(2,0,0)
+ce_m = sp.Integer(0)
+ce_p = sp.Rational(3,4)
+ensemble_three_face_zero = ensemble_event_three_face_residual(Me_m, Qe_m, ce_m, Me_p, Qe_p, ce_p) == 0
+ensemble_geometry, ensemble_state, ensemble_corr = ensemble_event_three_faces(Me_m, Qe_m, ce_m, Me_p, Qe_p, ce_p)
+ensemble_face_values_expected = (ensemble_geometry, ensemble_state, ensemble_corr) == (sp.Rational(9,2), sp.Rational(5,2), sp.Rational(3,4))
+
+rho_evt, rhod_evt = sp.symbols("rho_evt rhod_evt", nonzero=True)
+Qsmooth = sp.Matrix([[2,1],[1,3]])
+Qsmooth_dot = sp.Matrix([[1,2],[2,-1]])
+Asmooth = sp.Matrix([[3,1],[1,2]])
+Asmooth_dot = sp.Matrix([[2,-1],[-1,1]])
+smooth_scale_shape_content_zero = scale_shape_smooth_rate_residual(Qsmooth, Qsmooth_dot, rho_evt, rhod_evt, Asmooth, Asmooth_dot) == 0
+
+A_mat = sp.Matrix([[1,2],[-1,-1]])
+L_mat = sp.Matrix([[2,1],[0,1]])
+Q_mat = sp.Matrix([[3,1],[1,2]])
+B_mat = sp.Matrix([[1,2],[3,-1]])
+reverse_material_weighted_zero = reverse_material_weighted_energy_rate_residual(A_mat, L_mat, Q_mat, B_mat, nu) == 0
+
+homogeneous_refinement_p2_p7_zero = all(
+    homogeneous_isotropic_refinement_residual(Mm_evt, Qm_evt, sp.Symbol("lambda_evt"), p) == 0
+    for p in range(2,8)
+)
+
+rho_long = sp.symbols("rho_long", positive=True)
+Ylong = sp.symbols("Ylong", real=True)
+quad_long = quadratic_long_support_calibration(Ylong, t, nu, rho_long)
+quad_long_epsilon_expected = sp.simplify(quad_long["epsilon_z"] + rho_long**2) == 0
+quad_long_chi_expected = quad_long["chi"] == sp.Matrix([0,0,-1])
+quad_long_residual_expected = quad_long["physical_residual"] == sp.Matrix([0,0,-rho_long])
+quad_long_energy_expected = sp.simplify(quad_long["physical_energy"] - rho_long**2) == 0
+quad_long_energy_limit_zero = sp.limit(quad_long["physical_energy"], rho_long, 0, dir="+") == 0
+quad_long_support_not_local = quad_long["long_x_line_squared"] == 1 and quad_long["line_frame"][0,0] == 1
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -960,6 +1039,16 @@ report = {
         "one_mode_raw_codeforming_spread_no_go": "Audited calibration / rigorous spread-target correction",
         "homogeneous_weighted_residual_exponent": "Exact identity",
         "first_bad_weighted_physical_residual_collapse": "Open",
+        "directional_weighted_residual_decomposition": "Exact identity",
+        "right_refinement_weighted_metric_law": "Exact identity",
+        "finite_weighted_residual_midpoint_revaluation": "Exact finite-jump identity",
+        "random_frame_weighted_event_correlation_face": "Exact full-state finite-event identity",
+        "passive_gl_weighted_residual_gauge": "Exact gauge identity",
+        "smooth_weighted_scale_shape_content_law": "Exact product-rule identity",
+        "reverse_material_weighted_strain_qv_law": "Exact Ito/material-frame identity",
+        "homogeneous_weighted_refinement_exponent": "Exact identity",
+        "weighted_residual_vs_support_locality": "Audited calibration / rigorous seam no-go",
+        "first_bad_directional_weighted_products": "Open",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1257,6 +1346,37 @@ report = {
         "homogeneous_exponent_p2_to_p7_residual_zero": bool(homogeneous_weighted_exponents_zero),
         "first_bad": "Open: control E[chi^T L^T L chi] on the actual migrating packet with random-frame correlation plus selector/refinement/boundary/exit/reset faces; support locality remains separate",
         "future_clock": "Open-literal: same-clock weighted physical residual is not the future conditional covariance bank",
+    },
+    "directional_refinement_kelvin_residual": {
+        "directional_decomposition_residual_zero": bool(directional_decomposition_zero),
+        "right_refinement_metric_residual_zero": bool(right_refinement_metric_zero),
+        "midpoint_event_residual_zero": bool(midpoint_event_zero),
+        "midpoint_geometry_face": str(mid_geometry_evt),
+        "midpoint_state_face": str(mid_state_evt),
+        "passive_gl_total_residual_zero": bool(passive_gl_total_zero),
+        "passive_gl_geometry_face_nonzero": bool(passive_gl_geometry_nonzero),
+        "passive_gl_state_face_nonzero": bool(passive_gl_state_nonzero),
+        "passive_gl_faces_cancel": bool(passive_gl_faces_cancel),
+        "random_frame_three_face_residual_zero": bool(ensemble_three_face_zero),
+        "random_frame_face_values_expected": bool(ensemble_face_values_expected),
+        "random_frame_geometry_face": str(ensemble_geometry),
+        "random_frame_state_face": str(ensemble_state),
+        "random_frame_correlation_face": str(ensemble_corr),
+        "smooth_scale_shape_content_residual_zero": bool(smooth_scale_shape_content_zero),
+        "reverse_material_strain_qv_residual_zero": bool(reverse_material_weighted_zero),
+        "homogeneous_refinement_p2_to_p7_residual_zero": bool(homogeneous_refinement_p2_p7_zero),
+        "quadratic_long_support": {
+            "epsilon_expected": bool(quad_long_epsilon_expected),
+            "chi_expected": bool(quad_long_chi_expected),
+            "physical_residual_expected": bool(quad_long_residual_expected),
+            "physical_energy_rho2": bool(quad_long_energy_expected),
+            "physical_energy_limit_zero": bool(quad_long_energy_limit_zero),
+            "support_not_local": bool(quad_long_support_not_local),
+            "line_frame": str(quad_long["line_frame"]),
+            "typing": "weighted physical Kelvin residual collapses while one support line remains exactly length one",
+        },
+        "event_typing": "conditioned event has geometry plus current/state faces; full random-frame event adds metric-residual correlation; Delta Q remains supplied by the full pair/current event map",
+        "first_bad": "Open: control each directional sigma_i^2 v_i^T Q_chi v_i together with support locality, random-frame correlation, selector/refinement/boundary/exit/reset faces",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),

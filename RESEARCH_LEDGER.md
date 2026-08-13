@@ -1193,3 +1193,15 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited calibration / spread correction:** exact one-mode shear on an asymmetric shrinking face has `q_chi -> -(1/2)U_yyy` generically nonzero while the physical noise `rho q_chi ->0`; raw codeforming q.v./spread collapse is not necessary either.
 - **Exact homogeneous scale law:** a degree-`p` nonaffine jet has physical weighted residual energy `rho^(2p-2)`; at `p=2` the raw codeforming residual is order one while the physical energy is order `rho^2`.
 - **Open:** the corrected first-bad target is the literal full-state `E[chi^T L^T L chi]` together with random-frame correlation and all selector/refinement/boundary/exit/reset faces.  Support locality remains a separate physical requirement.  No future-bank, restart, continuation, or regularity theorem is claimed.
+
+## 2026-08-13 — Directional/refinement balance of the weighted Kelvin residual
+
+- **Exact directional identity:** if `M=V diag(sigma_i^2)V^T`, then `tr(MQ)=sum_i sigma_i^2 v_i^T Q v_i`; at fixed geometry this becomes `sum_i sigma_i^2[(v_i.m_chi)^2+v_i^T C_chi v_i]`.  No max-singular-value norm is used.
+- **Exact literal refinement law:** repo convention `L_+=L_-R` gives `M_+=R^T M_- R`.  This is only the geometry face; it does not define the post-event residual second moment.
+- **Exact finite midpoint law:** `Delta tr(MQ)=tr(Qbar Delta M)+tr(Delta Q Mbar)`, separating signed geometry reweighting from signed current/residual revaluation without imposing an event ordering.
+- **Exact passive-GL gauge calibration:** `M_+=R^TMR`, `Q_+=R^-1 Q R^-T` leaves total weighted energy invariant although the midpoint geometry/state faces are individually nonzero and cancel.
+- **Exact full random-state law:** finite events require a third signed face `Delta C_MQ` for metric--residual correlation.  The energy ledger therefore has geometry, current-content, and correlation event faces.
+- **Exact smooth law:** for `M=rho^2 A`, `E_dot=2(rho_dot/rho)E+rho^2 tr(Q A_dot)+tr(Q_dot M)`.  Under reverse incompressible material transport the first term vanishes and the law becomes physical strain work plus residual q.v. content.
+- **Exact homogeneous refinement:** degree-`p` residuals give `E_+=lambda^(2p-2)E` under isotropic physical refinement.
+- **Audited calibration / seam no-go:** exact quadratic heat shear with `L=diag(1,rho,rho)` has `chi=-e_z`, physical residual `r=-rho e_z` and weighted energy `rho^2 -> 0`, while the x support line remains exactly length one.  Weighted Kelvin descent does not imply support locality.
+- **Open:** actual first-bad support locality and directional weighted residual products must be controlled simultaneously on the same migrating selected state, with correlation, pair refinement, selector, boundary, exit, and reset faces retained.  No restart/continuation/regularity theorem is claimed.

@@ -42,3 +42,7 @@ See `docs/pair_localization_worldsheet_audit.md`.
 ### Latest: physical weighting corrects the raw codeforming first-bad target
 
 The reverse-age martingale coordinate `chi` is not itself the physical finite-to-local topology.  The actual reconstructed residual is `r=L chi`, hence the exact physical energy is `chi^T L^T L chi`.  Exact quadratic and one-mode Navier--Stokes shears show that raw codeforming bias and raw codeforming q.v. can remain order one while the physical residual/noise shrink.  If `L` is random, a signed metric--residual correlation is mandatory; `E[M]E[chi chi^T]` does not close the full state.  The first-bad weighted residual collapse and support locality remain open and distinct.
+
+### Latest: directional and event balance of the physical Kelvin residual
+
+The physical residual energy now has an exact principal-line ledger `sum_i sigma_i^2 v_i^T Q_chi v_i`; finite events split exactly into geometry reweighting and current/residual revaluation, with a third metric--residual correlation face on the random full state.  Passive GL reparameterization can have nonzero signed faces but zero total change.  Exact quadratic Navier--Stokes also shows weighted residual collapse can occur while one support line stays order one, so support locality and residual descent remain distinct open first-bad requirements.

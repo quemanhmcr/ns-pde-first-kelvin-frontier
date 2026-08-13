@@ -32,6 +32,7 @@ whitened_codeforming_note = ROOT / "docs" / "codeforming_whitened_kelvin_remaind
 dynamic_reconstructed_note = ROOT / "docs" / "dynamic_reconstructed_kelvin_residual_audit.md"
 reverse_codeforming_note = ROOT / "docs" / "reverse_codeforming_kelvin_martingale_audit.md"
 weighted_codeforming_note = ROOT / "docs" / "weighted_codeforming_kelvin_residual_audit.md"
+directional_refinement_note = ROOT / "docs" / "directional_refinement_kelvin_residual_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -60,6 +61,7 @@ whitened_codeforming_text = whitened_codeforming_note.read_text()
 dynamic_reconstructed_text = dynamic_reconstructed_note.read_text()
 reverse_codeforming_text = reverse_codeforming_note.read_text()
 weighted_codeforming_text = weighted_codeforming_note.read_text()
+directional_refinement_text = directional_refinement_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -536,6 +538,25 @@ if weighted_codeforming_missing:
     print("missing weighted codeforming Kelvin residual markers:", weighted_codeforming_missing)
     sys.exit(1)
 
+directional_refinement_required = [
+    "principal material-line directions",
+    "L_+=L_-R",
+    "geometry / line-metric reweighting",
+    "current/residual second-moment revaluation",
+    "Passive GL reparameterization",
+    "three literal faces",
+    "scale + anisotropy + current content",
+    "strain work + residual q.v.",
+    "weighted Kelvin residual collapse",
+    "does not construct `Delta Q`",
+    "first-bad directional weighted products Open",
+    "no restart/continuation/regularity theorem claimed",
+]
+directional_refinement_missing = [token for token in directional_refinement_required if token not in directional_refinement_text]
+if directional_refinement_missing:
+    print("missing directional/refinement Kelvin residual markers:", directional_refinement_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -672,8 +693,17 @@ for forbidden in [
     "weighted residual energy proves support locality",
     "weighted residual energy is the future covariance bank",
     "weighted residual collapse proves restart",
+    "directional weighted energy proves support locality",
+    "midpoint refinement law defines Q_plus",
+    "midpoint refinement law defines Delta Q",
+    "refinement current revaluation can drop cross-child covariance",
+    "passive GL reparameterization is physical refinement",
+    "random-frame event has only geometry and state faces",
+    "metric-residual correlation can be dropped at events",
+    "directional event balance is the future covariance bank",
+    "directional event balance proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")
