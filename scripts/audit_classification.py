@@ -36,6 +36,7 @@ directional_refinement_note = ROOT / "docs" / "directional_refinement_kelvin_res
 principal_channels_note = ROOT / "docs" / "principal_kelvin_residual_channels_audit.md"
 selected_lineage_note = ROOT / "docs" / "selected_principal_kelvin_lineage_audit.md"
 frame_aware_refinement_note = ROOT / "docs" / "frame_aware_kelvin_residual_refinement_audit.md"
+spectral_event_note = ROOT / "docs" / "spectral_kelvin_event_transfer_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -68,6 +69,7 @@ directional_refinement_text = directional_refinement_note.read_text()
 principal_channels_text = principal_channels_note.read_text()
 selected_lineage_text = selected_lineage_note.read_text()
 frame_aware_refinement_text = frame_aware_refinement_note.read_text()
+spectral_event_text = spectral_event_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -619,6 +621,23 @@ if frame_aware_refinement_missing:
     print("missing frame-aware Kelvin residual refinement markers:", frame_aware_refinement_missing)
     sys.exit(1)
 
+spectral_event_required = [
+    "Exact projector event-transfer law",
+    "signed ordered child-pair",
+    "Four bookkeeping sectors",
+    "Degeneracy is regular in projector variables",
+    "Exact one-mode Navier--Stokes referee",
+    "No exact positive child-channel replacement",
+    "Correction to the cross-event principal-axis frontier",
+    "individual-axis ancestry is an audited noncanonical target",
+    "Actual first-bad event-map instantiation remains Open-literal",
+    "No restart/continuation/regularity theorem claimed",
+]
+spectral_event_missing = [token for token in spectral_event_required if token not in spectral_event_text]
+if spectral_event_missing:
+    print("missing spectral Kelvin event-transfer markers:", spectral_event_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -790,8 +809,14 @@ for forbidden in [
     "frame-aware refinement proves restart",
     "every first-bad refinement is orientation preserving",
     "actual first-bad child weights are already specified",
+    "cross-event principal axes are canonically matched",
+    "spectral event transfer is a nonnegative Markov kernel",
+    "cross-child spectral event terms can be dropped",
+    "degenerate event transfer requires an eigenvector connection",
+    "projector event transfer proves the actual first-bad event map",
+    "projector event transfer proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

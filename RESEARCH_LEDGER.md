@@ -1240,3 +1240,13 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Exact pair consequence:** frame-aware second moments and parent spectral channels use the full ordered child-pair `A tensor A` / `B tensor B` functor; cross-child content remains mandatory.
 - **Frontier correction:** the broad physical-residual refinement lift is now audited-conditional once an orientation-complete current packet map is supplied.  The surviving refinement seam is **Open-literal:** instantiate the actual moving first-bad parent/child packet blocks `R_i`.  Support locality, selected-channel collapse, moving-cut time faces, ancestry/future-bank identification, restart, continuation, and regularity remain open.
 - **Exact orientation-complete scalar refinement lift:** the existing current law `Z_parent=sum_i w_i Z_i` canonically gives `R_i=w_i I_3`, `R_i tensor R_j=w_i w_j I_9`; the exact interval chain refinement tensors with `I_3` and remains a chain map.  Thus orientation-preserving scalar refinement is structurally instantiated.  The remaining first-bad packet-map seam concerns actual event weights and any genuine orientation mixing/reselection.
+
+## Spectral Kelvin event transfer
+
+- **Exact identity:** after frame-aware synthesis `Q_P=sum_{ij}A_i Q_ij A_j^T`, each parent spectral channel is `E_{P,alpha}=sum_{i,j,beta,gamma} lambda_{P,alpha} tr(P_{P,alpha} A_i P_{i,beta} Q_ij P_{j,gamma} A_j^T)`.
+- **Exact sector partition:** same-child/same-channel, same-child/cross-channel, cross-child/same-index and cross-child/cross-index terms sum to the exact parent channel.  Channel-index equality is bookkeeping, not physical axis ancestry.
+- **Audited generic mechanism:** a frame-aware event block can route one child spectral projector into a different parent projector.
+- **Exact degeneracy law:** projector transfer contains no spectral-gap denominator; changing an internal rank-one basis inside a repeated-eigenvalue block changes subterms but not the block-total transfer.
+- **Audited exact-NS calibration:** half-period one-mode NS has positive same-child `z`-channel traffic and equal negative cross-child traffic, yielding zero parent channel exactly.  The signed cross-child sector is physically active.
+- **Frontier correction:** individual cross-event principal-axis matching is a noncanonical target and is no longer an open theorem requirement; exact projector-pair transfer is the invariant substitute.
+- **Open-literal:** the actual first-bad event map/state (`R_i`, hence `A_i`, plus the literal child pair state) is still not instantiated line by line.  Support locality, uniform selected-channel collapse, moving-cut clocks, ancestry/future-bank identification, restart, continuation, and regularity remain open.

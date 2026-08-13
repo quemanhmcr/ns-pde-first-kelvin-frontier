@@ -219,6 +219,15 @@ from pde_audit.weighted_codeforming_kelvin_residual import (  # noqa: E402
     weighted_bias_spread_residual,
     weighted_qv_trace_residual,
 )
+from pde_audit.spectral_kelvin_event_transfer import (  # noqa: E402
+    degenerate_block_internal_basis_residual,
+    full_parent_spectral_energy_residual,
+    projector_family_algebra_residuals,
+    spectral_event_transfer_residual,
+    spectral_event_transfer_term,
+    transfer_sector_sums,
+    two_child_opposite_residual_transfer_calibration,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1150,6 +1159,56 @@ orientation_chain_lift_zero=orientation_complete_chain_refinement_residual(
     Bfine_frame,Bcoarse_frame,R1chain_frame,R0chain_frame,3
 ) == sp.zeros(Bfine_frame.rows*3,R1chain_frame.cols*3)
 
+# Spectral projector event transfer with a frame-converting finite map.
+Lpe=sp.diag(2,3,4); L1e=sp.diag(1,2,5); L2e=sp.diag(3,1,2)
+Hpe=cofactor_map(Lpe); H1e=cofactor_map(L1e); H2e=cofactor_map(L2e)
+R1e=sp.Matrix([[0,1,0],[1,0,0],[0,0,1]]); R2e=sp.eye(3)
+A1e=frame_aware_physical_synthesis_block(Hpe,H1e,R1e)
+A2e=frame_aware_physical_synthesis_block(Hpe,H2e,R2e)
+Pevent=[sp.diag(1,0,0),sp.diag(0,1,0),sp.diag(0,0,1)]
+projector_family_zero=all(X == sp.zeros(3) for X in projector_family_algebra_residuals(Pevent))
+Qevent=sp.Matrix(6,6,sp.symbols("Qevent0:36"))
+event_transfer_all_zero=all(
+    spectral_event_transfer_residual(Qevent,[A1e,A2e],lam,P,[Pevent,Pevent]) == 0
+    for lam,P in zip((4,9,16),Pevent)
+)
+event_full_energy_zero=full_parent_spectral_energy_residual(
+    Qevent,[A1e,A2e],(4,9,16),Pevent,sp.diag(4,9,16)
+) == 0
+Qcross_event=sp.zeros(6); Qcross_event[0,0]=1
+event_cross_channel_term=spectral_event_transfer_term(
+    Qcross_event,[A1e,A2e],1,Pevent[1],[Pevent,Pevent],0,0,0,0
+)
+event_cross_channel_nonzero=sp.simplify(event_cross_channel_term) != 0
+event_cross_channel_residual_zero=spectral_event_transfer_residual(
+    Qcross_event,[A1e,A2e],1,Pevent[1],[Pevent,Pevent]
+) == 0
+
+Pxy_event=sp.diag(1,1,0); Pz_event=sp.diag(0,0,1)
+degenerate_parent_projector_family_zero=all(
+    X == sp.zeros(3) for X in projector_family_algebra_residuals([Pxy_event,Pz_event])
+)
+degenerate_event_transfer_zero=spectral_event_transfer_residual(
+    Qevent,[sp.eye(3),sp.eye(3)],4,Pxy_event,[Pevent,Pevent]
+) == 0
+e1ev,e2ev,e3ev=sp.eye(3)[:,0],sp.eye(3)[:,1],sp.eye(3)[:,2]
+cev=sp.sqrt(2)/2; uev=cev*(e1ev+e2ev); vev=cev*(e1ev-e2ev)
+fam_a_ev=[e1ev*e1ev.T,e2ev*e2ev.T,e3ev*e3ev.T]
+fam_b_ev=[uev*uev.T,vev*vev.T,e3ev*e3ev.T]
+degenerate_child_basis_transfer_zero=degenerate_block_internal_basis_residual(
+    Qevent,[sp.eye(3),sp.eye(3)],4,Pxy_event,0,[fam_a_ev,Pevent],fam_a_ev,fam_b_ev
+) == 0
+
+one_mode_event_transfer=two_child_opposite_residual_transfer_calibration(one_mode_lineage["chi0"])
+one_mode_event_transfer_zero=one_mode_event_transfer["transfer_residual"] == 0 and one_mode_event_transfer["parent_channel"] == 0
+one_mode_event_same_positive=sp.simplify(one_mode_event_transfer["same_child_same_channel"]) != 0
+one_mode_event_cross_negative=sp.simplify(
+    one_mode_event_transfer["cross_child_same_channel"] + one_mode_event_transfer["same_child_same_channel"]
+) == 0
+one_mode_event_other_sectors_zero=one_mode_event_transfer["same_child_cross_channel"] == 0 and one_mode_event_transfer["cross_child_cross_channel"] == 0
+sector_event=transfer_sector_sums(Qevent,[A1e,A2e],4,Pevent[0],[Pevent,Pevent])
+sector_event_sum_zero=sp.simplify(sum(sector_event)-4*sp.trace(Pevent[0]*(sp.Matrix.hstack(A1e,A2e)*Qevent*sp.Matrix.hstack(A1e,A2e).T))) == 0
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1267,7 +1326,7 @@ report = {
         "one_mode_spectral_cross_child_cancellation": "Audited calibration / rigorous cross-child necessity",
         "one_mode_selected_reset_signed_revaluation": "Audited calibration",
         "selected_reset_positive_path_no_go": "Audited calibration / rigorous no-positive-path consequence",
-        "cross_event_principal_axis_lineage": "Open-literal",
+        "cross_event_principal_axis_lineage": "Audited structural correction: individual-axis matching is noncanonical; projector transfer is exact",
         "first_bad_physical_residual_refinement_lift": "Audited-conditional structural lift given an orientation-complete current packet map",
         "selected_spectral_hybrid_same_clock_ledger": "Rigorous conditional composition of exact identities",
         "first_bad_selected_spectral_lineage": "Open-literal",
@@ -1282,6 +1341,14 @@ report = {
         "orientation_preserving_scalar_packet_refinement_lift": "Exact type lift of existing scalar current refinement",
         "orientation_complete_chain_refinement_lift": "Exact chain-map tensor lift",
         "first_bad_orientation_packet_refinement_instantiation": "Open-literal",
+        "spectral_projector_event_transfer": "Exact identity",
+        "spectral_event_transfer_sector_partition": "Exact identity",
+        "spectral_event_frame_conversion_cross_channel": "Audited generic mechanism",
+        "spectral_event_degenerate_projector_regularity": "Exact projector-gauge identity",
+        "one_mode_spectral_event_signed_cross_child": "Audited calibration / rigorous signed-sector necessity",
+        "positive_child_channel_event_kernel_no_go": "Audited calibration / exact signed-law no-go",
+        "selected_spectral_hybrid_projector_event_ledger": "Rigorous conditional composition of exact same-clock identities",
+        "first_bad_spectral_event_transfer_instantiation": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1633,6 +1700,29 @@ report = {
         },
         "random_frame_typing": "pathwise spectral products retain geometry-residual correlation without mean-metric factorization",
         "first_bad": "Open: weighted channel collapse is an exact reformulation of residual descent but does not prove support locality or close physical event/cross-clock faces",
+    },
+    "spectral_kelvin_event_transfer": {
+        "parent_projector_family_algebra_residual_zero": bool(projector_family_zero),
+        "all_parent_channel_transfer_residuals_zero": bool(event_transfer_all_zero),
+        "full_parent_metric_energy_spectral_residual_zero": bool(event_full_energy_zero),
+        "frame_conversion_cross_channel_term_nonzero": bool(event_cross_channel_nonzero),
+        "frame_conversion_cross_channel_transfer_residual_zero": bool(event_cross_channel_residual_zero),
+        "degenerate_parent_projector_family_residual_zero": bool(degenerate_parent_projector_family_zero),
+        "degenerate_parent_transfer_residual_zero": bool(degenerate_event_transfer_zero),
+        "degenerate_child_internal_basis_transfer_residual_zero": bool(degenerate_child_basis_transfer_zero),
+        "sector_partition_residual_zero": bool(sector_event_sum_zero),
+        "one_mode_ns": {
+            "parent_channel_zero": bool(one_mode_event_transfer_zero),
+            "same_child_sector_nonzero_positive_symbolically": bool(one_mode_event_same_positive),
+            "cross_child_cancels_same_child": bool(one_mode_event_cross_negative),
+            "other_sectors_zero": bool(one_mode_event_other_sectors_zero),
+            "same_child": str(one_mode_event_transfer["same_child_same_channel"]),
+            "cross_child": str(one_mode_event_transfer["cross_child_same_channel"]),
+            "typing": "exact half-period one-mode NS activates positive same-child and equal negative cross-child projector traffic",
+        },
+        "event_law": "T_{alpha;i beta,j gamma}=lambda_P tr(P_P A_i P_i_beta Q_ij P_j_gamma A_j^T)",
+        "degeneracy_typing": "spectral projector blocks are canonical; no eigenvector gap connection or cross-event axis matching is needed",
+        "first_bad": "Open-literal only at actual event-map/state instantiation; projector transfer itself is exact once A_i and Q_ij are supplied",
     },
     "frame_aware_kelvin_residual_refinement": {
         "compatible_raw_error_refinement_residual_zero": bool(compatible_raw_error_zero),
