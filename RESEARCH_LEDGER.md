@@ -1341,3 +1341,15 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Rigorous consequence:** adaptive first-bad expectation-level bookkeeping requires the event-map/state joint law, not mean map x mean payload.
 - **Necessary only:** no sufficient first-bad functional, restart, continuation, or regularity theorem is claimed.
 - **Open-literal:** actual Navier--Stokes badness/resolve functional and event generation.
+
+
+## Local enstrophy growth gate = stretching - Kelvin bulk + curvature
+
+- **Exact identity:** `(partial_t+u.grad-nu Delta)(|omega|^2/2)=omega.S.omega-nu|grad omega|_F^2`.
+- **Exact physical typing:** `nu|grad omega|_F^2` equals the metric-normalized orientation-complete Kelvin small-loop q.v. bulk for every invertible area frame.
+- **Exact identity:** at `grad e=0`, `partial_t e=stretching-Kelvin_bulk+nu Delta e`.
+- **Rigorous consequence:** at a local maximum `Delta e<=0`, positive margin `stretching-Kelvin_bulk>0` is necessary but not sufficient for positive time growth; it must exceed `-nu Delta e`.
+- **Exact Beltrami scope theorem:** for the full ABC family, `omega.S.omega=u.grad e`; every enstrophy critical point therefore has zero stretching scalar.
+- **Audited exact-NS calibration:** affine vortex has spatially uniform enstrophy, zero Kelvin bulk, positive stretching `8 a r(t)^2`, and exact `partial_t e=8 a r(t)^2`.
+- **Exact theorem-domain correction:** the affine calibration is nonperiodic/non-finite-energy, so it types the local mechanism but does not refute a target-class global criterion.
+- **Open-literal:** bridge from local growth mechanics plus packet/support/event structure to actual first-bad continuation failure.

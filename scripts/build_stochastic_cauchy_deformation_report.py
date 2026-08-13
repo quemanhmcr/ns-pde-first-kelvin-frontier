@@ -307,6 +307,14 @@ from pde_audit.first_bad_rule_admissibility import (  # noqa: E402
     persistent_library_switch_obstruction,
     raw_score_passive_gauge_change,
 )
+from pde_audit.local_enstrophy_kelvin_growth_gate import (  # noqa: E402
+    abc_beltrami_enstrophy_stretching_calibration,
+    affine_vortex_local_growth_calibration,
+    critical_point_growth_residual,
+    enstrophy_balance_faces,
+    growth_gate_margin,
+    kelvin_bulk_packet_residual,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1535,6 +1543,38 @@ admiss_necessary_flags=all(bool(admiss_ledger[k]) for k in [
 ])
 admiss_no_sufficiency=not bool(admiss_ledger["sufficient_first_bad_functional_defined"]) and not bool(admiss_ledger["restart_continuation_regularity_proved"])
 
+# Literal local enstrophy growth gate and Kelvin bulk typing.
+x_lg,y_lg,z_lg=sp.symbols("x_lg y_lg z_lg", real=True)
+coords_lg=(x_lg,y_lg,z_lg)
+u_lg=sp.Matrix([x_lg*y_lg,y_lg*z_lg,z_lg*x_lg])
+omega_lg=sp.Matrix([x_lg+t,y_lg**2,z_lg+x_lg])
+faces_lg=enstrophy_balance_faces(u_lg,omega_lg,coords_lg,t,nu)
+local_balance_contraction_zero=faces_lg["balance_minus_vorticity_contraction"] == 0
+G_lg=sp.Matrix([[1,2,0],[0,1,3],[2,0,1]])
+H_lg=sp.Matrix([[2,1,0],[0,3,1],[1,0,2]])
+local_kelvin_bulk_zero=kelvin_bulk_packet_residual(G_lg,H_lg,nu) == 0
+s_lg,b_lg,ell_lg=sp.symbols("s_lg b_lg ell_lg")
+local_critical_curvature_zero=critical_point_growth_residual(s_lg-b_lg-nu*ell_lg,s_lg,b_lg,-ell_lg,nu) == 0
+local_margin_expected=growth_gate_margin(s_lg,b_lg) == s_lg-b_lg
+A_lg=sp.symbols("A_lg", positive=True)
+abc_lg=abc_beltrami_enstrophy_stretching_calibration(A_lg,nu,t,coords_lg)
+abc_lg_beltrami_zero=abc_lg["beltrami_residual"] == sp.zeros(3,1)
+abc_lg_transport_zero=abc_lg["stretching_minus_enstrophy_transport"] == 0
+abc_lg_ns_zero=abc_lg["ns_residual"] == sp.zeros(3,1)
+abc_point_lg={x_lg:sp.pi/4,y_lg:sp.pi/4,z_lg:sp.pi/4}
+abc_lg_critical_zero=sp.simplify(abc_lg["enstrophy_gradient"].subs(abc_point_lg)) == sp.zeros(3,1)
+abc_lg_critical_stretch_zero=sp.simplify(abc_lg["stretching"].subs(abc_point_lg)) == 0
+a_lg,r0_lg=sp.symbols("a_lg r0_lg", positive=True)
+aff_lg=affine_vortex_local_growth_calibration(a_lg,r0_lg,t,coords_lg,nu)
+r_lg=sp.simplify(r0_lg*sp.exp(2*a_lg*t))
+aff_lg_expected_growth=sp.simplify(8*a_lg*r_lg**2)
+aff_lg_ns_zero=aff_lg["ns_residual"] == sp.zeros(3,1)
+aff_lg_uniform=aff_lg["gradient"] == sp.zeros(3,1) and aff_lg["laplacian"] == 0
+aff_lg_kelvin_zero=aff_lg["kelvin_bulk"] == 0
+aff_lg_growth_expected=aff_lg["stretching"] == aff_lg_expected_growth and aff_lg["time"] == aff_lg_expected_growth
+aff_lg_balance_zero=aff_lg["balance_residual"] == 0
+aff_lg_nonperiodic=aff_lg["periodicity_defect_x_2pi"] != sp.zeros(3,1)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1753,6 +1793,14 @@ report = {
         "first_bad_adaptive_joint_law_necessity": "Rigorous consequence of exact adaptive-event algebra",
         "first_bad_rule_physical_admissibility_ledger": "Rigorous synthesis of necessary physical constraints; not sufficient",
         "first_bad_badness_resolve_functional_after_admissibility": "Open-literal",
+        "local_enstrophy_balance_vorticity_contraction": "Exact identity",
+        "kelvin_bulk_enstrophy_dissipation_identification": "Exact orientation-complete Kelvin identity",
+        "local_enstrophy_critical_three_face_law": "Exact identity",
+        "local_max_growth_gate_curvature_necessity": "Rigorous consequence",
+        "abc_beltrami_critical_stretching_zero": "Exact Beltrami identity / rigorous scope correction",
+        "affine_vortex_positive_local_growth_gate": "Audited exact-NS mechanism calibration",
+        "affine_vortex_growth_gate_target_scope": "Exact theorem-domain correction",
+        "first_bad_local_growth_to_continuation_bridge": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -2232,6 +2280,32 @@ report = {
         "adaptive_anti_aligned_exact_vs_naive": [str(admiss_adaptive["anti_aligned_exact"]),str(admiss_adaptive["anti_aligned_naive"])],
         "typing": "necessary physical admissibility only: gauge, support, persistent-library memory, full coherence, and adaptive joint-law constraints",
         "first_bad": "Open-literal: no sufficient Navier-Stokes badness/resolve functional is defined",
+    },
+    "local_enstrophy_kelvin_growth_gate": {
+        "enstrophy_balance_equals_vorticity_residual_contraction": bool(local_balance_contraction_zero),
+        "orientation_complete_kelvin_bulk_residual_zero": bool(local_kelvin_bulk_zero),
+        "critical_point_three_face_residual_zero": bool(local_critical_curvature_zero),
+        "growth_gate_margin_expected": bool(local_margin_expected),
+        "abc": {
+            "beltrami_residual_zero": bool(abc_lg_beltrami_zero),
+            "stretching_equals_enstrophy_transport_globally": bool(abc_lg_transport_zero),
+            "ns_residual_zero": bool(abc_lg_ns_zero),
+            "symmetric_critical_gradient_zero": bool(abc_lg_critical_zero),
+            "symmetric_critical_stretching_zero": bool(abc_lg_critical_stretch_zero),
+            "typing": "global Beltrami identity forces zero stretching at every enstrophy critical point; ABC cannot referee a positive local-max gate",
+        },
+        "affine_vortex": {
+            "ns_residual_zero": bool(aff_lg_ns_zero),
+            "spatially_uniform_enstrophy": bool(aff_lg_uniform),
+            "kelvin_bulk_zero": bool(aff_lg_kelvin_zero),
+            "stretching_and_time_growth_expected": bool(aff_lg_growth_expected),
+            "enstrophy_balance_residual_zero": bool(aff_lg_balance_zero),
+            "nonperiodic_x_shift_defect": bool(aff_lg_nonperiodic),
+            "exact_growth": str(aff_lg_expected_growth),
+            "typing": "positive local growth gate is compatible with exact smooth affine NS, but the calibration is outside periodic/finite-energy target class",
+        },
+        "local_max_law": "at grad e=0: e_t=stretching-Kelvin_bulk+nu Delta e; at a max Delta e<=0, positive margin is necessary but not sufficient for growth",
+        "first_bad": "Open-literal: no bridge from this local growth law plus packet/support/event structure to continuation failure",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),
