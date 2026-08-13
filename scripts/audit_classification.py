@@ -37,6 +37,7 @@ principal_channels_note = ROOT / "docs" / "principal_kelvin_residual_channels_au
 selected_lineage_note = ROOT / "docs" / "selected_principal_kelvin_lineage_audit.md"
 frame_aware_refinement_note = ROOT / "docs" / "frame_aware_kelvin_residual_refinement_audit.md"
 spectral_event_note = ROOT / "docs" / "spectral_kelvin_event_transfer_audit.md"
+event_normal_form_note = ROOT / "docs" / "kelvin_event_normal_form_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -70,6 +71,7 @@ principal_channels_text = principal_channels_note.read_text()
 selected_lineage_text = selected_lineage_note.read_text()
 frame_aware_refinement_text = frame_aware_refinement_note.read_text()
 spectral_event_text = spectral_event_note.read_text()
+event_normal_form_text = event_normal_form_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -638,6 +640,27 @@ if spectral_event_missing:
     print("missing spectral Kelvin event-transfer markers:", spectral_event_missing)
     sys.exit(1)
 
+event_normal_form_required = [
+    "`A` is the complete physical normal form",
+    "codeforming block is an equivalent volume-normal form",
+    "Sequential frame-aware events compose",
+    "Full second moments compose",
+    "pair functor itself composes exactly",
+    "Intermediate spectral projectors telescope",
+    "Degenerate intermediate bases also telescope",
+    "A scalar channel list is not a compositional state",
+    "Full symmetric second moment is complete for unrestricted linear event probes",
+    "observationally complete for the unrestricted linear event-probe class",
+    "No actual first-bad probe-reachability or minimality claim",
+    "Event normal form modulo packet gauge",
+    "first-bad event choice/state remains Open-literal/Open",
+    "No restart/continuation/regularity theorem claimed",
+]
+event_normal_form_missing = [token for token in event_normal_form_required if token not in event_normal_form_text]
+if event_normal_form_missing:
+    print("missing Kelvin event normal-form markers:", event_normal_form_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -815,8 +838,17 @@ for forbidden in [
     "degenerate event transfer requires an eigenvector connection",
     "projector event transfer proves the actual first-bad event map",
     "projector event transfer proves restart",
+    "diagonal spectral channel list is a closed event state",
+    "intermediate eigenvector labels are physical ancestry data",
+    "event normal form determines the first-bad event",
+    "event normal form proves support locality",
+    "event normal form is the future covariance bank",
+    "event normal form proves restart",
+    "actual first-bad events realize all polarization probes",
+    "full Q is minimal under the actual first-bad event class",
+    "observational completeness proves first-bad closure",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

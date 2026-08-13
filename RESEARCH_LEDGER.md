@@ -1250,3 +1250,14 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited exact-NS calibration:** half-period one-mode NS has positive same-child `z`-channel traffic and equal negative cross-child traffic, yielding zero parent channel exactly.  The signed cross-child sector is physically active.
 - **Frontier correction:** individual cross-event principal-axis matching is a noncanonical target and is no longer an open theorem requirement; exact projector-pair transfer is the invariant substitute.
 - **Open-literal:** the actual first-bad event map/state (`R_i`, hence `A_i`, plus the literal child pair state) is still not instantiated line by line.  Support locality, uniform selected-channel collapse, moving-cut clocks, ancestry/future-bank identification, restart, continuation, and regularity remain open.
+
+## Kelvin finite-event normal form
+
+- **Exact gauge normal form:** with invertible endpoint area frames, `R <-> A=H_P^-T R H_C^T`; `A` is invariant under passive packet bases and reconstructs `R` uniquely.
+- **Exact codeforming normal form:** `B=(J_C/J_P)R` and `R=(J_P/J_C)B`.
+- **Exact event composition:** `A_PC=A_PM A_MC`; the intermediate area frame cancels.  Codeforming maps compose with exact cancellation of the intermediate determinant.
+- **Exact second-moment/pair functor:** sequential linear events satisfy `A2(A1 Q A1^T)A2^T=(A2A1)Q(A2A1)^T` and `(A2 tensor A2)(A1 tensor A1)=(A2A1) tensor (A2A1)`.
+- **Exact spectral telescope:** complete intermediate projector resolutions sum out of the composite parent channel; internal bases of a degenerate intermediate block also telescope.
+- **Audited PSD no-go:** two PSD states with the same diagonal spectral channel vector `(1,1,0)` but opposite off-diagonal coherence respond differently under the same next event; scalar channel lists are not a closed compositional state.
+- **Frontier:** specified same-clock linear packet-event algebra is structurally closed modulo passive gauge.  What remains Open-literal/Open is the NS-generated first-bad event choice/map/state, support locality, full selected pair/projector control, moving-cut faces, and cross-clock ancestry/future-bank identification.  No restart/continuation/regularity theorem is claimed.
+- **Exact polarization / audited-conditional observational completeness:** for the unrestricted linear event-probe class, coordinate probes `e_i` and pair-sum probes `e_i+e_j` reconstruct every symmetric second-moment entry `Q_ij`.  Thus full symmetric `Q` is complete for all such quadratic event responses, while diagonal channel data is not.  No claim is made that actual first-bad events realize all probes or that `Q` is minimal for that smaller physical event family.

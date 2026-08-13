@@ -123,6 +123,18 @@ from pde_audit.future_covariance_tensor import (  # noqa: E402
     product_pair_diagonal_defect,
     vector_carre_du_champ,
 )
+from pde_audit.kelvin_event_normal_form import (  # noqa: E402
+    channel_only_composition_counterexample,
+    codeforming_event_composition_residual,
+    codeforming_raw_normal_form_residual,
+    frame_aware_event_composition_residual,
+    intermediate_degenerate_basis_telescope_residual,
+    intermediate_projector_telescope_residual,
+    pair_functor_event_composition_residual,
+    physical_raw_normal_form_residual,
+    second_moment_event_composition_residual,
+    symmetric_event_probe_reconstruction_residual,
+)
 from pde_audit.kelvin_packet_locality import (  # noqa: E402
     affine_vortex_stretch_gradient,
     affine_vortex_stretch_ns_residual,
@@ -1209,6 +1221,51 @@ one_mode_event_other_sectors_zero=one_mode_event_transfer["same_child_cross_chan
 sector_event=transfer_sector_sums(Qevent,[A1e,A2e],4,Pevent[0],[Pevent,Pevent])
 sector_event_sum_zero=sp.simplify(sum(sector_event)-4*sp.trace(Pevent[0]*(sp.Matrix.hstack(A1e,A2e)*Qevent*sp.Matrix.hstack(A1e,A2e).T))) == 0
 
+# Gauge-normal finite-event composition.
+normal_physical_zero=physical_raw_normal_form_residual(Hpf,H1f,R1f) == sp.zeros(3)
+normal_codeforming_zero=codeforming_raw_normal_form_residual(Lpf,L1f,R1f) == sp.zeros(3)
+Lmid_nf=sp.Matrix([[1,1,0],[0,2,1],[1,0,3]]); Hmid_nf=cofactor_map(Lmid_nf)
+normal_frame_comp_zero=frame_aware_event_composition_residual(
+    Hpf,Hmid_nf,H1f,R1f,R2f
+) == sp.zeros(3)
+normal_code_comp_zero=codeforming_event_composition_residual(
+    Lpf,Lmid_nf,L1f,R1f,R2f
+) == sp.zeros(3)
+Qnf=sp.Matrix(3,3,sp.symbols("Qnormal0:9"))
+A1nf=sp.Matrix([[1,2,0],[0,1,1]])
+A2nf=sp.Matrix([[1,0],[0,1],[1,1]])
+normal_second_moment_zero=second_moment_event_composition_residual(Qnf,A1nf,A2nf) == sp.zeros(3)
+normal_pair_functor_zero=pair_functor_event_composition_residual(A1nf,A2nf) == sp.zeros(9,9)
+A1spec_nf=sp.Matrix([[1,1,0],[0,1,0],[0,0,1]])
+A2spec_nf=sp.Matrix([[2,0,1],[0,1,0],[1,0,1]])
+Pnf=Pevent
+normal_projector_telescope_zero=intermediate_projector_telescope_residual(
+    Qnf,A1spec_nf,A2spec_nf,5,Pnf[0],Pnf
+) == 0
+e1nf,e2nf,e3nf=sp.eye(3)[:,0],sp.eye(3)[:,1],sp.eye(3)[:,2]
+cnf=sp.sqrt(2)/2; unf=cnf*(e1nf+e2nf); vnf=cnf*(e1nf-e2nf)
+fam_a_nf=[e1nf*e1nf.T,e2nf*e2nf.T,e3nf*e3nf.T]
+fam_b_nf=[unf*unf.T,vnf*vnf.T,e3nf*e3nf.T]
+normal_degenerate_telescope_zero=intermediate_degenerate_basis_telescope_residual(
+    Qnf,A1spec_nf,A2spec_nf,5,sp.diag(1,1,0),fam_a_nf,fam_b_nf
+) == 0
+channel_nf=channel_only_composition_counterexample()
+channel_nf_same_inputs=channel_nf["input_channels_plus"] == channel_nf["input_channels_minus"]
+channel_nf_parent_diff=channel_nf["parent_channel_difference"] == 2
+channel_nf_coherence_opposite=sp.simplify(channel_nf["cross_coherence_plus"]+channel_nf["cross_coherence_minus"]) == 0 and channel_nf["cross_coherence_plus"] != 0
+channel_nf_psd=all(
+    all(ev >= 0 for ev in channel_nf[key].eigenvals()) for key in ("Q_plus","Q_minus")
+)
+qobs00,qobs11,qobs22,qobs01,qobs02,qobs12=sp.symbols(
+    "qobs00 qobs11 qobs22 qobs01 qobs02 qobs12"
+)
+Qobs=sp.Matrix([
+    [qobs00,qobs01,qobs02],
+    [qobs01,qobs11,qobs12],
+    [qobs02,qobs12,qobs22],
+])
+normal_probe_reconstruction_zero=symmetric_event_probe_reconstruction_residual(Qobs) == sp.zeros(3)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1349,6 +1406,18 @@ report = {
         "positive_child_channel_event_kernel_no_go": "Audited calibration / exact signed-law no-go",
         "selected_spectral_hybrid_projector_event_ledger": "Rigorous conditional composition of exact same-clock identities",
         "first_bad_spectral_event_transfer_instantiation": "Open-literal",
+        "physical_event_gauge_normal_form": "Exact gauge-normal-form identity / bijection",
+        "codeforming_event_volume_normal_form": "Exact identity / bijection",
+        "frame_aware_event_composition": "Exact identity",
+        "codeforming_event_composition": "Exact identity",
+        "event_second_moment_composition": "Exact identity",
+        "event_pair_functor_composition": "Exact identity",
+        "intermediate_projector_telescope": "Exact identity",
+        "intermediate_degenerate_basis_telescope": "Exact projector-gauge identity",
+        "scalar_channel_event_compositional_closure": "Audited PSD calibration: false universally",
+        "full_second_moment_linear_event_observational_completeness": "Exact polarization identity / audited-conditional on unrestricted linear event probes",
+        "specified_linear_packet_event_normal_form": "Exact normal-form/functoriality theorem",
+        "first_bad_event_normal_form_instantiation": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1700,6 +1769,30 @@ report = {
         },
         "random_frame_typing": "pathwise spectral products retain geometry-residual correlation without mean-metric factorization",
         "first_bad": "Open: weighted channel collapse is an exact reformulation of residual descent but does not prove support locality or close physical event/cross-clock faces",
+    },
+    "kelvin_event_normal_form": {
+        "physical_raw_bijection_residual_zero": bool(normal_physical_zero),
+        "codeforming_raw_bijection_residual_zero": bool(normal_codeforming_zero),
+        "frame_aware_event_composition_residual_zero": bool(normal_frame_comp_zero),
+        "codeforming_event_composition_residual_zero": bool(normal_code_comp_zero),
+        "second_moment_event_composition_residual_zero": bool(normal_second_moment_zero),
+        "pair_functor_event_composition_residual_zero": bool(normal_pair_functor_zero),
+        "intermediate_projector_telescope_residual_zero": bool(normal_projector_telescope_zero),
+        "intermediate_degenerate_basis_telescope_residual_zero": bool(normal_degenerate_telescope_zero),
+        "symmetric_second_moment_probe_reconstruction_residual_zero": bool(normal_probe_reconstruction_zero),
+        "observational_completeness_typing": "unrestricted linear event-probe class reconstructs symmetric Q by polarization; no actual first-bad probe reachability/minimality claim",
+        "channel_only_no_go": {
+            "input_diagonal_channels_identical": bool(channel_nf_same_inputs),
+            "cross_coherence_opposite": bool(channel_nf_coherence_opposite),
+            "both_second_moments_psd": bool(channel_nf_psd),
+            "parent_channel_difference_exact_2": bool(channel_nf_parent_diff),
+            "input_channels": [str(x) for x in channel_nf["input_channels_plus"]],
+            "parent_plus": str(channel_nf["parent_channel_plus"]),
+            "parent_minus": str(channel_nf["parent_channel_minus"]),
+            "typing": "diagonal spectral channel list loses cross-channel coherence and is not a compositional event state",
+        },
+        "normal_form": "raw packet gauge orbit <-> physical A; sequential A maps compose; pair functor and complete intermediate projector resolutions are functorial",
+        "first_bad": "Open-literal at NS-generated event choice/map/state; normal-form algebra itself is exact",
     },
     "spectral_kelvin_event_transfer": {
         "parent_projector_family_algebra_residual_zero": bool(projector_family_zero),
