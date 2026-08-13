@@ -337,3 +337,12 @@ The common-replica Gram law does not solve any of these programme-specific
 identifications.
 
 **Status: first-bad candidate-library/clock instantiation remains Open-literal/Open.  No restart/continuation/regularity theorem claimed.**
+
+
+---
+
+## Own-local event scope guard
+
+The linear Gram push `Gamma -> A Gamma A^T` is exact for a supplied genuinely linear/common-target residual event.  Packet-specific target changes add the affine state coboundary and the target-gradient noise face described in `own_local_kelvin_affine_event_audit.md`.  This does not change the same-replica common-driver law between events.
+
+**Classification: Exact scope correction.**

@@ -1389,3 +1389,17 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Exact envelope consequence:** selected scalar max is continuous at the tie but its derivative switches; selector index can jump without a scalar state jump.
 - **Rigorous structural consequence:** branch ranking crossing, branch degeneracy/birth/death, and physical packet events are distinct event types.
 - **Open-literal:** actual first-bad badness/resolve hysteresis and its mapping to critical-branch competition.
+
+
+## 2026-08-13 — Draft PR #2 adjudication and own-local affine Kelvin event
+
+- **Exact identity:** common-target current/cochain refinement remains unchanged.  For packet-specific local targets, `epsilon_P=sum_i R_i epsilon_i+Delta_omega` with `Delta_omega=sum_i R_i H_i^T(omega_i-omega_P)`.
+- **Exact identity:** reconstructed own-local residual events are affine, `r_+=A r_-+d`, and coherent codeforming events have the corresponding `B` block plus target offset.
+- **Exact identity / rigorous consequence:** `d=A Omega_- - Omega_+` is a target coboundary; sequential supplied events telescope exactly.
+- **Exact identity:** affine pathwise second moments, simultaneous selector jumps, and target-gradient Brownian Gram faces retain all signed cross terms.
+- **Audited calibration:** the exact cubic heat shear `u=(y^3+6 nu t y,0,0)` gives a nonzero own-local target mismatch and a pure-reanchor q.v.-source change even when the current map is `A=I`.
+- **Rigorous anti-extension guardrail:** the finite-event hybrid theorem does not imply endogenous selector local finiteness; Brownian sign switching exhibits the missing Tanaka local-time/interface possibility.
+- **Exact population identity / rigorous anti-factorization:** the two-replica four-face identity is exact in its stated domain, while general `E[C Q C^T]` also contains `E[delta C delta Q delta C^T]`; the equal-weight PSD three-state witness has missing face `2/9`.
+- **Audit verdict:** the PR #2 enstrophy, critical-point-speed, and critical-Hessian checks survive in their stated smooth/nondegenerate domains.
+- **Open-literal:** actual NS first-bad packet/anchor event, badness/resolve predicates, endogenous event local finiteness or interface law, support locality, and same-replica-to-restart-clock bridge.
+- **No claim:** no restart, continuation, blow-up exclusion, or global-regularity theorem follows from this layer.

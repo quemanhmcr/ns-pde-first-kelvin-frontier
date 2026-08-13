@@ -1,8 +1,7 @@
 # Selected residual hybrid semimartingale audit
 
 The persistent same-replica library evolves continuously under one common Brownian
-flow, while the hysteretic first-bad selector is piecewise constant and changes only
-at finite entry/resolve events.  The active selected residual is therefore a hybrid
+flow.  On the theorem domain here, the selector path is **supplied with locally finite jumps** and is piecewise constant between those finite events.  The active selected residual is therefore a hybrid
 càdlàg process with two physically different sources of path variation:
 
 1. continuous Brownian evolution of the underlying physical library;
@@ -312,3 +311,12 @@ The remaining first-bad questions are no longer semimartingale bookkeeping:
 - moving-cut and cross-clock ancestry/future-bank identification.
 
 **Status: hybrid selected-path law audited-conditional on a specified library and selector path; actual first-bad timing/event instantiation remains Open-literal/Open.  No restart/continuation/regularity theorem claimed.**
+
+
+---
+
+## Endogenous switching accumulation is a separate theorem boundary
+
+The finite-event identity does not prove that an NS-generated first-bad selector has locally finite events.  In the scalar same-noise library `d chi_1=dW`, `d chi_2=-dW`, the threshold readout choosing germ 1 for `W>=0` and germ 2 for `W<0` gives `Y=|W|`.  Brownian zero crossings accumulate, selected jumps vanish at the interface, yet Tanaka's formula carries a continuous local-time term.  Therefore a first-bad extension must prove local finiteness/hysteresis separation, prove a summable limiting theorem, or retain the interface/local-time measure.
+
+**Classification: Rigorous anti-extension guardrail.  Endogenous first-bad local finiteness/interface law remains Open-literal.**

@@ -271,3 +271,22 @@ The algebra after those data are supplied is no longer open.
 **Status: Open-literal only at actual first-bad timing/event-map/state instantiation.**
 
 No restart/continuation/regularity theorem claimed.
+
+
+---
+
+## 9. Own-local affine extension
+
+The preceding theorem is exact for a genuinely linear/common-target physical event.  For an own-local packet event
+
+\[X_+=AX_-+d,\]
+
+the literal selected jump is
+
+\[
+\boxed{\Delta Y=(E_+A-E_-)X_-+E_+d.}
+\]
+
+Consequently the optional jump square contains the two linear/target cross faces and `(E_+d)(E_+d)^T` in addition to the old linear quadratic face.
+
+**Classification: Exact affine extension / exact scope correction.**

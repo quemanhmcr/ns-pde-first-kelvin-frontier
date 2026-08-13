@@ -255,3 +255,18 @@ still the actual Navier--Stokes first-bad instantiation:
 **Status: Open-literal at actual first-bad library/timing/event/clock instantiation.**
 
 No restart/continuation/regularity theorem claimed.
+
+
+---
+
+## 8. Own-local target-gradient extension
+
+The formula `B_+=E_+A\mathcal N` is exact only when the event is genuinely linear in the residual/noise state.  For own-local targets,
+
+\[
+\boxed{\mathcal N_+=A\mathcal N_-+N_{\rm target},\qquad N_{\rm target}=AG_- - G_+.}
+\]
+
+Thus the post-event Gram contains the base pushed Gram, two signed cross faces with `N_target`, and the positive `N_target N_target^T` face.  A pure reanchor can change continuous q.v. even with `A=I`.
+
+**Classification: Exact affine/noise scope correction.**

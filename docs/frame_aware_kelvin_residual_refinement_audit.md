@@ -15,6 +15,8 @@ leaves only determinant ratios and the raw orientation-current map.
 
 No estimate is used below.
 
+**Scope guard.** The linear residual synthesis derived in this note uses the same local vorticity target for parent and children.  Packet-specific own-local anchors require the affine target face derived in `own_local_kelvin_affine_event_audit.md`; the current/cochain theorem here is not revoked.
+
 ---
 
 ## 1. Raw orientation error is a current/cochain difference
@@ -492,7 +494,7 @@ contained two logically different questions.
 
 ### 10.1 Closed structural lift
 
-Once an orientation-complete linear current packet refinement is supplied, the
+Once an orientation-complete linear current packet refinement is supplied **and the residuals are referenced to one common local target (or have already been reanchored to one)**, the
 chain/current readouts force
 
 \[
@@ -539,8 +541,7 @@ It is a current-geometry question, not a missing whitening theorem.
 
 ## 11. Refined selected-lineage law
 
-If a first-bad event supplies the actual orientation packet blocks `R_i`, then the
-residual state map is no longer free:
+If a first-bad event supplies the actual orientation packet blocks `R_i` **and a common target/reanchoring has been established**, then the linear residual state map is no longer free:
 
 \[
 \boxed{
@@ -570,3 +571,17 @@ identified.
 
 **Status: Exact/rigorous conditional refinement law; first-bad packet-map
 instantiation Open-literal.  No restart/continuation/regularity theorem claimed.**
+
+---
+
+## 12. Own-local anchor correction
+
+For packet-specific targets `omega_i` and parent target `omega_P`, current/area linearity gives instead
+
+\[
+\varepsilon_P=\sum_iR_i\varepsilon_i+\sum_iR_iH_i^T(\omega_i-\omega_P).
+\]
+
+Thus the physical/codeforming event is affine.  The exact target coboundary, its selector interaction, continuous-source gradient face, and exact cubic heat-shear Navier--Stokes referee are derived in `own_local_kelvin_affine_event_audit.md`.
+
+**Status: Exact scope correction.  The common-target linear theorem survives; own-local first-bad target/event instantiation remains Open-literal.**

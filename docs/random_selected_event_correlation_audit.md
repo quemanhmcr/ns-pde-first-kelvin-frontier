@@ -235,3 +235,22 @@ It is the actual Navier--Stokes mechanism that generates:
 **Status: Open-literal at actual first-bad adaptive event/joint-law instantiation.**
 
 No restart/continuation/regularity theorem claimed.
+
+
+---
+
+## 10. Population expectation has a centered triple face
+
+The four-face identity above is exactly a **two equal-weight replica** identity.  For a general population, with `delta C=C-E C` and `delta Q=Q-E Q`,
+
+\[
+\begin{aligned}
+E[CQC^T]={}&\mu_C\mu_Q\mu_C^T+E[\delta C\,\mu_Q\,\delta C^T]\\
+&+\mu_CE[\delta Q\,\delta C^T]+E[\delta C\,\delta Q]\mu_C^T\\
+&+E[\delta C\,\delta Q\,\delta C^T].
+\end{aligned}
+\]
+
+The final centered triple face vanishes in the symmetric two-point representation but not in general.  The equal-weight PSD scalar witness `(C,Q)=(0,1),(1,0),(2,1)` has exact `E[C^2Q]=4/3`, while the first four population faces sum to `10/9`; the missing triple face is `2/9`.
+
+**Classification: Exact population identity / rigorous anti-factorization guardrail.**

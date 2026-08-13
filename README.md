@@ -84,3 +84,17 @@ A nondegenerate moving enstrophy critical point now has an exact speed law as we
 The critical-Hessian evolution is now exact too.  Along a differentiable critical branch, `Hdot = Hess(R)-(grad u)^T H-H grad u+((xdot_*-u).grad)H`, with `R=stretching-Kelvin_bulk+nu Delta e`.  The connection splits into strain reshaping plus a rotation commutator.  Its `log|det H|` rate is exactly `-2 div u`, so incompressibility removes local linear deformation from curvature-volume change without freezing Hessian shape.  On a nondegenerate branch `d log|det H|/dt=tr(H^-1 Hdot)`; finite integrated log-rate preserves nonzero determinant conditionally.  Exact periodic ABC has `Hdot=-2nu H`, `d log|det H|/dt=-6nu`, and remains nondegenerate for every finite time.  Critical branch degeneracy remains a genuine event seam and is not a Navier--Stokes continuation theorem.
 
 Critical-candidate ranking has now been separated from branch degeneracy.  For two critical values the gap rate is the difference of their literal stretching/Kelvin-bulk/curvature rates.  A geometric calibration shows a transverse value tie is independent of full Hessian degeneracy.  More importantly, an exact periodic three-mode Navier--Stokes heat shear has two persistent critical sheets `y=0,pi` whose enstrophy values cross at `t=1/nu` while both transverse curvatures remain strictly negative.  Both values are decreasing; the switch is driven purely by different curvature-decay rates, with gap rate `48 nu e^-2`.  The non-hysteretic selected maximum is continuous at the tie but its derivative switches.  Thus winner-switch, branch birth/death, and physical packet events are distinct typed events; mapping any of them to the actual first-bad hysteresis remains Open-literal.
+
+
+## 2026-08-13 draft PR #2 adjudication: own-local Kelvin events
+
+Draft PR #2 exposed one genuine event-interface correction and two anti-extension guardrails.  The frame-aware `A/B` residual synthesis remains exact for a **common local vorticity target**.  A packet library with packet-specific anchors instead has the exact affine event
+
+\[
+\varepsilon_P=\sum_iR_i\varepsilon_i+\Delta_\omega,\qquad
+\Delta_\omega=\sum_iR_iH_i^T(\omega_i-\omega_P),
+\]
+
+so `r_P=A r+d` and the continuous Brownian response has the matching target-gradient face.  The target offset is an exact coboundary and composes functorially for supplied finite current events.  The existing two-replica adaptive four-face identity also survives exactly, but a general population has an additional centered triple face.  Likewise, the finite-event selected semimartingale law survives on its supplied locally-finite-jump domain; an endogenous selector still needs a local-finiteness theorem, summable limit, or interface/local-time law.
+
+See `docs/own_local_kelvin_affine_event_audit.md` and `docs/pr2_adjudication_2026-08-13.md`.  These results do **not** define the physical first-bad rule, prove support locality, identify the restart clock, or prove continuation/global regularity.

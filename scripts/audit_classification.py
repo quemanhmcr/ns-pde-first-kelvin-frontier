@@ -49,6 +49,7 @@ local_growth_gate_note = ROOT / "docs" / "local_enstrophy_kelvin_growth_gate_aud
 moving_critical_note = ROOT / "docs" / "moving_enstrophy_critical_point_audit.md"
 critical_hessian_note = ROOT / "docs" / "enstrophy_critical_hessian_evolution_audit.md"
 branch_competition_note = ROOT / "docs" / "enstrophy_critical_branch_competition_audit.md"
+own_local_affine_note = ROOT / "docs" / "own_local_kelvin_affine_event_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -94,6 +95,7 @@ local_growth_gate_text = local_growth_gate_note.read_text()
 moving_critical_text = moving_critical_note.read_text()
 critical_hessian_text = critical_hessian_note.read_text()
 branch_competition_text = branch_competition_note.read_text()
+own_local_affine_text = own_local_affine_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -627,6 +629,8 @@ if selected_lineage_missing:
 
 frame_aware_refinement_required = [
     "Raw orientation error is a current/cochain difference",
+    "same local vorticity target",
+    "Own-local anchor correction",
     "Whitening forces the unique physical residual synthesis",
     "Independent orientation-basis changes leave `A_i` invariant",
     "Cofactor geometry turns frame conversion into a line-frame conjugation",
@@ -721,6 +725,8 @@ if same_replica_library_missing:
 
 hybrid_selected_required = [
     "Frozen-selector intervals inherit the active library martingale",
+    "supplied with locally finite jumps",
+    "Endogenous switching accumulation is a separate theorem boundary",
     "pure selector event is a finite readout jump",
     "Optional quadratic variation contains the jump square",
     "does **not** contradict",
@@ -772,6 +778,9 @@ if combined_qv_rate_missing:
 
 random_event_required = [
     "Mean selected output already has an event--state correlation face",
+    "Population expectation has a centered triple face",
+    "two equal-weight replica",
+    "2/9",
     "Exact second-order four-face law",
     "Event-map dispersion is PSD",
     "correlation faces are signed",
@@ -785,6 +794,22 @@ random_event_required = [
 random_event_missing = [token for token in random_event_required if token not in random_event_text]
 if random_event_missing:
     print("missing random/adaptive selected-event markers:", random_event_missing)
+    sys.exit(1)
+
+own_local_affine_required = [
+    "Current and area still refine linearly",
+    "Physical and codeforming events are affine",
+    "Reanchoring offset is a coboundary",
+    "Second moment and selector jump retain affine faces",
+    "Brownian response has the target-gradient coboundary",
+    "Exact cubic heat-shear Navier--Stokes referee",
+    "Audited exact-NS calibration / rigorous no-go consequence",
+    "Still Open-literal",
+    "No restart/continuation/global-regularity theorem is claimed",
+]
+own_local_affine_missing = [token for token in own_local_affine_required if token not in own_local_affine_text]
+if own_local_affine_missing:
+    print("missing own-local Kelvin affine-event markers:", own_local_affine_missing)
     sys.exit(1)
 
 first_bad_admissibility_required = [
@@ -1040,6 +1065,14 @@ for forbidden in [
     "adaptive event correlation is always positive",
     "event-map dispersion exhausts adaptive event randomness",
     "adaptive event joint law proves restart",
+    "A alone closes own-local event",
+    "A/B alone close own-local event",
+    "own-local event is always linear",
+    "two-replica four-face law is a population closure",
+    "four-face identity closes every population expectation",
+    "finite-event hybrid theorem proves selector local finiteness",
+    "hysteresis automatically prevents Zeno switching",
+    "own-local affine event proves restart",
     "raw residual norm is a physical first-bad score",
     "gauge-invariant residual smallness proves support locality",
     "admissibility checklist is a sufficient first-bad criterion",
@@ -1120,7 +1153,7 @@ for forbidden in [
     "hybrid selected path law determines first-bad event times",
     "hybrid selected semimartingale proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text or forbidden in random_event_text or forbidden in first_bad_admissibility_text or forbidden in local_growth_gate_text or forbidden in moving_critical_text or forbidden in critical_hessian_text or forbidden in branch_competition_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text or forbidden in random_event_text or forbidden in first_bad_admissibility_text or forbidden in local_growth_gate_text or forbidden in moving_critical_text or forbidden in critical_hessian_text or forbidden in branch_competition_text or forbidden in own_local_affine_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

@@ -10,6 +10,9 @@ from src.pde_audit.random_selected_event_correlation import (
     two_replica_congruence_residual,
     two_replica_mean_output_faces,
     two_replica_mean_output_residual,
+    population_congruence_faces,
+    population_congruence_residual,
+    three_state_population_triple_face_calibration,
 )
 
 
@@ -74,6 +77,20 @@ class RandomSelectedEventCorrelationAudit(unittest.TestCase):
         x=sp.Matrix([2,3])
         _,corr=two_replica_mean_output_faces(C1,x,C2,x)
         self.assertEqual(corr,sp.zeros(1,1))
+
+    def test_general_population_requires_centered_triple_face(self) -> None:
+        Cs=[sp.Matrix([[0]]),sp.Matrix([[1]]),sp.Matrix([[2]])]
+        Qs=[sp.Matrix([[1]]),sp.Matrix([[0]]),sp.Matrix([[1]])]
+        self.assertEqual(population_congruence_residual(Cs,Qs),sp.zeros(1))
+        faces=population_congruence_faces(Cs,Qs)
+        self.assertEqual(faces[4],sp.Matrix([[sp.Rational(2,9)]]))
+
+    def test_three_state_population_witness_blocks_four_face_promotion(self) -> None:
+        c=three_state_population_triple_face_calibration()
+        self.assertEqual(c['exact'],sp.Rational(4,3))
+        self.assertEqual(c['four_face_sum'],sp.Rational(10,9))
+        self.assertEqual(c['triple'],sp.Rational(2,9))
+        self.assertEqual(c['exact']-c['four_face_sum'],c['triple'])
 
 
 if __name__ == '__main__':

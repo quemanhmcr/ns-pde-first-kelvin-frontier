@@ -12,7 +12,7 @@ This note asks whether these are independent layers of complexity or different
 representations of one much smaller event law.
 
 They are largely one law.  For invertible endpoint frames, the physical synthesis
-block is a complete gauge-normal representative of the raw packet map; sequential
+block is a complete gauge-normal representative of the **linear raw current block**; sequential
 events compose functorially on one-current state and on the full pair state; and any
 intermediate spectral projector resolution telescopes out.  What does **not**
 compose is a reduced list of diagonal scalar channel energies, because that list has
@@ -89,7 +89,7 @@ The physical and codeforming normal forms answer different questions:
 - `A` acts on actual physical reconstructed vectors;
 - `B` acts on each packet's own co-deforming residual coordinates.
 
-Neither introduces additional event physics beyond the same raw current map.
+Neither introduces additional physics inside that linear current block.  An own-local residual event can still carry an affine target/reanchoring coboundary not encoded by `A` or `B` alone.
 
 **Status: Exact identity / exact bijection given invertible coherent frames.**
 
@@ -472,3 +472,18 @@ sharply separated from the event algebra:
 No item on this list is solved by the event normal-form identity itself.
 
 **Status: first-bad event choice/state remains Open-literal/Open.  No restart/continuation/regularity theorem claimed.**
+
+
+---
+
+## 13. Affine own-local normal form
+
+The gauge-normal theorem above is exact for the current/frame block.  If the packet residual uses packet-specific local vorticity targets, define the unreanchored readout `z=x+Omega`.  A supplied current event acts linearly on `z`, while the residual obeys
+
+\[
+\boxed{x_+=Ax_-+d,\qquad d=A\Omega_- - \Omega_+.}
+\]
+
+The homogeneous affine matrix `[[A,d],[0,1]]` composes exactly, and the intermediate target cancels.  Therefore the repaired physical event normal form is `(A,d)` on an own-local library, not `A` alone.  Because `d` is generally state-dependent/adapted, this pathwise lift is not an unconditional moment closure.
+
+**Status: Exact affine extension; actual first-bad own-local event data remain Open-literal.**

@@ -291,10 +291,21 @@ from pde_audit.selected_residual_combined_qv_rate import (  # noqa: E402
 from pde_audit.random_selected_event_correlation import (  # noqa: E402
     adaptive_event_alignment_calibrations,
     event_dispersion_face_psd_quadratic_form,
+    population_congruence_faces,
+    population_congruence_residual,
+    three_state_population_triple_face_calibration,
     two_replica_congruence_faces,
     two_replica_congruence_residual,
     two_replica_mean_output_faces,
     two_replica_mean_output_residual,
+)
+from pde_audit.own_local_kelvin_affine_event import (  # noqa: E402
+    affine_composition_residuals,
+    affine_noise_gram_residual,
+    affine_pathwise_second_moment_residual,
+    cubic_heat_shear_reanchoring_calibration,
+    cubic_two_child_own_local_mismatch,
+    selected_affine_jump_square_residual,
 )
 from pde_audit.first_bad_rule_admissibility import (  # noqa: E402
     adaptive_event_joint_law_obstruction,
@@ -1536,6 +1547,29 @@ Cq1=sp.Matrix([[1,0]]); Cq2=sp.Matrix([[0,1]])
 Nq1=sp.Matrix([[1,0],[0,0]]); Nq2=sp.Matrix([[0,0],[0,2]])
 Gq1=sp.simplify(Nq1*Nq1.T); Gq2=sp.simplify(Nq2*Nq2.T)
 random_qv_congruence_zero=two_replica_congruence_residual(Cq1,Gq1,Cq2,Gq2) == sp.zeros(1)
+random_population=three_state_population_triple_face_calibration()
+random_population_residual_zero=population_congruence_residual(
+    [sp.Matrix([[0]]),sp.Matrix([[1]]),sp.Matrix([[2]])],
+    [sp.Matrix([[1]]),sp.Matrix([[0]]),sp.Matrix([[1]])],
+) == sp.zeros(1)
+random_population_triple_expected=random_population["triple"] == sp.Rational(2,9)
+random_population_four_face_incomplete=random_population["four_face_sum"] == sp.Rational(10,9) and random_population["exact"] == sp.Rational(4,3)
+
+# Own-local affine Kelvin event: current/frame block plus target coboundary.
+Aol1=sp.Matrix([[1,2],[0,1]]); Aol2=sp.Matrix([[2,0],[1,1]])
+Ool0=sp.Matrix([1,3]); Ool1=sp.Matrix([2,-1]); Ool2=sp.Matrix([4,5]); xol=sp.Matrix([7,-2])
+own_local_state_comp,own_local_offset_comp=affine_composition_residuals(Aol1,Aol2,Ool0,Ool1,Ool2,xol)
+own_local_composition_zero=own_local_state_comp == sp.zeros(2,1) and own_local_offset_comp == sp.zeros(2,1)
+own_local_second_moment_zero=affine_pathwise_second_moment_residual(Aol1,xol,sp.Matrix([2,4])) == sp.zeros(2)
+Eolm=sp.Matrix([[1,0]]); Eolp=sp.Matrix([[0,1]])
+own_local_jump_square_zero=selected_affine_jump_square_residual(xol,Aol1,sp.Matrix([2,4]),Eolm,Eolp) == sp.zeros(1)
+own_local_noise_gram_zero=affine_noise_gram_residual(sp.eye(2),sp.zeros(2),sp.zeros(2),sp.Matrix([[1,2],[3,4]])) == sp.zeros(2)
+aol,pol,bol,lol=sp.symbols("aol pol bol lol", nonzero=True)
+own_local_cubic=cubic_heat_shear_reanchoring_calibration(aol,pol,bol,lol,t,nu)
+own_local_cubic_ns_zero=own_local_cubic["heat_equation_residual"] == 0
+own_local_cubic_noise_expected=own_local_cubic["residual_noise_y"] == sp.simplify(12*bol*lol*(pol-aol))
+own_local_two_child=cubic_two_child_own_local_mismatch(aol,bol,lol,t,nu)
+own_local_two_child_mismatch_expected=own_local_two_child["mismatch"] == sp.simplify(-12*aol**2*bol*lol)
 
 # Necessary physical admissibility constraints for future first-bad rules.
 eps_adm=sp.Matrix([2,-1,3])
@@ -1892,6 +1926,14 @@ report = {
         "mean_event_map_mean_payload_closure": "Audited PSD calibration: false universally",
         "adaptive_event_alignment_correlation_sign": "Audited PSD calibration",
         "adaptive_event_qv_gram_congruence": "Exact identity",
+        "adaptive_population_centered_triple_face": "Exact population identity / rigorous anti-factorization consequence",
+        "own_local_kelvin_affine_target_face": "Exact identity",
+        "own_local_kelvin_affine_composition": "Exact identity / rigorous functorial consequence",
+        "own_local_kelvin_affine_moment_selector_faces": "Exact pathwise identity",
+        "own_local_kelvin_target_gradient_noise_face": "Exact identity",
+        "cubic_heat_shear_own_local_event_no_go": "Audited exact-NS calibration / rigorous no-linear-extension consequence",
+        "endogenous_selector_local_finiteness_or_interface_law": "Open-literal",
+        "first_bad_own_local_affine_event_instantiation": "Open-literal",
         "selected_adaptive_event_expectation_ledger": "Rigorous conditional composition of exact replica identities",
         "first_bad_adaptive_event_joint_law": "Open-literal",
         "first_bad_physical_score_passive_gauge": "Exact physical gauge identity",
@@ -2366,6 +2408,14 @@ report = {
         "aligned_faces_expected_1_1_1_1_to_4": bool(random_alignment_positive_expected),
         "anti_aligned_faces_expected_1_1_minus1_minus1_to_0": bool(random_alignment_negative_expected),
         "qv_gram_congruence_residual_zero": bool(random_qv_congruence_zero),
+        "population_centered_triple_residual_zero": bool(random_population_residual_zero),
+        "population_triple_face_expected_2_over_9": bool(random_population_triple_expected),
+        "population_four_face_shortcut_incomplete": bool(random_population_four_face_incomplete),
+        "population_three_state": {
+            "exact": str(random_population["exact"]),
+            "four_face_sum": str(random_population["four_face_sum"]),
+            "triple": str(random_population["triple"]),
+        },
         "aligned": {
             "exact": str(random_alignment["positive_exact"]),
             "naive": str(random_alignment["positive_naive"]),
@@ -2382,6 +2432,18 @@ report = {
         },
         "typing": "adaptive event-map dispersion and signed event-state correlation are mandatory expectation-level faces",
         "first_bad": "Open-literal at actual badness/resolve rule, adaptive event-map distribution, joint law, and outer clock",
+    },
+    "own_local_kelvin_affine_event": {
+        "affine_composition_residual_zero": bool(own_local_composition_zero),
+        "affine_second_moment_residual_zero": bool(own_local_second_moment_zero),
+        "selector_affine_jump_square_residual_zero": bool(own_local_jump_square_zero),
+        "target_gradient_noise_gram_residual_zero": bool(own_local_noise_gram_zero),
+        "cubic_heat_shear_ns_residual_zero": bool(own_local_cubic_ns_zero),
+        "cubic_reanchored_noise_expected": bool(own_local_cubic_noise_expected),
+        "two_child_own_local_linear_extension_fails_by_expected_face": bool(own_local_two_child_mismatch_expected),
+        "two_child_mismatch": str(own_local_two_child["mismatch"]),
+        "typing": "A/B remain exact linear current-frame blocks; own-local residual events add the target coboundary and target-gradient Brownian face",
+        "first_bad": "Open-literal at actual packet/anchor event, endogenous selector local finiteness/interface law, support locality, and restart clock bridge",
     },
     "first_bad_rule_admissibility": {
         "physical_score_passive_gauge_residual_zero": bool(admiss_physical_gauge_zero),
