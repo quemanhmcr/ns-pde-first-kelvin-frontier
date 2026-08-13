@@ -1205,3 +1205,13 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Exact homogeneous refinement:** degree-`p` residuals give `E_+=lambda^(2p-2)E` under isotropic physical refinement.
 - **Audited calibration / seam no-go:** exact quadratic heat shear with `L=diag(1,rho,rho)` has `chi=-e_z`, physical residual `r=-rho e_z` and weighted energy `rho^2 -> 0`, while the x support line remains exactly length one.  Weighted Kelvin descent does not imply support locality.
 - **Open:** actual first-bad support locality and directional weighted residual products must be controlled simultaneously on the same migrating selected state, with correlation, pair refinement, selector, boundary, exit, and reset faces retained.  No restart/continuation/regularity theorem is claimed.
+
+## 2026-08-13 — Pathwise spectral channels and principal-axis traffic
+
+- **Exact spectral-projector identity:** `tr(MQ)=sum_alpha lambda_alpha tr(P_alpha Q)` pathwise.  Averaging this representation keeps random geometry--residual correlation inside each realization instead of factorizing mean metric and mean residual tensors.
+- **Rigorous consequence:** the projector channels are nonnegative for `Q>=0`; in 3D weighted residual collapse is equivalent to collapse of every expected spectral-block channel, with support locality still separate.
+- **Exact simple-spectrum connection:** with `B=V^T Mdot V`, `Omega_ij=B_ij/(lambda_j-lambda_i)` and `lambda_i_dot=B_ii`.  The API rejects repeated eigenvalues rather than emitting a singular principal-axis connection.
+- **Exact channel traffic law:** `E_i=lambda_i Qtilde_ii` has eigenvalue-stretch, residual/current-content, and eigenframe-mixing faces.  The total mixing is exactly `2 sum_{i<j} B_ij Qtilde_ij`, the off-diagonal metric work.
+- **Audited calibration:** exact linear NS shear `u=(gamma y,0,0)` with anisotropic frame `diag(2,1,3)` gives `Omega_12=2 gamma/3` and activates nonzero principal-axis mixing whose total is exactly the off-diagonal strain/metric work.
+- **Exact degeneracy gauge:** within a repeated-eigenvalue subspace, individual axes are gauge but the projector-block energy `lambda tr(PQ)` is invariant under internal orthogonal rotations.
+- **Open:** control pathwise spectral channel products on the same first-bad packet as support locality and all physical event faces.  No future-bank/restart/continuation/regularity theorem is claimed.

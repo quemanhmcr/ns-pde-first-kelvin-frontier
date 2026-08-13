@@ -46,3 +46,7 @@ The reverse-age martingale coordinate `chi` is not itself the physical finite-to
 ### Latest: directional and event balance of the physical Kelvin residual
 
 The physical residual energy now has an exact principal-line ledger `sum_i sigma_i^2 v_i^T Q_chi v_i`; finite events split exactly into geometry reweighting and current/residual revaluation, with a third metric--residual correlation face on the random full state.  Passive GL reparameterization can have nonzero signed faces but zero total change.  Exact quadratic Navier--Stokes also shows weighted residual collapse can occur while one support line stays order one, so support locality and residual descent remain distinct open first-bad requirements.
+
+### Latest: pathwise spectral Kelvin-residual channels
+
+The random-frame weighted residual can be kept fully literal without factorizing geometry from residual content: pathwise `M=sum lambda_alpha P_alpha` gives `E=sum lambda_alpha tr(P_alpha Q)`.  For simple spectrum, every principal channel has exactly three smooth traffic faces—eigenvalue stretch, residual content, and eigenframe mixing—and the total mixing equals the off-diagonal metric work.  At spectral degeneracy, individual axes are gauge and the eigenspace projector is the canonical object.  Exact linear Navier--Stokes shear activates this mixing mechanism.  Principal-channel collapse and support locality remain separate open first-bad requirements.

@@ -142,6 +142,19 @@ from pde_audit.surface_moment_hierarchy import (  # noqa: E402
     polynomial_flux_error_from_oriented_moments,
     reverse_age_oriented_moment_rate_integrand,
 )
+from pde_audit.principal_kelvin_residual_channels import (  # noqa: E402
+    degenerate_basis_rotation_residual,
+    degenerate_eigenspace_energy,
+    principal_channel_rate_faces,
+    principal_channel_rate_sum_residual,
+    principal_metric_rate_reconstruction_residual,
+    principal_mixing_offdiagonal_residual,
+    projector_channel_decomposition_residual,
+    reverse_linear_shear_metric_rate,
+    simple_spectrum_connection,
+    simple_spectrum_connection_skew_residual,
+    two_replica_pathwise_channel_residual,
+)
 from pde_audit.reverse_codeforming_kelvin_martingale import (  # noqa: E402
     codeforming_residual_energy_drift,
     constant_mean_bias_rate,
@@ -949,6 +962,51 @@ quad_long_energy_expected = sp.simplify(quad_long["physical_energy"] - rho_long*
 quad_long_energy_limit_zero = sp.limit(quad_long["physical_energy"], rho_long, 0, dir="+") == 0
 quad_long_support_not_local = quad_long["long_x_line_squared"] == 1 and quad_long["line_frame"][0,0] == 1
 
+# Pathwise spectral Kelvin-residual channels and principal-axis traffic.
+Ppc = [sp.diag(1,0,0), sp.diag(0,1,0), sp.diag(0,0,1)]
+lampc = (sp.Integer(1), sp.Integer(4), sp.Integer(9))
+Mpc = sp.diag(*lampc)
+Qpc = sp.Matrix([[2,1,0],[1,3,1],[0,1,5]])
+projector_channel_zero = projector_channel_decomposition_residual(Mpc,Qpc,Ppc,lampc) == 0
+
+V1pc = sp.eye(3)
+V2pc = sp.Matrix([[0,1,0],[1,0,0],[0,0,1]])
+Q1pc = sp.diag(3,1,2)
+Q2pc = sp.Matrix([[1,sp.Rational(1,2),0],[sp.Rational(1,2),4,0],[0,0,2]])
+two_replica_channel_zero = two_replica_pathwise_channel_residual(
+    V1pc,(1,4,9),Q1pc,V2pc,(2,5,7),Q2pc
+) == 0
+
+Bpc = sp.Matrix([[2,3,1],[3,-1,2],[1,2,4]])
+Qrate_pc = sp.Matrix([[5,2,1],[2,3,sp.Rational(1,2)],[1,sp.Rational(1,2),4]])
+Qdot_pc = sp.Matrix([[1,2,0],[2,3,1],[0,1,-2]])
+connection_skew_zero = simple_spectrum_connection_skew_residual(Bpc,lampc) == sp.zeros(3)
+metric_rate_reconstruction_zero = principal_metric_rate_reconstruction_residual(Bpc,lampc) == sp.zeros(3)
+channel_rate_sum_zero = principal_channel_rate_sum_residual(Bpc,lampc,Qrate_pc,Qdot_pc) == 0
+mixing_offdiag_zero = principal_mixing_offdiagonal_residual(Bpc,lampc,Qrate_pc) == 0
+
+gamma_pc, qmix_pc = sp.symbols("gamma_pc qmix_pc", nonzero=True)
+Lshear_pc = sp.diag(2,1,3)
+Bshear_pc = reverse_linear_shear_metric_rate(gamma_pc,Lshear_pc)
+Omegashear_pc = simple_spectrum_connection(Bshear_pc,(4,1,9))
+Qshear_pc = sp.Matrix([[1,qmix_pc,0],[qmix_pc,2,0],[0,0,3]])
+_,_,mixing_shear_pc = principal_channel_rate_faces(Bshear_pc,(4,1,9),Qshear_pc,sp.zeros(3))
+linear_shear_B_expected = Bshear_pc == sp.Matrix([[0,-2*gamma_pc,0],[-2*gamma_pc,0,0],[0,0,0]])
+linear_shear_connection_expected = sp.simplify(Omegashear_pc[0,1]-sp.Rational(2,3)*gamma_pc) == 0
+linear_shear_mixing_expected = sp.simplify(sum(mixing_shear_pc)+4*gamma_pc*qmix_pc) == 0
+linear_shear_mixing_active = mixing_shear_pc[0] != 0 and mixing_shear_pc[1] != 0
+
+Wdeg_pc = sp.Matrix([[1,0],[0,1],[0,0]])
+Rdeg_pc = sp.Matrix([[sp.Rational(3,5),-sp.Rational(4,5)],[sp.Rational(4,5),sp.Rational(3,5)]])
+Qdeg_pc = sp.Matrix([[2,1,3],[1,5,2],[3,2,7]])
+degenerate_basis_gauge_zero = degenerate_basis_rotation_residual(Wdeg_pc,Rdeg_pc,4,Qdeg_pc) == 0
+degenerate_block_energy_expected = degenerate_eigenspace_energy(Wdeg_pc,4,Qdeg_pc) == 28
+try:
+    simple_spectrum_connection(sp.Matrix([[0,1,0],[1,0,0],[0,0,0]]),(1,1,4))
+    degeneracy_rejected = False
+except ValueError:
+    degeneracy_rejected = True
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1049,6 +1107,14 @@ report = {
         "homogeneous_weighted_refinement_exponent": "Exact identity",
         "weighted_residual_vs_support_locality": "Audited calibration / rigorous seam no-go",
         "first_bad_directional_weighted_products": "Open",
+        "pathwise_spectral_weighted_residual_channels": "Exact spectral-projector identity",
+        "weighted_collapse_spectral_channel_equivalence": "Rigorous nonnegative finite-channel consequence",
+        "principal_simple_spectrum_connection": "Exact identity conditional on simple spectrum",
+        "principal_channel_three_face_rate": "Exact simple-spectrum identity",
+        "principal_mixing_offdiagonal_metric_work": "Exact simple-spectrum identity",
+        "degenerate_eigenspace_projector_gauge": "Exact gauge identity / theorem-domain correction",
+        "linear_shear_principal_mixing_calibration": "Audited calibration",
+        "first_bad_principal_channel_collapse": "Open",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1377,6 +1443,29 @@ report = {
         },
         "event_typing": "conditioned event has geometry plus current/state faces; full random-frame event adds metric-residual correlation; Delta Q remains supplied by the full pair/current event map",
         "first_bad": "Open: control each directional sigma_i^2 v_i^T Q_chi v_i together with support locality, random-frame correlation, selector/refinement/boundary/exit/reset faces",
+    },
+    "principal_kelvin_residual_channels": {
+        "projector_channel_decomposition_residual_zero": bool(projector_channel_zero),
+        "two_replica_pathwise_channel_residual_zero": bool(two_replica_channel_zero),
+        "simple_spectrum_connection_skew_residual_zero": bool(connection_skew_zero),
+        "metric_rate_reconstruction_residual_zero": bool(metric_rate_reconstruction_zero),
+        "principal_channel_rate_sum_residual_zero": bool(channel_rate_sum_zero),
+        "principal_mixing_offdiagonal_residual_zero": bool(mixing_offdiag_zero),
+        "linear_shear": {
+            "metric_rate_expected": bool(linear_shear_B_expected),
+            "connection_12_expected": bool(linear_shear_connection_expected),
+            "mixing_total_expected": bool(linear_shear_mixing_expected),
+            "mixing_channels_active": bool(linear_shear_mixing_active),
+            "typing": "exact steady NS shear routes off-diagonal metric work through moving principal-axis residual channels",
+        },
+        "degeneracy": {
+            "internal_basis_gauge_residual_zero": bool(degenerate_basis_gauge_zero),
+            "block_energy_expected": bool(degenerate_block_energy_expected),
+            "simple_spectrum_api_rejects_degeneracy": bool(degeneracy_rejected),
+            "typing": "individual axes inside a repeated-eigenvalue block are gauge; the spectral projector block is canonical",
+        },
+        "random_frame_typing": "pathwise spectral products retain geometry-residual correlation without mean-metric factorization",
+        "first_bad": "Open: weighted channel collapse is an exact reformulation of residual descent but does not prove support locality or close physical event/cross-clock faces",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),

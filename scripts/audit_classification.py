@@ -33,6 +33,7 @@ dynamic_reconstructed_note = ROOT / "docs" / "dynamic_reconstructed_kelvin_resid
 reverse_codeforming_note = ROOT / "docs" / "reverse_codeforming_kelvin_martingale_audit.md"
 weighted_codeforming_note = ROOT / "docs" / "weighted_codeforming_kelvin_residual_audit.md"
 directional_refinement_note = ROOT / "docs" / "directional_refinement_kelvin_residual_audit.md"
+principal_channels_note = ROOT / "docs" / "principal_kelvin_residual_channels_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -62,6 +63,7 @@ dynamic_reconstructed_text = dynamic_reconstructed_note.read_text()
 reverse_codeforming_text = reverse_codeforming_note.read_text()
 weighted_codeforming_text = weighted_codeforming_note.read_text()
 directional_refinement_text = directional_refinement_note.read_text()
+principal_channels_text = principal_channels_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -557,6 +559,25 @@ if directional_refinement_missing:
     print("missing directional/refinement Kelvin residual markers:", directional_refinement_missing)
     sys.exit(1)
 
+principal_channels_required = [
+    "spectral-projector identity",
+    "does **not remove geometry--residual correlation**",
+    "Exact identity conditional on simple spectrum",
+    "eigenvalue stretch/compression",
+    "residual/current content",
+    "eigenframe mixing",
+    "off-diagonal metric work",
+    "Exact linear Navier--Stokes shear",
+    "individual axes are gauge",
+    "spectral-projector representation remains regular at degeneracy",
+    "support locality remains Open",
+    "no restart/continuation/regularity theorem claimed",
+]
+principal_channels_missing = [token for token in principal_channels_required if token not in principal_channels_text]
+if principal_channels_missing:
+    print("missing principal Kelvin residual channel markers:", principal_channels_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -702,8 +723,16 @@ for forbidden in [
     "metric-residual correlation can be dropped at events",
     "directional event balance is the future covariance bank",
     "directional event balance proves restart",
+    "pathwise spectral channels remove geometry-residual correlation",
+    "individual eigenvectors are canonical at degeneracy",
+    "simple-spectrum connection extends through repeated eigenvalues",
+    "eigenframe mixing is a new positive source",
+    "principal-axis mixing can be dropped from metric work",
+    "principal channel collapse proves support locality",
+    "principal channel energy is the future covariance bank",
+    "principal channel law proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")
