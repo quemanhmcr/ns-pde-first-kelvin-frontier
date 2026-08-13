@@ -315,6 +315,13 @@ from pde_audit.local_enstrophy_kelvin_growth_gate import (  # noqa: E402
     growth_gate_margin,
     kelvin_bulk_packet_residual,
 )
+from pde_audit.moving_enstrophy_critical_point import (  # noqa: E402
+    abc_fixed_critical_point_speed_calibration,
+    affine_degenerate_critical_speed_calibration,
+    critical_path_value_derivative_residual,
+    nondegenerate_scalar_critical_velocity_at,
+    scalar_critical_constraint_speed_residual_at,
+)
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
     affine_vortex_total_bank_envelope_residual,
@@ -1575,6 +1582,24 @@ aff_lg_growth_expected=aff_lg["stretching"] == aff_lg_expected_growth and aff_lg
 aff_lg_balance_zero=aff_lg["balance_residual"] == 0
 aff_lg_nonperiodic=aff_lg["periodicity_defect_x_2pi"] != sp.zeros(3,1)
 
+# Moving enstrophy critical-point geometry.
+A_mc=sp.symbols("A_mc", positive=True)
+abc_mc=abc_fixed_critical_point_speed_calibration(A_mc,nu,t,coords_lg)
+abc_mc_grad_zero=abc_mc["gradient"] == sp.zeros(3,1)
+abc_mc_hessian_invertible=abc_mc["hessian_det"] != 0
+abc_mc_negative_sylvester=bool(abc_mc["hessian"][0,0] < 0 and sp.det(abc_mc["hessian"][:2,:2]) > 0 and abc_mc["hessian"].det() < 0)
+abc_mc_fluid_nonzero=abc_mc["fluid_velocity"] != sp.zeros(3,1)
+abc_mc_fixed=abc_mc["critical_velocity"] == sp.zeros(3,1) and abc_mc["predicted_critical_velocity"] == sp.zeros(3,1)
+abc_mc_constraint_zero=abc_mc["constraint_speed_residual"] == sp.zeros(3,1) and abc_mc["pde_speed_residual"] == sp.zeros(3,1)
+abc_mc_relative_minus_u=sp.simplify(abc_mc["relative_velocity"]+abc_mc["fluid_velocity"]) == sp.zeros(3,1)
+a_mc,r0_mc=sp.symbols("a_mc r0_mc", positive=True)
+aff_mc=affine_degenerate_critical_speed_calibration(a_mc,r0_mc,t,coords_lg,nu)
+aff_mc_degenerate=aff_mc["gradient"] == sp.zeros(3,1) and aff_mc["hessian"] == sp.zeros(3) and aff_mc["growth_gradient"] == sp.zeros(3,1)
+aff_mc_speed_nonunique=aff_mc["speed_residual_v1"] == sp.zeros(3,1) and aff_mc["speed_residual_v2"] == sp.zeros(3,1)
+# Critical-path value derivative loses path velocity when grad e=0.
+ft_mc=sp.symbols("ft_mc")
+value_speed_independent=critical_path_value_derivative_residual(ft_mc,ft_mc,sp.zeros(3,1),sp.Matrix([3,-2,5])) == 0
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1801,6 +1826,14 @@ report = {
         "affine_vortex_positive_local_growth_gate": "Audited exact-NS mechanism calibration",
         "affine_vortex_growth_gate_target_scope": "Exact theorem-domain correction",
         "first_bad_local_growth_to_continuation_bridge": "Open-literal",
+        "moving_enstrophy_critical_constraint_speed": "Exact conditional critical-constraint identity",
+        "moving_enstrophy_critical_pde_relative_speed": "Exact conditional Navier--Stokes identity",
+        "moving_enstrophy_critical_three_gradient_faces": "Exact conditional physical split",
+        "moving_enstrophy_critical_value_speed_independence": "Exact identity",
+        "abc_fixed_enstrophy_maximum_vs_fluid_transport": "Audited exact periodic-NS calibration",
+        "affine_degenerate_critical_speed_nonuniqueness": "Audited exact-NS degeneracy calibration",
+        "critical_hessian_inversion_theorem_domain": "Exact theorem-domain correction",
+        "first_bad_enstrophy_critical_path_identification": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -2306,6 +2339,28 @@ report = {
         },
         "local_max_law": "at grad e=0: e_t=stretching-Kelvin_bulk+nu Delta e; at a max Delta e<=0, positive margin is necessary but not sufficient for growth",
         "first_bad": "Open-literal: no bridge from this local growth law plus packet/support/event structure to continuation failure",
+    },
+    "moving_enstrophy_critical_point": {
+        "critical_path_value_speed_independence": bool(value_speed_independent),
+        "abc": {
+            "critical_gradient_zero": bool(abc_mc_grad_zero),
+            "hessian_invertible": bool(abc_mc_hessian_invertible),
+            "hessian_negative_definite_sylvester": bool(abc_mc_negative_sylvester),
+            "fluid_velocity_nonzero": bool(abc_mc_fluid_nonzero),
+            "critical_velocity_fixed_zero": bool(abc_mc_fixed),
+            "constraint_and_pde_speed_residuals_zero": bool(abc_mc_constraint_zero),
+            "relative_speed_equals_minus_fluid": bool(abc_mc_relative_minus_u),
+            "hessian_det": str(abc_mc["hessian_det"]),
+            "fluid_velocity": str(abc_mc["fluid_velocity"]),
+            "typing": "exact periodic ABC strict enstrophy maximum is fixed in Eulerian space while nonzero fluid moves through it",
+        },
+        "affine_degeneracy": {
+            "gradient_hessian_growth_gradient_zero": bool(aff_mc_degenerate),
+            "two_distinct_speed_residuals_zero": bool(aff_mc_speed_nonunique),
+            "typing": "uniform enstrophy has singular Hessian and no unique inverse-Hessian critical speed",
+        },
+        "speed_law": "H_e(xdot_*-u)+grad[stretching-Kelvin_bulk+nu Delta e]=0 on a differentiable critical branch; invert H_e only when nondegenerate",
+        "first_bad": "Open-literal: the programme first-bad observable is not identified with a nondegenerate enstrophy critical branch",
     },
     "same_replica_residual_library_dynamics": {
         "cross_germ_qv_block_residual_zero": bool(library_cross_block_zero),

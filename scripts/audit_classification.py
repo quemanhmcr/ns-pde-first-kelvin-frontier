@@ -46,6 +46,7 @@ combined_qv_rate_note = ROOT / "docs" / "selected_residual_combined_qv_rate_audi
 random_event_note = ROOT / "docs" / "random_selected_event_correlation_audit.md"
 first_bad_admissibility_note = ROOT / "docs" / "first_bad_rule_admissibility_audit.md"
 local_growth_gate_note = ROOT / "docs" / "local_enstrophy_kelvin_growth_gate_audit.md"
+moving_critical_note = ROOT / "docs" / "moving_enstrophy_critical_point_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -88,6 +89,7 @@ combined_qv_rate_text = combined_qv_rate_note.read_text()
 random_event_text = random_event_note.read_text()
 first_bad_admissibility_text = first_bad_admissibility_note.read_text()
 local_growth_gate_text = local_growth_gate_note.read_text()
+moving_critical_text = moving_critical_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -816,6 +818,22 @@ if local_growth_gate_missing:
     print("missing local enstrophy/Kelvin growth-gate markers:", local_growth_gate_missing)
     sys.exit(1)
 
+moving_critical_required = [
+    "Differentiate the critical-point constraint before choosing a speed",
+    "Insert the literal three-face Navier--Stokes growth law",
+    "Relative critical speed has three physical gradient faces",
+    "value growth along a critical path does not depend on its velocity",
+    "strict maximum is fixed while fluid moves through it",
+    "Degenerate critical sets do not have a unique inverse-Hessian speed",
+    "not the first-bad quantile speed law",
+    "first-bad critical-path identification remains Open-literal",
+    "No restart/continuation/regularity theorem claimed",
+]
+moving_critical_missing = [token for token in moving_critical_required if token not in moving_critical_text]
+if moving_critical_missing:
+    print("missing moving enstrophy critical-point markers:", moving_critical_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -992,6 +1010,10 @@ for forbidden in [
     "affine vortex is a periodic regularity counterexample",
     "affine vortex is a finite-energy regularity counterexample",
     "stretching minus Kelvin bulk alone determines local maximum growth",
+    "enstrophy maximum moves with the fluid velocity",
+    "inverse Hessian critical speed extends through degeneracy",
+    "enstrophy critical speed is the first-bad quantile speed",
+    "moving enstrophy critical point proves restart",
     "generic germ mixing commutes with per-germ spectral blocks",
     "diagonal-only spectral refinement is sufficient",
     "quadratic selector reset is a positive physical payment",
@@ -1044,7 +1066,7 @@ for forbidden in [
     "hybrid selected path law determines first-bad event times",
     "hybrid selected semimartingale proves restart",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text or forbidden in random_event_text or forbidden in first_bad_admissibility_text or forbidden in local_growth_gate_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text or forbidden in spectral_event_text or forbidden in event_normal_form_text or forbidden in selected_residual_readout_text or forbidden in same_replica_library_text or forbidden in hybrid_selected_text or forbidden in combined_event_text or forbidden in combined_qv_rate_text or forbidden in random_event_text or forbidden in first_bad_admissibility_text or forbidden in local_growth_gate_text or forbidden in moving_critical_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

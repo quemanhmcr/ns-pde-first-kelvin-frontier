@@ -1353,3 +1353,14 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited exact-NS calibration:** affine vortex has spatially uniform enstrophy, zero Kelvin bulk, positive stretching `8 a r(t)^2`, and exact `partial_t e=8 a r(t)^2`.
 - **Exact theorem-domain correction:** the affine calibration is nonperiodic/non-finite-energy, so it types the local mechanism but does not refute a target-class global criterion.
 - **Open-literal:** bridge from local growth mechanics plus packet/support/event structure to actual first-bad continuation failure.
+
+
+## Moving enstrophy critical-point geometry
+
+- **Exact conditional identity:** differentiating `grad e(x_*,t)=0` gives `H_e xdot_* + partial_t grad e=0`; if `H_e` is invertible, `xdot_*=-H_e^-1 partial_t grad e`.
+- **Exact conditional NS identity:** `H_e(xdot_*-u)+grad[stretching-Kelvin_bulk+nu Delta e]=0`.
+- **Exact physical split:** relative critical speed has stretching-gradient, Kelvin-bulk-gradient, and curvature-gradient faces.
+- **Exact identity:** along a critical path, `d e(x_*(t),t)/dt=partial_t e`; critical-path speed does not enter the first value derivative.
+- **Audited exact periodic-NS calibration:** ABC strict maximum at `(pi/4)^3` has invertible negative Hessian, nonzero fluid velocity, but fixed critical position `xdot_*=0`.
+- **Audited exact-NS degeneracy calibration:** affine uniform enstrophy has `H_e=0`; distinct critical-path velocities satisfy the same constraint, so inverse-Hessian speed is not canonical through degeneracy.
+- **Open-literal:** identification of the programme first-bad observable with a differentiable nondegenerate enstrophy-max branch and reconciliation with selector/refinement events.
