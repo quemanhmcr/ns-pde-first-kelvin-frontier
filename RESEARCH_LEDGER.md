@@ -1454,3 +1454,13 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - Built an exact four-mode periodic heat shear whose `y=0,pi` points are true global enstrophy maxima at `t*=1/nu`; exact polynomial bounds certify the global claim, and the max envelope switches one-sided rates from `-336nu` to `-240nu` with zero value jump.
 - Classification: similarity/localization/speed/ancestry-flux laws Exact/Rigorous; one-mode and four-mode witnesses Audited exact-NS calibrations; actual first-bad/continuation identification remains Open-literal/Open.
 - No restart/continuation/global-regularity claim.  No geometric scale is identified with the Kelvin diffusion scale merely from an exponent.
+
+
+## Milestone: intrinsic chamber -> Kelvin/Nanson support no-go
+
+- **Exact identity:** for the one-mode max-normalized chamber, `L=diag(1,2 alpha/n,1)`, `H=diag(2 alpha/n,1,2 alpha/n)`, `B=L L^T`, and the tangent-plane support face is `P B P=diag(1,0,1)`.
+- **Exact physical typing:** the persistent face normal to `y` has area one but zero Kelvin flux, local target flux, and raw residual because `omega` is parallel to `z`; orientation-complete quadrupoles recover the transverse geometry the current channel misses.
+- **Audited exact-NS calibration / rigorous no-go:** `alpha->0` in one fixed smooth periodic NS solution gives zero scalar compatibility, zero uniform-ancestry net flux, collapsing packet volume and physical residual, zero local q.v., and collapsing finite-shape/Nanson rates while transverse support and diameter remain order one and conditioning degenerates.
+- **Open-literal:** no theorem yet identifies this filtration sequence with the actual first-bad state or forces tangential support/refinement collapse from a genuine first-bad compatibility obstruction.
+- **Open:** uniform singular-time support/conditioning, restart capacity, continuation, and global regularity.
+- The intrinsic chamber width is not identified with the Kelvin diffusion scale.

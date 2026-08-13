@@ -53,6 +53,7 @@ critical_merger_kelvin_note = ROOT / "docs" / "critical_sheet_merger_kelvin_even
 critical_transport_nanson_note = ROOT / "docs" / "critical_sheet_transport_nanson_event_audit.md"
 kelvin_ancestry_readout_note = ROOT / "docs" / "kelvin_ancestry_moving_readout_audit.md"
 intrinsic_enstrophy_localization_note = ROOT / "docs" / "intrinsic_enstrophy_localization_audit.md"
+intrinsic_chamber_support_note = ROOT / "docs" / "intrinsic_chamber_kelvin_support_audit.md"
 own_local_affine_note = ROOT / "docs" / "own_local_kelvin_affine_event_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
@@ -103,6 +104,7 @@ critical_merger_kelvin_text = critical_merger_kelvin_note.read_text()
 critical_transport_nanson_text = critical_transport_nanson_note.read_text()
 kelvin_ancestry_readout_text = kelvin_ancestry_readout_note.read_text()
 intrinsic_enstrophy_localization_text = intrinsic_enstrophy_localization_note.read_text()
+intrinsic_chamber_support_text = intrinsic_chamber_support_note.read_text()
 own_local_affine_text = own_local_affine_note.read_text()
 required = [
     "Exact identity",
