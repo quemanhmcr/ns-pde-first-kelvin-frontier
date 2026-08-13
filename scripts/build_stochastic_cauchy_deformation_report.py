@@ -142,6 +142,24 @@ from pde_audit.surface_moment_hierarchy import (  # noqa: E402
     polynomial_flux_error_from_oriented_moments,
     reverse_age_oriented_moment_rate_integrand,
 )
+from pde_audit.active_pair import interval_boundary, interval_refinement_map  # noqa: E402
+from pde_audit.frame_aware_kelvin_residual_refinement import (  # noqa: E402
+    block_synthesis_pair_expansion_residual,
+    block_synthesis_pair_functor_residual,
+    block_synthesis_spectral_channel_residual,
+    codeforming_determinant_ratio_residual,
+    codeforming_refinement_from_raw_error_residual,
+    cofactor_physical_synthesis_residual,
+    compatible_raw_error_refinement_residual,
+    frame_aware_physical_synthesis_block,
+    isotropic_frame_aware_scale_residuals,
+    orientation_complete_chain_refinement_residual,
+    orientation_preserving_scalar_refinement_blocks,
+    physical_reconstruction_refinement_residual,
+    physical_synthesis_gauge_residual,
+    quadratic_isotropic_packet_refinement_calibration,
+    scalar_refinement_pair_block_residual,
+)
 from pde_audit.principal_kelvin_residual_channels import (  # noqa: E402
     degenerate_basis_rotation_residual,
     degenerate_eigenspace_energy,
@@ -1075,6 +1093,63 @@ axis_after=(sp.simplify((uaxis.T*Qaxis*uaxis)[0]),sp.simplify((vaxis.T*Qaxis*vax
 cross_event_axis_values_change=axis_before != axis_after
 cross_event_block_total_invariant=sp.simplify(sum(axis_before)-sum(axis_after)) == 0
 
+# Frame-aware refinement forced by raw orientation-current packet synthesis.
+Lpf=sp.Matrix([[2,1,0],[0,3,1],[1,0,2]])
+L1f=sp.Matrix([[1,1,0],[0,2,0],[0,1,3]])
+L2f=sp.Matrix([[3,0,1],[1,2,0],[0,1,1]])
+Hpf=cofactor_map(Lpf); H1f=cofactor_map(L1f); H2f=cofactor_map(L2f)
+R1f=sp.Matrix([[1,1,0],[0,1,0],[0,0,2]])
+R2f=sp.Matrix([[2,0,0],[1,1,1],[0,0,1]])
+omegaf=sp.Matrix(sp.symbols("omega_frame0:3"))
+K1f=sp.Matrix(sp.symbols("K1_frame0:3")); K2f=sp.Matrix(sp.symbols("K2_frame0:3"))
+compatible_raw_error_zero=compatible_raw_error_refinement_residual(
+    [K1f,K2f],[H1f,H2f],[R1f,R2f],omegaf
+) == sp.zeros(3,1)
+e1f=sp.Matrix(sp.symbols("eps1_frame0:3")); e2f=sp.Matrix(sp.symbols("eps2_frame0:3"))
+physical_refinement_zero=physical_reconstruction_refinement_residual(
+    [e1f,e2f],[H1f,H2f],[R1f,R2f],Hpf
+) == sp.zeros(3,1)
+Spf=sp.Matrix([[1,1,0],[0,1,0],[0,0,2]])
+S1f=sp.Matrix([[2,0,0],[1,1,0],[0,0,1]])
+physical_gauge_zero=physical_synthesis_gauge_residual(Hpf,H1f,R1f,Spf,S1f) == sp.zeros(3)
+cofactor_synthesis_zero=cofactor_physical_synthesis_residual(Lpf,L1f,R1f) == sp.zeros(3)
+codeforming_det_zero=codeforming_determinant_ratio_residual(Lpf,L1f,R1f) == sp.zeros(3)
+c1f=sp.Matrix(sp.symbols("chi1_frame0:3")); c2f=sp.Matrix(sp.symbols("chi2_frame0:3"))
+codeforming_parent_zero=codeforming_refinement_from_raw_error_residual(
+    [c1f,c2f],Lpf,[L1f,L2f],[R1f,R2f]
+) == sp.zeros(3,1)
+A1f=frame_aware_physical_synthesis_block(Hpf,H1f,R1f)
+A2f=frame_aware_physical_synthesis_block(Hpf,H2f,R2f)
+Qframe=sp.Matrix(6,6,sp.symbols("Qframe0:36"))
+frame_pair_functor_zero=block_synthesis_pair_functor_residual(Qframe,[A1f,A2f]) == sp.zeros(9,1)
+frame_pair_expansion_zero=block_synthesis_pair_expansion_residual(Qframe,[A1f,A2f]) == sp.zeros(3)
+frame_spectral_pair_zero=block_synthesis_spectral_channel_residual(
+    Qframe,[A1f,A2f],sp.Symbol("lambda_frame"),sp.diag(1,0,1)
+) == 0
+rpf,rif,awf=sp.symbols("rho_parent_frame rho_child_frame a_frame", positive=True)
+frame_iso_phys_zero,frame_iso_code_zero=isotropic_frame_aware_scale_residuals(rpf,rif,awf)
+frame_iso_scale_zero=frame_iso_phys_zero == sp.zeros(3) and frame_iso_code_zero == sp.zeros(3)
+
+rf1,rf2,af1,af2=sp.symbols("rho_frame1 rho_frame2 a_frame1 a_frame2", positive=True)
+quad_frame=quadratic_isotropic_packet_refinement_calibration([rf1,rf2],[af1,af2],t,nu)
+quad_frame_physical_zero=quad_frame["physical_prediction_residual"] == sp.zeros(3,1)
+quad_frame_codeforming_zero=quad_frame["codeforming_prediction_residual"] == sp.zeros(3,1)
+quad_frame_expected_r=sp.Matrix([0,0,-(af1*rf1**3+af2*rf2**3)/(af1*rf1**2+af2*rf2**2)])
+quad_frame_expected_chi=sp.Matrix([0,0,-(af1*rf1**3+af2*rf2**3)/(af1*rf1**2+af2*rf2**2)**sp.Rational(3,2)])
+quad_frame_r_expected=sp.simplify(quad_frame["parent_physical_residual"]-quad_frame_expected_r) == sp.zeros(3,1)
+quad_frame_chi_expected=sp.simplify(quad_frame["parent_codeforming_residual"]-quad_frame_expected_chi) == sp.zeros(3,1)
+quad_frame_naive_false=quad_frame["parent_physical_residual"].subs({rf1:1,rf2:2,af1:1,af2:1}) != quad_frame["naive_common_fiber_physical_sum"].subs({rf1:1,rf2:2,af1:1,af2:1})
+
+scalar_weights=[sp.Rational(1,3),sp.Rational(2,3)]
+scalar_packet_blocks=orientation_preserving_scalar_refinement_blocks(scalar_weights)
+scalar_packet_blocks_expected=scalar_packet_blocks == [scalar_weights[0]*sp.eye(3),scalar_weights[1]*sp.eye(3)]
+scalar_packet_pair_zero=all(X == sp.zeros(9) for X in scalar_refinement_pair_block_residual(scalar_weights))
+Bfine_frame,R1chain_frame,R0chain_frame=interval_refinement_map(2,2)
+Bcoarse_frame=interval_boundary(2)
+orientation_chain_lift_zero=orientation_complete_chain_refinement_residual(
+    Bfine_frame,Bcoarse_frame,R1chain_frame,R0chain_frame,3
+) == sp.zeros(Bfine_frame.rows*3,R1chain_frame.cols*3)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1193,9 +1268,20 @@ report = {
         "one_mode_selected_reset_signed_revaluation": "Audited calibration",
         "selected_reset_positive_path_no_go": "Audited calibration / rigorous no-positive-path consequence",
         "cross_event_principal_axis_lineage": "Open-literal",
-        "first_bad_physical_residual_refinement_lift": "Open-literal",
+        "first_bad_physical_residual_refinement_lift": "Audited-conditional structural lift given an orientation-complete current packet map",
         "selected_spectral_hybrid_same_clock_ledger": "Rigorous conditional composition of exact identities",
         "first_bad_selected_spectral_lineage": "Open-literal",
+        "orientation_packet_current_error_refinement": "Exact current/cochain identity",
+        "frame_aware_physical_residual_synthesis": "Exact identity / uniqueness consequence",
+        "frame_aware_independent_orientation_gauge": "Exact gauge identity",
+        "frame_aware_cofactor_line_conjugation": "Exact identity",
+        "frame_aware_codeforming_determinant_synthesis": "Exact identity",
+        "frame_aware_isotropic_area_volume_weights": "Exact identity",
+        "quadratic_frame_aware_refinement_calibration": "Audited calibration / rigorous no-naive-weight consequence",
+        "frame_aware_residual_pair_functor": "Exact pair-functor identity",
+        "orientation_preserving_scalar_packet_refinement_lift": "Exact type lift of existing scalar current refinement",
+        "orientation_complete_chain_refinement_lift": "Exact chain-map tensor lift",
+        "first_bad_orientation_packet_refinement_instantiation": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1547,6 +1633,34 @@ report = {
         },
         "random_frame_typing": "pathwise spectral products retain geometry-residual correlation without mean-metric factorization",
         "first_bad": "Open: weighted channel collapse is an exact reformulation of residual descent but does not prove support locality or close physical event/cross-clock faces",
+    },
+    "frame_aware_kelvin_residual_refinement": {
+        "compatible_raw_error_refinement_residual_zero": bool(compatible_raw_error_zero),
+        "physical_reconstruction_refinement_residual_zero": bool(physical_refinement_zero),
+        "independent_orientation_gauge_residual_zero": bool(physical_gauge_zero),
+        "cofactor_physical_synthesis_residual_zero": bool(cofactor_synthesis_zero),
+        "codeforming_determinant_ratio_residual_zero": bool(codeforming_det_zero),
+        "direct_codeforming_parent_refinement_residual_zero": bool(codeforming_parent_zero),
+        "frame_aware_pair_functor_residual_zero": bool(frame_pair_functor_zero),
+        "frame_aware_pair_expansion_residual_zero": bool(frame_pair_expansion_zero),
+        "frame_aware_spectral_pair_expansion_residual_zero": bool(frame_spectral_pair_zero),
+        "isotropic_area_volume_scale_residual_zero": bool(frame_iso_scale_zero),
+        "quadratic_ns": {
+            "physical_prediction_residual_zero": bool(quad_frame_physical_zero),
+            "codeforming_prediction_residual_zero": bool(quad_frame_codeforming_zero),
+            "physical_formula_expected": bool(quad_frame_r_expected),
+            "codeforming_formula_expected": bool(quad_frame_chi_expected),
+            "naive_unchanged_scalar_weights_false": bool(quad_frame_naive_false),
+            "typing": "exact quadratic heat-shear current synthesis uses area-frame weights physically and determinant/volume weights codeformingly",
+        },
+        "scalar_packet_lift": {
+            "blocks_equal_w_i_I3": bool(scalar_packet_blocks_expected),
+            "pair_blocks_equal_w_i_w_j_I9": bool(scalar_packet_pair_zero),
+            "interval_chain_orientation_lift_residual_zero": bool(orientation_chain_lift_zero),
+            "typing": "the existing scalar current/chain refinement class canonically tensors with the independent orientation fiber",
+        },
+        "structural_lift": "A_i=H_P^-T R_i H_i^T=(J_i/J_P)L_P R_i L_i^-1; B_i=(J_i/J_P)R_i",
+        "first_bad": "Open-literal only at actual event-map instantiation: scalar orientation-preserving refinement is already lifted, while genuine orientation mixing/reselection requires its physical R_i",
     },
     "selected_principal_kelvin_lineage": {
         "selector_spectral_commutator_zero": bool(selector_spectral_zero),

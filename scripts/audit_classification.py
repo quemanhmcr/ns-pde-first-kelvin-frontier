@@ -35,6 +35,7 @@ weighted_codeforming_note = ROOT / "docs" / "weighted_codeforming_kelvin_residua
 directional_refinement_note = ROOT / "docs" / "directional_refinement_kelvin_residual_audit.md"
 principal_channels_note = ROOT / "docs" / "principal_kelvin_residual_channels_audit.md"
 selected_lineage_note = ROOT / "docs" / "selected_principal_kelvin_lineage_audit.md"
+frame_aware_refinement_note = ROOT / "docs" / "frame_aware_kelvin_residual_refinement_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -66,6 +67,7 @@ weighted_codeforming_text = weighted_codeforming_note.read_text()
 directional_refinement_text = directional_refinement_note.read_text()
 principal_channels_text = principal_channels_note.read_text()
 selected_lineage_text = selected_lineage_note.read_text()
+frame_aware_refinement_text = frame_aware_refinement_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -589,12 +591,32 @@ selected_lineage_required = [
     "no positive selector path-length bank",
     "do not canonically match across an event",
     "Hybrid selected-lineage law",
-    "actual first-bad residual-refinement lift",
+    "first-bad orientation-packet refinement-map instantiation Open-literal",
     "No restart/continuation/regularity theorem claimed",
 ]
 selected_lineage_missing = [token for token in selected_lineage_required if token not in selected_lineage_text]
 if selected_lineage_missing:
     print("missing selected principal Kelvin lineage markers:", selected_lineage_missing)
+    sys.exit(1)
+
+frame_aware_refinement_required = [
+    "Raw orientation error is a current/cochain difference",
+    "Whitening forces the unique physical residual synthesis",
+    "Independent orientation-basis changes leave `A_i` invariant",
+    "Cofactor geometry turns frame conversion into a line-frame conjugation",
+    "Codeforming coordinates cancel all anisotropic line-frame conjugation",
+    "area ratio",
+    "volume ratio",
+    "Exact quadratic Navier--Stokes calibration",
+    "Full pair functor survives frame-aware reconstruction",
+    "Canonical lift of the repository's scalar current refinement",
+    "R_i=w_i I_3",
+    "first-bad orientation-complete packet refinement-map instantiation",
+    "No restart/continuation/regularity theorem claimed",
+]
+frame_aware_refinement_missing = [token for token in frame_aware_refinement_required if token not in frame_aware_refinement_text]
+if frame_aware_refinement_missing:
+    print("missing frame-aware Kelvin residual refinement markers:", frame_aware_refinement_missing)
     sys.exit(1)
 
 for forbidden in [
@@ -758,8 +780,18 @@ for forbidden in [
     "selected spectral lineage proves support locality",
     "selected spectral lineage is the future covariance bank",
     "selected spectral lineage proves restart",
+    "whitening preserves raw child coefficients for unequal frames",
+    "physical residual refinement always uses R_i directly",
+    "codeforming refinement keeps anisotropic parent-child conjugation",
+    "frame-aware refinement proves the actual first-bad R_i map",
+    "orientation packet refinement map is already derived from the first-bad selector",
+    "frame-aware refinement proves support locality",
+    "frame-aware refinement is the future covariance bank",
+    "frame-aware refinement proves restart",
+    "every first-bad refinement is orientation preserving",
+    "actual first-bad child weights are already specified",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text or forbidden in weighted_codeforming_text or forbidden in directional_refinement_text or forbidden in principal_channels_text or forbidden in selected_lineage_text or forbidden in frame_aware_refinement_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

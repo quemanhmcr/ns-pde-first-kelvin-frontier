@@ -470,16 +470,17 @@ The hybrid law above must not absorb other first-bad world-sheet faces:
 2. moving quantile/shell **time/boundary-speed** faces;
 3. genuine physical exit/open-current faces;
 4. connection/holonomy geometry not already represented by the local line metric;
-5. actual physical refinement/reselection maps;
+5. actual orientation-complete physical refinement/reselection packet maps;
 6. random metric--residual correlation when working after ensemble factorization.
 
-In particular, the generic exact synthesis law `A tensor A` does **not** prove that
-the programme's actual moving first-bad current refinement has already been lifted
-to the reconstructed residual fiber.  That map must be written from the actual
-current geometry and then audited for functoriality.
+In particular, the generic exact synthesis law `A tensor A` by itself did not say how
+unequal parent/child orientation frames convert residuals.  The later frame-aware audit
+now closes that structural step: `A_i=H_P^-T R_i H_i^T` and
+`B_i=(J_i/J_P)R_i` once an orientation-complete current packet map `R_i` is supplied.
+What remains literal is the actual first-bad event instantiation of those `R_i`.
 
-**Status: Exact physical typing / actual first-bad residual-refinement lift
-Open-literal.**
+**Status: Exact physical typing / structural residual lift audited-conditional;
+first-bad orientation-packet refinement-map instantiation Open-literal.**
 
 ---
 
@@ -500,7 +501,7 @@ What remains genuinely open is narrower:
 \begin{array}{l}
 \text{actual first-bad badness/resolve predicates},\\
 \text{actual moving quantile/shell outer-time law},\\
-\text{actual current-to-physical-residual refinement lift},\\
+\text{actual orientation-complete first-bad packet refinement-map instantiation},\\
 \text{support locality/conditioning of the selected packet},\\
 \text{uniform collapse of the selected nonnegative projector channels},\\
 \text{cross-clock future-bank/ancestry identification}.
