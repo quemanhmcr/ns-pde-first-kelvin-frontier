@@ -115,6 +115,16 @@ from pde_audit.finite_shape_kelvin_descent import (  # noqa: E402
     reverse_age_local_area_rate,
     xy_rectangle_shear_descent_error,
 )
+from pde_audit.first_bad_selected_residual_readout import (  # noqa: E402
+    hidden_reset_faces_from_blocks,
+    selected_physical_event_factorization_residual,
+    selector_second_moment_jump_residual,
+    selector_switch_factorization_on_subspace_residual,
+    selector_switch_second_moment_counterexample,
+    selector_switch_state_counterexample,
+    selector_switch_unavoidable_new_block,
+    selector_switch_universal_factorization_residual,
+)
 from pde_audit.future_covariance_tensor import (  # noqa: E402
     connected_covariance_horizon_residual,
     connected_mean_horizon_residual,
@@ -1266,6 +1276,43 @@ Qobs=sp.Matrix([
 ])
 normal_probe_reconstruction_zero=symmetric_event_probe_reconstruction_residual(Qobs) == sp.zeros(3)
 
+# Literal first-bad selected residual readout semantics.
+Tsel=sp.Matrix(3,3,sp.symbols("Tsel0:9"))
+selector_factorization_residual=selector_switch_universal_factorization_residual(2,0,1,Tsel)
+selector_factorization_nonzero=selector_factorization_residual != sp.zeros(3,6)
+selector_unavoidable_identity=selector_switch_unavoidable_new_block(2,0,1,Tsel) == sp.eye(3)
+selector_state_counter=selector_switch_state_counterexample()
+selector_state_old_same=selector_state_counter["old_readout_1"] == selector_state_counter["old_readout_2"]
+selector_state_new_diff=selector_state_counter["new_readout_1"] != selector_state_counter["new_readout_2"]
+Qsel=sp.Matrix(6,6,sp.symbols("Qselector0:36"))
+selector_pair_jump_zero=selector_second_moment_jump_residual(Qsel,2,0,1) == sp.zeros(3)
+selector_faces=hidden_reset_faces_from_blocks(Qsel)
+selector_faces_expected=(
+    selector_faces["left"] == sp.simplify(selector_faces["Q10"]-selector_faces["Q00"])
+    and selector_faces["right"] == sp.simplify(selector_faces["Q01"]-selector_faces["Q00"])
+    and selector_faces["quadratic"] == sp.simplify(selector_faces["Q11"]-selector_faces["Q10"]-selector_faces["Q01"]+selector_faces["Q00"])
+)
+selector_psd_counter=selector_switch_second_moment_counterexample()
+selector_psd_old_same=selector_psd_counter["old_Q_1"] == selector_psd_counter["old_Q_2"]
+selector_psd_new_diff=selector_psd_counter["new_Q_1"] != selector_psd_counter["new_Q_2"]
+selector_psd_full=all(
+    all(ev >= 0 for ev in selector_psd_counter[key].eigenvals())
+    for key in ("Q_full_1","Q_full_2")
+)
+E0sel=germ_extraction_map(2,0); E1sel=germ_extraction_map(2,1)
+Tad=sp.Matrix([[1,2,0],[0,1,0],[0,0,1]])
+Sad=sp.Matrix.vstack(sp.eye(3),Tad)
+selector_admissible_factor_zero=selector_switch_factorization_on_subspace_residual(
+    E0sel,E1sel,Sad,Tad
+) == sp.zeros(3)
+selector_identity_event_factor_nonzero=selected_physical_event_factorization_residual(
+    sp.eye(6),2,0,2,1,Tsel
+) != sp.zeros(3,6)
+B0sel=sp.diag(2,1,3); B1sel=sp.Matrix([[1,1,0],[0,1,0],[0,0,1]])
+selector_same_germ_event_factor_zero=selected_physical_event_factorization_residual(
+    sp.diag(B0sel,B1sel),2,0,2,0,B0sel
+) == sp.zeros(3,6)
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -1418,6 +1465,16 @@ report = {
         "full_second_moment_linear_event_observational_completeness": "Exact polarization identity / audited-conditional on unrestricted linear event probes",
         "specified_linear_packet_event_normal_form": "Exact normal-form/functoriality theorem",
         "first_bad_event_normal_form_instantiation": "Open-literal",
+        "first_bad_selected_residual_readout": "Exact type/readout identity",
+        "selector_switch_selected_state_factorization": "Audited exact obstruction: false universally for distinct germs",
+        "selector_switch_state_nonclosure": "Audited exact counterexample",
+        "selector_second_moment_full_pair_jump": "Exact identity",
+        "selector_reset_hidden_germ_blocks": "Exact block identity",
+        "selector_switch_selected_second_moment_nonclosure": "Audited PSD counterexample",
+        "selector_switch_admissible_subspace_factorization": "Exact conditional factorization identity",
+        "physical_event_plus_selector_factorization": "Exact generic factorization criterion / audited obstruction",
+        "persistent_library_selected_observer_architecture": "Rigorous consequence of exact selector/event typing",
+        "first_bad_persistent_library_dynamics": "Open-literal",
         "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
@@ -1769,6 +1826,26 @@ report = {
         },
         "random_frame_typing": "pathwise spectral products retain geometry-residual correlation without mean-metric factorization",
         "first_bad": "Open: weighted channel collapse is an exact reformulation of residual descent but does not prove support locality or close physical event/cross-clock faces",
+    },
+    "first_bad_selected_residual_readout": {
+        "distinct_selector_universal_factorization_nonzero": bool(selector_factorization_nonzero),
+        "unavoidable_new_germ_identity_block": bool(selector_unavoidable_identity),
+        "state_counterexample": {
+            "old_selected_equal": bool(selector_state_old_same),
+            "new_selected_different": bool(selector_state_new_diff),
+        },
+        "second_moment_pair_jump_residual_zero": bool(selector_pair_jump_zero),
+        "two_germ_reset_block_faces_expected": bool(selector_faces_expected),
+        "second_moment_psd_counterexample": {
+            "both_full_moments_psd": bool(selector_psd_full),
+            "old_selected_blocks_equal": bool(selector_psd_old_same),
+            "new_selected_blocks_different": bool(selector_psd_new_diff),
+        },
+        "admissible_subspace_factorization_residual_zero": bool(selector_admissible_factor_zero),
+        "identity_event_plus_genuine_switch_not_factorable": bool(selector_identity_event_factor_nonzero),
+        "same_germ_block_event_factorization_residual_zero": bool(selector_same_germ_event_factor_zero),
+        "typing": "selector is an active readout on a persistent germ/fiber library, not a universal physical transition between selected endpoints",
+        "first_bad": "Open-literal at NS-generated persistent library dynamics and programme-specific admissible inter-germ relations",
     },
     "kelvin_event_normal_form": {
         "physical_raw_bijection_residual_zero": bool(normal_physical_zero),

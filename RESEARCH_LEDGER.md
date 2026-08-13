@@ -1261,3 +1261,14 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Audited PSD no-go:** two PSD states with the same diagonal spectral channel vector `(1,1,0)` but opposite off-diagonal coherence respond differently under the same next event; scalar channel lists are not a closed compositional state.
 - **Frontier:** specified same-clock linear packet-event algebra is structurally closed modulo passive gauge.  What remains Open-literal/Open is the NS-generated first-bad event choice/map/state, support locality, full selected pair/projector control, moving-cut faces, and cross-clock ancestry/future-bank identification.  No restart/continuation/regularity theorem is claimed.
 - **Exact polarization / audited-conditional observational completeness:** for the unrestricted linear event-probe class, coordinate probes `e_i` and pair-sum probes `e_i+e_j` reconstruct every symmetric second-moment entry `Q_ij`.  Thus full symmetric `Q` is complete for all such quadratic event responses, while diagonal channel data is not.  No claim is made that actual first-bad events realize all probes or that `Q` is minimal for that smaller physical event family.
+
+## First-bad selected residual readout semantics
+
+- **Exact type identity:** the active residual is `r_g=E_g X`, a coordinate readout from the persistent candidate germ/fiber library; selector choice is not itself a physical packet map.
+- **Exact obstruction / audited counterexample:** for distinct germs no universal `T` satisfies `E_h=T E_g` on the full library.  Explicit states share the old selected residual and differ after the switch.
+- **Exact pair reset:** `Q_h-Q_g=DeltaE Q E_g^T+E_g Q DeltaE^T+DeltaE Q DeltaE^T`.  For two germs the faces are `Q10-Q00`, `Q01-Q00`, and `Q11-Q10-Q01+Q00`; the old selected block alone does not contain them.
+- **Audited PSD no-go:** two PSD full-library second moments can share the old selected block and have different switched blocks.
+- **Exact conditional bridge:** selected-to-selected factorization on an admissible state family requires an independently supplied relation `E_h S=T E_g S`.
+- **Exact event/selector typing:** after a genuine full-library physical event, the post-selected map is `E_post A_full`; reduction through the old selected state requires `E_post A_full=T E_pre` and fails generically for a genuine selector switch.
+- **Rigorous architecture consequence:** arbitrary hysteretic switching requires a persistent library/full pair state plus an active selected observer.  The selected endpoint state alone is not universally compositional.
+- **Open-literal:** Navier--Stokes/programme dynamics for the persistent first-bad candidate library and any programme-specific admissible inter-germ relations are still not defined line by line.  Support locality, moving-cut clocks, ancestry/future-bank identification, restart, continuation, and regularity remain open.

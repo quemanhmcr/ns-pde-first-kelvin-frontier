@@ -1,0 +1,331 @@
+# First-bad selected residual readout audit
+
+The finite-event normal-form audit closed the algebra of a **specified physical
+linear packet event**.  The hysteretic first-bad selector is a different typed
+operation.  It chooses which germ/fiber block of a persistent candidate library is
+observed; it is not, by itself, a physical transport map from the previously
+selected packet to the newly selected packet.
+
+This note makes that distinction exact for reconstructed Kelvin residual state and
+for its full second moment.
+
+---
+
+## 1. Literal selected residual is a coordinate readout of the full library
+
+Let there be `N` candidate germs, each carrying a physical residual fiber `R^3`.
+Write the persistent library state as
+
+\[
+X=(r_1,\ldots,r_N)\in G\otimes\mathbb R^3.
+\]
+
+For germ `g`, the selected readout is the extraction map
+
+\[
+\boxed{
+r_g=E_gX,
+\qquad
+E_g=[0\;\cdots\;I_3\;\cdots\;0].
+}
+\]
+
+This is the fiber version of the already-audited rank-one first-bad selector
+`M_fb tensor I_3`.
+
+**Status: Exact type/readout identity.**
+
+---
+
+## 2. A genuine selector switch does not define a universal selected-to-selected map
+
+Suppose the selector switches from germ `g` to a distinct germ `h`.  A universal
+selected-state transition would require a matrix `T` such that
+
+\[
+\boxed{E_h=T E_g}
+\]
+
+on the entire candidate library.
+
+But `T E_g` has support only in the `g` input block, while `E_h` contains the
+identity in the distinct `h` block.  In fact, for every `T`, the `h` block of
+
+\[
+E_h-T E_g
+\]
+
+is exactly `I_3`.
+
+Equivalently, choose a library vector supported only on germ `h`.  It lies in
+`ker E_g` but not in `ker E_h`.  Hence the finite-dimensional factorization
+criterion
+
+\[
+B=TA\quad\Longleftrightarrow\quad \ker A\subseteq\ker B
+\]
+
+fails for `A=E_g`, `B=E_h`.
+
+Therefore
+
+\[
+\boxed{
+\text{genuine selector switch}
+\neq
+\text{universal physical transport of the old selected residual}.
+}
+\]
+
+**Status: Exact linear-algebra obstruction.**
+
+---
+
+## 3. Two full library states can look identical before the switch and different after it
+
+There exist explicit library states `X_1,X_2` with
+
+\[
+\boxed{E_gX_1=E_gX_2}
+\]
+
+but
+
+\[
+\boxed{E_hX_1\neq E_hX_2.}
+\]
+
+The old selected residual therefore does not contain enough information to predict
+the new selected residual under an arbitrary switch.
+
+This is not stochastic uncertainty and not a norm loss.  It is a literal hidden
+germ coordinate that the old readout never observed.
+
+**Status: Audited exact counterexample / rigorous selected-state nonclosure.**
+
+---
+
+## 4. The second-moment readout is also a library readout
+
+Let the full germ/fiber second moment be
+
+\[
+\mathbb Q=\mathbb E[XX^T].
+\]
+
+The selected second moment is
+
+\[
+\boxed{
+Q_g=E_g\mathbb Q E_g^T.
+}
+\]
+
+For a switch `g->h`, with
+
+\[
+\Delta E=E_h-E_g,
+\]
+
+the exact jump is
+
+\[
+\boxed{
+Q_h-Q_g
+=\Delta E\,\mathbb Q E_g^T
++E_g\mathbb Q\,\Delta E^T
++\Delta E\,\mathbb Q\,\Delta E^T.
+}
+\]
+
+This is precisely the one-readout version of the already-audited full pair selector
+jump.
+
+**Status: Exact pair identity.**
+
+---
+
+## 5. Two-germ reset exposes the hidden blocks explicitly
+
+For a two-germ library
+
+\[
+\mathbb Q=
+\begin{pmatrix}
+Q_{00}&Q_{01}\\
+Q_{10}&Q_{11}
+\end{pmatrix},
+\]
+
+the switch `0->1` has exact faces
+
+\[
+\boxed{
+\mathcal R_L=Q_{10}-Q_{00},
+}
+\]
+
+\[
+\boxed{
+\mathcal R_R=Q_{01}-Q_{00},
+}
+\]
+
+and
+
+\[
+\boxed{
+\mathcal R_Q=Q_{11}-Q_{10}-Q_{01}+Q_{00}.
+}
+\]
+
+Their sum is
+
+\[
+\boxed{
+\mathcal R_L+\mathcal R_R+\mathcal R_Q
+=Q_{11}-Q_{00}.
+}
+\]
+
+Thus a jump description relative to the old selected state explicitly calls back
+three pieces the old block `Q_00` does not contain by itself: the two cross-germ
+blocks and the hidden new-germ block.
+
+**Status: Exact block identity.**
+
+---
+
+## 6. Same old selected second moment does not determine the switched second moment
+
+There are two explicit positive-semidefinite full library second moments with
+
+\[
+\boxed{Q^{(1)}_{00}=Q^{(2)}_{00}}
+\]
+
+but
+
+\[
+\boxed{Q^{(1)}_{11}\neq Q^{(2)}_{11}.}
+\]
+
+Hence no deterministic rule on the old selected second moment alone can reproduce
+all possible new selected second moments after a genuine first-bad selector switch.
+
+The obstruction persists even though both full matrices are honest PSD second
+moments of deterministic library vectors.
+
+**Status: Audited PSD counterexample / rigorous reduced-state no-go.**
+
+---
+
+## 7. Conditional selected-to-selected transport requires an additional state relation
+
+A selected transition can exist on a restricted admissible state family.  Let
+
+\[
+X=S\xi
+\]
+
+parameterize a specified admissible subspace.  Then a matrix `T` is a valid
+selected transition precisely when
+
+\[
+\boxed{
+E_hS=T E_gS.
+}
+\]
+
+For example, if the admissible states satisfy `r_h=T r_g`, the factorization is
+true by construction.
+
+The point is physical typing: such a relation must come from an independently
+proved current/geometry/dynamics constraint.  It is not generated by the
+hysteretic selector itself.
+
+**Status: Exact conditional factorization identity / Conjectural bridge until an
+actual Navier--Stokes first-bad admissible relation is supplied.**
+
+---
+
+## 8. Physical event followed by selector is `E_post A_full`
+
+If a genuine full-library physical event acts by a linear map
+
+\[
+X_+=A_{\rm full}X_-,
+\]
+
+and the post-event selector chooses germ `h`, then the literal old-library to
+selected-post-event map is
+
+\[
+\boxed{
+r_{+,h}=E_hA_{\rm full}X_-.
+}
+\]
+
+A reduced transition through the old selected residual exists only if one can
+factor
+
+\[
+\boxed{
+E_hA_{\rm full}=T E_g.
+}
+\]
+
+For the identity physical event and a genuine selector switch, this reduces to the
+impossible universal factorization `E_h=T E_g` above.
+
+By contrast, if the selector stays on germ `g` and the physical event is germwise
+block diagonal, then the selected transition factors exactly through the `g` block.
+
+So selector readout and physical packet event are distinct operations whose
+composition can be tested exactly; they are not interchangeable names for one
+map.
+
+**Status: Exact factorization criterion / audited generic obstruction.**
+
+---
+
+## 9. Persistent full library versus active selected observer
+
+The smallest exact architecture compatible with arbitrary hysteretic selector
+switches is therefore not “evolve only the currently selected residual”.  It is:
+
+1. a persistent candidate germ/fiber library state `X` (and, at second order, its
+   full pair state `mathbb Q`);
+2. a hysteretic active index `g(t)`;
+3. the observer readout `E_{g(t)}`;
+4. separately typed physical event maps acting on the library when actual current
+   refinement/reselection occurs.
+
+On a frozen unresolved interval, `g(t)` is constant and there is no selector
+readout jump.  At a finite selector switch, the active observable is re-read from
+the persistent library; it is not transported from the previous selected value
+unless a further admissible-state factorization theorem is available.
+
+**Status: Rigorous consequence of the exact selector and event-map typing.**
+
+---
+
+## 10. Refined first-bad state frontier
+
+This removes another false target: a selected endpoint residual or its diagonal
+spectral channels are not, by themselves, a universally compositional first-bad
+state across selector switches.
+
+What remains literal is sharper:
+
+- define the Navier--Stokes badness and resolve predicates;
+- define/evolve the persistent candidate library on the actual physical clock;
+- instantiate any genuine physical current refinement/reselection maps on that
+  library;
+- retain the full pair/coherence state needed by future selector/event readouts;
+- control support locality/conditioning and the selected projector channels;
+- resolve moving-cut and cross-clock future-bank/ancestry faces.
+
+The selector theorem itself supplies none of these missing dynamics.
+
+**Status: first-bad persistent-library dynamics and programme-specific admissible factorizations remain Open-literal/Open.  No restart/continuation/regularity theorem claimed.**
