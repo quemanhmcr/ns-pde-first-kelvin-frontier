@@ -1310,3 +1310,28 @@ with the future-remaining covariance bank.
 
 **Classification: Exact full-state pathwise identity.  Reduced covariance closure and
 future-clock identification remain Open-literal.**
+
+---
+
+## 17. Reverse-age co-deforming q.v. has the opposite clock sign from the backward operator source
+
+On the actual reverse-age state, `eta=L^-1 omega` obeys the driftless martingale law
+
+\[
+d\eta=\sqrt{2\nu}\,L^{-1}\nabla\omega\,dW,
+\]
+
+so its pathwise dyad drift in increasing reverse age is
+
+\[
++2\nu L^{-1}(\nabla\omega)(\nabla\omega)^TL^{-T}.
+\]
+
+The existing physical-time backward-Kelvin operator identity carries the same tensor
+with a minus sign.  This is the exact clock-orientation reversal, not a disagreement.
+It also does not identify the same-clock residual martingale covariance with the
+future conditional covariance bank: terminal conditioning and bank semantics remain
+separate.
+
+**Classification: Exact clock-sign reconciliation.  Cross-clock bank identification
+remains Open-literal.**

@@ -694,3 +694,34 @@ first-bad argument cannot replace these objects by a single positive covariance
 payment.
 
 **Status: Open-literal/Open.  No restart/continuation/regularity theorem claimed.**
+
+---
+
+## 14. Pulling the physical residual back one more time removes all affine strain
+
+With `Ldot=-A L`, `J=det L` constant by incompressibility, and `H=cof(L)`, define
+
+\[
+\eta=L^{-1}\omega,
+\qquad
+\chi=L^{-1}r=J^{-1}\varepsilon,
+\qquad
+\kappa=J^{-1}K=\eta+\chi.
+\]
+
+Then all three are driftless reverse-age martingales.  Their complete local/residual
+second-moment system is the one Gram matrix of the stacked noise response
+`[L^-1 grad omega; Q/J]`.  The physical strain term in the `r` energy law is exactly
+the metric work of the pushforward `r=L chi`.
+
+This gives a strict bias/spread separation: `E chi` is constant while
+`Cov(chi)` grows only by the residual q.v. tensor.  Exact cubic NS has nonzero
+constant `chi` with zero q.v.; an exact one-mode full-period face has positive local
+and residual diagonal q.v. that cancel completely through a negative cross q.v.,
+leaving the full circulation q.v. zero.
+
+**Status: Exact same-clock co-deforming martingale identity / audited exact-NS
+calibrations.  First-bad bias collapse, reduced covariance closure, and future-clock
+identification remain Open-literal/Open.**
+
+See `docs/reverse_codeforming_kelvin_martingale_audit.md`.

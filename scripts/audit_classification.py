@@ -30,6 +30,7 @@ moment_note = ROOT / "docs" / "surface_moment_hierarchy_audit.md"
 codeforming_note = ROOT / "docs" / "codeforming_surface_moment_tower_audit.md"
 whitened_codeforming_note = ROOT / "docs" / "codeforming_whitened_kelvin_remainder_audit.md"
 dynamic_reconstructed_note = ROOT / "docs" / "dynamic_reconstructed_kelvin_residual_audit.md"
+reverse_codeforming_note = ROOT / "docs" / "reverse_codeforming_kelvin_martingale_audit.md"
 text = note.read_text()
 active_text = active_note.read_text()
 cycle_text = cycle_note.read_text()
@@ -56,6 +57,7 @@ moment_text = moment_note.read_text()
 codeforming_text = codeforming_note.read_text()
 whitened_codeforming_text = whitened_codeforming_note.read_text()
 dynamic_reconstructed_text = dynamic_reconstructed_note.read_text()
+reverse_codeforming_text = reverse_codeforming_note.read_text()
 required = [
     "Exact identity",
     "Rigorous consequence",
@@ -497,6 +499,26 @@ if dynamic_reconstructed_missing:
     print("missing dynamic reconstructed-Kelvin structural markers:", dynamic_reconstructed_missing)
     sys.exit(1)
 
+reverse_codeforming_required = [
+    "driftless same-anchor martingales",
+    "Orientation error, physical residual, and co-deforming residual",
+    "one full Gram tensor",
+    "All co-deforming dyad dynamics are q.v.-only",
+    "metric/frame work",
+    "Mean bias and covariance spread",
+    "nonzero mean bias, zero q.v.",
+    "cross q.v. cancels both positive diagonals",
+    "not a local first-bad packet",
+    "opposite source signs",
+    "future-remaining covariance bank",
+    "Open-literal/Open",
+    "No restart/continuation/regularity theorem claimed",
+]
+reverse_codeforming_missing = [token for token in reverse_codeforming_required if token not in reverse_codeforming_text]
+if reverse_codeforming_missing:
+    print("missing reverse codeforming Kelvin martingale markers:", reverse_codeforming_missing)
+    sys.exit(1)
+
 for forbidden in [
     "therefore 3D Navier--Stokes is regular",
     "global regularity is proved",
@@ -620,8 +642,15 @@ for forbidden in [
     "pathwise residual dyad closes reduced covariance",
     "reconstructed residual qv is the future bank",
     "dynamic reconstructed residual proves restart",
+    "co-deforming qv controls mean bias",
+    "zero co-deforming covariance implies zero finite-shape bias",
+    "positive local and residual qv can be added without cross terms",
+    "full-period shear is a local first-bad packet",
+    "co-deforming martingale core is the future covariance bank",
+    "reverse-age qv bank proves restart",
+    "qv-only co-deforming energy bounds physical residual",
 ]:
-    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text:
+    if forbidden in text or forbidden in active_text or forbidden in cycle_text or forbidden in hodge_text or forbidden in ck_text or forbidden in stochastic_text or forbidden in vorticity_text or forbidden in packet_text or forbidden in future_tensor_text or forbidden in shape_text or forbidden in time_text or forbidden in locality_text or forbidden in resolution_text or forbidden in clock_cut_text or forbidden in two_clock_text or forbidden in event_text or forbidden in candidate_text or forbidden in support_bank_text or forbidden in cauchy_text or forbidden in coupling_text or forbidden in full_shape_cov_text or forbidden in descent_text or forbidden in moment_text or forbidden in codeforming_text or forbidden in whitened_codeforming_text or forbidden in dynamic_reconstructed_text or forbidden in reverse_codeforming_text:
         print("forbidden overclaim found:", forbidden)
         sys.exit(1)
 print("classification/anti-overclaim audit: PASS")

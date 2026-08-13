@@ -2382,3 +2382,49 @@ covariance bank and does not identify the future-bank clock.
 **Classification: Exact identity / audited exact-NS calibrations.  Reduced covariance
 closure and first-bad/future-clock bridges remain Open-literal/Open.  No restart,
 continuation, or regularity theorem.**
+
+---
+
+## 41. The reverse-age co-deforming core is one joint martingale Gram law
+
+Pull the dynamic reconstructed residual back by the actual local reverse line frame:
+
+\[
+\eta=L^{-1}\omega,
+\qquad
+\chi=L^{-1}r,
+\qquad
+\kappa=J^{-1}K=\eta+\chi,
+\qquad J=\det L.
+\]
+
+Incompressibility keeps `J` constant.  Exact NS/Kelvin/Nanson cancellation gives
+
+\[
+\boxed{
+ d\eta=\sqrt{2\nu}\widetilde G\,dW,
+\quad
+ d\chi=\sqrt{2\nu}\widetilde Q\,dW,
+\quad
+ d\kappa=\sqrt{2\nu}(\widetilde G+\widetilde Q)\,dW.
+}
+\]
+
+Thus the full local/residual second-moment system is a single Gram matrix with
+mandatory cross block `2nu Gtilde Qtilde^T`.  Physical strain has moved entirely into
+the pushforward metric `r=L chi`; it is not a drift of the co-deforming coordinate.
+
+The mean residual bias is conserved along the same-clock martingale family, while its
+covariance grows by q.v.  Exact cubic NS gives nonzero bias with zero q.v.  Exact
+one-mode NS on a full-period finite face gives positive local and residual diagonal
+q.v. but a negative cross q.v. that cancels them exactly, leaving zero full Kelvin
+q.v.  That full-period face is a mechanism calibration, not a local first-bad packet.
+
+This is the smallest exact smooth material law found so far, but it does not solve the
+first-bad problem: both bias collapse and stochastic spread collapse must be proved,
+together with support/conditioning and all selector/refinement/boundary/exit/reset
+faces.
+
+**Classification: Exact same-clock martingale/Gram identities and audited exact-NS
+calibrations.  First-bad/reduced-state/future-clock bridges remain Open-literal/Open.
+No restart/continuation/regularity theorem.**

@@ -1156,3 +1156,30 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 - **Open-literal:** the pathwise full-state law does not supply an autonomous reduced
   covariance PDE; full-state correlations, finite shape, selector/boundary/exit/reset,
   and clock/state lift remain.  No restart/continuation/regularity claim.
+
+## 2026-08-13 — reverse-age co-deforming Kelvin martingale core
+
+- **Exact identity:** for `Ldot=-A L`, incompressibility freezes `J=det L`; with
+  `H=cof(L)`, `chi=L^-1 r=epsilon/J`, `eta=L^-1 omega`, and
+  `kappa=K/J=eta+chi`.
+- **Exact identity:** all three are driftless same-anchor reverse-age martingales:
+  `d eta=sqrt(2nu) Gtilde dW`, `d chi=sqrt(2nu) Qtilde dW`,
+  `d kappa=sqrt(2nu)(Gtilde+Qtilde)dW`.
+- **Exact Gram identity:** the joint `(eta,chi)` q.v. is one PSD block Gram tensor;
+  the local/residual cross block `2nu Gtilde Qtilde^T` is signed and mandatory.
+- **Exact metric-work identity:** `|chi|^2/2` has only positive q.v. drift, while
+  pushing `chi` to physical `r=L chi` recovers the signed `-r.S.r` strain term exactly
+  as line-frame metric work.
+- **Exact martingale consequence:** `E chi` is constant while centered covariance
+  grows by the expected residual q.v.; deterministic bias and stochastic spread are
+  separate physical faces.
+- **Audited exact-NS calibration:** cubic heat shear has nonzero constant `chi=-e_z/4`
+  and zero q.v., so covariance cannot remove mean finite-shape bias.
+- **Audited exact-NS calibration:** a one-mode face spanning one full periodic `y`
+  period has `K_z=0`, `chi_z=-eta_z`; positive local and residual q.v. diagonals are
+  canceled exactly by a negative cross q.v., giving zero full-circulation q.v.
+- **Exact clock identity:** reverse-age dyad q.v. source is the opposite sign of the
+  existing physical-time backward mean-dyad source for the same pulled-back Gram.
+- **Open-literal/Open:** no first-bad theorem forces mean bias and covariance to
+  vanish simultaneously with support locality; reduced-state and future-bank bridges
+  remain open.  No restart/continuation/regularity claim.

@@ -106,6 +106,7 @@ from pde_audit.future_covariance_tensor import (  # noqa: E402
     connected_covariance_horizon_residual,
     connected_mean_horizon_residual,
     connected_second_moment_horizon_residual,
+    codeforming_mean_dyad_backward_source,
     product_pair_diagonal_defect,
     vector_carre_du_champ,
 )
@@ -127,6 +128,24 @@ from pde_audit.surface_moment_hierarchy import (  # noqa: E402
     polynomial_error_noise_from_oriented_moments,
     polynomial_flux_error_from_oriented_moments,
     reverse_age_oriented_moment_rate_integrand,
+)
+from pde_audit.reverse_codeforming_kelvin_martingale import (  # noqa: E402
+    codeforming_residual_energy_drift,
+    constant_mean_bias_rate,
+    cross_qv_tensor as reverse_codeforming_cross_qv_tensor,
+    full_circulation_qv_decomposition_residual,
+    incompressible_volume_rate_residual,
+    joint_qv_block_residual as reverse_codeforming_joint_qv_block_residual,
+    normalized_circulation_local_residual_identity_residual,
+    orientation_error_to_codeforming_residual_residual,
+    physical_pushforward_energy_drift_residual,
+    qv_tensor as reverse_codeforming_qv_tensor,
+    reverse_age_vs_backward_operator_source_residual,
+    reverse_codeforming_noise_decomposition_residual,
+    reverse_codeforming_residual_noise,
+    reverse_codeforming_vorticity_drift_residual,
+    reverse_codeforming_vorticity_noise,
+    second_moment_minus_covariance_source_residual,
 )
 from pde_audit.stochastic_cauchy_deformation import (  # noqa: E402
     affine_vortex_cauchy_z_residual,
@@ -707,6 +726,81 @@ one_mode_dynamic_qv_onset_zero = sp.trigsimp(sp.simplify(
     sp.diff(V_one_dyn, h).subs(h, 0) - 2 * nu * sp.diff(eps_one_dyn, y) ** 2
 )) == 0
 
+# Reverse-age co-deforming Kelvin martingale core.
+Acof = sp.Matrix([[sp.Symbol("Ac00"), sp.Symbol("Ac01"), 0], [sp.Symbol("Ac10"), -sp.Symbol("Ac00"), 0], [0, 0, 0]])
+Lcof = sp.Matrix([[2, 1, 0], [0, 3, 1], [1, 0, 2]])
+Jcof = sp.det(Lcof)
+omega_cof = sp.Matrix(sp.symbols("omega_cof_0:3"))
+Kcof = sp.Matrix(sp.symbols("Kcof_0:3"))
+Hcof = cofactor_map(Lcof)
+eps_cof = sp.simplify(Kcof - Hcof.T * omega_cof)
+volume_freeze_zero = incompressible_volume_rate_residual(Acof, Lcof) == 0
+residual_triangle_zero = orientation_error_to_codeforming_residual_residual(Lcof, eps_cof) == sp.zeros(3, 1)
+normalized_split_zero = normalized_circulation_local_residual_identity_residual(
+    Lcof, Kcof, omega_cof, eps_cof
+) == sp.zeros(3, 1)
+local_codeforming_drift_zero = reverse_codeforming_vorticity_drift_residual(
+    Acof, Lcof, omega_cof
+) == sp.zeros(3, 1)
+Gcof = sp.Matrix(3, 3, sp.symbols("Gcof_0:9"))
+AKcof = sp.Matrix(3, 3, sp.symbols("AKcof_0:9"))
+Qeps_cof = sp.simplify(AKcof - Hcof.T * Gcof)
+noise_split_zero = reverse_codeforming_noise_decomposition_residual(
+    AKcof, Qeps_cof, Lcof, Gcof
+) == sp.zeros(3)
+Gtilde_cof = reverse_codeforming_vorticity_noise(Lcof, Gcof)
+Qtilde_cof = reverse_codeforming_residual_noise(Qeps_cof, Lcof)
+joint_gram_blocks_zero = reverse_codeforming_joint_qv_block_residual(
+    Gtilde_cof, Qtilde_cof, nu
+) == sp.zeros(6)
+full_qv_split_zero = full_circulation_qv_decomposition_residual(
+    Gtilde_cof, Qtilde_cof, nu
+) == sp.zeros(3)
+chi_cof = sp.Matrix(sp.symbols("chi_cof_0:3"))
+metric_work_zero = physical_pushforward_energy_drift_residual(
+    Acof, Lcof, chi_cof, Qtilde_cof, nu
+) == 0
+mean_bias_rate_zero = constant_mean_bias_rate() == 0
+covariance_source_zero = second_moment_minus_covariance_source_residual(
+    Qtilde_cof, nu
+) == sp.zeros(3)
+reverse_eta_source = reverse_codeforming_qv_tensor(Gtilde_cof, nu)
+backward_eta_source = codeforming_mean_dyad_backward_source(Lcof, Gcof, nu)
+clock_sign_zero = reverse_age_vs_backward_operator_source_residual(
+    reverse_eta_source, backward_eta_source
+) == sp.zeros(3)
+
+# Exact cubic bias/no-qv calibration in unit coherent frame.
+chi_cubic_cof = sp.Matrix([0, 0, -sp.Rational(1, 4)])
+Q_cubic_cof = sp.zeros(3)
+cubic_codeforming_bias_nonzero = chi_cubic_cof != sp.zeros(3, 1)
+cubic_codeforming_qv_zero = reverse_codeforming_qv_tensor(Q_cubic_cof, nu) == sp.zeros(3)
+cubic_codeforming_energy_zero = codeforming_residual_energy_drift(Q_cubic_cof, nu) == 0
+
+# Exact periodic one-mode full-y-period mechanism calibration.
+Ycof = sp.symbols("Ycof", real=True)
+a_cof = sp.symbols("a_cof", positive=True)
+b_cof = sp.pi / k
+Ucof = lambda yy: sp.exp(-alpha * t) * sp.cos(k * yy)
+Kz_full_period = sp.trigsimp(sp.simplify(-2 * a_cof * (Ucof(Ycof + b_cof) - Ucof(Ycof - b_cof))))
+omega_z_cof = sp.simplify(-sp.diff(Ucof(Ycof), Ycof))
+eta_z_cof = omega_z_cof  # choose coherent third line length one
+chi_z_cof = sp.simplify(-eta_z_cof)  # Kz/J=0
+geta_cof = sp.diff(eta_z_cof, Ycof)
+qchi_cof = sp.diff(chi_z_cof, Ycof)
+gamma_eta_cof = sp.simplify(2 * nu * geta_cof**2)
+gamma_chi_cof = sp.simplify(2 * nu * qchi_cof**2)
+gamma_cross_cof = sp.simplify(2 * nu * geta_cof * qchi_cof)
+full_period_K_zero = Kz_full_period == 0
+full_period_noise_opposite = sp.simplify(qchi_cof + geta_cof) == 0
+full_period_cross_negative_equal = sp.simplify(gamma_cross_cof + gamma_eta_cof) == 0
+full_period_diag_equal = sp.simplify(gamma_chi_cof - gamma_eta_cof) == 0
+full_period_qv_cancellation_zero = sp.simplify(
+    gamma_eta_cof + gamma_chi_cof + 2 * gamma_cross_cof
+) == 0
+full_period_local_qv_nonzero = sp.simplify(gamma_eta_cof) != 0
+full_period_cross_qv_nonzero = sp.simplify(gamma_cross_cof) != 0
+
 report = {
     "status": {
         "reverse_age_state": "Exact identity",
@@ -778,6 +872,19 @@ report = {
         "one_mode_dynamic_reconstructed_cross_qv": "Audited calibration",
         "dynamic_reconstructed_reduced_covariance_closure": "Open-literal",
         "dynamic_reconstructed_future_clock_identification": "Open-literal",
+        "reverse_codeforming_volume_freeze": "Exact identity",
+        "reverse_codeforming_residual_triangle": "Exact identity",
+        "reverse_codeforming_local_martingale": "Exact identity",
+        "reverse_codeforming_residual_martingale": "Exact identity",
+        "reverse_codeforming_joint_gram": "Exact identity",
+        "reverse_codeforming_physical_metric_work": "Exact identity",
+        "reverse_codeforming_bias_vs_spread": "Exact martingale consequence under square-integrability",
+        "cubic_codeforming_bias_qv_blind": "Audited calibration / rigorous covariance-only no-go",
+        "one_mode_full_period_cross_qv_cancellation": "Audited calibration / rigorous cross-block necessity",
+        "reverse_codeforming_clock_sign": "Exact clock-orientation identity",
+        "first_bad_codeforming_bias_collapse": "Open-literal",
+        "first_bad_codeforming_spread_collapse": "Open",
+        "reverse_codeforming_future_bank_identification": "Open-literal",
         "first_bad_full_shape_local_descent": "Open-literal",
         "short_horizon_asymptotic": "Rigorous consequence for locally smooth Navier--Stokes coefficients",
         "one_mode_shear": "Audited calibration",
@@ -1003,6 +1110,43 @@ report = {
         },
         "reduced_covariance": "Open-literal: pathwise dyad law does not factor full-state correlations into an autonomous reduced centered covariance PDE",
         "future_clock": "Open-literal: same-clock reverse-age dynamic residual is not identified with future-remaining or ancestry resolution bank",
+    },
+    "reverse_codeforming_kelvin_martingale": {
+        "variables": "eta=L^-1 omega; chi=L^-1 r=epsilon/J; kappa=K/J=eta+chi; J=det L",
+        "volume_freeze_residual_zero": bool(volume_freeze_zero),
+        "orientation_error_codeforming_residual_triangle_zero": bool(residual_triangle_zero),
+        "normalized_circulation_split_residual_zero": bool(normalized_split_zero),
+        "local_codeforming_affine_drift_residual_zero": bool(local_codeforming_drift_zero),
+        "noise_decomposition_residual_zero": bool(noise_split_zero),
+        "joint_gram_block_residual_zero": bool(joint_gram_blocks_zero),
+        "full_circulation_qv_split_residual_zero": bool(full_qv_split_zero),
+        "physical_metric_work_residual_zero": bool(metric_work_zero),
+        "mean_bias_rate_zero": bool(mean_bias_rate_zero),
+        "centered_covariance_source_residual_zero": bool(covariance_source_zero),
+        "reverse_age_backward_operator_clock_sign_residual_zero": bool(clock_sign_zero),
+        "martingale_core": "d eta=sqrt(2nu)Gtilde dW; d chi=sqrt(2nu)Qtilde dW; d kappa=sqrt(2nu)(Gtilde+Qtilde)dW",
+        "cubic": {
+            "chi": str(chi_cubic_cof),
+            "bias_nonzero": bool(cubic_codeforming_bias_nonzero),
+            "qv_zero": bool(cubic_codeforming_qv_zero),
+            "energy_drift_zero": bool(cubic_codeforming_energy_zero),
+            "verdict": "nonzero co-deforming mean bias can persist with exactly zero stochastic spread",
+        },
+        "one_mode_full_period": {
+            "actual_circulation_zero": bool(full_period_K_zero),
+            "chi_equals_minus_eta": True,
+            "noise_responses_opposite": bool(full_period_noise_opposite),
+            "positive_diagonal_qv_equal": bool(full_period_diag_equal),
+            "cross_qv_is_negative_diagonal": bool(full_period_cross_negative_equal),
+            "local_qv_nonzero": bool(full_period_local_qv_nonzero),
+            "cross_qv_nonzero": bool(full_period_cross_qv_nonzero),
+            "full_qv_cancellation_residual_zero": bool(full_period_qv_cancellation_zero),
+            "typing": "full-period finite face is a nonlocal mechanism calibration, not a local first-bad packet",
+        },
+        "bias_spread_typing": "E chi is constant; covariance grows by expected qv, so bias and stochastic spread are distinct",
+        "physical_pushforward": "r=L chi restores signed strain as frame/metric work",
+        "future_clock": "Open-literal: reverse-age co-deforming martingale covariance is not identified with the future conditional covariance bank",
+        "first_bad": "Open: must force both mean-bias and spread collapse with actual support/conditioning and moving physical faces",
     },
     "affine_vortex": {
         "ns_residual_zero": bool(sp.simplify(ns_aff) == sp.zeros(3, 1)),
