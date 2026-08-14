@@ -917,3 +917,53 @@ object is forced as a natural projection of the coupled `(G,bar beta)` system.
 identity, Bochner/carre-du-champ synthesis, and contact-as-untraced-Bochner are
 Exact/Rigorous.  Their sufficiency for no-escape, continuation, or global regularity
 is Open.
+
+---
+
+## Follow-through: the two-object frontier compresses to a moving Hodge constraint
+
+The next theorem is now recorded in
+`docs/hodge_strain_null_lagrangian_compatibility.md`.  It sharpens the apparent
+`(G,bar beta)` two-object feedback in three ways.
+
+First,
+
+\[
+\nabla^G\bar\alpha=\frac12\partial_tG+\frac12\bar\beta,
+\]
+
+so material metric velocity/strain and vorticity are the symmetric and
+antisymmetric faces of one trace-free integrable covariant gradient.  The induced
+Hodge--strain map is a scaled `L^2` isometry, and the quadratic/cubic minor
+compatibilities are exactly the pressure Poisson/equipartition and Betchov laws.
+
+Second, if `P_G` is the Hodge projector onto co-closed one-forms, then the exact
+Bernoulli/pressure term is
+
+\[
+\boxed{d\bar B=(\partial_tP_G)\bar\alpha},
+\]
+
+so the material momentum equation is
+
+\[
+\boxed{(\partial_t-\partial_tP_G)\bar\alpha=\nu\Delta_G\bar\alpha.}
+\]
+
+Pressure/Bernoulli is therefore the off-diagonal connection needed to keep the
+velocity one-form in a Hodge subspace moved by the self-generated metric.
+
+Third, at frozen flat `G`, the Hodge--strain map intertwines diffusion; its actual
+failure to heat is exactly its time variation, whose Eulerian representation is the
+full symmetric quadratic/rotation/pressure-Hessian strain feedback.
+
+Thus the shorter frontier superseding Section 14 is not merely `metric + heat`, but
+
+\[
+\boxed{
+\text{Hodge heat inside a Hodge geometry moved by the same heated state}.
+}
+\]
+
+Whether this self-Hodge compatibility forbids singular escape remains Open.  No
+restart, continuation, blow-up exclusion, or regularity theorem is claimed.

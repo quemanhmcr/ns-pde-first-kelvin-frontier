@@ -1518,3 +1518,55 @@ same incompressible flow.  After fixing the harmonic/Galilean velocity mode,
 See `docs/material_hodge_bochner_master_compatibility.md`.  No CI/calibration
 campaign was used for this milestone; only lightweight symbolic algebra checked the
 matrix ordering and the already-exact contact/product identities.
+
+## 2026-08-14 — Hodge–strain / null-Lagrangian compatibility compression
+
+The material `(G,bar beta)` system has been compressed one level further.  The
+material velocity one-form satisfies the exact pointwise split
+`nabla^G bar alpha = (1/2) Gdot + (1/2) bar beta`: metric velocity/strain and
+vorticity are the symmetric and antisymmetric faces of one actual covariant
+gradient.  Flatness gives the local gradient-integrability relation coupling their
+first derivatives, while incompressibility makes the symmetric face trace-free.
+The Hodge–strain transform is insensitive to the parallel harmonic/Galilean mode and
+`S_G:bar beta -> E=Sym nabla^G B_G bar beta` obeys the exact polarized identity
+`<S_G beta1,S_G beta2>=(1/2)<beta1,beta2>`; hence
+`||Gdot||_2^2=2||bar beta||_2^2`, with the same factor after every fixed covariant
+derivative.  Total enstrophy is therefore exactly one quarter of the squared
+material-metric speed, kinetic-energy dissipation is `(nu/2)||Gdot||_2^2`, and
+bulk enstrophy dissipation is `(nu/2)||nabla Gdot||_2^2`.
+
+The same integrable-gradient structure also retypes pressure and stretching.
+Quadratic compatibility is the exact local identity
+`-Delta_G pbar=|E|^2-|bar beta|^2/2`; its zero mean is precisely the global
+Hodge strain–vorticity equipartition.  Pressure is therefore gauge only in the
+closed-circulation quotient; in the symmetric gradient sector it is the nonlocal
+incompressibility constraint potential.  Cubic determinant/Piola compatibility
+is the Betchov law `int <b,Kb> = -4 int det K`, so vortex stretching and cubic strain
+self-amplification are the antisymmetric/symmetric faces of the degree-three
+null-Lagrangian of the same velocity gradient.  Consequently the exact integrated
+enstrophy law is purely metric-tangent:
+`d int|K|^2/dt = -4 int det K - 2nu int|nabla K|^2`, where
+`K=(1/2)G^-1 Gdot`.
+
+Classification: gradient split, local integrability, pressure Poisson, metric-speed
+identities and Betchov/null-Lagrangian relations Exact; Hodge–strain scaled-isometry
+and operator synthesis Rigorous consequences.  The new frontier is whether the
+parabolic evolution of the antisymmetric face can remain compatible with an
+escaping symmetric metric face under the exact flat/volume/integrability/minor
+constraints.  Sufficiency for no-escape, restart, continuation and regularity
+remains Conjectural/Open.
+
+A further exact compression identifies the Bernoulli/pressure gauge itself with
+motion of the material Hodge constraint.  If `P_G` is the orthogonal projector onto
+co-closed one-forms, then `P_G bar alpha=bar alpha`, the fixed-`G` Hodge Laplacian
+preserves `Ran P_G`, and the material momentum equation forces
+`d bar B = (dot P_G) bar alpha`.  Hence
+`(partial_t-dot P_G)bar alpha=nu Delta_G bar alpha`: NS momentum is Hodge heat in a
+co-closed subspace whose projector is moved by the same self-generated metric.
+Equivalently `delta_G d bar B=-(partial_t delta_G)bar alpha`.  Together with the
+previous time-Hodge identity for stretching, pressure/Bernoulli and vortex
+stretching become two functorial derivatives (`dot P_G` and `dot *_G`) of the same
+moving Hodge geometry.  At frozen flat `G`, the Hodge–strain map intertwines the
+form and symmetric-tensor Laplacians; along the actual path its sole failure to
+heat is `(partial_t S_G)bar beta`, whose Eulerian representation is exactly
+`S^2-Omega^2+[S,Omega]-Hess p`.  No sign or no-escape estimate is claimed.
