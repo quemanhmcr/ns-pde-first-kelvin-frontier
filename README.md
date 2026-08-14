@@ -350,3 +350,24 @@ bound cannot replace this time--scale law: the measured ratio
 `N=5`.  The surviving question is boundary concentration of this projectively flat
 connection at `(T,0)`, not interior curvature.  See
 `docs/causal_heat_ray_projective_zero_curvature_master_law.md`.
+
+The polar action now has a literal positive-transport meaning on the same heat
+half-line.  For the normalized heat ray define
+`kappa(h,t)=<q_h,|C|q_h>`,
+`chi=-partial_h kappa=Cov_(q_h)(|C|,C^2)>=0`, and
+`Theta=(partial_t-2nu partial_h)kappa`.  Mixed derivatives give the exact critical-
+spread continuity law
+`(partial_t-2nu partial_h)chi+partial_h Theta=0`, equivalently
+`chi_t+partial_h(Theta-2nu chi)=0`.  At the physical boundary,
+`Theta(0)=T_kappa` and `4chi(0)=V_kappa`, so the scalar transfer-relevant action is
+not a chosen quotient at all:
+`A_rel=(1/4)Theta(0)^2/chi(0)`, one quarter of the canonical kinetic action
+`flux^2/density` of this positive continuity equation.  The boundary law
+`kappadot=Theta(0)-2nu chi(0)` is exactly the previous critical transfer/viscosity
+balance.  For each fixed state, `int_0^infty chi dh` is the critical-center excess
+above the lowest occupied Laplacian shell, and `kappa(h)` itself is the fractional
+subordination readout of the existing heat-energy density `rho`; no independent
+heat population was added.  The remaining no-escape problem is therefore an
+infinite boundary kinetic-action trace at `(T,0)` for a positive transport whose
+underlying heat ray is projectively flat.  See
+`docs/critical_spread_heat_continuity_action_law.md`.
