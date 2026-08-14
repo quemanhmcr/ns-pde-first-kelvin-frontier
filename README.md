@@ -268,3 +268,21 @@ Hilbert--Schmidt pairing with `D`, so every change of non-Beltrami defect size i
 forced through the second, curvature-source term.  This makes the next no-escape seam
 literal: control the self-generated Hodge/connection curvature in a topology strong
 enough to see Zeno concentration, rather than invent another badness functional.
+
+The energy-ray law now extends to the whole Hodge functional calculus without adding
+new mechanisms.  For every self-adjoint Hodge multiplier `F(C)`, the derived ray
+commutator `D_F=[Pi,F(C)]` satisfies the exact covariance Gram identity
+`Cov_q(F,G)=<D_F,D_G>_HS/2`; spectrally `D_F(c,d)=(F(d)-F(c))Pi(c,d)`, so every
+`D_F` is the divided-difference image of the single `D=[Pi,C]`.  Likewise one
+curvature `K=[A_NS,C]` generates every `[A_NS,F(C)]` by the same divided-difference
+map, and `nabla_t^A D_F=-[Pi,mathfrak D_F^C(K)]`.  The positive critical commutator is a
+contraction of `D`: `||[Pi,|C|]||_HS<=||D||_HS`, with the exact heterochiral gap
+`(K/E)^2-(H/E)^2=(||D||_HS^2-||[Pi,|C|]||_HS^2)/2`.  The weak Euler-path theorem
+also has a causal critical consequence.  Pushing the literal active energy-loss
+measure `sqrt(1-(H/E)^2/(Z/E))(-dE)` onto the canonical heat-age variable
+`h=2nu(t-s)`, the mild Hodge equation bounds `||A^(1/4)u(t)||_2` by its finite-age
+initial contribution plus the `h^-1/2` moment of that positive measure.  Therefore
+any divergence of the positive critical norm must be a zero-heat-age concentration
+of **defect-weighted actual viscous loss**; pure Beltrami loss contributes zero.
+Physical-time Zeno and the prior heat-age Zeno frontier are thus one parabolic
+boundary problem.  See `docs/projective_hodge_covariance_causal_heat_master_law.md`.
