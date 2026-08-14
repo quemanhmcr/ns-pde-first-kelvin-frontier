@@ -162,4 +162,22 @@ The critical transfer has now descended below the paired-chirality scalar.  Writ
 
 The heat-null law also forces a genuine scale-direction restriction: every fixed positive heat-age portion of the paired transfer has finite cumulative variation on finite physical-time intervals, so any hypothetical `Theta -> +infinity` must migrate to heat age zero.  In addition, positive critical growth requires some canonical heat age `h` with `4 h ||P_h J omega||_infty > nu`; this is a necessary consequence of the exact heat mean/covariance versus variance balance, not a promoted threshold theory.
 
-The heat-null reduction has now collapsed the spectral/cascade picture to one canonical positive continuity law.  With `E(h,t)=<u,e^-hA u>/2`, `rho=-partial_h E>=0`, and `Pi(h,t)=-<u cross omega,e^-hA u>`, Navier--Stokes obeys exactly `rho_t-partial_h(2nu rho+Pi)=0` on the Hodge heat half-line.  Kinetic energy is `int rho dh`, enstrophy is `rho(0)`, nonlinearity has the exact boundary null `Pi(0)=0`, and viscosity is the only energy exit at heat age zero.  Vortex stretching is simply `partial_h Pi(0)`, the positive critical quadratic is the `h^-1/2` moment of `rho`, and paired critical transfer is the `h^-3/2` moment of the same `Pi`; critical viscosity is the corresponding positive boundary-density deficit.  Thus cascade, stretching, chirality transfer and viscous loss are boundary/moment faces of one heat-scale conservation law.  A no-escape theorem would now be a uniform boundary nonconcentration theorem preventing positive `rho` from forming a Zeno layer at `h=0` while `Pi(0)=0` and viscosity continuously drains that boundary.  See `docs/canonical_heat_scale_energy_continuity.md`.
+The heat-null reduction has now collapsed the spectral/cascade picture to one canonical positive continuity law.  With `E(h,t)=<u,e^-hA u>/2`, `rho=-partial_h E>=0`, and `Pi(h,t)=-<u cross omega,e^-hA u>`, Navier--Stokes obeys exactly `rho_t-partial_h(2nu rho+Pi)=0` on the Hodge heat half-line.  Kinetic energy is `int rho dh`, enstrophy is `rho(0)`, nonlinearity has the exact boundary null `Pi(0)=0`, and viscosity is the only energy exit at heat age zero.  Vortex stretching is simply `partial_h Pi(0)`, the positive critical quadratic is the `h^-1/2` moment of `rho`, and paired critical transfer is the `h^-3/2` moment of the same `Pi`; critical viscosity is the corresponding positive boundary-density deficit.  Thus cascade, stretching, chirality transfer and viscous loss are boundary/moment faces of one heat-scale conservation law.  At this heat-only representation the missing step first appears as a boundary-nonconcentration theorem.  The later signed-curl whole-family theorem sharpens that frontier: `rho` alone does not close the nonlinear flux, and exact Beltrami solutions can have arbitrarily thin benign heat layers.  The actual open problem is dynamic compatibility between positive boundary mass and the self-generated signed phase/orientation current.  See `docs/canonical_heat_scale_energy_continuity.md` and `docs/signed_curl_alternating_three_current_master.md`.
+
+The whole quadratic Hodge family has now collapsed to one **signed-curl alternating
+three-current**.  With `C=curl`, `u=sum_c u_c`, and `e_c=||u_c||_2^2/2`, the Lamb
+nonlinearity is encoded by the fully alternating
+`T_cdr=int u_c.(u_d cross u_r)` and `J_cd=sum_r r T_cdr`; hence
+`edot_c=sum_d J_cd-2nu c^2e_c`, `J` is skew, and the stronger blockwise null
+`sum_d d J_cd=0` follows from the same `R_beta(Cu)=0` that gives helicity
+cancellation.  Every spectral quadratic `<u,F(C)u>/2` has nonlinear rate
+`(1/6)sum D_F T`, where `D_F=det[[1,1,1],[c,d,r],[F(c),F(d),F(r)]]`; energy and
+helicity are universal affine null directions, stretching is the Vandermonde `F=c^2` face, critical
+paired chirality is the kink `F=|c|` face, and the heat-scale law is the Laplace
+`F=e^-h c^2` face.  Fourier support gives exact spectral triangle/no-teleportation,
+and actual heat profiles are completely monotone Laplace transforms of the positive
+`e_c`, so the generic positive heat-continuity state space is too large.  The open
+no-escape problem is now whether this self-generated alternating triangle current
+can drive positive energy through an infinite heterochiral chain to unbounded curl
+frequency against the diagonal `2nu c^2` viscous killing.  No blow-up exclusion or
+regularity theorem is claimed.  See `docs/signed_curl_alternating_three_current_master.md`.

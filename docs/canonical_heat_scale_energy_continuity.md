@@ -693,10 +693,19 @@ The next literal question is therefore
 }
 \]
 
-A genuine no-escape theorem would be a uniform boundary nonconcentration theorem for
-this exact positive heat-scale continuity law.  No such theorem is proved here.
+At this representation level the missing step looks like boundary nonconcentration.
+A subsequent signed-curl theorem sharpens that statement: `rho` alone cannot be the
+closed no-escape state.  Exact one-curl-eigenspace Beltrami solutions can have
+arbitrarily thin heat boundary layers while remaining globally smooth, and the
+instantaneous reversal `u -> -u` preserves the entire `rho(h)` profile while reversing
+the nonlinear heat flux.  Therefore any true no-escape theorem must couple boundary
+nonconcentration to the **self-generated signed phase/orientation current**, not to
+the positive profile alone.
 
-**Classification: Conjectural bridge / Open.**
+No such dynamic phase-current/boundary theorem is proved here.
+
+**Classification: Conjectural bridge / Open, sharpened by the later signed-curl
+whole-family theorem.**
 
 No blow-up exclusion, restart, continuation or global-regularity conclusion is
 claimed.
@@ -746,3 +755,24 @@ heat-scale continuity sign, `Pi(0)=0`, the identity `Pi_h(0)=` nonlinear enstrop
 rate, and the fractional flux moment giving the critical nonlinear rate.  This is
 only a coefficient/sign referee for the spectral identities above; it is not a
 Navier--Stokes calibration campaign.
+
+---
+
+## Postscript: the heat-age state is not an arbitrary positive density
+
+A subsequent signed-curl spectral audit sharpens the theorem domain of this note.
+The actual heat density has the exact form
+
+\[
+\rho(h,t)=\sum_c c^2e^{-hc^2}e_c(t),
+\qquad e_c(t)\ge0,
+\]
+
+so `rho(.,t)` is completely monotone for every smooth time.  The nonlinear heat flux
+is the Laplace image of one antisymmetric signed-curl pair current, itself the
+contraction of a fully alternating spectral three-current.  Thus a generic positive
+half-line continuity solution is **not** an admissible Navier--Stokes heat-scale
+state.  The no-escape frontier must retain this Bernstein/signed-curl compatibility.
+See `docs/signed_curl_alternating_three_current_master.md`.
+
+**Classification: Exact theorem-domain sharpening.**

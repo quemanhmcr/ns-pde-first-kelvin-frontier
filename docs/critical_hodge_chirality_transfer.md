@@ -956,3 +956,24 @@ two exact representations of the same original NS transfer.  Critical viscosity 
 `(1/2) doubleint K_|C| |delta omega|^2` on the identical positive kernel.  The open
 bridge is therefore a self-induced signed correlation/anti-concentration law, not a
 new chirality bank or shell architecture.  No no-escape or regularity claim follows.
+
+---
+
+## Postscript: chirality transfer is one determinant face of a whole-family law
+
+A later signed-curl spectral reduction shows that the paired critical law is the
+`F(c)=|c|` instance of the universal determinant
+
+\[
+\mathfrak D_F(c,d,r)
+=\det\begin{pmatrix}1&1&1\\c&d&r\\F(c)&F(d)&F(r)\end{pmatrix}
+\]
+
+paired with the same fully alternating spectral three-current for every Hodge
+quadratic.  Since `|c|` is affine on each chirality half-line, homochiral triples have
+zero critical determinant identically.  Energy `F=1`, helicity `F=c`, stretching
+`F=c^2`, and heat-scale flux `F=e^{-hc^2}` are other readouts of the same law rather
+than separate mechanisms.  See
+`docs/signed_curl_alternating_three_current_master.md`.
+
+**Classification: Exact architecture compression.**

@@ -1748,3 +1748,66 @@ The heat-null theorem exposes a still smaller state-space law.  Define the canon
 The same `Pi` generates the formerly separate scale laws.  Its boundary slope is vortex stretching: `partial_h Pi(0)=int omega.S.omega`.  The positive critical quadratic is `K=(1/sqrt(pi)) int h^-1/2 rho dh`, while the complete paired nonlinear critical transfer is `2tau=(1/(2sqrt(pi))) int h^-3/2 Pi dh`.  Critical viscosity is the boundary-density deficit `D=(1/sqrt(pi)) int h^-3/2(rho(0)-rho(h)) dh`, giving the exact one-line critical balance `Kdot=(1/(2sqrt(pi))) int h^-3/2[Pi-2nu(rho(0)-rho(h))] dh`.  Moreover `Pi` itself is the same heat-null cross-product/carre-du-champ defect from the preceding milestone.
 
 Classification: heat-scale density/flux, continuity law, boundary nullity, stretching slope, critical moment/flux moment and viscous deficit Exact; the reduction of energy cascade, stretching, critical chirality transfer and viscosity to one positive scale continuity law Rigorous.  Every fixed smooth state has a viscosity-dominated boundary layer because `Pi(h)=O(h)` while `rho(h)->rho(0)`.  Uniform persistence of that layer and exclusion of zero-heat-scale Zeno concentration remain Open; no no-escape or regularity theorem is claimed.
+
+## 2026-08-14 — signed-curl alternating three-current / whole-family spectral law
+
+The canonical heat-scale continuity frontier has been pushed below heat age itself.
+On the mean-zero divergence-free torus, decompose the actual velocity by the signed
+self-adjoint curl spectrum, `u=sum_c u_c`, `C u_c=c u_c`, and set
+`e_c=||u_c||_2^2/2>=0`.  The Lamb rotation generates one fully alternating spectral
+three-current `T_cdr=int u_c.(u_d cross u_r)`.  Its pair contraction is
+`J_cd=sum_r r T_cdr`, so `J_cd=-J_dc` and the stronger blockwise null law
+`sum_d d J_cd=0` holds for every output block, the spectral shadow of
+`R_beta(Cu)=0`.  Positive spectral energy obeys the exact current equation
+`edot_c=sum_d J_cd-2nu c^2 e_c`.
+
+For every Hodge spectral quadratic `Q_F=<u,F(C)u>/2`, the complete nonlinear rate is
+one determinant contraction
+`(Q_F dot)_nl=(1/6)sum_cdr D_F(c,d,r) T_cdr`, with
+`D_F=det[[1,1,1],[c,d,r],[F(c),F(d),F(r)]]`
+`=(c-d)(d-r)(r-c) F[c,d,r]`.  Thus all quadratic Hodge cases are second spectral
+curvature readouts of one physical current.  Affine `F=a+bc` vanish triplewise, so
+energy and Euler helicity are universal affine null directions of the same law.  `F=c^2` gives the
+Vandermonde stretching formula.  `F=|c|` vanishes on every homochiral triple because
+absolute value is affine on each curl-sign half-line; mixed critical transfer is the
+kink-curvature face.  Fourier support forces triangle inequalities among
+`|c|,|d|,|r|`; hence no nonlinear spectral teleportation from two bounded frequencies
+to one arbitrarily larger frequency.  For a mixed triple `c,d>0,r<0`,
+`D_|.|=2r(c-d)` and triangle support gives `|D_|.||<=2|r|^2`, an exact high--high--low
+null coefficient, not a transfer/dissipation estimate.
+
+The heat-age law is exactly the Laplace image of this signed spectral current:
+`E(h)=sum e^-h c^2 e_c`, `rho=sum c^2 e^-h c^2 e_c`.  Hence actual `rho` is completely
+monotone, not an arbitrary positive profile:
+`(-1)^m partial_h^m rho=sum c^(2m+2)e^-h c^2 e_c>=0`.  Its logarithmic spectral
+barycenter `kappa=-partial_h log rho` obeys the exact variance law
+`partial_h kappa=-Var_{pi_h}(c^2)<=0`.  The boundary mass
+`M=int_0^h rho=E(0)-E(h)` is a Bernstein function and satisfies exactly
+`M_t=Pi-2nu(rho(0)-rho(h))`; the complete critical evolution is merely the
+`h^-3/2` moment of `M_t`.  Thus the earlier nonlinear-versus-viscous heat bracket is
+the time velocity of one canonical positive boundary mass, not a third mechanism.
+
+Classification: signed-curl block law, alternating three-current, weighted block
+nullity, determinant master law, affine/triplewise energy-helicity cancellation,
+Vandermonde stretching, heterochiral critical determinant, heat Laplace image,
+complete monotonicity/Bernstein law Exact; Fourier triangle/no-teleportation and
+heterochiral low-frequency-square coefficient Rigorous consequences.  Static
+Bernstein shape alone cannot exclude escape; the remaining Open bridge is whether the
+self-generated alternating triangle current can drive positive spectral mass through
+an infinite heterochiral chain to `|c|->infinity` against diagonal `2nu c^2` killing.
+No no-escape, continuation, or regularity claim.
+- **Exact whole-family no-go calibration:** any field in one signed curl eigenspace
+  `Cu_0=c u_0` has `u x omega=0` and evolves by the exact smooth NS heat law
+  `u(t)=e^-nu c^2 t u_0`.  Its heat density is the single completely-monotone atom
+  `rho=c^2 e^-h c^2 e_c(t)`, `Pi=0`, and `K/E=|c|`.  Thus across exact smooth NS
+  families the heat boundary width `c^-2` can be arbitrarily small and critical
+  magnitude arbitrarily large with no escape.  Static Bernstein concentration is
+  not badness; the unresolved object is dynamic alternating spectral transport.
+- **Exact whole-quadratic exhaustion no-go:** `u -> -u` leaves every signed-curl
+  energy atom `e_c`, hence every quadratic Hodge readout `Q_F`, the full heat profile
+  `rho(h)`, helicity, critical size, enstrophy and boundary mass unchanged.  But the
+  cubic alternating current `T_cdr`, pair current `J_cd`, heat flux `Pi`, and every
+  nonlinear quadratic rate change sign.  Therefore no closure of NS nonlinear
+  spectral dynamics on the complete positive energy measure or on `rho` alone is
+  possible.  The irreducible missing information is signed phase/orientation, not
+  another quadratic magnitude.
