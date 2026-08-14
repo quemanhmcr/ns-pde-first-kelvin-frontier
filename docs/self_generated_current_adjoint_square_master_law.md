@@ -1022,3 +1022,135 @@ No curvature nonconcentration theorem is proved here.
   adjoint-square feedback itself;
 - exclusion of finite-time escape;
 - continuation, restart, blow-up exclusion and global regularity.
+
+---
+
+## Follow-through A. The actual current has an exact acceleration--pressure Hodge split
+
+The momentum identity
+
+\[
+\mathcal J_{\rm NS}
+=-\alpha_t+d\varphi
+\]
+
+is already the orthogonal Hodge decomposition of the physical current: `alpha_t` is
+co-closed and `d varphi` is exact.  Hence
+
+\[
+\boxed{
+\|\mathcal J_{\rm NS}\|_2^2
+=\|u_t\|_2^2+\|\nabla\varphi\|_2^2.
+}
+\]
+
+Substituting this into the current-interference stretching identity from Section 10
+gives
+
+\[
+\boxed{
+\begin{aligned}
+2\nu\int\omega\cdot S\omega
+&=\nu^2\|\operatorname{curl}\omega\|_2^2
++\|u\times\omega\|_2^2\\
+&\quad-\|u_t\|_2^2
+-\|\nabla\varphi\|_2^2.
+\end{aligned}
+}
+\]
+
+Equivalently, with `Z=||omega||_2^2/2`,
+
+\[
+\boxed{
+2\nu\dot Z
+=\|u\times\omega\|_2^2
+-\|u_t\|_2^2
+-\|\nabla\varphi\|_2^2
+-\nu^2\|\operatorname{curl}\omega\|_2^2.
+}
+\]
+
+Thus positive enstrophy growth is not merely an Euler-versus-viscosity comparison.
+At the same instant the Lamb current must exceed three simultaneous exact costs:
+actual velocity motion, the Bernoulli/pressure reaction enforcing incompressibility,
+and viscous vorticity roughness.
+
+This identity still has no favorable universal sign; the amplitude-scaling no-go in
+Section 13 remains active.  Its role is simultaneous compatibility, not domination.
+
+**Classification: Exact Hodge/current consequence.**
+
+---
+
+## Follow-through B. Finite inverse-mobility action is too weak for no-escape
+
+The positive frozen mobility from Section 8 has order-two principal part
+
+\[
+\mathcal M_\alpha
+=\frac1\nu P_\sigma\mathcal R_\alpha^*\mathcal R_\alpha P_\sigma,
+\]
+
+and on co-closed Fourier modes its principal symbol is
+
+\[
+\boxed{
+\sigma_2(\mathcal M_\alpha)(\xi)
+=\nu|\xi|^2P_\xi.
+}
+\]
+
+The state-dependent wedge/contraction terms are lower order.  Hence the inverse
+mobility has principal topology of order `-2`; finite path action in that metric is
+not a critical regularity norm.
+
+The exact Beltrami heat family makes the obstruction literal.  For
+
+\[
+\operatorname{curl}u_N=Nu_N,
+\qquad
+u_N(t)=e^{-\nu N^2t}u_N(0),
+\]
+
+one has
+
+\[
+\boxed{
+\mathcal M_{\alpha_N}\alpha_N
+=\nu N^2\alpha_N.
+}
+\]
+
+Along this one-dimensional ray the inverse-mobility kinetic action is
+
+\[
+\langle\alpha_t,
+\mathcal M_{\alpha_N}^{-1}\alpha_t\rangle
+=2\nu N^2E(t)
+=-\dot E(t).
+\]
+
+Therefore
+
+\[
+\boxed{
+\int_0^\infty
+\langle\alpha_t,
+\mathcal M_{\alpha_N}^{-1}\alpha_t\rangle\,dt
+=E(0),
+}
+\]
+
+independently of `N`, while the positive critical ratio satisfies
+
+\[
+\frac{\mathcal K(0)}{E(0)}=N.
+\]
+
+Thus finite action of the positive adjoint-square mobility cannot by itself control
+high Hodge scale.  Any no-escape theorem must use the **lower-order self-curvature
+coupling** encoded by `alpha wedge`, `i_u` and the curvature square, not merely the
+elliptic principal symbol or its inverse action.
+
+**Classification: Exact Beltrami no-go / architecture stop condition.**
