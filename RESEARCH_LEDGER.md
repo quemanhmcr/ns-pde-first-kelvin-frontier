@@ -1570,3 +1570,48 @@ moving Hodge geometry.  At frozen flat `G`, the Hodge–strain map intertwines t
 form and symmetric-tensor Laplacians; along the actual path its sole failure to
 heat is `(partial_t S_G)bar beta`, whose Eulerian representation is exactly
 `S^2-Omega^2+[S,Omega]-Hess p`.  No sign or no-escape estimate is claimed.
+
+## 2026-08-14 — self-Hodge conjugacy / Lax compression
+
+The moving material Hodge objects have now collapsed to one universal naturality
+law.  If `T_t=Phi_t^*` and `A_G` is any diffeomorphism-natural Hodge/tensor operator,
+then `A_G=T_t A_0 T_t^-1`; differentiating gives
+`A_Gdot=L_U^out A_G-A_G L_U^in`, with `U=Phi_t^*u`.  Thus `dot star_G`,
+`dot delta_G`, `dot Delta_G`, `dot P_G`, the Biot--Savart/Hodge-strain transforms,
+and the induced carré-du-champ are not separate geometric dynamics.  Pressure is
+the projector component `dBbar=[L_U,P_G]bar alpha=(I-P_G)L_U bar alpha`; stretching
+is the star component `[L_U,star_G]bar beta`; the full symmetric strain/rotation/
+pressure-Hessian feedback is the Hodge--strain representation of the same operator
+commutator.
+
+A new exact architecture correction follows: because `G=Phi_t^*g_0`, the material
+Hodge Laplacian is unitarily conjugate to the fixed Euclidean one at every smooth
+time.  Its spectrum, spectral gaps, intrinsic Poincare constants, diameter and
+heat-kernel geometry do not degenerate.  The reciprocal coefficient matrices
+`G/G^-1` describe coordinate/diffeomorphism distortion, not intrinsic loss of the
+Hodge diffusion geometry.  The genuine escape variable is therefore the
+conjugating diffeomorphism/distortion, whose symmetric infinitesimal rate is the
+same Hodge-strain image of the heated vorticity.
+
+The prior scaled isometry also eliminates `bar beta` as an independent material
+state: `Gdot=2 S_G bar beta` and `S_G^* S_G=I/2` imply exactly
+`bar beta=S_G^* Gdot`.  Hence every smooth NS solution induces the metric-tangent
+heat law `partial_t(S_G^*Gdot)=nu Delta_G^(2)(S_G^*Gdot)` on the flat volume-one
+metric orbit, with `Gdot` restricted to the compatible symmetric-gradient range.
+No converse for arbitrary metric paths is claimed.  The shortest current grammar is
+now: the state is Hodge-heated while its entire Hodge calculus is inner-conjugated
+by the velocity reconstructed from that same heated state.  Whether this
+self-conjugate parabolic loop forbids finite-time diffeomorphism escape remains
+Conjectural/Open; no restart, continuation or global-regularity theorem is claimed.
+
+See `docs/self_hodge_conjugacy_lax_compatibility.md`.
+
+The same conjugacy theorem gives a rigorous anti-case-by-case stopping rule.  Any
+further operator built functorially from the material metric, de Rham/Hodge calculus,
+Hodge functional calculus, natural tensor operations and current pairing has its
+geometry motion forced by the same `L_U` conjugacy.  Nonlinear state observables add
+only ordinary chain/product faces, with the unique second-order non-derivation
+already typed by the Bochner/carre-du-champ.  Hence another natural Hodge/contact/
+Kelvin representation cannot constitute a new primitive mechanism.  Any genuinely
+new primitive must lie outside this functorial closure and must be derived literally
+from NS rather than introduced architecturally.

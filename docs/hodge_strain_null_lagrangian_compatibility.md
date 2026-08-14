@@ -910,3 +910,31 @@ without violating the gradient/minor compatibility above?
 That is the smallest literal no-escape target currently visible.  Its sufficiency
 for blow-up exclusion is **Conjectural/Open**.  No continuation or regularity claim
 is made.
+
+---
+
+## Follow-through: all moving Hodge operators lie on one conjugacy orbit
+
+The next compression is recorded in
+`docs/self_hodge_conjugacy_lax_compatibility.md`.  If `T_t=Phi_t^*`, every
+natural Hodge operator satisfies
+
+\[
+A_{G_t}=T_tA_{g_0}T_t^{-1},
+\qquad
+\partial_tA_G
+=\mathcal L_U^{\rm out}A_G-A_G\mathcal L_U^{\rm in}.
+\]
+
+Thus the separate derivatives `dot P_G`, `dot star_G`, `dot Delta_G`, and
+`dot S_G` appearing above are components of one universal naturality/Lax law.  In
+particular, `Delta_G` is unitarily conjugate to the fixed flat-torus Laplacian, so
+its intrinsic spectrum and heat geometry do not deteriorate along a smooth
+material path.  The open escape variable is the self-generated conjugating
+diffeomorphism/distortion, not an intrinsic degeneration of the Hodge operator.
+
+The scaled Hodge--strain identity also gives `bar beta=S_G^* Gdot`, so the previous
+`(G,bar beta)` picture reduces to one compatible flat volume-one metric path plus
+its tangent.  Whether the resulting self-conjugate Hodge-heat law forbids
+finite-time distortion escape remains Open; no continuation or regularity claim is
+made.
