@@ -1615,3 +1615,57 @@ already typed by the Bochner/carre-du-champ.  Hence another natural Hodge/contac
 Kelvin representation cannot constitute a new primitive mechanism.  Any genuinely
 new primitive must lie outside this functorial closure and must be derived literally
 from NS rather than introduced architecturally.
+
+## 2026-08-14 — critical Hodge chirality / paired-transfer compression
+
+The self-Hodge conjugacy frontier has been compressed at the canonical critical
+spectral order.  In the fixed-Hodge/Leray gauge, mean-zero divergence-free NS is
+`u_t+T_u u+nu A u=0` with `T_u=P(u.grad)` skew-adjoint and `A=-Delta` positive.
+For every self-adjoint spectral multiplier `F(A)`, the exact quadratic law is
+`d <u,F u>/2 = <u,[T_u,F]u>/2 - nu <A^(1/2)u,F A^(1/2)u>`: nonlinearity is only
+spectral commutator transfer and viscosity is diagonal.  `F=A` identifies literal
+vortex stretching with this commutator; `F=I` gives zero nonlinear energy
+production.
+
+Three dimensions add the exact Hodge factorization `A=C^2`, `C=curl`.  With
+`J=sign C` and `P_+-/=(I+-J)/2`, the positive critical form
+`K=<u,|C|u>/2=||A^(1/4)u||^2/2` and signed helicity
+`H=<u,C u>/2` have the same half-derivative order and differ only by the curl sign.
+Writing `K_+-=<u_+-,|C|u_+->/2`, one has `K=K_++K_-`, `H=K_+-K_-`.  The nonlinear
+helicity rate vanishes exactly, so the nonlinear critical rates satisfy one rigid
+law `tau_+=tau_-=:tau`; hence
+`Kdot_+=tau-nu D_+`, `Kdot_-=tau-nu D_-`, with
+`D_+-=<u_+-,|C|^3u_+->>=0`.  All nonlinear positive-critical growth is therefore
+paired opposite-chirality transfer in the canonical global Hodge decomposition.
+
+A finite Fourier helical referee verifies the operator typing: homochiral triads have
+zero nonlinear energy/helicity/critical rates; heterochiral triads can have zero
+energy/helicity rates but nonzero critical rate, with equal positive/negative chiral
+rates.  This also supplies a sharp anti-route.  Amplitude scaling gives
+`tau(a u)=a^3 tau(u)` while `D_+-(a u)=a^2 D_+-(u)`, so no universal instantaneous
+`2 tau <= nu(D_++D_-)` law can underlie no-escape.  Any true exclusion mechanism
+must be dynamic/causal and constrain cumulative self-generated paired-helicity
+transfer, not a snapshot domination estimate.
+
+Classification: Leray skew split, master spectral commutator, curl square,
+helicity cancellation and paired-transfer laws Exact; critical signed-to-absolute
+compression Rigorous; finite helical triad is Audited calibration; instantaneous
+domination route is ruled out by exact amplitude scaling once nonzero transfer is
+activated.  Dynamic no-escape, continuation and regularity remain Open.
+
+See `docs/critical_hodge_chirality_transfer.md`.  No CI/actions campaign was run.
+
+Follow-through on the same milestone: integrating the paired laws produces a literal
+causal identity, not an added bank.  With `Theta(t)=int_0^t tau`, one has exactly
+`Theta=K_+(t)-K_+(0)+nu int D_+ = K_-(t)-K_-(0)+nu int D_-`.  Thus every cumulative
+unit of nonlinear critical transfer must be accounted in both chirality sectors as
+stored positive critical content or positive viscous critical dissipation.  A
+critical escape therefore requires `Theta -> +infinity`; an apparently one-sign
+terminal escape still forces the opposite sign to participate through co-storage or
+unbounded accumulated critical dissipation.  Separately, spectral Cauchy--Schwarz
+and the ordinary energy law give `K^2<=E Z` and
+`int_0^T K^2 dt <= E(0)^2/(2nu)`.  This does not close regularity; it shows that any
+required infinite cumulative paired transfer must concentrate into shrinking time
+windows and/or critical dissipation.  The remaining gap is therefore a causal
+anti-concentration law for the self-generated paired transfer, not another static
+channel estimate.
