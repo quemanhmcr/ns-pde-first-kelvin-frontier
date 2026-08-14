@@ -2055,3 +2055,59 @@ one-shell null/second-variation laws Exact; whole monotone viscous-cone descent 
 the architecture correction Rigorous; cumulative exclusion of repeated spread
 creation, Dini-half parabolic anti-Zeno, continuation, restart, blow-up exclusion and
 global regularity Open.
+
+## Polar twin-Rayleigh / critical quotient-action compression
+
+The normalized operator law has descended through the polar decomposition
+`C=J Lambda`, `Lambda=|C|`.  Define the signed and positive energy-sphere Rayleigh
+functions `lambda=<q,Cq>=H/E` and `kappa=<q,Lambda q>=Kcrit/E`.  Since
+`C^2=Lambda^2`, the universal square identity gives the exact twin eikonal law
+`mu=Z/E=lambda^2+||grad lambda||^2/4=kappa^2+||grad kappa||^2/4`.  The same square
+has a positive tangent factorization `grad mu=M_q grad kappa` with
+`M_q=P_q(Lambda+kappa)P_q>0`.  Hence literal normalized Navier--Stokes is
+`qdot=(r/2)K_q grad lambda-(nu/2)M_q grad kappa`, `rdot=-nu r mu`: signed curl
+supplies the skew orientation mobility and positive curl supplies the symmetric
+critical mobility, both tied by one Hodge square.
+
+Writing `a_E=(qdot)_Euler`, the positive critical center obeys exactly
+`kappadot=<grad kappa,a_E>-(nu/2)<grad kappa,M_q grad kappa>`.  Completing the
+actual positive metric yields
+`kappadot=-(nu/2)||M_q^(1/2)grad kappa-nu^-1 M_q^-1/2 a_E||^2
++(2nu)^-1 Acrit`, where `Acrit=<a_E,M_q^-1 a_E>`.  Equivalently, with
+`a_nu=(qdot)_visc`,
+`kappadot=(2nu)^-1(||a_E||_(M^-1)^2-||a_E+2a_nu||_(M^-1)^2)`.  Thus maximum
+critical feeding requires the exact impedance match `a_nu=-a_E/2`; a one-shell state
+has `a_nu=0` and zero critical-center derivative even if Euler still moves the ray.
+
+The action is not an added score.  Let `S_Lambda X=Lambda X+X Lambda`.  Among every
+skew Hilbert--Schmidt generator `A` with `Aq=a`, the exact quotient minimum is
+`inf <A,S_Lambda^-1 A>_HS=2<a,M_q^-1a>`.  The optimizer is
+`A_*=S_Lambda(p tensor q-q tensor p)`, `p=M_q^-1a`; tangent-gauge cross terms vanish
+because every competitor difference kills `q`.  A variational bound gives
+`Acrit<=<a_E,(Lambda+kappa)^-1 a_E><=<a_E,Lambda^-1a_E>`, so the critical quotient
+action is weaker than the homogeneous `H^-1/2` ray action.
+
+Integrating the exact square shows that finite `int Acrit dt` bounds `kappa`.  Thus
+any blow-up of the physical positive critical quadratic requires
+`int Acrit=+infinity`, hence the Euler ray has infinite `L^2_t dot H^-1/2` action.
+The preceding theorem already proves finite `L^1_t H^-1/2` ray length, so the
+remaining Zeno is necessarily finite-length/infinite-action.  Since
+`||a_E||_(H^-1/2)<=(C_T/nu) theta(-rdot)`, `theta=sqrt(1-lambda^2/mu)`, critical
+escape further forces the actual active radial-loss density `theta(-rdot)` to lie in
+`L^1` but not `L^2`.
+
+The older common-kernel square has also been quotient-reduced.  In the pair Hilbert
+space with norm `||F||_P^2=(1/2)doubleint K_Lambda |F|^2`, the increment map satisfies
+`delta^*delta=Lambda`.  For `b_u(x,y)=u(x) cross u(y)`,
+`delta^* b_u=P_H[-u cross Lambda u]=Y`.  Only the exact-increment projection
+`P_R b_u=delta Lambda^-1 Y` pairs with `delta omega`, and
+`||P_R b_u||_P^2=<Y,Lambda^-1Y><=||b_u||_P^2`.  Hence the old positive pair
+remainder is an exact upper envelope; the dynamically realizable remainder is its
+Riesz-projected inverse-Hodge action.
+
+Classification: polar/twin-eikonal, positive mobility, normalized polar PDE,
+critical action/reflection, quotient-minimum and pair-Riesz identities Exact on the
+stated smooth domains; action-to-weak-topology comparison and finite-length/infinite-
+action Zeno consequence Rigorous; finiteness of the quotient action, exclusion of
+active-loss spikes, continuation, restart, blow-up exclusion and global regularity
+Open.

@@ -306,3 +306,25 @@ unchanged at first order, viscous ray shape is frozen, yet the physical radius s
 decays at rate `nu kappa^2`.  Euler can leave such a shell only through the surviving
 signed mismatch `[Pi,C]`; it must create positive-scale spread before critical center
 transfer can begin.  See `docs/canonical_ray_connection_eikonal_hodge_hierarchy.md`.
+
+The canonical-ray theorem compresses once more through the polar decomposition of
+curl.  Let `Lambda=|C|`, `lambda=<q,Cq>=H/E`, and
+`kappa=<q,Lambda q>=Kcrit/E`.  Because `C^2=Lambda^2`, signed and positive Rayleigh
+geometry have the same exact eikonal envelope:
+`mu=Z/E=lambda^2+||grad lambda||^2/4=kappa^2+||grad kappa||^2/4`.  More strongly,
+`grad mu=M_q grad kappa` with the positive tangent mobility
+`M_q=P_q(Lambda+kappa)P_q`.  Literal normalized NS is therefore the polar
+skew--positive law
+`qdot=(r/2)K_q grad lambda-(nu/2)M_q grad kappa`, while
+`rdot=-nu r mu`.  The critical center obeys an exact action square
+`kappadot=-(nu/2)||M_q^(1/2)grad kappa-nu^-1 M_q^-1/2(qdot)_E||^2
++(2nu)^-1 <(qdot)_E,M_q^-1(qdot)_E>`.  The action is canonical: twice it is the
+minimum inverse-Sylvester action among every skew operator representative of the
+same Euler ray velocity.  It is bounded by the `H^-1/2` Euler-ray speed squared.
+Hence any finite-time critical escape must have finite weak ray length but infinite
+quadratic weak action; using the earlier radius-path bound, the literal active radial
+loss `sqrt(1-lambda^2/mu)(-rdot)` must be `L^1` but not `L^2`.  The old fractional
+pair square also descends: only the orthogonal projection of `u(x) cross u(y)` onto
+the exact one-field increment range can pair with `delta omega`, so its dynamically
+active positive remainder is an inverse-Hodge Riesz action no larger than the full
+pair remainder.  See `docs/polar_twin_rayleigh_critical_action_master_law.md`.

@@ -895,7 +895,7 @@ b=u(x)\times u(y).
 The common-kernel integrand satisfies the algebraic identity
 
 \[
-\frac12 a\cdot b-rac\nu2|a|^2
+\frac12 a\cdot b-\frac\nu2|a|^2
 =
 -\frac\nu2\left|a-\frac{b}{2\nu}\right|^2
 +
@@ -1199,3 +1199,75 @@ claimed.
 - no-escape/blow-up exclusion;
 - restart/continuation;
 - global regularity.
+
+---
+
+## Follow-through: the pair-square remainder has an exact-increment Riesz projection
+
+A later polar/action theorem sharpens Section 11 without changing its exact square.
+Equip antisymmetric pair fields with
+
+\[
+\langle F,G\rangle_{\mathscr P}
+=\frac12\iint K_\Lambda(x,y)F(x,y)\cdot G(x,y)\,dx\,dy
+\]
+
+and let
+
+\[
+\delta f(x,y)=f(x)-f(y)
+\]
+
+on the mean-zero divergence-free Hodge sector.  Then
+
+\[
+\delta^*\delta=\Lambda.
+\]
+
+For
+
+\[
+b_u(x,y)=u(x)\times u(y),
+\]
+
+direct pair symmetrization gives
+
+\[
+\delta^*b_u
+=P_{\mathcal H}[-u\times\Lambda u]
+=:Y.
+\]
+
+Only the orthogonal projection of `b_u` onto the exact one-field increment range can
+pair with `delta omega`.  If `P_R` denotes that projection, then
+
+\[
+\boxed{
+P_\mathscr R b_u
+=\delta\Lambda^{-1}Y,
+\qquad
+\|P_\mathscr Rb_u\|_{\mathscr P}^2
+=\langle Y,\Lambda^{-1}Y\rangle
+\le\|b_u\|_{\mathscr P}^2.
+}
+\]
+
+Hence the same critical balance also has the exact projected square
+
+\[
+\boxed{
+\dot{\mathcal K}
+=-\nu
+\left\|
+\delta\omega-\frac1{2\nu}P_\mathscr Rb_u
+\right\|_{\mathscr P}^2
++\frac1{4\nu}\|P_\mathscr Rb_u\|_{\mathscr P}^2.
+}
+\]
+
+The full pair square in Section 11 remains exact; its positive remainder contains an
+orthogonal pair component which no one-field vorticity increment can see.  The later
+formula removes only that dynamically invisible pair direction.  See
+`docs/polar_twin_rayleigh_critical_action_master_law.md`.
+
+**Classification: Exact later Riesz-projection descent.**
