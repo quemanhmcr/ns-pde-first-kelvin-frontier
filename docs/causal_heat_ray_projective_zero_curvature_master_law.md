@@ -1045,3 +1045,29 @@ No such boundary theorem is proved here.
   finite radial energy face;
 - finiteness of the critical quotient action;
 - continuation, restart, blow-up exclusion and global regularity.
+
+---
+
+## Follow-through: projective flatness is an interior compatibility, not an abstract no-escape principle
+
+A later shell-ladder adversary shows that a fixed Hodge square, finite radial
+reservoir, skew/Casimir-null ray motion and projectively flat heat lift can coexist
+with finite-time Hodge escape if the conservative ray plane is allowed to be chosen
+abstractly from shell to shell.
+
+Therefore the boundary problem identified here cannot be solved by flatness alone.
+The genuinely Navier--Stokes-specific ingredient is the fixed Lamb/self-Lie
+realization of the horizontal connection and its heat anomaly:
+
+\[
+X_E(u)=P_\sigma(u\times Cu),
+\qquad
+\mathfrak N_h
+=S_hX_E(u)-X_E(S_hu).
+\]
+
+Any successful boundary theorem must exploit that specific nonlinear realization,
+not merely the fact that the resulting heat--time connection is projectively flat.
+See `docs/abstract_shell_ladder_escape_self_lie_stop_theorem.md`.
+
+**Classification: Rigorous later architecture correction.**

@@ -2211,3 +2211,58 @@ fixed-state total spread mass and heat subordination Exact.  The interpretation 
 one positive transport face Rigorous.  Finiteness of the boundary kinetic-action
 trace, boundary compactness at `(T,0)`, continuation, restart, blow-up exclusion and
 global regularity remain Open.
+
+## Abstract shell-ladder escape / self-Lie stop theorem
+
+An adversarial abstract Hodge system shows that the recent projective/heat
+compression is not sufficient for no-escape unless the literal NS Lie/Lamb
+realization is retained.  Let an abstract real Hilbert space have orthonormal
+`s_n,t_n`, `L_n=2^n`, and self-adjoint
+`C s_n=L_n t_n`, `C t_n=L_n s_n`.  Thus each shell is the real form of a paired
+`+/-L_n` curl eigenspace and `A=C^2` has shell value `L_n^2`.  Choose a smooth
+flat-endpoint monotone quarter-turn profile and transition from `s_n` to `s_(n+1)`
+over `delta_n=L_n^-4`.  The intervals have finite total length.  Every `t<T` state
+has finite spectral support and is in the common smooth Hodge core.
+
+On the `n`th transition, with `L=L_n`, `q=c s_n+s s_(n+1)`, one has exactly
+`lambda=<q,Cq>=0`, `kappa=L(c^2+2s^2)`, and
+`mu=L^2(c^2+4s^2)`.  Solving `rdot=-nu r mu` gives
+`int_(I_n)mu<=4L^-2`, hence `int_0^T mu<infinity` and `r->r_*>0`, while at shell
+endpoints `kappa=L_(n+1)->infinity`, so the physical critical quadratic
+`E kappa->infinity`.
+
+Let `v_n=-s s_n+c s_(n+1)`.  The viscous normalized ray velocity is exactly
+`a_nu=-3nu L^2 c s v_n`.  With the prescribed geometric velocity
+`qdot=theta_dot v_n`, define
+`a_E=(theta_dot+3nu L^2cs)v_n` and
+`J_*=a_E tensor q-q tensor a_E`.  Then `J_*^*=-J_*`, `J_*q=a_E`, and because
+`Cq` lies in the orthogonal `t` sector, `J_*Cq=0`.  Therefore the abstract path obeys
+exactly `qdot=J_*q-nu(C^2-mu)q`, and the physical state obeys
+`u_t=J_*u-nu C^2u`, retaining skew energy conservation and Casimir nullity.
+
+The weak geometry realizes all necessary Zeno signatures.  Since
+`||v_n||_(dot H^-1/2)^2=s^2/L+c^2/(2L)`, the Euler weak path length per transition is
+`O(L^-1/2)+O(nu L^-5/2)`, hence summable.  If
+`C2=int_0^1 |vartheta'|^2>0`, then weak quadratic action is at least
+`C2 L^3/2` per transition.  The positive critical mobility on this tangent line is
+exactly `3L`; therefore
+`A_rel=(theta_dot+3nuL^2cs)^2/(3L)` and its integral is at least `C2 L^3/3`, so the
+critical action diverges.  Because `lambda=0`, the active radial density is
+`g_act=-rdot=nu r mu`; its `L1` mass is finite but each transition contributes a
+fixed positive lower bound to `int g_act^2`, hence `g_act notin L2`.
+
+The normalized heat lift of this abstract fixed-Hodge path still satisfies the same
+heat sorting identities, mixed-derivative projective flatness and positive
+critical-spread continuity law.  Thus those structures plus skewness and Casimir
+nullity are abstractly insufficient.  The construction is **not** Navier--Stokes:
+`J_*` is not the fixed divergence-free Lie--Poisson/Lamb operator
+`P_sigma(v cross Cu)=C^-1[Cu,v]_Lie`, and no Jacobi/Fourier-triangle/de Rham local
+realization is claimed.  This is an architecture stop theorem: a future no-escape
+proof must use an identity which fails for arbitrary shell-dependent skew
+Casimir-null rotation and depends essentially on the fixed physical self-Lie current.
+
+Classification: shell construction, finite reservoir, escape, skew/Casimir-null
+operator, weak-length/action and active-loss estimates Exact/Rigorous in the
+abstract model; insufficiency of the abstract Hodge/ray/heat package Rigorous.  No
+NS counterexample is claimed.  The shortest physical self-Lie compatibility which
+excludes the adversary remains Open.

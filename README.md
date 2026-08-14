@@ -371,3 +371,23 @@ heat population was added.  The remaining no-escape problem is therefore an
 infinite boundary kinetic-action trace at `(T,0)` for a positive transport whose
 underlying heat ray is projectively flat.  See
 `docs/critical_spread_heat_continuity_action_law.md`.
+
+An adversarial stop theorem now identifies which part of the recent compression is
+still only abstract geometry.  On a Hilbert shell ladder with paired curl values
+`+/-L_n`, `L_n=2^n`, define `C s_n=L_n t_n`, `C t_n=L_n s_n` and move the normalized
+ray from shell `n` to `n+1` over `delta_n=L_n^-4` with a smooth flat-endpoint quarter
+rotation.  Then `lambda=<q,Cq>=0`, `kappa=<q,|C|q>->infinity`, while
+`int_0^T mu dt<infinity`, the radius solving `rdot=-nu r mu` stays bounded away from
+zero, and the physical critical quadratic `E kappa` diverges.  Each transition admits
+an exact rank-two skew conservative operator `J_*=a_E tensor q-q tensor a_E` with
+`J_*q=a_E` and `J_*Cq=0`, so the abstract energy/Casimir-null anatomy is retained.
+The Euler ray has finite `H^-1/2` path length but infinite quadratic and critical
+quotient action; the active radial loss is `L1` but not `L2`.  The normalized heat
+lift remains projectively flat and its positive critical-spread continuity law still
+holds.  What the construction deliberately violates is the fixed physical NS
+realization `J_NS(u)v=P_sigma(v cross Cu)=C^-1[Cu,v]_Lie`.  Therefore Hodge/ray/heat
+flatness, positivity and abstract skew-Casimir geometry cannot by themselves be the
+no-escape theorem.  Future work must use an identity that fails for an arbitrary
+shell-dependent skew Casimir-null operator and depends essentially on the one local
+self-Lie/Lamb product.  See
+`docs/abstract_shell_ladder_escape_self_lie_stop_theorem.md`.

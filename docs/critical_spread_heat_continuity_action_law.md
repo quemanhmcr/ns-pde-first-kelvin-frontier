@@ -744,3 +744,27 @@ No such trace theorem is proved here.
 - a boundary compactness theorem coupling `chi,Theta` to the projectively flat ray;
 - exclusion of the causal `(T,0)` Zeno corner;
 - continuation, restart, blow-up exclusion and global regularity.
+
+---
+
+## Follow-through: positive boundary transport plus projective flatness is not sufficient abstractly
+
+A later adversarial shell-ladder theorem constructs an abstract fixed-Hodge system
+which obeys the positive `chi,Theta` continuity identity and projective heat
+mixed-derivative flatness, has finite radial dissipation and finite weak ray length,
+yet develops infinite boundary critical action and `kappa -> infinity` in finite
+time.
+
+The adversary preserves skew energy geometry and Casimir nullity but replaces the
+literal Navier--Stokes Lamb operator by a shell-dependent rank-two skew map.  Thus the
+open boundary-action problem in this note cannot be closed from positivity,
+continuity and flatness alone.  The missing control must use the fixed physical
+self-Lie realization
+
+\[
+P_\sigma(v\times Cu)=C^{-1}[Cu,v]_{\rm Lie}.
+\]
+
+See `docs/abstract_shell_ladder_escape_self_lie_stop_theorem.md`.
+
+**Classification: Rigorous later architecture no-go; genuine NS self-Lie frontier remains Open.**
