@@ -1862,3 +1862,40 @@ global-regularity claim.
   nonlinearly invisible, and even the signed curl barycenter can move only through
   the transverse defect.  This is a derived representation of the Poisson--Casimir
   master law, not a new score or state.
+
+## Energy-sphere Rayleigh/Hodge compression
+
+The Poisson--Casimir/Beltrami-defect frontier has been compressed by separating the
+kinetic-energy radius from the unit state.  For a smooth nonzero solution set
+`r=||u||_2`, `q=u/r`, `lambda(q)=<q,Cq>=H/E`, and `mu(q)=<q,C^2q>=Z/E`.  On the unit
+`L^2` sphere the universal self-adjoint Rayleigh identity is
+`grad_S R_A=2(A-R_A)q`; hence `g:=grad_S lambda=2(C-lambda)q`,
+`B=(r/2)g=E grad_u(H/E)`, and `D_B/E=||g||^2/4`.  Operator squaring becomes the
+universal first-jet law `R_(A^2)=R_A^2+||grad_S R_A||^2/4`, so
+`mu=lambda^2+||g||^2/4` and `C^2q=mu q+grad_S(mu)/2`.
+
+Writing `K_q v=P(q cross v)`, the literal normalized Navier--Stokes dynamics are
+`rdot=-nu r mu` and `qdot=(r/2)K_q g-(nu/2)grad_S mu`.  Since
+`grad_S mu=2 lambda g+(1/2)Hess_S(lambda)g`, this is the one-landscape operator law
+`qdot=[(r/2)K_q-nu lambda I-(nu/4)Hess_S(lambda)]g`.  Euler preserves `lambda`
+exactly, so inviscid growth of `mu` is only steepening of the same Rayleigh
+landscape along its own level set.  The exact law is
+`mu_dot=(r/4)<Hess(lambda)g,K_q g>-(nu/2)||grad_S mu||^2`, equivalently an
+`[Hess(lambda),K_q]` or `[C,K_q]` commutator.  The previous leaf-tangent enstrophy
+residual is not primitive: `R_Z=(r/4)P_{q,g}^perp Hess(lambda)g`.
+
+There is also a whole-functional-calculus bridge to the earlier material Hodge Lax
+theorem.  For smooth divergence-free fields, `C K_q=-ad_q`, so on the mean-zero
+sector `K_q=-C^{-1}ad_q` and for every admissible spectral multiplier
+`[F(C),K_q]=C^{-1}[ad_q,F(C)]`; with `u=rq`,
+`r[F(C),K_q]=C^{-1}[ad_u,F(C)]`.  Thus spectral transfer and material Hodge operator
+motion use one literal commutator defect rather than two analogous mechanisms.
+Relative to `span{q} + T_q S`, curl itself is exactly
+`[[lambda,g*/2],[g/2,lambda I+Hess(lambda)/2]]`, and because `lambda` is quadratic
+its Hessian derivative is algebraically forced by `g` and the sphere velocity; no
+independent third phase-sphere jet exists.
+
+Classification: all displayed Rayleigh, normalized-PDE, block-operator,
+tangent-curvature and commutator identities Exact on the common smooth core; the
+cross-representation synthesis Rigorous; any anti-Zeno/no-escape consequence Open.
+No continuation, restart, blow-up exclusion or global-regularity theorem is claimed.

@@ -212,3 +212,24 @@ is defect-mediated.  Nonlinearity sees only transverse Casimir defect, whereas
 viscosity drains the full curl `omega=alpha u+B`.  This sharpens the no-escape
 frontier: any genuine singular engine must maintain transverse defect and its curl,
 not merely large vorticity magnitude or a thin high-frequency Beltrami component.
+
+The Poisson--Casimir law compresses one step further after quotienting only the
+kinetic-energy radius.  For every smooth nonzero state write `u=r q`, `||q||_2=1`,
+and define the canonical curl Rayleigh function `lambda(q)=<q,Cq>=H/E` on the unit
+energy sphere.  Its sphere gradient `g=grad_S lambda=2(C-lambda)q` is exactly the
+previous transverse defect: `B=(r/2)g`, so `D_B/E=||g||^2/4`.  More strongly, the
+universal Rayleigh-square identity gives `mu:=Z/E=<q,C^2q>=lambda^2+||g||^2/4` and
+`C^2q=mu q+grad_S(mu)/2`.  The full normalized PDE is therefore the one-landscape
+law `rdot=-nu r mu`, `qdot=(r/2)K_q g-(nu/2)grad_S mu`, with
+`K_q v=P(q cross v)`.  Equivalently
+`qdot=[(r/2)K_q-nu lambda I-(nu/4)Hess_S(lambda)]g`.  Euler moves only along a
+`lambda` level set; its only normalized-enstrophy production is the mixed
+Hessian/rotation commutator `(r/4)<Hess(lambda)g,K_q g>`, while viscosity descends
+`mu` on the same sphere and drains the radius at rate `nu r mu`.  The old tangent
+residual is just level-set curvature:
+`R_Z=(r/4)P_{q,g}^perp Hess(lambda)g`.  Finally the spectral and material frontiers
+meet literally: `C K_q=-ad_q`, hence for every Hodge spectral multiplier
+`[F(C),K_q]=C^{-1}[ad_q,F(C)]`; the spectral-transfer commutator is the inverse-curl
+form of the same Lie/Hodge commutator that moves the material Hodge calculus.  See
+`docs/energy_sphere_rayleigh_hodge_master_law.md`.  No no-escape or regularity claim
+is made.
