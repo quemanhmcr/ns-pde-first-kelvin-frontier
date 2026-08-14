@@ -2006,3 +2006,52 @@ and covariant curvature laws Exact on their stated smooth/bounded domains; the
 Lipschitz contractions, weak-forcing-to-critical Abel bound and parabolic-clock
 identification Rigorous; intrinsic boundary modulus, positive-topology anti-Zeno,
 continuation, restart, blow-up exclusion and global regularity Open.
+
+## Canonical ray connection / eikonal Hodge hierarchy correction
+
+The curvature source from the preceding milestone has a projective gauge redundancy.
+Any skew generator `A` of the same rank-one ray decomposes exactly as
+`A=Gamma+A_parallel`, where `Gamma=qdot tensor q-q tensor qdot=[Pi,[Pi,A]]` and
+`[A_parallel,Pi]=0`.  Therefore the full `K=[A_NS,C]` is not a canonical primitive
+below the ray level: its tangent-gauge contribution cancels between the Lax-transport
+and curvature faces of `Ddot`.  The invariant rank-two law is
+`Pidot=[Gamma_NS,Pi]` with `Gamma_NS=qdot tensor q-q tensor qdot`.  Viscosity
+`nu[Pi,C^2]` is already canonical; only the Euler Poisson operator carries the extra
+tangent block.
+
+For every quadratic Hodge Rayleigh readout `R_F(q)=<q,F(C)q>` and
+`D_F=[Pi,F(C)]`, the canonical curvature is simply
+`nabla_t^Gamma D_F=(1/2) q wedge Hess_S(R_F) qdot`.  In particular the mysterious
+ray--curl curvature reduces to the Hessian of the one curl-Rayleigh landscape applied
+to the actual ray velocity.  No independent operator-curvature state survives this
+quotient.
+
+The same Rayleigh-square identity iterates to all positive dyadic Hodge levels.  With
+`Lambda=|C|`, `F_n=Lambda^(2^n)` and `R_n=<q,F_n q>`, exactly
+`R_(n+1)=R_n^2+||grad_S R_n||^2/4=R_n^2+||[Pi,F_n]||_HS^2/2`.  Hence each next
+Hodge level is only current center squared plus current projective spread.  At the
+critical base, `kappa=Kcrit/E=<q,Lambda q>` and `mu=Z/E` satisfy
+`mu=kappa^2+||[Pi,Lambda]||_HS^2/2`, so
+`-rdot/(nu r)=kappa^2+||[Pi,Lambda]||_HS^2/2`.
+
+Viscosity has a whole-cone monotonicity: for every nondecreasing scalar `f` on the
+positive spectrum of `A=C^2`, `(d/dt)<q,f(A)q>|_visc=-2nu Cov_q(f(A),A)<=0`, because
+the pair kernel `(f(x)-f(y))(x-y)` is nonnegative.  Thus the one viscous projective
+direction simultaneously sorts every monotone positive Hodge readout downward.
+
+A new exact null theorem holds on any single Laplacian shell, not only a signed
+Beltrami eigenspace.  `[Pi,Lambda]=0` iff `Lambda q=kappa q`, hence
+`C^2q=kappa^2q`.  At such an instant `(kappadot)_Euler=(kappadot)_visc=0` and
+`(qdot)_visc=0`, while `rdot=-nu kappa^2 r`.  A heterochiral `+/-kappa` mixture may
+still have signed `D=[Pi,C]` nonzero, so Euler can move the ray, but it must first
+create positive spread: at the shell
+`D_Lambdadot=q wedge (Lambda-kappa)(qdot)_Euler`, and
+`kappaddot=2<(qdot)_Euler,(Lambda-kappa)(qdot)_Euler>` with no universal sign.  Thus
+critical cascade has an exact create-spread-before-center-transfer anatomy.
+
+Classification: ray-gauge decomposition, canonical rank-two connection, Hessian
+curvature law, eikonal square recursion, critical center/spread radius identity and
+one-shell null/second-variation laws Exact; whole monotone viscous-cone descent and
+the architecture correction Rigorous; cumulative exclusion of repeated spread
+creation, Dini-half parabolic anti-Zeno, continuation, restart, blow-up exclusion and
+global regularity Open.

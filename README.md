@@ -286,3 +286,23 @@ any divergence of the positive critical norm must be a zero-heat-age concentrati
 of **defect-weighted actual viscous loss**; pure Beltrami loss contributes zero.
 Physical-time Zeno and the prior heat-age Zeno frontier are thus one parabolic
 boundary problem.  See `docs/projective_hodge_covariance_causal_heat_master_law.md`.
+
+A canonical-gauge correction compresses the curvature frontier again.  The full skew
+ray generator `A_NS` contains a tangent--tangent block that commutes with the
+rank-one energy projector and therefore does not move the ray.  The unique minimal
+connection is `Gamma=qdot tensor q-q tensor qdot=[Pi,[Pi,A_NS]]`, rank at most two;
+viscosity `nu[Pi,C^2]` is already in this gauge, while only the Euler Poisson operator
+has removable tangent rotation.  For every quadratic Hodge Rayleigh readout
+`R_F=<q,F(C)q>` the projectively active curvature is exactly
+`nabla_t^Gamma[Pi,F]=(1/2) q wedge Hess_S(R_F) qdot`.  Thus the previous
+`K=[A_NS,C]` law remains exact but its tangent-gauge part is not a primitive source.
+The same theorem exposes an infinite positive-Hodge eikonal hierarchy.  With
+`Lambda=|C|`, `R_n=<q,Lambda^(2^n)q>`, one has exactly
+`R_(n+1)=R_n^2+||[Pi,Lambda^(2^n)]||_HS^2/2`.  In particular
+`Z/E=(Kcrit/E)^2+||[Pi,|C|]||_HS^2/2`, so critical center and positive-scale spread
+are precisely the two faces of radial viscous tax.  If the ray lies on one Laplacian
+shell, `[Pi,|C|]=0`: Euler and viscosity both leave the positive critical center
+unchanged at first order, viscous ray shape is frozen, yet the physical radius still
+decays at rate `nu kappa^2`.  Euler can leave such a shell only through the surviving
+signed mismatch `[Pi,C]`; it must create positive-scale spread before critical center
+transfer can begin.  See `docs/canonical_ray_connection_eikonal_hodge_hierarchy.md`.

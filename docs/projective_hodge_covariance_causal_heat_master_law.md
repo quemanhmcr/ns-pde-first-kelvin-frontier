@@ -1339,3 +1339,68 @@ ray/Hodge mismatch-curvature system.
 - a curvature estimate on `K=[A_NS,C]` strong enough to force that modulus;
 - exclusion of the remaining parabolic-corner concentration;
 - continuation, restart, blow-up exclusion and global regularity.
+
+---
+
+## Follow-through: the full `K=[A_NS,C]` curvature has a ray-gauge redundancy
+
+A subsequent canonical-ray theorem sharpens Sections 5--7 and 14 without changing
+any identity proved above.  The skew generator `A_NS` is not unique as a generator of
+the rank-one energy ray: any tangent--tangent skew block commuting with `Pi` can be
+added without changing `q_t`, `Pi_t`, or any projective Hodge moment.
+
+The unique minimal connection carried by the actual oriented ray is
+
+\[
+\boxed{
+\Gamma_{NS}
+=q_t\otimes q-q\otimes q_t
+=[\Pi,[\Pi,\mathcal A_{NS}]].
+}
+\]
+
+Writing
+
+\[
+\mathcal A_{NS}=\Gamma_{NS}+A_\parallel,
+\qquad
+[A_\parallel,\Pi]=0,
+\]
+
+Jacobi shows that the `A_parallel` contribution to the Lax transport of
+`D=[Pi,C]` cancels exactly against its contribution to the source
+`-[Pi,[A_NS,C]]`.  The invariant projective law is therefore
+
+\[
+\boxed{
+D_t
+=[\Gamma_{NS},D]
+-[\Pi,[\Gamma_{NS},C]].
+}
+\]
+
+More strongly, for every quadratic Hodge Rayleigh readout
+
+\[
+R_F(q)=\langle q,F(C)q\rangle,
+\qquad
+D_F=[\Pi,F(C)],
+\]
+
+the projectively active source is
+
+\[
+\boxed{
+\nabla_t^\Gamma D_F
+=
+\frac12\,q\wedge
+\big(\operatorname{Hess}_S R_F\big)q_t.
+}
+\]
+
+Thus the full operator `K=[A_NS,C]` remains an exact useful representation, but it is
+**not** promoted as a canonical primitive below the energy-ray quotient.  Its
+ray-active content is the Rayleigh-Hessian action above.  See
+`docs/canonical_ray_connection_eikonal_hodge_hierarchy.md`.
+
+**Classification: Exact projective gauge correction / later descent.**
