@@ -1328,3 +1328,33 @@ spectral decomposition and alternating scalar triple product.
 - uniform exclusion of zero-heat-age Bernstein mass concentration;
 - no-escape/blow-up exclusion;
 - restart/continuation/global regularity.
+
+
+---
+
+## 19. Later operator descent: the three-current is the coordinate tensor of a phase-space three-form
+
+A subsequent whole-functional theorem identifies
+
+\[
+\mathscr T_{cdr}=\Omega(u_c,u_d,u_r),
+\qquad
+\Omega(a,b,c)=\int a\cdot(b\times c),
+\]
+
+and shows that the contraction `J_cd=sum_r r T_cdr` is the signed-curl matrix of the
+Lie--Poisson operator `i_(grad H) Omega`, with `H=<u,Cu>/2`.  Consequently the
+determinant theorem in this note is the quadratic spectral coordinate form of the
+whole-functional identity
+
+\[
+\dot{\mathcal F}
+=\Omega(\nabla\mathcal F,\nabla E,\nabla H)
+-\nu\langle\nabla\mathcal F,\nabla^2H\,\nabla H\rangle.
+\]
+
+Thus `T` is retained as an exact spectral readout but is no longer primitive beneath
+the phase-space theorem.  The no-escape frontier must respect the latter
+Poisson--Casimir/metric-gradient compatibility.
+
+**Classification: Exact representation descent to the later whole-functional theorem.**

@@ -181,3 +181,34 @@ no-escape problem is now whether this self-generated alternating triangle curren
 can drive positive energy through an infinite heterochiral chain to unbounded curl
 frequency against the diagonal `2nu c^2` viscous killing.  No blow-up exclusion or
 regularity theorem is claimed.  See `docs/signed_curl_alternating_three_current_master.md`.
+
+The operator compression has now moved below the entire quadratic/spectral family.
+On the mean-zero divergence-free phase space, the constant alternating three-form
+`Omega(a,b,c)=int a.(b cross c)`, kinetic energy `E=||u||^2/2`, and helicity
+`H=<u,curl u>/2` generate the full conservative PDE: the state Poisson operator is
+`J(u)v=P(v cross curl u)=i_(grad H)Omega` in pairing form, the induced bracket
+`{F,G}=Omega(grad F,grad G,grad H)=-<u,[grad F,grad G]_Lie>` is Lie--Poisson, Euler is
+`Fdot={F,E}`, and helicity is a Casimir because `J(u)grad H=0`.  Viscosity is not a
+separate architecture: with `Z=||curl u||^2/2=||grad H||^2/2`, it is exactly the
+`L^2` gradient descent `-nu grad Z`.  Hence every smooth observable obeys the single
+whole-functional law `Fdot={F,E}-nu<grad F,grad Z>`.  The prior signed-curl
+three-current is merely the spectral coordinate tensor of `Omega`; its determinant
+law, stretching, heterochiral critical transfer, heat-scale flux and Beltrami
+collapse are all functional/spectral readouts of this same Poisson--Casimir/metric
+structure.  The open no-escape question is now whether Hamiltonian tangent motion
+preserving energy and helicity can drive the norm and higher Hodge complexity of the
+same Casimir gradient into finite-time escape while viscosity descends its squared
+norm.  See `docs/poisson_casimir_gradient_master_law.md`.
+
+The same two-generator geometry has a canonical transverse defect.  For `E>0`, set
+`alpha=H/E` and `B=(curl-alpha)u=omega-alpha u`, the orthogonal projection of the
+helicity/Casimir gradient away from the energy gradient.  Then `<u,B>=0`,
+`D_B=Z-H^2/E=||B||^2/2`, and the Euler vector is exactly `P(u cross B)`: the
+Beltrami-aligned vorticity component `alpha u` never enters the nonlinear Lamb
+current.  More strongly, the defect obeys the exact closed balance
+`D_Bdot=<u cross B,curl B>-nu||curl B||^2`, while
+`alpha_dot=-(nu/E)<B,(curl+alpha)B>`.  Thus even motion of the global Beltrami center
+is defect-mediated.  Nonlinearity sees only transverse Casimir defect, whereas
+viscosity drains the full curl `omega=alpha u+B`.  This sharpens the no-escape
+frontier: any genuine singular engine must maintain transverse defect and its curl,
+not merely large vorticity magnitude or a thin high-frequency Beltrami component.
