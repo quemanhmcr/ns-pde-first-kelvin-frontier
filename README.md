@@ -328,3 +328,25 @@ pair square also descends: only the orthogonal projection of `u(x) cross u(y)` o
 the exact one-field increment range can pair with `delta omega`, so its dynamically
 active positive remainder is an inverse-Hodge Riesz action no larger than the full
 pair remainder.  See `docs/polar_twin_rayleigh_critical_action_master_law.md`.
+
+The causal heat-age frontier now closes into an exact projectively flat two-variable
+operator law.  With `S_h=e^-hC^2/2`, `u_h=S_hu`, `q_h=u_h/||u_h||` and
+`P_h=q_h tensor q_h`, heat age gives the Brockett flow
+`partial_h P_h=[(1/2)[P_h,C^2],P_h]`, while along the parabolic characteristic
+`D_nu=partial_t-2nu partial_h` the explicit viscous square cancels and
+`D_nu P_h=[Gamma_h^E,P_h]`.  Mixed derivatives give the exact projective
+zero-curvature law
+`[partial_h Gamma_h^E-D_nu B_h+[Gamma_h^E,B_h],P_h]=0`.  More physically, one
+vector heat-renormalization defect
+`N_h=S_h X_E(u)-X_E(S_hu)` generates both remaining heat faces: its radial projection
+is exactly the canonical nonlinear scale flux, while its tangent projection is the
+anomaly between heat-then-Euler and Euler-then-heat ray motion.  `N_h` is precisely
+the already-derived cross-product heat carré-du-champ defect.  The scalar continuity
+law `rho_t-partial_h(2nu rho+Pi)=0` is the radial mixed-derivative flatness condition;
+the ray Lax law is its directional counterpart.  An adversarial mixed-helical
+localized wavepacket family also shows why a snapshot critical-action/energy-drain
+bound cannot replace this time--scale law: the measured ratio
+`T_kappa^2/(mu V_kappa)` grows with the predicted intermittent `~N^2` onset through
+`N=5`.  The surviving question is boundary concentration of this projectively flat
+connection at `(T,0)`, not interior curvature.  See
+`docs/causal_heat_ray_projective_zero_curvature_master_law.md`.

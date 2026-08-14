@@ -776,3 +776,57 @@ state.  The no-escape frontier must retain this Bernstein/signed-curl compatibil
 See `docs/signed_curl_alternating_three_current_master.md`.
 
 **Classification: Exact theorem-domain sharpening.**
+
+---
+
+## Follow-through: heat continuity is the radial face of a projectively flat heat--time connection
+
+A later heat-ray theorem lifts the scalar state to
+
+\[
+u_h=e^{-hA/2}u,
+\qquad
+u_h=r_hq_h.
+\]
+
+With
+
+\[
+\mathcal D_\nu=\partial_t-2\nu\partial_h,
+\]
+
+the explicit viscous square cancels:
+
+\[
+\mathcal D_\nu u_h=e^{-hA/2}X_E(u).
+\]
+
+Define the heat-renormalization defect
+
+\[
+\mathfrak N_h
+=e^{-hA/2}X_E(u)-X_E(e^{-hA/2}u).
+\]
+
+Then the existing scale flux is exactly its radial projection,
+
+\[
+\Pi(h,t)=-\langle u_h,\mathfrak N_h\rangle,
+\]
+
+while the tangent projection corrects the Euler connection of the normalized heat
+ray.  Since
+
+\[
+\partial_h\mathcal E=-\rho,
+\qquad
+\mathcal D_\nu\mathcal E=-\Pi,
+\]
+
+the continuity equation in this note is precisely the radial mixed-derivative
+compatibility.  The normalized ray satisfies the corresponding projective
+zero-curvature law.  Thus scalar heat cascade and directional ray renormalization are
+two projections of one heat-product defect rather than separate mechanisms.  See
+`docs/causal_heat_ray_projective_zero_curvature_master_law.md`.
+
+**Classification: Exact later operator lift of the scalar continuity law.**

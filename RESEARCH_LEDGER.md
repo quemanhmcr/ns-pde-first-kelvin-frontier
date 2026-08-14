@@ -2111,3 +2111,64 @@ stated smooth domains; action-to-weak-topology comparison and finite-length/infi
 action Zeno consequence Rigorous; finiteness of the quotient action, exclusion of
 active-loss spikes, continuation, restart, blow-up exclusion and global regularity
 Open.
+
+## Causal heat-ray projective zero-curvature compression
+
+The zero-curvature question left open by the energy-ray Lax theorem has an exact
+answer after lifting the actual state over canonical heat age.  Put
+`S_h=e^-hA/2`, `u_h=S_hu`, `r_h=||u_h||`, `q_h=u_h/r_h`, and
+`P_h=q_h tensor q_h`.  The heat direction is exactly
+`partial_h q_h=-(A-mu_h)q_h/2`, hence
+`partial_h P_h=[B_h,P_h]` with `B_h=[P_h,A]/2`.  In the causal parabolic direction
+`D_nu=partial_t-2nu partial_h`, the explicit viscous term cancels:
+`D_nu u_h=S_hX_E(u)`.  Thus
+`D_nu q_h=r_h^-1(I-P_h)S_hX_E(u)` and
+`D_nu P_h=[Gamma_h^E,P_h]` for its canonical rank-two skew connection.  Since
+`[D_nu,partial_h]=0`, Jacobi gives the exact projective zero-curvature law
+`[partial_h Gamma_h^E-D_nu B_h+[Gamma_h^E,B_h],P_h]=0`.
+
+The nonlinear content of this lift is one vector defect,
+`N_h=S_hX_E(u)-X_E(S_hu)=P_sigma[S_h(u cross Cu)-S_hu cross S_hCu]`.  This is exactly
+the existing cross-product heat-product/carre-du-champ defect.  Its radial projection
+is the canonical scale flux:
+`Pi_heat=-<u_h,N_h>` and `D_nu r_h=<q_h,N_h>`.  Its tangent projection is exactly the
+renormalization anomaly in the heat-resolved Euler ray connection:
+`D_nu q_h=X_E(u_h)/r_h+r_h^-1(I-P_h)N_h`.  Hence scalar cascade and directional
+connection anomaly are not independent heat mechanisms.
+
+The existing heat continuity law is now the radial flatness equation.  Since
+`E(h,t)=r_h^2/2` obeys `partial_h E=-rho` and `D_nu E=-Pi_heat`, commutation of the
+two derivatives is exactly `rho_t-partial_h(2nu rho+Pi_heat)=0`.  The projector
+zero-curvature law is the directional counterpart of the same mixed-derivative
+compatibility.  Therefore every positive heat-age rectangle is projectively flat;
+any remaining Zeno escape must be a singular boundary concentration at `(T,0)`.
+
+The polar action was also quotiented to the one scalar direction relevant to critical
+center transfer.  With `T_kappa=<grad kappa,(qdot)_E>` and
+`V_kappa=<grad kappa,M_q grad kappa>`, define
+`A_rel=T_kappa^2/V_kappa` off the one-shell null set and zero on it.  The exact scalar
+square is
+`kappadot=-(nu/2)(sqrt(V_kappa)-T_kappa/(nu sqrt(V_kappa)))^2+A_rel/(2nu)`, so
+critical escape requires `int A_rel=+infinity`, and `A_rel<=A_crit` by the positive
+mobility Cauchy inequality.
+
+A direct snapshot bound `A_rel <= C r^2 mu` is not compatible with spatial
+intermittency.  Euclidean `L^2`-normalized localization has the exact formal Hodge
+scaling `mu~eps^-2`, `V_kappa~eps^-3`, `T_kappa~eps^-7/2`, hence
+`A_rel/mu~eps^-2`.  A torus auditor uses a nonzero-transfer mixed-helical carrier
+triad at `N k_j`, multiplies its vector potential by a real Dirichlet envelope of
+bandwidth `N`, takes curl (so divergence-free structure is exact), and normalizes in
+`L^2`.  For `N=1,...,5`, `T_kappa^2/(mu V_kappa)` equals approximately
+`0.000830, 0.001659, 0.003307, 0.005688, 0.008799`; after division by `N^2` the last
+three values are `0.000367, 0.000356, 0.000352`.  The measured log slopes on
+`N=2,...,5` are about `3.29,1.87,2.89,1.82` for `T_kappa,mu,V_kappa,ratio`, moving
+toward the localization exponents `7/2,2,3,2`.  This is an audited adversarial
+scaling calibration, not a rigorous torus asymptotic theorem.  It rules out using a
+scale-wrong instantaneous action/drain estimate as the architecture endpoint; the
+missing compensator must retain the parabolic heat/time variable.
+
+Classification: heat lift, heat-age double bracket, causal ray Lax law, one vector
+renormalization defect, radial flux identity, scalar continuity-as-flatness and
+projective zero-curvature Exact; their synthesis Rigorous.  Intermittent wavepacket
+onset Audited.  Boundary compactness/holonomy at `(T,0)`, action nonconcentration,
+continuation, restart, blow-up exclusion and global regularity remain Open.

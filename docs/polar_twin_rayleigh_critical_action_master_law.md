@@ -1273,3 +1273,88 @@ norm estimates would sit above the compression already obtained here.
 - exclusion of `L^1`/non-`L^2` active-loss spiking;
 - exclusion of the equivalent causal zero-heat-age concentration;
 - continuation, restart, blow-up exclusion and global regularity.
+
+---
+
+## Follow-through: quotient the critical action to the single scalar direction actually seen by `kappa`
+
+The full quotient action
+
+\[
+\mathscr A_{crit}
+=\langle a_E,M_q^{-1}a_E\rangle
+\]
+
+still counts Euler ray motion orthogonal to the positive critical gradient.  A later
+heat--time audit removes that invisible motion as well.
+
+Set
+
+\[
+T_\kappa
+:=\langle\nabla_S\kappa,a_E\rangle,
+\qquad
+V_\kappa
+:=\langle\nabla_S\kappa,M_q\nabla_S\kappa\rangle.
+\]
+
+If `V_kappa>0`, define only the derived scalar quotient
+
+\[
+\boxed{
+\mathscr A_{rel}
+:=\frac{T_\kappa^2}{V_\kappa};
+}
+\]
+
+on the one-shell null set `V_kappa=0`, both `grad kappa` and `T_kappa` vanish and set
+`A_rel=0` by continuity of the structural definition.
+
+The exact critical law
+
+\[
+\dot\kappa
+=T_\kappa-\frac\nu2V_\kappa
+\]
+
+becomes
+
+\[
+\boxed{
+\dot\kappa
+=-\frac\nu2
+\left(
+\sqrt{V_\kappa}
+-\frac{T_\kappa}{\nu\sqrt{V_\kappa}}
+\right)^2
++\frac1{2\nu}\mathscr A_{rel}.
+}
+\]
+
+Positive-mobility Cauchy--Schwarz gives
+
+\[
+\boxed{
+\mathscr A_{rel}
+\le\mathscr A_{crit}.
+}
+\]
+
+Hence a divergent critical center forces the still smaller necessary condition
+
+\[
+\boxed{
+\int\mathscr A_{rel}\,dt=+\infty.
+}
+\]
+
+A localized mixed-helical wavepacket audit in the later heat--time theorem shows why
+one cannot close this by a scale-independent instantaneous estimate
+`A_rel <= C r^2 mu`: the ratio `A_rel/(r^2 mu)` has the predicted intermittent
+`~N^2` onset.  Thus the scalar quotient sharpens the action frontier but also makes
+clear that the missing control must be dynamic/parabolic rather than a snapshot
+energy inequality.
+
+See `docs/causal_heat_ray_projective_zero_curvature_master_law.md`.
+
+**Classification: Exact scalar action quotient; audited intermittent scaling no-go against scale-independent snapshot domination.**

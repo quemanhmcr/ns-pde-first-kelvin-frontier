@@ -1619,3 +1619,57 @@ claimed.
   topology;
 - a dynamic exclusion of strong-topology Zeno concentration;
 - continuation, restart, blow-up exclusion and global regularity.
+
+---
+
+## Follow-through: the zero-curvature frontier closes on the causal heat lift
+
+A later theorem resolves the open structural question stated in Section 14.  For
+
+\[
+S_h=e^{-hC^2/2},
+\qquad
+u_h=S_hu,
+\qquad
+\mathsf P_h
+=\frac{u_h}{\|u_h\|}\otimes\frac{u_h}{\|u_h\|},
+\]
+
+the heat-age and causal characteristic directions satisfy
+
+\[
+\partial_h\mathsf P_h
+=[B_h,\mathsf P_h],
+\qquad
+B_h=\frac12[\mathsf P_h,C^2],
+\]
+
+and
+
+\[
+(\partial_t-2\nu\partial_h)\mathsf P_h
+=[\Gamma_h^E,\mathsf P_h].
+\]
+
+Their projectively active curvature vanishes exactly:
+
+\[
+\boxed{
+\left[
+\partial_h\Gamma_h^E
+-(\partial_t-2\nu\partial_h)B_h
++[\Gamma_h^E,B_h],
+\mathsf P_h
+\right]=0.
+}
+\]
+
+The same lifted theorem identifies the connection anomaly with the existing heat
+cross-product/carré-du-champ defect.  Its radial projection is the canonical
+heat-scale energy flux; its tangent projection is the heat renormalization of the
+Euler ray connection.  Thus the earlier material/energy-ray Lax synthesis now has an
+exact heat--time projective-flatness face.  This still does not exclude singular
+boundary concentration at `h=0`.  See
+`docs/causal_heat_ray_projective_zero_curvature_master_law.md`.
+
+**Classification: Exact later zero-curvature closure; boundary no-escape remains Open.**
