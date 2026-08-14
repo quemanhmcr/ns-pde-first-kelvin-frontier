@@ -1468,3 +1468,53 @@ Open-literal**. No restart, continuation, or regularity theorem is claimed.
 ## Intrinsic normalized-vorticity unit-ball contact grammar
 
 The attempted next descent through higher scalar jets exposed a stricter PDE-first reduction.  With `M=max |omega|^2/2` and `V=omega/sqrt(2M)`, at differentiability times of the max envelope, literal Navier--Stokes gives `D_t V=(grad u)V+nu Delta V-(Mdot/2M)V`, while always `g=e/M=|V|^2<=1`.  On the active unit sphere the exact contact form is `H_c=-V dot Hess(V)=(grad V)^T grad V+Q/2`, so `ker H_c=ker Q intersect ker(grad V)`.  The new tangent term is the right Gram of the same normalized gradient whose left Gram is exactly orientation-complete Kelvin q.v. divided by `4nuM`; no external score/source is introduced.  Exact periodic elliptic-polarization shears realize `G_R,zz=beta^2 k^2`, `Q_zz/2=(1-beta^2)k^2`, but `H_c,zz=k^2` for the whole family.  The helical endpoint has `g identically 1`, zero scalar source and all scalar `g` jets zero while `grad V`, contact and Kelvin bulk remain nonzero, so scalar higher-jet exhaustion is an exact-NS no-go.  Classification: normalized-vector PDE/contact/Kelvin Gram laws exact; contact-kernel completeness rigorous at active maxima; polarization transfer and helical no-go audited calibrations; actual first-bad contact-kernel closure Open-literal; restart/continuation/regularity Open.
+
+## 2026-08-14 — Material Hodge--Bochner master compatibility reduction
+
+The recent intrinsic-localization/contact milestones have now been compressed one
+level below their separate Eulerian manifestations.  For the actual deterministic
+Lagrangian flow `Phi_t`, set `G=Phi_t^* g_0`, `bar alpha=Phi_t^* u^flat`, and
+`bar beta=Phi_t^* d u^flat`.  Naturality gives the exact material system
+
+`partial_t bar beta = nu Delta_G bar beta`, `d bar beta=0`,
+`bar beta=d bar alpha`, `delta_G bar alpha=0`, while
+`partial_t G=L_U G` with `U=bar alpha^{sharp_G}`.  The metric is not a model state:
+`G=F^T F` is flat and volume-one because it is the pullback Euclidean metric of the
+same incompressible flow.  After fixing the harmonic/Galilean velocity mode,
+`bar alpha` is Hodge-reconstructed from `(G,bar beta)`.
+
+- **Exact reciprocal metric lock:** with `H=cof F=F^-T`, `H^T H=G^-1` and the old
+  packet metric `(H^T H)^-1` is exactly `G`; physical vorticity amplitude is
+  `|omega|^2 o Phi=b^T G b`, while the principal material Hodge-diffusion metric is
+  `G^-1`.
+- **Exact metric-work compression:** `(1/2)b^T Gdot b=(omega.S.omega)o Phi`; vortex
+  stretching is only time variation of the material fiber metric once Lie transport
+  has been removed by pullback.
+- **Exact Hodge-star commutator:** with `H_G=partial_t-nu Delta_G`,
+  `H_G(*_G bar beta)-*_G H_G(bar beta)=(partial_t *_G)bar beta`, and because
+  `H_G bar beta=0` the right side is exactly `2 Phi^*[(S omega)^flat]`.  Stretching
+  is therefore the time-Hodge representation defect of the same material heat law.
+- **Exact Hodge--Bochner compression:** because every `G_t` is flat, diffusion has
+  one bilinear product defect `2<grad X,grad Y>_G`.  Its scalar trace is viscous
+  enstrophy loss; its tensor/pair/covariance representations are the already-audited
+  vorticity-dyad defect, Kelvin common-noise q.v., same-ancestor diagonal defect, and
+  future-covariance source.
+- **Exact contact compression:** normalized-vorticity contact is the untraced
+  covariant product rule
+  `H_c,G=(nabla^G Vbar)^* nabla^G Vbar+Q_G/2`; the previous contact tensor is
+  therefore not a new primitive beneath the carré-du-champ sector.
+- **Rigorous architecture consequence:** deterministic Cauchy/Nanson/deformation and
+  the full material finite-current shape are functorial images of one diffeomorphism;
+  pulling back freezes the full reference current.  This explains the infinite
+  finite-shape hierarchy without validating any finite moment/deformation closure.
+- **Frontier correction:** the primitive local question is no longer to invent a
+  higher contact tensor on `ker H_c`.  The smallest literal candidate core is the
+  coupled exact-form/metric feedback `(G,bar beta)`.  A hypothetical no-escape
+  theorem would have to show that an exact Hodge-heated two-form cannot escape in
+  the self-generated flat volume-one metric whose velocity is reconstructed from
+  that same form.  Sufficiency for blow-up exclusion, restart, continuation, or
+  global regularity remains **Open**.
+
+See `docs/material_hodge_bochner_master_compatibility.md`.  No CI/calibration
+campaign was used for this milestone; only lightweight symbolic algebra checked the
+matrix ordering and the already-exact contact/product identities.
