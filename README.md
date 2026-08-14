@@ -233,3 +233,38 @@ meet literally: `C K_q=-ad_q`, hence for every Hodge spectral multiplier
 form of the same Lie/Hodge commutator that moves the material Hodge calculus.  See
 `docs/energy_sphere_rayleigh_hodge_master_law.md`.  No no-escape or regularity claim
 is made.
+
+The energy-sphere theorem itself is a shadow of a still shorter energy-ray operator
+law.  For a smooth nonzero state let `u=r q`, `||q||_2=1`, and let
+`Pi=q tensor q` be the canonical rank-one energy-ray projector.  The unnormalized
+dyad obeys `Qdot=[J(u),Q]-nu{C^2,Q}`.  After dividing out its trace, viscosity becomes
+an exact double bracket and the entire normalized PDE is one Lax rotation:
+`rdot=-nu r tr(Pi C^2)` and
+`Pidot=[J(u),Pi]-nu[Pi,[Pi,C^2]]=[J(u)+nu[Pi,C^2],Pi]`; equivalently
+`qdot=[J(u)+nu[Pi,C^2]]q`, with a skew-adjoint total ray generator.  The unique
+non-Beltrami shape mismatch is the ray--curl commutator `D=[Pi,C]`:
+`D=(q tensor g-g tensor q)/2`, `B=-r D q`,
+`Z/E-(H/E)^2=||D||_HS^2/2`, and `[Pi,C^2]={C,D}`.  Thus Euler ray rotation, viscous
+ray rotation, Rayleigh slope/variance and the extra radial drain all descend from the
+same off-diagonal Hodge defect.  Every normalized Hodge moment is a trace shadow of
+this one Lax equation.  A further energy-level consequence is a weak cumulative
+anti-Zeno bound: the Euler Lamb motion is `L^1_t H^{-1/2}` with total path controlled
+by the actual viscous energy loss, sharpened by the factor
+`sqrt(1-(H/E)^2/(Z/E))`; this is far below positive-topology continuation strength.
+The new open frontier is whether the energy-ray Lax law and the material-Hodge Lax
+law obey a stronger mismatch/zero-curvature compatibility that rules out a
+strong-topology Zeno cascade.  See `docs/energy_ray_lax_double_bracket_master_law.md`.
+
+The same energy-ray milestone compresses below the Poisson notation as well.  On the
+fixed mean-zero harmonic sector, `C J(u)v=[C u,v]_Lie`; for the actual state this gives
+the exact one-line velocity law
+`u_t=C^-1[C,ad_u]u-nu C^2 u`.  Hence the full Euler velocity is the inverse-Hodge
+image of the failure of curl to commute with self-Lie transport, while viscosity is
+the square of that same curl.  With `D=[Pi,C]`, the two commutator defects collapse on
+the state: `[C,ad_q]q=[q,Dq]`, so the normalized PDE is
+`qdot=r C^-1[q,Dq]+nu{C,D}q`.  The mismatch itself obeys
+`Ddot=[A_NS,D]-[Pi,[A_NS,C]]`; the first term is pure Lax transport and has zero
+Hilbert--Schmidt pairing with `D`, so every change of non-Beltrami defect size is
+forced through the second, curvature-source term.  This makes the next no-escape seam
+literal: control the self-generated Hodge/connection curvature in a topology strong
+enough to see Zeno concentration, rather than invent another badness functional.
