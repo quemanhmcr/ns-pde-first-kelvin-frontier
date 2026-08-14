@@ -391,3 +391,23 @@ no-escape theorem.  Future work must use an identity that fails for an arbitrary
 shell-dependent skew Casimir-null operator and depends essentially on the one local
 self-Lie/Lamb product.  See
 `docs/abstract_shell_ladder_escape_self_lie_stop_theorem.md`.
+
+The self-Lie frontier has now been typed by a whole-operator realization law rather
+than another spectral case.  For the fixed divergence-free Lie bracket and
+`A=C^2=-Delta`, one has exactly
+`A[f,g]-[Af,g]-[f,Ag]=-2 sum_j[partial_j f,partial_j g]`, equivalently
+`[A,ad_f]=ad_(Af)-2 sum_j ad_(partial_j f) partial_j`.  Since
+`C X_E(u)=[Cu,u]_Lie`, the one vector heat anomaly obeys
+`C N_h=S_h[Cu,u]-[S_hCu,S_hu]` and is exactly the heat integral of this Lie
+carre-du-champ.  Fourier triangle support is only its coordinate shadow: a bracket
+pair `p+q=k` carries the transverse area factor `|p cross q|`, while heat
+renormalization of that same pair is controlled by `p dot q`; the exact lock
+`(p dot q)^2+|p cross q|^2=|p|^2|q|^2` prevents independent tuning.  Heron gives a
+soft upper-edge null, including zero projected coupling at exact equal-shell
+doubling.  This still has no favorable local sign: the exact unit-shell datum formed
+from a real `+` Beltrami pair at `(1,0,0)` and a real `-` pair at `(0,1,0)` has
+`kappadot_E=0` but `kappaddot_E=3(sqrt(2)-1)/4>0`.  Thus the missing theorem must be
+cumulative: can one fixed local Lie product repeatedly regenerate the coherence and
+intermittency required for infinite boundary critical action while the same Hodge
+square supplies its derivative defect, heat renormalization and viscosity?  See
+`docs/self_lie_derivation_carre_du_champ_realization_law.md`.

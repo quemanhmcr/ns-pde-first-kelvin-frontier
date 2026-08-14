@@ -2266,3 +2266,48 @@ operator, weak-length/action and active-loss estimates Exact/Rigorous in the
 abstract model; insufficiency of the abstract Hodge/ray/heat package Rigorous.  No
 NS counterexample is claimed.  The shortest physical self-Lie compatibility which
 excludes the adversary remains Open.
+
+## Self-Lie derivation / Hodge-square carre-du-champ realization
+
+The physical constraint missing from the abstract shell-ladder escape has been
+compressed to one fixed derivation law.  For divergence-free
+`[f,g]=(f.grad)g-(g.grad)f` and `A=-Delta=C^2`, direct differentiation gives
+`A[f,g]-[Af,g]-[f,Ag]=-2 sum_j[partial_j f,partial_j g]`, hence
+`[A,ad_f]=ad_(Af)-2 sum_j ad_(partial_j f) partial_j`.  This is a Lie
+carre-du-champ: the commutator of the viscous Hodge square with the conservative
+transport representation has a forced local first-derivative source.
+
+For `P_s=e^-sA`, the heat Lie defect is exactly
+`D_s^Lie(f,g)=P_s[f,g]-[P_s f,P_s g]
+=2 int_0^s P_(s-r) sum_j[partial_j P_r f,partial_j P_r g] dr`.  Since
+`C X_E(u)=[Cu,u]`, the established heat-ray vector anomaly satisfies
+`C N_h=S_h[Cu,u]-[S_hCu,S_hu]` and is this same Lie defect with `f=Cu,g=u,s=h/2`.
+Thus radial heat flux, tangent ray renormalization, cross-product heat anomaly and
+the new Lie derivative defect are representations of one fixed self-Lie product.
+
+In Fourier variables the ordered bracket contribution at `p+q=k` is
+`i[(f_p.q)g_q-(g_q.p)f_p]`.  Divergence-free geometry gives the exact transverse
+typing
+`|f_p.q|<=|p cross q||f_p|/|p|` and the analogous `g` bound, hence the bracket
+vanishes on collinear triangles.  Heron yields
+`|p cross q|^2<=2ab(a+b)(a+b-c)` for side lengths `a,b,c`, and for equal input
+shells `(|p cross q|/|p+q|)^2=L^2-|p+q|^2/4`; exact doubling has zero projected
+coupling.  The heat defect multiplier of the same pair is
+`e^-s|p+q|^2-e^-s(|p|^2+|q|^2)`, controlled by `p.q`, while
+`(p.q)^2+|p cross q|^2=|p|^2|q|^2`.  Transfer and heat renormalization are therefore
+complementary dot/area faces of one pair geometry.
+
+A favorable one-shell second-variation sign is nevertheless false.  On the unit
+shell take a real positive-helicity Beltrami pair at `+/-p`, `p=(1,0,0)`, and a real
+negative-helicity pair at `+/-q`, `q=(0,1,0)`, with equal amplitudes and total L2
+norm one.  The projected Lamb vector lies at the four modes `+/-(p+q),+/-(p-q)`, all
+of magnitude `sqrt(2)`, with total L2 mass `3/8`.  Hence the exact shell formula gives
+`kappaddot_E=2<a_E,(Lambda-1)a_E>=3(sqrt(2)-1)/4>0`.  The orthogonal pair also has
+zero heat renormalization multiplier because `p.q=0`, so heat-anomaly size cannot
+pointwise dominate every dangerous interaction.
+
+Classification: self-Lie/Hodge-square derivative defect, heat Lie anomaly, Fourier
+area typing, Heron soft edge, dot--area lock and sparse shell calibration Exact;
+architecture synthesis Rigorous.  The remaining target is cumulative phase
+coherence/intermittency of one fixed local Lie current, not another snapshot sign or
+score.  No no-escape or regularity theorem is claimed.

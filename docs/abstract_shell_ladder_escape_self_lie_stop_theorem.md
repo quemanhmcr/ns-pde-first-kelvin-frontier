@@ -973,3 +973,35 @@ No such theorem is claimed here.
 - the shortest whole-operator self-Lie compatibility which excludes independent
   shell-rotation Zeno;
 - continuation, restart, blow-up exclusion and global regularity.
+
+---
+
+## Follow-through: the missing self-Lie realization has an exact Hodge-square carre-du-champ
+
+A later theorem identifies a concrete whole-operator law which the abstract ladder
+does not satisfy.  For the physical divergence-free Lie bracket and `A=C^2=-Delta`,
+
+\[
+A[f,g]-[Af,g]-[f,Ag]
+=-2\sum_j[\partial_jf,\partial_jg].
+\]
+
+Consequently the actual heat-renormalization anomaly obeys
+
+\[
+C\mathfrak N_h
+=S_h[Cu,u]-[S_hCu,S_hu]
+=2\int_0^{h/2}P_{h/2-r}
+\sum_j[\partial_jP_rCu,\partial_jP_ru]dr.
+\]
+
+Its Fourier symbol carries the triangle-area factor forced by incompressibility,
+while the heat mismatch of the same pair is controlled by the complementary dot
+product.  These identities fail for a shell-dependent arbitrary rank-two `J_*`.
+
+The later theorem also supplies an exact orthogonal opposite-helicity shell datum
+with positive second critical acceleration, so this realization law is not yet a
+local-sign no-escape theorem.  See
+`docs/self_lie_derivation_carre_du_champ_realization_law.md`.
+
+**Classification: Exact later physical-realization refinement.**
