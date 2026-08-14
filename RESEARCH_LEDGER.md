@@ -1705,3 +1705,46 @@ no-escape, restart, continuation, or global-regularity claim.
 - **Exact parity/no-quotient consequence:** under the instantaneous state reversal `u -> -u`, all even critical pair magnitudes (`E`, `K`, `D`, `|delta omega|^2`, `|u_x cross u_y|^2`) are unchanged while the oriented common-kernel transfer `tau` changes sign.  Therefore no magnitude-only/Gram-only positive state can determine the dangerous transfer; signed phase/orientation correlation is irreducible unless reconstructed by another exact PDE law.
 - **Exact master Hodge-current identity:** for every self-adjoint spectral `F` on exact closed vorticity two-forms, `d/dt <beta,F beta>/2 = -<delta F beta,i_u beta>-nu<delta F beta,delta beta>`.  `F=A^-1`, `A^-1/2`, and `I` are respectively kinetic energy, the canonical critical quadratic, and enstrophy.  Thus their nonlinear/viscous faces are not separate balances but Hodge tests of the single current `J_NS=i_u beta+nu delta beta`; in particular stretching is `-<delta beta,i_u beta>`.
 - **Exact spectral/physical-space bridge:** with chirality involution `J=C|C|^-1`, `(Kdot)_nl=int u.(omega cross J omega)=-2 int u.(omega_+ cross omega_-)`, hence `tau=-int u.(omega_+ cross omega_-)`.  The same `tau` is `(1/4)doubleint K_Lambda delta_omega.(u_x cross u_y)`.  Opposite-curl-sign mixing and the oriented vorticity-increment current are therefore exactly the same transfer in local spectral-sign and nonlocal pair representations.
+
+## 2026-08-14 — Heat-null / carré-du-champ critical-transfer compression
+
+The de Rham skew-square frontier has compressed one level further.  With
+`A=C^2=-Delta`, `Lambda=A^(1/2)`, `J=C|C|^-1`, `a=omega_+`, `b=omega_-`, and
+`j=J omega=a-b`, Hodge reconstruction gives `u=Lambda^-1 j`.  The complete paired
+critical transfer is therefore not a raw cubic term but the exact inverse-Hodge
+commutator
+`tau=-(1/2)(<a,[Lambda^-1,X_b]a>+<b,[Lambda^-1,X_a]b>)`, where
+`X_q v=v cross q`.  Symmetrization gives the double-increment null form
+`tau=-(1/2) intint G_-1 (m_a-m_b).(delta a cross delta b)` or equivalently
+`tau=(1/4) intint G_-1 m_j.(delta omega cross delta j)`.  Thus both curl signs must
+vary at the same physical pair; magnitude-only coexistence is not enough.
+
+Subordination by the same Hodge heat semigroup `P_s=e^-sA` gives the sharper exact
+law
+`tau=(1/(2 sqrt(pi))) int s^-1/2 <P_(s/2) j, D^x_(s/2)(omega,j)> ds`, where
+`D^x_t(f,g)=P_t(f cross g)-P_t f cross P_t g`.  The pointwise null relation
+`P_t j.(P_t omega cross P_t j)=0` shows that critical growth is entirely the heat
+product anomaly of an alternating null form.  Duhamel converts this anomaly into the
+cross-product carré-du-champ
+`2 int_0^t P_(t-r) sum_k partial_k P_r f cross partial_k P_r g dr`.  Critical
+viscosity is simultaneously the positive half-Laplacian heat square
+`D=(1/(2 sqrt(pi))) int s^-3/2 <omega,(I-P_s)omega> ds`.  Since `J` is unitary and
+commutes with the heat calculus, the `omega` and `J omega` heat increment/gradient
+energies agree exactly at every heat scale.
+
+Classification: inverse-Hodge commutator, double-increment formula, heat-null defect,
+carré-du-champ representation, positive heat dissipation and scale-by-scale Hodge-sign
+isometry Exact; the synthesis reducing critical transfer, Kelvin/contact/covariance
+and viscosity to the same Hodge product defect is Rigorous.  The remaining bridge is
+a dynamic anti-concentration theorem for the self-generated heat-scale
+mean--oriented-covariance alignment.  No no-escape, continuation or regularity claim
+is made.
+- **Rigorous heat-scale anti-Zeno consequence:** for every fixed heat-age cutoff `h0>0`, the `h>=h0` part of the exact heat-covariance transfer is absolutely integrable over every finite smooth physical-time interval, by torus heat smoothing and the kinetic-energy identity.  Hence `Theta->+infinity`, if possible, must be carried by heat ages tending to zero.  The same common-age covariance inequality gives the necessary growth condition `Kdot>0 => exists h>0 with 4 h ||P_h J omega||_infty > nu`; this is only a PDE-forced viscosity-scale crossing, not a selector or continuation criterion.
+
+## 2026-08-14 — Canonical Hodge heat-scale energy continuity law
+
+The heat-null theorem exposes a still smaller state-space law.  Define the canonical heat-resolved energy `E(h,t)=<u,P_h u>/2`, `P_h=e^-hA`, and the positive heat-scale density `rho=-partial_h E=(1/2)||A^(1/2)P_(h/2)u||_2^2`.  Then `int_0^infty rho dh` is exactly kinetic energy and `rho(0)` is enstrophy.  With the canonical nonlinear scale flux `Pi(h,t)=-<u cross omega,P_hu>`, literal NS gives the exact one-dimensional continuity equation `rho_t-partial_h(2nu rho+Pi)=0`; `Pi(0)=0`, so nonlinearity has no direct flux through the finest heat-age boundary and viscosity is the only energy exit there.
+
+The same `Pi` generates the formerly separate scale laws.  Its boundary slope is vortex stretching: `partial_h Pi(0)=int omega.S.omega`.  The positive critical quadratic is `K=(1/sqrt(pi)) int h^-1/2 rho dh`, while the complete paired nonlinear critical transfer is `2tau=(1/(2sqrt(pi))) int h^-3/2 Pi dh`.  Critical viscosity is the boundary-density deficit `D=(1/sqrt(pi)) int h^-3/2(rho(0)-rho(h)) dh`, giving the exact one-line critical balance `Kdot=(1/(2sqrt(pi))) int h^-3/2[Pi-2nu(rho(0)-rho(h))] dh`.  Moreover `Pi` itself is the same heat-null cross-product/carre-du-champ defect from the preceding milestone.
+
+Classification: heat-scale density/flux, continuity law, boundary nullity, stretching slope, critical moment/flux moment and viscous deficit Exact; the reduction of energy cascade, stretching, critical chirality transfer and viscosity to one positive scale continuity law Rigorous.  Every fixed smooth state has a viscosity-dominated boundary layer because `Pi(h)=O(h)` while `rho(h)->rho(0)`.  Uniform persistence of that layer and exclusion of zero-heat-scale Zeno concentration remain Open; no no-escape or regularity theorem is claimed.
