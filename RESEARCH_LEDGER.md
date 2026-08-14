@@ -1669,3 +1669,39 @@ required infinite cumulative paired transfer must concentrate into shrinking tim
 windows and/or critical dissipation.  The remaining gap is therefore a causal
 anti-concentration law for the self-generated paired transfer, not another static
 channel estimate.
+
+## 2026-08-14 — de Rham skew-square / critical increment-current compression
+
+The critical paired-chirality milestone has been pushed below chirality itself.  With
+`alpha=u^flat`, `beta=d alpha`, `delta alpha=0`, literal NS is the exact two-form
+current law `beta_t+d(i_u beta+nu delta beta)=0`.  After fixing the harmonic velocity
+mode, `u=B beta`, so this is a beta-only self-induced nonlinear Hodge conservation
+law.  In three dimensions `C=*d=curl`, `C^2=-Delta` on the co-closed mean-zero sector,
+and the projected momentum equation is `alpha_t=R_beta alpha-nu C^2 alpha` with
+`R_beta eta=-P i_{eta#} beta`.  The same alternating two-form forces
+`R_beta^*=-R_beta` and `R_beta(C alpha)=0`; nonlinear energy cancellation and
+nonlinear helicity cancellation are therefore two shadows of one skew/null algebra,
+not separate conservation mechanisms.  Applying `C` gives vorticity
+advection/stretching as the curl of the same sideways current.
+
+At the critical Hodge order `Lambda=|C|`, the remaining nonlinear transfer has the
+exact commutator form `(Kdot)_nl=(1/2)<alpha,[Lambda,R_beta]alpha>`.  Subordination of
+`Lambda` gives a positive torus kernel `K_Lambda`; the commutator is exactly
+`doubleint K_Lambda (omega(x)-omega(y)).(u(x) cross u(y))`, while the critical
+viscous term is `(1/2) doubleint K_Lambda |omega(x)-omega(y)|^2`.  Hence
+`Kdot=(1/2)doubleint K_Lambda[delta_omega.(u_x cross u_y)-nu|delta_omega|^2]`.
+The cumulative paired transfer from the previous milestone is therefore the literal
+spacetime oriented vorticity-increment current, not an independent bank.  Dangerous
+critical transfer and critical viscosity use the same canonical pair geometry; one
+is the orientation-correlation face and the other the increment-square face.
+
+Classification: de Rham current, beta-only closure, skew-square form, null direction,
+energy/helicity cancellations, fractional commutator kernel, and common-kernel
+critical balance Exact; reduction of prior pressure/stretching/chirality/material
+Hodge mechanisms to this core Rigorous.  The missing theorem is now a genuinely
+self-induced correlation/anti-concentration law exploiting `u=B beta`; generic
+Cauchy/Young bounds that discard this self-generation are not promoted.  No
+no-escape, restart, continuation, or global-regularity claim.
+- **Exact parity/no-quotient consequence:** under the instantaneous state reversal `u -> -u`, all even critical pair magnitudes (`E`, `K`, `D`, `|delta omega|^2`, `|u_x cross u_y|^2`) are unchanged while the oriented common-kernel transfer `tau` changes sign.  Therefore no magnitude-only/Gram-only positive state can determine the dangerous transfer; signed phase/orientation correlation is irreducible unless reconstructed by another exact PDE law.
+- **Exact master Hodge-current identity:** for every self-adjoint spectral `F` on exact closed vorticity two-forms, `d/dt <beta,F beta>/2 = -<delta F beta,i_u beta>-nu<delta F beta,delta beta>`.  `F=A^-1`, `A^-1/2`, and `I` are respectively kinetic energy, the canonical critical quadratic, and enstrophy.  Thus their nonlinear/viscous faces are not separate balances but Hodge tests of the single current `J_NS=i_u beta+nu delta beta`; in particular stretching is `-<delta beta,i_u beta>`.
+- **Exact spectral/physical-space bridge:** with chirality involution `J=C|C|^-1`, `(Kdot)_nl=int u.(omega cross J omega)=-2 int u.(omega_+ cross omega_-)`, hence `tau=-int u.(omega_+ cross omega_-)`.  The same `tau` is `(1/4)doubleint K_Lambda delta_omega.(u_x cross u_y)`.  Opposite-curl-sign mixing and the oriented vorticity-increment current are therefore exactly the same transfer in local spectral-sign and nonlocal pair representations.

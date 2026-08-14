@@ -917,3 +917,42 @@ No no-escape, continuation, restart, or global-regularity theorem is claimed.
 - blow-up exclusion;
 - restart/continuation;
 - global regularity.
+
+---
+
+## Follow-through: chirality descends from the de Rham skew-square current
+
+The next reduction is recorded in `docs/derham_skew_square_critical_current.md`.
+The scalar paired transfer introduced here is no longer primitive.  With
+`alpha=u^flat`, `beta=d alpha`, and `C=*d`, literal NS is
+
+\[
+\partial_t\beta+d(\iota_u\beta+\nu\delta\beta)=0,
+\]
+
+or, on co-closed one-forms,
+
+\[
+\partial_t\alpha=\mathcal R_\beta\alpha-\nu C^2\alpha,
+\qquad
+\mathcal R_\beta^*=-\mathcal R_\beta,
+\qquad
+\mathcal R_\beta(C\alpha)=0.
+\]
+
+The chirality split in this note is the sign decomposition of that same first-order
+operator `C`.  More sharply,
+
+\[
+\boxed{
+\tau=-\int u\cdot(\omega_+\times\omega_-)\,dx
+=\frac14\iint K_{|C|}(x,y)
+(\omega(x)-\omega(y))\cdot(u(x)\times u(y))\,dx\,dy.
+}
+\]
+
+Thus heterochiral mixing and the oriented critical vorticity-increment current are
+two exact representations of the same original NS transfer.  Critical viscosity is
+`(1/2) doubleint K_|C| |delta omega|^2` on the identical positive kernel.  The open
+bridge is therefore a self-induced signed correlation/anti-concentration law, not a
+new chirality bank or shell architecture.  No no-escape or regularity claim follows.
